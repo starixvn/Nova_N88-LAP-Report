@@ -1,0 +1,41 @@
+
+#Ignore thumbnails created by Windows
+Thumbs.db
+#Ignore files built by Visual Studio
+*.obj
+*.exe
+*.pdb
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+[Bb]in
+[Dd]ebug*/
+*.lib
+*.sbr
+obj/
+[Rr]elease*/
+_ReSharper*/
+[Tt]est[Rr]esult*
+.vs/
+#Nuget packages folder
+packages/
+/TestReports
+/Fanex.Athena.Report/UnitTests/Fanex.Athena.Report.ByPlayer.UnitTest/coverage.cobertura.xml
+/Fanex.Athena.Report/UnitTests/Fanex.Athena.Report.ByPlayer.UnitTest/coverage.opencover.xml
+/Fanex.Athena.Report/UnitTests/Fanex.Athena.Report.BySite.UnitTests/coverage.cobertura.xml
+/Fanex.Athena.Report/UnitTests/Fanex.Athena.Report.BySite.UnitTests/coverage.opencover.xml
+/Fanex.Athena.Report/UnitTests/Fanex.Athena.Report.Common.UnitTests/coverage.cobertura.xml
+/Fanex.Athena.Report/UnitTests/Fanex.Athena.Report.Common.UnitTests/coverage.opencover.xml
+/Fanex.Athena.Report/UnitTests/Fanex.Athena.Report.Core.UnitTests/coverage.cobertura.xml
+/Fanex.Athena.Report/UnitTests/Fanex.Athena.Report.Core.UnitTests/coverage.opencover.xml
