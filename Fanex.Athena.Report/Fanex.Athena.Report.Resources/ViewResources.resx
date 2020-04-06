@@ -364,4 +364,7 @@
   <data name="SG" xml:space="preserve">
     <value>SG</value>
   </data>
+  <data name="VRG" xml:space="preserve">
+    <value>Virtual Games</value>
+  </data>
 </root>
