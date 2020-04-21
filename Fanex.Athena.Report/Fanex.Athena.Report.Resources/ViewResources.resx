@@ -370,4 +370,7 @@
   <data name="TG" xml:space="preserve">
     <value>Table Game</value>
   </data>
+  <data name="SBC" xml:space="preserve">
+    <value>Saba.club</value>
+  </data>
 </root>
