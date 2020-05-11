@@ -19,11 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MetaModels\" />
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Fanex.Data" Version="4.2.0" />
     <PackageReference Include="Fanex.Data.SqlServer" Version="4.2.0" />
   </ItemGroup>

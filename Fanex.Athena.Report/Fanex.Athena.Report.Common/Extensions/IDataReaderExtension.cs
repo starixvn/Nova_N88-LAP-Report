@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlTypes;
-using System.Text;
 
 namespace Fanex.Athena.Report.Common.Extensions
 {
@@ -17,6 +15,27 @@ namespace Fanex.Athena.Report.Common.Extensions
             }
 
             return Cast<T>(dbValue, defauleValue);
+        }
+
+        public static object GetVal(this IDataReader dataReader, Type type, string columnName)
+        {
+            if (type == typeof(string))
+            {
+                return GetVal<string>(dataReader, columnName);
+            }
+            if (type == typeof(decimal))
+            {
+                return GetVal<decimal>(dataReader, columnName);
+            }
+            if (type == typeof(int))
+            {
+                return GetVal<int>(dataReader, columnName);
+            }
+            if (type == typeof(double))
+            {
+                return GetVal<double>(dataReader, columnName);
+            }
+            return null;
         }
 
         private static T Cast<T>(object dbValue, T defauleValue = default(T))
