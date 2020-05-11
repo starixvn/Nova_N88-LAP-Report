@@ -33,7 +33,7 @@ namespace Fanex.Athena.Report.Common.Repositories
             {
                 return ReadDataTotal<T>(reader, typeof(T).GetProperties());
             }
-            return default;
+            return default(T);
         }
 
         protected virtual int GetTotalRows(IObjectDb db)

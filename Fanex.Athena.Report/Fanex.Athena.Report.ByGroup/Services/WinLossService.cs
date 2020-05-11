@@ -52,7 +52,7 @@ namespace Fanex.Athena.Report.ByGroup.Services
         private static Func<string, IEnumerable<WinLossDataItemDTO>, WinLossRecordViewModel> Mapper = (key, childData) =>
         {
             var (turnoverNoDraw, turnover, ggr, betCount, uniquePlayers) = SumChildData(childData);
-            var model = new WinLossRecordViewModel
+            var parent = new WinLossRecordViewModel
             {
                 Group = key,
                 Turnover = turnover,
@@ -60,22 +60,27 @@ namespace Fanex.Athena.Report.ByGroup.Services
                 BetCount = betCount,
                 UniquePlayers = uniquePlayers,
                 AvgBetAmount = turnover / betCount,
-                Margin = turnoverNoDraw == 0.0m ? 0.00 : (double)(ggr / turnoverNoDraw),
-                DrillDownData = childData.Select(_ => new WinLossRecordViewModel
-                {
-                    HasParent = true,
-                    Group = _.Code,
-                    Turnover = _.Turnover,
-                    Ggr = _.GGR,
-                    BetCount = _.BetCount,
-                    AvgBetAmount = _.AvgBetAmount,
-                    UniquePlayers = _.UniquePlayers,
-                    Margin = _.Margin
-                })
+                Margin = turnoverNoDraw == 0.0m ? 0.00 : (double)(ggr / turnoverNoDraw) * 100.00,
+                DrillDownData = SelectDrillDownData(key, childData)
             };
 
-            return model;
+            return parent;
         };
+
+        private static IEnumerable<WinLossRecordViewModel> SelectDrillDownData(string parent, IEnumerable<WinLossDataItemDTO> childData)
+        {
+            return childData.Select(_ => new WinLossRecordViewModel
+            {
+                Parent = parent,
+                Group = _.Code,
+                Turnover = _.Turnover,
+                Ggr = _.GGR,
+                BetCount = _.BetCount,
+                AvgBetAmount = _.AvgBetAmount,
+                UniquePlayers = _.UniquePlayers,
+                Margin = _.Margin
+            });
+        }
 
         private static (decimal, decimal, decimal, int, int) SumChildData(IEnumerable<WinLossDataItemDTO> childData)
         {
