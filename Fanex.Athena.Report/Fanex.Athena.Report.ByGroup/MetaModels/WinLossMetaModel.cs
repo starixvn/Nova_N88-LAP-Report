@@ -23,10 +23,10 @@ namespace Fanex.Athena.Report.ByGroup.MetaModels
 
         public bool IsNoDrawTicket { get; set; }
 
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
-
         [SpParam(SqlParamName = "DisplayCurrency")]
         public string BaseCurrency { get; set; }
+
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
     }
 }

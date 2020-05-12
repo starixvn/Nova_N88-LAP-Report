@@ -1,8 +1,11 @@
-﻿using Fanex.Athena.Report.ByGroup.MetaModels;
+﻿using Fanex.Athena.Report.ByGroup.Excels;
+using Fanex.Athena.Report.ByGroup.MetaModels;
 using Fanex.Athena.Report.ByGroup.Services;
 using Fanex.Athena.Report.ByGroup.ViewModels;
 using Fanex.Athena.Report.Common.Model.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Fanex.Athena.Report.ByGroup.Controllers
@@ -48,10 +51,38 @@ namespace Fanex.Athena.Report.ByGroup.Controllers
             return data;
         }
 
-        [HttpPost]
-        public async Task<dynamic> ExportData()
+        [HttpGet]
+        public async Task<FileResult> ExportData(
+            [FromServices] IFileProvider fileProvider,
+            [FromServices] IWinLossExcel excel
+            )
         {
-            return null;
+            var metaModel = new WinLossMetaModel
+            {
+                LicenseeId = 402,
+                DateType = 1,
+                GroupBy = 1,
+                FromDate = new System.DateTime(2019, 10, 1),
+                ToDate = new System.DateTime(2020, 6, 1),
+                ProductIds = "5",
+                UserName = string.Empty,
+                CurrencyIds = "2,3,51,52",
+                BaseCurrency = "EUR",
+                IsIncludedTestData = true,
+                IsNoDrawTicket = false,
+                PageIndex = 1,
+                PageSize = 10,
+            };
+
+            var template = fileProvider.GetFileInfo("/ExcelTemplate/WinLossReport.xlsx").PhysicalPath;
+            var data = await _winLossService.GetData(metaModel);
+            var workBook = excel.Export(template, data);
+            var stream = new MemoryStream();
+            workBook.Write(stream);
+            stream.Position = 0;
+
+            var mimeType = "application/vnd.ms-excel";
+            return File(stream, mimeType, "asd.xlsx");
         }
     }
 }
