@@ -1,4 +1,5 @@
-﻿using Fanex.Athena.Report.ByGroup.Excels;
+﻿using Fanex.Athena.Report.ByGroup.Consts;
+using Fanex.Athena.Report.ByGroup.Excels;
 using Fanex.Athena.Report.ByGroup.MetaModels;
 using Fanex.Athena.Report.ByGroup.Services;
 using Fanex.Athena.Report.ByGroup.ViewModels;
@@ -21,29 +22,6 @@ namespace Fanex.Athena.Report.ByGroup.Controllers
             _winLossService = winLossService;
         }
 
-        [HttpGet]
-        public async Task<dynamic> GetData()
-        {
-            var metaModel = new WinLossMetaModel
-            {
-                LicenseeId = 402,
-                DateType = 1,
-                GroupBy = 1,
-                FromDate = new System.DateTime(2019, 10, 1),
-                ToDate = new System.DateTime(2020, 6, 1),
-                ProductIds = "5",
-                UserName = string.Empty,
-                CurrencyIds = "2,3,51,52",
-                BaseCurrency = "EUR",
-                IsIncludedTestData = true,
-                IsNoDrawTicket = false,
-                PageIndex = 1,
-                PageSize = 10,
-            };
-            var x = await _winLossService.GetData(metaModel);
-            return x;
-        }
-
         [HttpPost]
         public async Task<ResultModel<WinLossRecordViewModel>> GetData(WinLossMetaModel metaModel)
         {
@@ -51,38 +29,21 @@ namespace Fanex.Athena.Report.ByGroup.Controllers
             return data;
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<FileResult> ExportData(
             [FromServices] IFileProvider fileProvider,
-            [FromServices] IWinLossExcel excel
+            [FromServices] IWinLossExcel excel,
+            WinLossMetaModel metaModel
             )
         {
-            var metaModel = new WinLossMetaModel
-            {
-                LicenseeId = 402,
-                DateType = 1,
-                GroupBy = 1,
-                FromDate = new System.DateTime(2019, 10, 1),
-                ToDate = new System.DateTime(2020, 6, 1),
-                ProductIds = "5",
-                UserName = string.Empty,
-                CurrencyIds = "2,3,51,52",
-                BaseCurrency = "EUR",
-                IsIncludedTestData = true,
-                IsNoDrawTicket = false,
-                PageIndex = 1,
-                PageSize = 10,
-            };
-
-            var template = fileProvider.GetFileInfo("/ExcelTemplate/WinLossReport.xlsx").PhysicalPath;
+            var template = fileProvider.GetFileInfo(ExcelConsts.WinLosExcelTemplatePath).PhysicalPath;
             var data = await _winLossService.GetData(metaModel);
-            var workBook = excel.Export(template, data);
+
+            var workBook = excel.Export(template, data, metaModel);
             var stream = new MemoryStream();
             workBook.Write(stream);
-            stream.Position = 0;
 
-            var mimeType = "application/vnd.ms-excel";
-            return File(stream, mimeType, "asd.xlsx");
+            return new FileContentResult(stream.ToArray(), ExcelConsts.OctetStreamContentType);
         }
     }
 }

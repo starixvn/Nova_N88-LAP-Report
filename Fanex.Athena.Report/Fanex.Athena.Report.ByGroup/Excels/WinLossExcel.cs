@@ -1,9 +1,11 @@
-﻿using Fanex.Athena.Report.ByGroup.ViewModels;
+﻿using Fanex.Athena.Report.ByGroup.MetaModels;
+using Fanex.Athena.Report.ByGroup.ViewModels;
 using Fanex.Athena.Report.Common.Excel;
 using Fanex.Athena.Report.Common.Model.ViewModel;
 using Fanex.Athena.Report.Resources;
 using NPOI.SS.UserModel;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Fanex.Athena.Report.ByGroup.Excels
 {
@@ -11,11 +13,14 @@ namespace Fanex.Athena.Report.ByGroup.Excels
     {
         private const string TemplateSheetName = "Template";
         private const string SheetName = "Data";
+        private const string DateFormat = "MM/dd/yyyy";
 
         private const int RowTitleTemplate = 0;
         private const int RowHeaderTemplate = 1;
         private const int RowParentContentTemplate = 3;
         private const int RowChildContentTemplate = 4;
+        private const int RowTotalDataTemplate = 6;
+        private const int RowNoInfoTemplate = 7;
 
         private const int ColumnTemplateCount = 8;
 
@@ -35,25 +40,42 @@ namespace Fanex.Athena.Report.ByGroup.Excels
             _builder = builder;
         }
 
-        public IWorkbook Export(string template, ResultModel<WinLossRecordViewModel> data)
+        public IWorkbook Export(string template, ResultModel<WinLossRecordViewModel> data, WinLossMetaModel metaModel)
         {
             var workBook = _builder.LoadTemplate(template);
-            var templateSheet = workBook.GetSheetAt(0);
+            var templateSheet = workBook.GetSheet(TemplateSheetName);
             var sheet = _builder.CloneSheet(workBook, templateSheet.SheetName, SheetName);
 
-            AssignTitle(sheet, templateSheet);
+            AssignTitle(sheet, templateSheet, metaModel);
             AssignHeader(sheet, templateSheet);
-            AssignData(sheet, templateSheet, data.DataList);
+
+            if (data.TotalRows == 0 || !data.DataList.Any())
+            {
+                AssignNoInfoRow(sheet, templateSheet);
+            }
+            else
+            {
+                AssignData(sheet, templateSheet, data.DataList);
+                AssignTotalData(sheet, templateSheet, data.TotalData);
+            }
 
             _builder.RemoveSheet(workBook, TemplateSheetName);
 
             return workBook;
         }
 
-        private void AssignTitle(ISheet sheet, ISheet templateSheet)
+        private void AssignNoInfoRow(ISheet sheet, ISheet templateSheet)
         {
-            var title = "abcxyz";
+            _builder.SetRowValue(sheet, templateSheet, RowNoInfoTemplate, RowParentContentTemplate, ColumnTemplateCount, ViewResources.NoInfo);
+        }
+
+        private void AssignTitle(ISheet sheet, ISheet templateSheet, WinLossMetaModel metaModel)
+        {
+            var title = $"{ViewResources.WinLoss}, {metaModel.FromDate.ToString(DateFormat)} - {metaModel.ToDate.ToString(DateFormat)}," +
+                $" {ViewResources.DisplayCurreny}: {metaModel.BaseCurrency.ToUpperInvariant()}";
+
             _builder.SetRowValue(sheet, templateSheet, sourceRowIndex: RowTitleTemplate, destRowIndex: RowTitleTemplate, columnCount: ColumnTemplateCount, value: title);
+
             sheet.CreateFreezePane(0, RowParentContentTemplate);
             _builder.ClearTemplate(sheet, RowParentContentTemplate);
         }
@@ -63,12 +85,24 @@ namespace Fanex.Athena.Report.ByGroup.Excels
             var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: RowHeaderTemplate, destRowIndex: RowHeaderTemplate);
             row.Cells[ColumnGroup].SetCellValue("Group");
             row.Cells[ColumnCurrency].SetCellValue(ViewResources.Currency);
-            row.Cells[ColumnTurnover].SetCellValue("Turnover");
-            row.Cells[ColumnGGR].SetCellValue("Ggr");
-            row.Cells[ColumnBetCount].SetCellValue("Bet Count");
-            row.Cells[ColumnAvgBetAmount].SetCellValue("Avg.Bet Amount");
-            row.Cells[ColumnUniquePlayers].SetCellValue("Unique Players");
-            row.Cells[ColumnMargin].SetCellValue("Margin");
+            row.Cells[ColumnTurnover].SetCellValue(ViewResources.Turnover);
+            row.Cells[ColumnGGR].SetCellValue(ViewResources.GGR);
+            row.Cells[ColumnBetCount].SetCellValue(ViewResources.BetCount);
+            row.Cells[ColumnAvgBetAmount].SetCellValue(ViewResources.AvgBetAmount);
+            row.Cells[ColumnUniquePlayers].SetCellValue(ViewResources.UniquePlayers);
+            row.Cells[ColumnMargin].SetCellValue(ViewResources.Margin);
+        }
+
+        private void AssignTotalData(ISheet sheet, ISheet templateSheet, WinLossRecordViewModel dataTotal)
+        {
+            var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: RowTotalDataTemplate, destRowIndex: sheet.LastRowNum + 1);
+            row.Cells[ColumnGroup].SetCellValue(ViewResources.Total);
+            row.Cells[ColumnTurnover].SetCellValue((double)dataTotal.Turnover);
+            row.Cells[ColumnGGR].SetCellValue((double)dataTotal.Ggr);
+            row.Cells[ColumnBetCount].SetCellValue(dataTotal.BetCount);
+            row.Cells[ColumnAvgBetAmount].SetCellValue((double)dataTotal.AvgBetAmount);
+            row.Cells[ColumnUniquePlayers].SetCellValue(dataTotal.UniquePlayers);
+            row.Cells[ColumnMargin].SetCellValue(dataTotal.Margin);
         }
 
         private void AssignData(ISheet sheet, ISheet templateSheet, IEnumerable<WinLossRecordViewModel> data)

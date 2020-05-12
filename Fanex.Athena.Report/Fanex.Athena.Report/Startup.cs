@@ -123,7 +123,7 @@
             }
             app.UseCustomHealthCheck();
             app.UseIPFilter();
-            //app.UseCustomApiAuth();
+            app.UseCustomApiAuth();
             app.UseMvc();
         }
     }
