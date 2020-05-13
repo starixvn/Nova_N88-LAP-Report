@@ -400,6 +400,6 @@
     <comment>133254</comment>
   </data>
   <data name="UniquePlayers" xml:space="preserve">
-    <value>Unique Players</value>
+    <value>#Unique Players</value>
     <comment>133254</comment>
   </data></root>

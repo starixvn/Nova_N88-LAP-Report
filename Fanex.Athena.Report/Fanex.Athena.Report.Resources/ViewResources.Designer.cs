@@ -772,7 +772,7 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unique Players.
+        ///   Looks up a localized string similar to #Unique Players.
         /// </summary>
         public static string UniquePlayers {
             get {
