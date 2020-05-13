@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Fanex.Athena.Report.ByGroup.Controllers
 {
@@ -31,12 +32,12 @@ namespace Fanex.Athena.Report.ByGroup.Controllers
 
         [HttpPost]
         public async Task<FileResult> ExportData(
-            [FromServices] IFileProvider fileProvider,
-            [FromServices] IWinLossExcel excel,
-            WinLossMetaModel metaModel
+            [FromServices]IFileProvider fileProvider,
+            [FromServices]IWinLossExcel excel,
+            ExportWinLossMetaModel metaModel
             )
         {
-            var template = fileProvider.GetFileInfo(ExcelConsts.WinLosExcelTemplatePath).PhysicalPath;
+            var template = fileProvider.GetFileInfo(ExcelConsts.WinLossExcelTemplatePath).PhysicalPath;
             var data = await _winLossService.GetData(metaModel);
 
             var workBook = excel.Export(template, data, metaModel);

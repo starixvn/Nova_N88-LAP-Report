@@ -2,7 +2,7 @@
 {
     public static class ExcelConsts
     {
-        public const string WinLosExcelTemplatePath = "/ExcelTemplate/WinLossReport.xlsx";
+        public const string WinLossExcelTemplatePath = "/ExcelTemplate/WinLossReport.xlsx";
         public const string OctetStreamContentType = "application/octet-stream";
     }
 }

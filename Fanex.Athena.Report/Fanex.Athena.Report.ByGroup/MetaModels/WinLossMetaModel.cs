@@ -17,7 +17,9 @@ namespace Fanex.Athena.Report.ByGroup.MetaModels
 
         public string ProductIds { get; set; }
         public string UserName { get; set; }
-        public string CurrencyIds { get; set; }
+
+        [SpParam(SqlParamName = "CurrencyIds")]
+        public string CurrencyIdList { get; set; }
 
         public bool IsIncludedTestData { get; set; }
 
