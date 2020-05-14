@@ -5,6 +5,8 @@ namespace Fanex.Athena.Report.ByGroup.MetaModels
 {
     public class WinLossMetaModel
     {
+        private const int GroupByCurrency = 4;
+
         public int LicenseeId { get; set; }
 
         [SpParam(SqlParamName = "FilterBy")]
@@ -30,5 +32,8 @@ namespace Fanex.Athena.Report.ByGroup.MetaModels
 
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
+
+        [SpParam(Ignored = true)]
+        public bool IsGroupByCurreny => GroupBy == GroupByCurrency;
     }
 }

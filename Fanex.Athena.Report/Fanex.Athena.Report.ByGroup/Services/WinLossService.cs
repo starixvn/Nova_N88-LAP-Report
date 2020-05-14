@@ -3,6 +3,7 @@ using Fanex.Athena.Report.ByGroup.MetaModels;
 using Fanex.Athena.Report.ByGroup.Repositories;
 using Fanex.Athena.Report.ByGroup.ViewModels;
 using Fanex.Athena.Report.Common.Model.ViewModel;
+using Fanex.Athena.Report.Common.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,14 @@ namespace Fanex.Athena.Report.ByGroup.Services
     public class WinLossService : IWinLossService
     {
         private readonly IWinLossRepository _winLossRepository;
+        private readonly IDataMapper _dataMapper;
+        private readonly ICurrencyService _currencyService;
 
-        public WinLossService(IWinLossRepository winLossRepository)
+        public WinLossService(IWinLossRepository winLossRepository, ICurrencyService currencyService, IDataMapper dataMapper)
         {
             _winLossRepository = winLossRepository;
+            _currencyService = currencyService;
+            _dataMapper = dataMapper;
         }
 
         public async Task<ResultModel<WinLossRecordViewModel>> GetData(WinLossMetaModel metaModel)
@@ -31,48 +36,63 @@ namespace Fanex.Athena.Report.ByGroup.Services
             var result = new ResultModel<WinLossRecordViewModel>
             {
                 TotalRows = totalRows,
-                DataList = dataItems.GroupBy(
-                            _ => _.Group,
-                            _ => _,
-                            Mapper),
-                TotalData = new WinLossRecordViewModel
-                {
-                    Turnover = dataTotal.TotalBasedTurnover,
-                    Ggr = dataTotal.TotalBasedGGR,
-                    BetCount = dataTotal.TotalBetCount,
-                    AvgBetAmount = dataTotal.TotalBasedAvgBetAmount,
-                    UniquePlayers = dataTotal.TotalUniquePlayers,
-                    Margin = dataTotal.TotalMargin
-                }
+                DataList = await ToDataItemViewModels(dataItems, metaModel.IsGroupByCurreny),
+                TotalData = ToTotalDataViewModel(dataTotal)
             };
 
             return result;
         }
 
-        private static Func<string, IEnumerable<WinLossDataItemDTO>, WinLossRecordViewModel> Mapper = (key, childData) =>
+        private async Task<IEnumerable<WinLossRecordViewModel>> ToDataItemViewModels(IEnumerable<WinLossDataItemDTO> dataItems, bool isGroupByCurreny)
+        {
+            var currencies = await _currencyService.GetCurrencyDictionaryAsync();
+            return dataItems.GroupBy(
+                       _ => isGroupByCurreny ? _dataMapper.ToCurrencyCode(currencies, Int32.Parse(_.Group)) : _.Group,
+                       _ =>
+                       {
+                           _.CurrencyCode = _dataMapper.ToCurrencyCode(currencies, _.CurrencyId);
+                           return _;
+                       },
+                       Mapper);
+        }
+
+        private WinLossRecordViewModel ToTotalDataViewModel(WinLossDataTotalDTO dataTotal)
+        {
+            return new WinLossRecordViewModel
+            {
+                Turnover = dataTotal.TotalBasedTurnover,
+                Ggr = dataTotal.TotalBasedGGR,
+                BetCount = dataTotal.TotalBetCount,
+                AvgBetAmount = dataTotal.TotalBasedAvgBetAmount,
+                UniquePlayers = dataTotal.TotalUniquePlayers,
+                Margin = dataTotal.TotalMargin
+            };
+        }
+
+        private static Func<string, IEnumerable<WinLossDataItemDTO>, WinLossRecordViewModel> Mapper = (parentKey, childData) =>
         {
             var (turnoverNoDraw, turnover, ggr, betCount, uniquePlayers) = SumChildData(childData);
             var parent = new WinLossRecordViewModel
             {
-                Group = key,
+                Group = parentKey,
                 Turnover = turnover,
                 Ggr = ggr,
                 BetCount = betCount,
                 UniquePlayers = uniquePlayers,
                 AvgBetAmount = turnover / betCount,
                 Margin = turnoverNoDraw == 0.0m ? 0.00 : (double)(ggr / turnoverNoDraw) * 100.00,
-                DrillDownData = SelectDrillDownData(key, childData)
+                DrillDownData = SelectDrillDownData(parentKey, childData)
             };
 
             return parent;
         };
 
-        private static IEnumerable<WinLossRecordViewModel> SelectDrillDownData(string parent, IEnumerable<WinLossDataItemDTO> childData)
+        private static IEnumerable<WinLossRecordViewModel> SelectDrillDownData(string parentKey, IEnumerable<WinLossDataItemDTO> childData)
         {
             return childData.Select(_ => new WinLossRecordViewModel
             {
-                Parent = parent,
-                Group = _.Code,
+                Parent = parentKey,
+                Group = _.CurrencyCode,
                 Turnover = _.Turnover,
                 Ggr = _.GGR,
                 BetCount = _.BetCount,

@@ -21,7 +21,7 @@ namespace Fanex.Athena.Report.Common.Repositories
             var properties = typeof(T).GetProperties();
             while (reader.Read())
             {
-                var dataItem = ReadDataItem<T>(reader, properties);
+                var dataItem = ReadDataOfType<T>(reader, properties);
                 dataItems.Add(dataItem);
             }
             return dataItems;
@@ -31,7 +31,7 @@ namespace Fanex.Athena.Report.Common.Repositories
         {
             if (reader.NextResult() && reader.Read())
             {
-                return ReadDataTotal<T>(reader, typeof(T).GetProperties());
+                return ReadDataOfType<T>(reader, typeof(T).GetProperties());
             }
             return default(T);
         }
@@ -41,25 +41,20 @@ namespace Fanex.Athena.Report.Common.Repositories
             return Convert.ToInt32(db.GetParameterValue(TotalRowsParamName));
         }
 
-        protected virtual T ReadDataItem<T>(IDataReader reader, PropertyInfo[] properties)
-        {
-            return ReadDataOfType<T>(reader, properties);
-        }
-
-        protected virtual T ReadDataTotal<T>(IDataReader reader, PropertyInfo[] properties)
-        {
-            return ReadDataOfType<T>(reader, properties);
-        }
-
-        protected static T ReadDataOfType<T>(IDataReader reader, PropertyInfo[] properties)
+        protected T ReadDataOfType<T>(IDataReader reader, PropertyInfo[] properties)
         {
             T model = Activator.CreateInstance<T>();
             foreach (var property in properties)
             {
-                var value = reader.GetVal(property.PropertyType, property.Name);
+                var value = GetValueColumn<T>(reader, property);
                 model.SetPropertyValue(property, value);
             }
             return model;
+        }
+
+        protected virtual object GetValueColumn<T>(IDataReader reader, PropertyInfo property)
+        {
+            return reader.GetVal(property.PropertyType, property.Name);
         }
     }
 }

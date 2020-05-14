@@ -35,6 +35,7 @@ namespace Fanex.Athena.Report.Common.Extensions
             {
                 return GetVal<double>(dataReader, columnName);
             }
+
             return null;
         }
 

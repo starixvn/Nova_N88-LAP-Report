@@ -3,7 +3,8 @@
     public class WinLossDataItemDTO
     {
         public string Group { get; set; }
-        public string Code { get; set; }
+        public int CurrencyId { get; set; }
+        public string CurrencyCode { get; set; }
         public decimal Turnover { get; set; }
         public decimal BasedTurnover { get; set; }
         public decimal BasedTurnoverNoDraw { get; set; }

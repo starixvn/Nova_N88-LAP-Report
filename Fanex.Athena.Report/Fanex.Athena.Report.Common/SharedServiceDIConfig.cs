@@ -13,6 +13,7 @@
             services.AddSingleton<IBalanceUpService, BalanceUpService>();
             services.AddSingleton<IFileService, FileService>();
             services.AddSingleton<ICurrencyService, CurrencyService>();
+            services.AddSingleton<IDataMapper, DataMapper>();
         }
     }
 }
