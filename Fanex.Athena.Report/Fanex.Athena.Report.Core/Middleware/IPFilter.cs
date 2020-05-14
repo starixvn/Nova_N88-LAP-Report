@@ -3,7 +3,6 @@
     using Fanex.Athena.Report.Core.DTO;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Options;
-    using Newtonsoft.Json;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
@@ -29,10 +28,7 @@
             if (!isInWhiteListIPList)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(new
-                {
-                    msg = $"Ip {ipAddress} was denied ",
-                }));
+                await context.Response.WriteAsync($"Ip {ipAddress} was denied");
                 return;
             }
 

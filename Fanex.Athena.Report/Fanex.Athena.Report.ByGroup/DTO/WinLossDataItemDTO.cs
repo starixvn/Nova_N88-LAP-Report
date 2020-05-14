@@ -1,10 +1,15 @@
-﻿namespace Fanex.Athena.Report.ByGroup.DTO
+﻿using Fanex.Athena.Report.Common.Attributes;
+
+namespace Fanex.Athena.Report.ByGroup.DTO
 {
     public class WinLossDataItemDTO
     {
         public string Group { get; set; }
         public int CurrencyId { get; set; }
+
+        [SqlColReader(Ignored = true)]
         public string CurrencyCode { get; set; }
+
         public decimal Turnover { get; set; }
         public decimal BasedTurnover { get; set; }
         public decimal BasedTurnoverNoDraw { get; set; }
