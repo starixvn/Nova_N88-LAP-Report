@@ -11,7 +11,7 @@
 
     public class CurrencyService : ICurrencyService
     {
-        private const int CacheTimeoutHours = 24;
+        private const int CacheTime24Hours = 24;
 
         private const string CurrencyListCacheKey = "REPORT_LAP_CACHE_CURRENCY_LIST";
         private const string CurrencyDictionaryCacheKey = "REPORT_LAP_CACHE_CURRENCY_DICTIONARY";
@@ -33,7 +33,7 @@
             }
 
             currencyList = await GetCurrencyListFromDbAsync().ConfigureAwait(false);
-            _cache.Set(CurrencyListCacheKey, currencyList, DateTimeOffset.Now.AddHours(CacheTimeoutHours));
+            _cache.Set(CurrencyListCacheKey, currencyList, DateTimeOffset.Now.AddHours(CacheTime24Hours));
 
             return currencyList;
         }
@@ -48,7 +48,7 @@
 
             var currencyList = await GetCurrencyListAsync();
             currencyDictionary = currencyList.ToDictionary(_ => _.ID, _ => _);
-            _cache.Set(CurrencyDictionaryCacheKey, currencyDictionary, DateTimeOffset.Now.AddHours(CacheTimeoutHours));
+            _cache.Set(CurrencyDictionaryCacheKey, currencyDictionary, DateTimeOffset.Now.AddHours(CacheTime24Hours));
 
             return currencyDictionary;
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlTypes;
 
@@ -6,6 +7,15 @@ namespace Fanex.Athena.Report.Common.Extensions
 {
     public static class IDataReaderExtension
     {
+        private static readonly IDictionary<Type, Func<IDataReader, string, object>> GetValByTypeFuncs = new Dictionary<Type, Func<IDataReader, string, object>>
+        {
+            { typeof(string), (dataReader, columnName) => GetVal<string>(dataReader, columnName) },
+            { typeof(decimal), (dataReader, columnName) => GetVal<decimal>(dataReader, columnName) },
+            { typeof(int), (dataReader, columnName) => GetVal<int>(dataReader, columnName) },
+            { typeof(double), (dataReader, columnName) => GetVal<double>(dataReader, columnName) },
+            { typeof(DateTime), (dataReader, columnName) => GetVal<DateTime>(dataReader, columnName) }
+        };
+
         public static T GetVal<T>(this IDataReader dataReader, string columnName, T defauleValue = default(T))
         {
             var dbValue = dataReader[columnName];
@@ -19,23 +29,10 @@ namespace Fanex.Athena.Report.Common.Extensions
 
         public static object GetVal(this IDataReader dataReader, Type type, string columnName)
         {
-            if (type == typeof(string))
+            if (GetValByTypeFuncs.ContainsKey(type))
             {
-                return GetVal<string>(dataReader, columnName);
+                return GetValByTypeFuncs[type].Invoke(dataReader, columnName);
             }
-            if (type == typeof(decimal))
-            {
-                return GetVal<decimal>(dataReader, columnName);
-            }
-            if (type == typeof(int))
-            {
-                return GetVal<int>(dataReader, columnName);
-            }
-            if (type == typeof(double))
-            {
-                return GetVal<double>(dataReader, columnName);
-            }
-
             return null;
         }
 

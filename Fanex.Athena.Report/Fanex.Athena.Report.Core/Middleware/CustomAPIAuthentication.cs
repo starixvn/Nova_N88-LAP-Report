@@ -27,7 +27,7 @@
                 if (!isAuthorized)
                 {
                     context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
-                    await context.Response.WriteAsync($"Auth token was invalid");
+                    await context.Response.WriteAsync("Auth token was invalid");
                     return;
                 }
             }

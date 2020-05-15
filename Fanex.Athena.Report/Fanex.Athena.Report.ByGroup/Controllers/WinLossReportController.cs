@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace Fanex.Athena.Report.ByGroup.Controllers
 {

@@ -7,7 +7,7 @@ namespace Fanex.Athena.Report.ByGroup.DTO
         public string Group { get; set; }
         public int CurrencyId { get; set; }
 
-        [SqlColReader(Ignored = true)]
+        [SqlColumn(Ignored = true)]
         public string CurrencyCode { get; set; }
 
         public decimal Turnover { get; set; }

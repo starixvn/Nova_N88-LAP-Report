@@ -44,7 +44,7 @@ namespace Fanex.Athena.Report.Common.Repositories
             return Convert.ToInt32(db.GetParameterValue(TotalRowsParamName));
         }
 
-        protected T ReadDataOfType<T>(IDataReader reader, IEnumerable<(PropertyInfo, SqlColReaderAttribute)> properties)
+        protected T ReadDataOfType<T>(IDataReader reader, IEnumerable<(PropertyInfo, SqlColumnAttribute)> properties)
         {
             T model = Activator.CreateInstance<T>();
             foreach (var property in properties)
@@ -60,9 +60,9 @@ namespace Fanex.Athena.Report.Common.Repositories
                         continue;
                     }
 
-                    if (!string.IsNullOrEmpty(attribute.ColName))
+                    if (!string.IsNullOrEmpty(attribute.ColumnName))
                     {
-                        colName = attribute.ColName;
+                        colName = attribute.ColumnName;
                     }
                 }
 
@@ -77,12 +77,12 @@ namespace Fanex.Athena.Report.Common.Repositories
             return reader.GetVal(type, colName);
         }
 
-        private static IEnumerable<(PropertyInfo, SqlColReaderAttribute)> GetProperties<T>()
+        private static IEnumerable<(PropertyInfo, SqlColumnAttribute)> GetProperties<T>()
         {
             var properties = typeof(T).GetProperties();
             return properties.Select(_ =>
             {
-                var attribute = Attribute.GetCustomAttribute(_, typeof(SqlColReaderAttribute)) as SqlColReaderAttribute;
+                var attribute = Attribute.GetCustomAttribute(_, typeof(SqlColumnAttribute)) as SqlColumnAttribute;
                 return (_, attribute);
             });
         }
