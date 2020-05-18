@@ -23,8 +23,6 @@ namespace Fanex.Athena.Report.ByGroup.MetaModels
         [SpParam(SqlParamName = "CurrencyIds")]
         public string CurrencyIdList { get; set; }
 
-        public bool IsIncludedTestData { get; set; }
-
         public bool IsNoDrawTicket { get; set; }
 
         [SpParam(SqlParamName = "DisplayCurrency")]
