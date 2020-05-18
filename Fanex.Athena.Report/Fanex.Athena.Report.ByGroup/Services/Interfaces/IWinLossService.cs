@@ -7,6 +7,6 @@ namespace Fanex.Athena.Report.ByGroup.Services
 {
     public interface IWinLossService
     {
-        Task<ResultModel<WinLossRecordViewModel>> GetData(WinLossMetaModel metaModel);
+        Task<SortableResultModel<WinLossRecordViewModel>> GetData(WinLossMetaModel metaModel);
     }
 }

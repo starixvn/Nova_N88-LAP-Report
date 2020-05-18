@@ -24,16 +24,16 @@ namespace Fanex.Athena.Report.ByGroup.Services
             _dataMapper = dataMapper;
         }
 
-        public async Task<ResultModel<WinLossRecordViewModel>> GetData(WinLossMetaModel metaModel)
+        public async Task<SortableResultModel<WinLossRecordViewModel>> GetData(WinLossMetaModel metaModel)
         {
             var (dataItems, dataTotal, totalRows) = await _winLossRepository.GetData(metaModel);
 
             if (totalRows == 0 || !dataItems.Any())
             {
-                return ResultModel<WinLossRecordViewModel>.Default;
+                return SortableResultModel<WinLossRecordViewModel>.Default;
             }
 
-            var result = new ResultModel<WinLossRecordViewModel>
+            var result = new SortableResultModel<WinLossRecordViewModel>
             {
                 TotalRows = totalRows,
                 DataList = await ToDataItemViewModels(dataItems, metaModel.IsGroupByCurreny),

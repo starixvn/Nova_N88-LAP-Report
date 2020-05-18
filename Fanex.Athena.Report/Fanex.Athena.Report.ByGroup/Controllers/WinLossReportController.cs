@@ -3,6 +3,7 @@ using Fanex.Athena.Report.ByGroup.Excels;
 using Fanex.Athena.Report.ByGroup.MetaModels;
 using Fanex.Athena.Report.ByGroup.Services;
 using Fanex.Athena.Report.ByGroup.ViewModels;
+using Fanex.Athena.Report.Common.Extensions;
 using Fanex.Athena.Report.Common.Model.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
@@ -38,6 +39,9 @@ namespace Fanex.Athena.Report.ByGroup.Controllers
         {
             var template = fileProvider.GetFileInfo(ExcelConsts.WinLossExcelTemplatePath).PhysicalPath;
             var data = await _winLossService.GetData(metaModel);
+
+            var sortAbleList = data.DataList as ISortableList<WinLossRecordViewModel>;
+            sortAbleList?.Sort(metaModel.SortBy, metaModel.SortType);
 
             var workBook = excel.Export(template, data, metaModel);
             var stream = new MemoryStream();
