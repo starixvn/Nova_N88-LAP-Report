@@ -21,7 +21,7 @@ namespace Fanex.Athena.Report.Common.Extensions
                 return;
             }
 
-            var propertyName = CollectionExtension.GetPropertyName<T>(sortBy);
+            var propertyName = GetPropertyName<T>(sortBy);
             if (string.IsNullOrEmpty(propertyName))
             {
                 return;

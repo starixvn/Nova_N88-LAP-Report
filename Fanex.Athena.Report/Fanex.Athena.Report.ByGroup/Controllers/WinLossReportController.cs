@@ -37,12 +37,11 @@ namespace Fanex.Athena.Report.ByGroup.Controllers
             ExportWinLossMetaModel metaModel
             )
         {
-            var template = fileProvider.GetFileInfo(ExcelConsts.WinLossExcelTemplatePath).PhysicalPath;
             var data = await _winLossService.GetData(metaModel);
-
             var sortAbleList = data.DataList as ISortableList<WinLossRecordViewModel>;
             sortAbleList?.Sort(metaModel.SortBy, metaModel.SortType);
 
+            var template = fileProvider.GetFileInfo(ExcelConsts.WinLossExcelTemplatePath).PhysicalPath;
             var workBook = excel.Export(template, data, metaModel);
             var stream = new MemoryStream();
             workBook.Write(stream);

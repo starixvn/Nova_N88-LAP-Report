@@ -1,0 +1,117 @@
+﻿using AutoFixture;
+using Fanex.Athena.Report.ByGroup.Controllers;
+using Fanex.Athena.Report.ByGroup.Excels;
+using Fanex.Athena.Report.ByGroup.MetaModels;
+using Fanex.Athena.Report.ByGroup.Services;
+using Fanex.Athena.Report.ByGroup.ViewModels;
+using Fanex.Athena.Report.Common.Extensions;
+using Fanex.Athena.Report.Common.Model.ViewModel;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
+using Moq;
+using NPOI.SS.UserModel;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+using Xunit;
+
+namespace Fanex.Athena.Report.ByGroup.UnitTests.Controllers
+{
+    public class WinLossReportControllerTest
+    {
+        private readonly WinLossReportController _target;
+        private readonly Mock<IWinLossService> _winLossService;
+        private readonly IFixture _fixture = new Fixture();
+
+        public WinLossReportControllerTest()
+        {
+            _winLossService = new Mock<IWinLossService>();
+            _target = new WinLossReportController(_winLossService.Object);
+        }
+
+        [Fact]
+        public async Task GetData_WhenCall_ReturnResultCorrectly()
+        {
+            //Arrange
+            var metaModel = _fixture.Create<WinLossMetaModel>();
+            var expectedResult = new SortableResultModel<WinLossRecordViewModel>();
+            _winLossService.Setup(_ => _.GetData(metaModel)).Returns(Task.FromResult(expectedResult));
+
+            //Act
+            var actualResult = await _target.GetData(metaModel);
+
+            //Assert
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Theory]
+        [InlineData("group", "desc", "Group", false)]
+        [InlineData("avgBetAMOUNT", "Asc", "AvgBetAmount", true)]
+        public async Task ExportData_WhenCall_ShouldSortDataList(string sortBy, string sortType, string expectedSortBy, bool expectedSortType)
+        {
+            //Arrange
+            var metaModel = _fixture.Create<ExportWinLossMetaModel>();
+            metaModel.SortBy = sortBy;
+            metaModel.SortType = sortType;
+
+            var mockDataList = new Mock<ISortableList<WinLossRecordViewModel>>();
+            var expectedResult = new Mock<SortableResultModel<WinLossRecordViewModel>>();
+
+            expectedResult.Setup(_ => _.DataList).Returns(mockDataList.Object);
+            mockDataList.Setup(_ => _.GetEnumerator()).Returns(new List<WinLossRecordViewModel>() { new WinLossRecordViewModel() }.GetEnumerator());
+            _winLossService.Setup(_ => _.GetData(metaModel)).Returns(Task.FromResult(expectedResult.Object));
+
+            var mockFileProvider = new Mock<IFileProvider>();
+            var mockExcel = new Mock<IWinLossExcel>();
+
+            mockFileProvider.Setup(_ => _.GetFileInfo(It.IsAny<string>()))
+                .Returns(Mock.Of<IFileInfo>(_ => _.PhysicalPath == ""));
+
+            mockExcel.Setup(_ => _.Export(It.IsAny<string>(), It.IsAny<ResultModel<WinLossRecordViewModel>>(), It.IsAny<WinLossMetaModel>()))
+                .Returns(Mock.Of<IWorkbook>());
+
+            //Act
+            await _target.ExportData(mockFileProvider.Object, mockExcel.Object, metaModel);
+
+            //Assert
+            mockDataList.Verify(_ => _.Sort(expectedSortBy, expectedSortType), Times.Once);
+        }
+
+        [Fact]
+        public async Task ExportData_WhenCall_ReturnFileResultCorrectly()
+        {
+            //Arrange
+            const string physicPath = "/PhysicalPath";
+            var metaModel = _fixture.Create<ExportWinLossMetaModel>();
+            var expectedResult = new SortableResultModel<WinLossRecordViewModel>
+            {
+                DataList = new List<WinLossRecordViewModel>()
+            };
+
+            _winLossService.Setup(_ => _.GetData(metaModel)).Returns(Task.FromResult(expectedResult));
+
+            var mockFileProvider = new Mock<IFileProvider>();
+            var mockExcel = new Mock<IWinLossExcel>();
+            var workBook = new Mock<IWorkbook>();
+
+            MemoryStream expectedStream = null;
+            workBook.Setup(_ => _.Write(It.IsAny<Stream>())).Callback<Stream>(stream => expectedStream = stream as MemoryStream);
+
+            mockFileProvider.Setup(_ => _.GetFileInfo("/ExcelTemplate/WinLossReport.xlsx"))
+                .Returns(Mock.Of<IFileInfo>(_ => _.PhysicalPath == physicPath));
+
+            mockExcel.Setup(_ => _.Export(physicPath, expectedResult, metaModel))
+                .Returns(workBook.Object);
+
+            //Act
+            var result = await _target.ExportData(mockFileProvider.Object, mockExcel.Object, metaModel);
+
+            //Assert
+            var fileContentResult = result as FileContentResult;
+            Assert.Equal("application/octet-stream", result.ContentType);
+            Assert.Equal(expectedStream?.ToArray(), fileContentResult.FileContents);
+
+            expectedStream?.Dispose();
+        }
+    }
+}
