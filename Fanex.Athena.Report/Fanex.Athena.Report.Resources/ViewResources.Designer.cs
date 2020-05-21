@@ -592,6 +592,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Saba.club.
+        /// </summary>
+        public static string SBC {
+            get {
+                return ResourceManager.GetString("SBC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SG.
         /// </summary>
         public static string SG {
@@ -624,6 +633,15 @@ namespace Fanex.Athena.Report.Resources {
         public static string SummaryTotalIn {
             get {
                 return ResourceManager.GetString("SummaryTotalIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sexy Gaming.
+        /// </summary>
+        public static string SXG {
+            get {
+                return ResourceManager.GetString("SXG", resourceCulture);
             }
         }
         
