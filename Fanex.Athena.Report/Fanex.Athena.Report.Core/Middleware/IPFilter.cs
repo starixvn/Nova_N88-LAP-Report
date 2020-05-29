@@ -1,12 +1,12 @@
 ﻿namespace Fanex.Athena.Report.Core.Middleware
 {
+    using Fanex.Athena.Report.Core.DTO;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Options;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
-    using Fanex.Athena.Report.Core.DTO;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Options;
 
     public class IPFilter
     {
@@ -28,6 +28,7 @@
             if (!isInWhiteListIPList)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+                await context.Response.WriteAsync($"Ip {ipAddress} was denied");
                 return;
             }
 

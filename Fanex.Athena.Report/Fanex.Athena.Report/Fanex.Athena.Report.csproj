@@ -47,6 +47,9 @@
     <Content Include="ExcelTemplate\PromotionPrize.xls">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="ExcelTemplate\WinLossReport.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="SpConfig\FanexSpName.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -74,6 +77,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.Athena.Report.ByGroup\Fanex.Athena.Report.ByGroup.csproj" />
     <ProjectReference Include="..\Fanex.Athena.Report.ByPlayer\Fanex.Athena.Report.ByPlayer.csproj" />
     <ProjectReference Include="..\Fanex.Athena.Report.BySite\Fanex.Athena.Report.BySite.csproj" />
     <ProjectReference Include="..\Fanex.Athena.Report.Common\Fanex.Athena.Report.Common.csproj" />

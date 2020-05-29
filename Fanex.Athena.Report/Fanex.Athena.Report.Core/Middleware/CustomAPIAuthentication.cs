@@ -19,7 +19,7 @@
 
         public async Task Invoke(HttpContext context)
         {
-            var isIgnored = context.Request.Path.Value.StartsWith("/health") || context.Request.Path.Value.Contains("favicon.ico");
+            var isIgnored = context.Request.Path.Value.Contains("favicon.ico");
             if (!isIgnored)
             {
                 var postedKey = context.Request.Headers["AUTH_TOKEN"];
@@ -27,6 +27,7 @@
                 if (!isAuthorized)
                 {
                     context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+                    await context.Response.WriteAsync("Auth token was invalid");
                     return;
                 }
             }

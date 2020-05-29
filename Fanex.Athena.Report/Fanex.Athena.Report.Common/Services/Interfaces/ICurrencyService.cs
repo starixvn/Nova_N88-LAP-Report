@@ -1,11 +1,13 @@
 ﻿namespace Fanex.Athena.Report.Common.Services.Interfaces
 {
+    using Fanex.Athena.Report.Common.Model.DTO;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Fanex.Athena.Report.Common.Model.DTO;
 
     public interface ICurrencyService
     {
         Task<IEnumerable<Currency>> GetCurrencyListAsync();
+
+        Task<IDictionary<int, Currency>> GetCurrencyDictionaryAsync();
     }
 }

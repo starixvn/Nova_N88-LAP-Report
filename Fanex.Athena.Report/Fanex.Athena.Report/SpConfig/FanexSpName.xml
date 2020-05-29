@@ -8,4 +8,7 @@
     <Setting Key="Lrf_Rpt_PromotionPrize" SpName="Lrf_Rpt_PromotionPrize" DbName="DBEXT.bodb02.bodbLicenseeNet" />
     <Setting Key="Lrf_CurrencySel" SpName="Lrf_CurrencySel" DbName="DBEXT.bodb02.bodbLicenseeNet" />
   </Function>
+  <Funtion Name="ReportByGroup">
+    <Setting Key="N88_Rpt_Winloss" SpName="N88_Rpt_Winloss" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
+  </Funtion>
 </Functions>

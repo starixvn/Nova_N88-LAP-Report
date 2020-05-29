@@ -355,4 +355,27 @@
   <data name="SXG" xml:space="preserve">
     <value>性感百家</value>
   </data>
-</root>
+  <data name="AvgBetAmount" xml:space="preserve">
+    <value>Avg. Bet Amount</value>
+    <comment>133254</comment>
+  </data>
+  <data name="BetCount" xml:space="preserve">
+    <value>Bet Count</value>
+    <comment>133254</comment>
+  </data>
+  <data name="DisplayCurreny" xml:space="preserve">
+    <value>Display Curreny</value>
+    <comment>133254</comment>
+  </data>
+  <data name="GGR" xml:space="preserve">
+    <value>GGR</value>
+    <comment>133254</comment>
+  </data>
+  <data name="Margin" xml:space="preserve">
+    <value>Margin</value>
+    <comment>133254</comment>
+  </data>
+  <data name="UniquePlayers" xml:space="preserve">
+    <value>#Unique Players</value>
+    <comment>133254</comment>
+  </data></root>

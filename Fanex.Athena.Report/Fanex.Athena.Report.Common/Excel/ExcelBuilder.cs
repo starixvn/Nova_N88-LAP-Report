@@ -1,19 +1,23 @@
 ﻿namespace Fanex.Athena.Report.Common.Excel
 {
-    using System.IO;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
+    using NPOI.XSSF.UserModel;
+    using System;
+    using System.IO;
 
     public class ExcelBuilder : IExcelBuilder
     {
+        private const string XlsxExtension = "xlsx";
         public const string TemplateSheetName = "Template";
 
         public IWorkbook LoadTemplate(string path)
         {
             using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
-                var workbook = new HSSFWorkbook(stream);
+                IWorkbook workbook = IsXlsxFormat(path) ? new XSSFWorkbook(stream) as IWorkbook
+                    : new HSSFWorkbook(stream) as IWorkbook;
                 var defaultStyle = workbook.CreateCellStyle();
                 defaultStyle.ShrinkToFit = true;
                 defaultStyle.WrapText = true;
@@ -158,6 +162,8 @@
                 sheet.SetColumnHidden(i, true);
             }
         }
+
+        private static bool IsXlsxFormat(string path) => Path.GetExtension(path).EndsWith(XlsxExtension, StringComparison.InvariantCultureIgnoreCase);
 
         private static ICell GetCell(ISheet sheet, int rowIndex, int colIndex)
         {

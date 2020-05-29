@@ -55,6 +55,7 @@
             SharedServiceDIConfig.Setup(services);
             BySite.ReportBySiteDIConfig.Setup(services);
             ByPlayer.ReportByPlayerDIConfig.Setup(services);
+            ByGroup.ReportByGroupDIConfig.Setup(services);
 
             CompositeResolver.RegisterAndSetAsDefault(
                      //// resolver custom types first
@@ -76,7 +77,6 @@
                 option.OutputFormatters.Add(new MessagePackOutputFormatter());
                 option.InputFormatters.Add(new MessagePackInputFormatter());
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-          
         }
 
         //// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
