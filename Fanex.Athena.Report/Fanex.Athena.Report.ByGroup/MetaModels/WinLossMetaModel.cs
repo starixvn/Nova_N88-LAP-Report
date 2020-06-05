@@ -18,6 +18,7 @@ namespace Fanex.Athena.Report.ByGroup.MetaModels
         public DateTime ToDate { get; set; }
 
         public string ProductIds { get; set; }
+        public byte UserNameFilterId { get; set; }
         public string UserName { get; set; }
         public bool IsIncludedTestData { get; set; }
 
@@ -34,5 +35,8 @@ namespace Fanex.Athena.Report.ByGroup.MetaModels
 
         [SpParam(Ignored = true)]
         public bool IsGroupByCurreny => GroupBy == GroupByCurrency;
+
+        [SpParam(Ignored = true)]
+        public bool DrilldownInOriginalCurrency { get; set; }
     }
 }
