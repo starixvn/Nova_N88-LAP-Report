@@ -376,6 +376,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Group.
+        /// </summary>
+        public static string Group {
+            get {
+                return ResourceManager.GetString("Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Indo 4D.
         /// </summary>
         public static string I4D {
@@ -624,6 +633,24 @@ namespace Fanex.Athena.Report.Resources {
         public static string RefNo {
             get {
                 return ResourceManager.GetString("RefNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saba Id.
+        /// </summary>
+        public static string SabaId {
+            get {
+                return ResourceManager.GetString("SabaId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saba System Id.
+        /// </summary>
+        public static string SabaSystemId {
+            get {
+                return ResourceManager.GetString("SabaSystemId", resourceCulture);
             }
         }
         
