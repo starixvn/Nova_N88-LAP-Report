@@ -3,6 +3,7 @@
     using Fanex.Athena.Report.Common.Excel;
     using Fanex.Athena.Report.Common.Services;
     using Fanex.Athena.Report.Common.Services.Interfaces;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
 
     public static class SharedServiceDIConfig
@@ -14,6 +15,7 @@
             services.AddSingleton<IFileService, FileService>();
             services.AddSingleton<ICurrencyService, CurrencyService>();
             services.AddSingleton<IDataMapper, DataMapper>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
     }
 }

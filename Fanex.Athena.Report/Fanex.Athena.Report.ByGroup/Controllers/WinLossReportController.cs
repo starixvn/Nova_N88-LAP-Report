@@ -6,7 +6,6 @@ using Fanex.Athena.Report.ByGroup.ViewModels;
 using Fanex.Athena.Report.Common.Extensions;
 using Fanex.Athena.Report.Common.Model.ViewModel;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.FileProviders;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -32,7 +31,6 @@ namespace Fanex.Athena.Report.ByGroup.Controllers
 
         [HttpPost]
         public async Task<FileResult> ExportData(
-            [FromServices]IFileProvider fileProvider,
             [FromServices]IWinLossExcelCreator excelCreator,
             ExportWinLossMetaModel metaModel
             )

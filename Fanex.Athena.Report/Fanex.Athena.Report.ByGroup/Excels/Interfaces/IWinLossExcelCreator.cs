@@ -2,6 +2,6 @@
 {
     public interface IWinLossExcelCreator
     {
-        IWinLossExcel CreateWinLossExcel(byte groupBy);
+        IWinLossExcel CreateWinLossExcel(byte group);
     }
 }

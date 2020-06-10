@@ -6,7 +6,7 @@ using NPOI.SS.UserModel;
 
 namespace Fanex.Athena.Report.ByGroup.Excels
 {
-    public class WinLossByPlayerExcel : BaseWinLossExcel, IWinLossExcel
+    public class WinLossPlayerExcel : BaseWinLossExcel, IWinLossExcel
     {
         private const string _templatePath = "/ExcelTemplate/WinLossReports/WinLossByPlayerReport.xlsx";
         private const int _rowParentContentTemplate = 3;
@@ -37,7 +37,7 @@ namespace Fanex.Athena.Report.ByGroup.Excels
 
         protected override string TemplatePath => _templatePath;
 
-        public WinLossByPlayerExcel(IExcelBuilder builder, IFileProvider fileProvider)
+        public WinLossPlayerExcel(IExcelBuilder builder, IFileProvider fileProvider)
             : base(builder, fileProvider)
         { }
 

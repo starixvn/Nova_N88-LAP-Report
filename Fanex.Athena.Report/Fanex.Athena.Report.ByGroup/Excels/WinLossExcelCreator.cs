@@ -1,28 +1,26 @@
 ﻿using Fanex.Athena.Report.ByGroup.Enums;
-using Fanex.Athena.Report.Common.Excel;
-using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Http;
 
 namespace Fanex.Athena.Report.ByGroup.Excels
 {
     public class WinLossExcelCreator : IWinLossExcelCreator
     {
-        protected readonly IExcelBuilder _excelBuilder;
-        private readonly IFileProvider _fileProvider;
+        protected readonly IHttpContextAccessor _contextAccessor;
 
-        public WinLossExcelCreator(IExcelBuilder excelBuilder, IFileProvider fileProvider)
+        public WinLossExcelCreator(IHttpContextAccessor contextAccessor)
         {
-            _excelBuilder = excelBuilder;
-            _fileProvider = fileProvider;
+            _contextAccessor = contextAccessor;
         }
 
-        public IWinLossExcel CreateWinLossExcel(byte groupBy)
+        public IWinLossExcel CreateWinLossExcel(byte group)
         {
-            if (groupBy == (byte)GroupBy.Player)
+            var serviceProvider = _contextAccessor.HttpContext.RequestServices;
+            if (group == (byte)GroupBy.Player)
             {
-                return new WinLossByPlayerExcel(_excelBuilder, _fileProvider);
+                return serviceProvider.GetService(typeof(WinLossPlayerExcel)) as IWinLossExcel;
             }
 
-            return new WinLossExcel(_excelBuilder, _fileProvider);
+            return serviceProvider.GetService(typeof(WinLossExcel)) as IWinLossExcel;
         }
     }
 }

@@ -2,6 +2,7 @@
 using Fanex.Athena.Report.ByGroup.MetaModels;
 using Fanex.Athena.Report.ByGroup.Repositories;
 using Fanex.Athena.Report.ByGroup.ViewModels;
+using Fanex.Athena.Report.Common.Helpers;
 using Fanex.Athena.Report.Common.Model.ViewModel;
 using Fanex.Athena.Report.Common.Services.Interfaces;
 using System;
@@ -17,7 +18,9 @@ namespace Fanex.Athena.Report.ByGroup.Services
         private readonly IDataMapper _dataMapper;
         private readonly ICurrencyService _currencyService;
 
-        public WinLossService(IWinLossRepository winLossRepository, ICurrencyService currencyService, IDataMapper dataMapper)
+        public WinLossService(IWinLossRepository winLossRepository,
+            ICurrencyService currencyService,
+            IDataMapper dataMapper)
         {
             _winLossRepository = winLossRepository;
             _currencyService = currencyService;
@@ -67,7 +70,7 @@ namespace Fanex.Athena.Report.ByGroup.Services
                 BetCount = dataTotal.TotalBetCount,
                 AvgBetAmount = dataTotal.TotalBasedAvgBetAmount,
                 UniquePlayers = dataTotal.TotalUniquePlayers,
-                Margin = dataTotal.TotalMargin
+                Margin = CalculatorHepler.Margin(dataTotal.TotalBasedGGR, dataTotal.TotalBasedTurnoverNoDraw)
             };
         }
 
@@ -85,7 +88,7 @@ namespace Fanex.Athena.Report.ByGroup.Services
                 BetCount = betCount,
                 UniquePlayers = uniquePlayers,
                 AvgBetAmount = turnover / betCount,
-                Margin = turnoverNoDraw == 0.0m ? 0.00 : (double)(ggr / turnoverNoDraw) * 100.00,
+                Margin = CalculatorHepler.Margin(ggr, turnoverNoDraw),
                 DrillDownData = SelectDrillDownData(parentKey, childData, drilldownInOriginalCurrency)
             };
 
@@ -105,7 +108,7 @@ namespace Fanex.Athena.Report.ByGroup.Services
                 BetCount = _.BetCount,
                 AvgBetAmount = drilldownInOriginalCurrency ? _.AvgBetAmount : _.BasedAvgBetAmount,
                 UniquePlayers = _.UniquePlayers,
-                Margin = _.Margin
+                Margin = CalculatorHepler.Margin(_.BasedGGR, _.BasedTurnoverNoDraw)
             });
         }
 

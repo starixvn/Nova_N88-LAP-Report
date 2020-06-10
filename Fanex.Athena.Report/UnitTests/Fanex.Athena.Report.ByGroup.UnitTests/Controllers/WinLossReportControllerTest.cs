@@ -7,7 +7,6 @@ using Fanex.Athena.Report.ByGroup.ViewModels;
 using Fanex.Athena.Report.Common.Extensions;
 using Fanex.Athena.Report.Common.Model.ViewModel;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.FileProviders;
 using Moq;
 using NPOI.SS.UserModel;
 using System.Collections.Generic;
@@ -61,17 +60,17 @@ namespace Fanex.Athena.Report.ByGroup.UnitTests.Controllers
             mockDataList.Setup(_ => _.GetEnumerator()).Returns(new List<WinLossRecordViewModel>() { new WinLossRecordViewModel() }.GetEnumerator());
             _winLossService.Setup(_ => _.GetData(metaModel)).Returns(Task.FromResult(expectedResult.Object));
 
-            var mockFileProvider = new Mock<IFileProvider>();
+            var mockExcelCreator = new Mock<IWinLossExcelCreator>();
             var mockExcel = new Mock<IWinLossExcel>();
 
-            mockFileProvider.Setup(_ => _.GetFileInfo(It.IsAny<string>()))
-                .Returns(Mock.Of<IFileInfo>(_ => _.PhysicalPath == ""));
+            mockExcelCreator.Setup(_ => _.CreateWinLossExcel(It.IsAny<byte>()))
+                .Returns(mockExcel.Object);
 
-            mockExcel.Setup(_ => _.Export(It.IsAny<string>(), It.IsAny<ResultModel<WinLossRecordViewModel>>(), It.IsAny<WinLossMetaModel>()))
+            mockExcel.Setup(_ => _.Export(It.IsAny<SortableResultModel<WinLossRecordViewModel>>(), metaModel))
                 .Returns(Mock.Of<IWorkbook>());
 
             //Act
-            await _target.ExportData(mockFileProvider.Object, mockExcel.Object, metaModel);
+            await _target.ExportData(mockExcelCreator.Object, metaModel);
 
             //Assert
             mockDataList.Verify(_ => _.Sort(expectedSortBy, expectedSortType), Times.Once);
@@ -81,7 +80,6 @@ namespace Fanex.Athena.Report.ByGroup.UnitTests.Controllers
         public async Task ExportData_WhenCall_ReturnFileResultCorrectly()
         {
             //Arrange
-            const string physicPath = "/PhysicalPath";
             var metaModel = _fixture.Create<ExportWinLossMetaModel>();
             var expectedResult = new SortableResultModel<WinLossRecordViewModel>
             {
@@ -90,21 +88,21 @@ namespace Fanex.Athena.Report.ByGroup.UnitTests.Controllers
 
             _winLossService.Setup(_ => _.GetData(metaModel)).Returns(Task.FromResult(expectedResult));
 
-            var mockFileProvider = new Mock<IFileProvider>();
+            var mockExcelCreator = new Mock<IWinLossExcelCreator>();
             var mockExcel = new Mock<IWinLossExcel>();
             var workBook = new Mock<IWorkbook>();
 
             MemoryStream expectedStream = null;
             workBook.Setup(_ => _.Write(It.IsAny<Stream>())).Callback<Stream>(stream => expectedStream = stream as MemoryStream);
 
-            mockFileProvider.Setup(_ => _.GetFileInfo("/ExcelTemplate/WinLossReport.xlsx"))
-                .Returns(Mock.Of<IFileInfo>(_ => _.PhysicalPath == physicPath));
+            mockExcelCreator.Setup(_ => _.CreateWinLossExcel(metaModel.GroupBy))
+                .Returns(mockExcel.Object);
 
-            mockExcel.Setup(_ => _.Export(physicPath, expectedResult, metaModel))
+            mockExcel.Setup(_ => _.Export(expectedResult, metaModel))
                 .Returns(workBook.Object);
 
             //Act
-            var result = await _target.ExportData(mockFileProvider.Object, mockExcel.Object, metaModel);
+            var result = await _target.ExportData(mockExcelCreator.Object, metaModel);
 
             //Assert
             var fileContentResult = result as FileContentResult;
