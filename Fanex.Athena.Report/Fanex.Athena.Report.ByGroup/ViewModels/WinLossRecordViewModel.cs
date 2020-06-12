@@ -7,6 +7,8 @@ namespace Fanex.Athena.Report.ByGroup.ViewModels
         public string Group { get; set; }
         public string Parent { get; set; }
         public IEnumerable<WinLossRecordViewModel> DrillDownData { get; set; }
+        public string SabaId { get; set; }
+        public string SabaSystemId { get; set; }
         public decimal Turnover { get; set; }
         public decimal Ggr { get; set; }
         public int BetCount { get; set; }

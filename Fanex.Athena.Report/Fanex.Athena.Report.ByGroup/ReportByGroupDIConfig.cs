@@ -11,7 +11,15 @@ namespace Fanex.Athena.Report.ByGroup
         {
             services.AddTransient<IWinLossRepository, WinLossRepository>();
             services.AddTransient<IWinLossService, WinLossService>();
-            services.AddTransient<IWinLossExcel, WinLossExcel>();
+            services.AddTransient<IWinLossExcelCreator, WinLossExcelCreator>();
+            services.AddTransient<IWinLossExcelCreator, WinLossExcelCreator>();
+            SetupExcel(services);
+        }
+
+        private static void SetupExcel(IServiceCollection services)
+        {
+            services.AddTransient<WinLossExcel>();
+            services.AddTransient<WinLossPlayerExcel>();
         }
     }
 }

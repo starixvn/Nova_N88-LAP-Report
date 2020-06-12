@@ -7,6 +7,6 @@ namespace Fanex.Athena.Report.ByGroup.Excels
 {
     public interface IWinLossExcel
     {
-        IWorkbook Export(string template, ResultModel<WinLossRecordViewModel> data, WinLossMetaModel metaModel);
+        IWorkbook Export(ResultModel<WinLossRecordViewModel> data, WinLossMetaModel metaModel);
     }
 }

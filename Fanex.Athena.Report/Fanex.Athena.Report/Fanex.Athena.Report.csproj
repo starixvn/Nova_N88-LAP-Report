@@ -26,6 +26,8 @@
     <None Remove="ExcelTemplate\CustomerReports\CustomerWinLoss.xls" />
     <None Remove="ExcelTemplate\CustomerReports\CustomerWinLoss.xlsx" />
     <None Remove="ExcelTemplate\PromotionPrize.xls" />
+    <None Remove="ExcelTemplate\WinLossReports\WinLossByPlayerReport.xlsx" />
+    <None Remove="ExcelTemplate\WinLossReports\WinLossReport.xlsx" />
     <None Remove="SpConfig\FanexSpName.xml" />
   </ItemGroup>
 
@@ -39,7 +41,10 @@
     <Content Include="ExcelTemplate\PromotionPrize.xls">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="ExcelTemplate\WinLossReport.xlsx">
+    <Content Include="ExcelTemplate\WinLossReports\WinLossByPlayerReport.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ExcelTemplate\WinLossReports\WinLossReport.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="SpConfig\FanexSpName.xml">

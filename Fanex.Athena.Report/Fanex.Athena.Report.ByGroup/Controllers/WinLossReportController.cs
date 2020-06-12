@@ -6,7 +6,6 @@ using Fanex.Athena.Report.ByGroup.ViewModels;
 using Fanex.Athena.Report.Common.Extensions;
 using Fanex.Athena.Report.Common.Model.ViewModel;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.FileProviders;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -32,8 +31,7 @@ namespace Fanex.Athena.Report.ByGroup.Controllers
 
         [HttpPost]
         public async Task<FileResult> ExportData(
-            [FromServices]IFileProvider fileProvider,
-            [FromServices]IWinLossExcel excel,
+            [FromServices]IWinLossExcelCreator excelCreator,
             ExportWinLossMetaModel metaModel
             )
         {
@@ -41,8 +39,8 @@ namespace Fanex.Athena.Report.ByGroup.Controllers
             var sortAbleList = data.DataList as ISortableList<WinLossRecordViewModel>;
             sortAbleList?.Sort(metaModel.SortBy, metaModel.SortType);
 
-            var template = fileProvider.GetFileInfo(ExcelConsts.WinLossExcelTemplatePath).PhysicalPath;
-            var workBook = excel.Export(template, data, metaModel);
+            var excel = excelCreator.CreateWinLossExcel(metaModel.GroupBy);
+            var workBook = excel.Export(data, metaModel);
             var stream = new MemoryStream();
             workBook.Write(stream);
 

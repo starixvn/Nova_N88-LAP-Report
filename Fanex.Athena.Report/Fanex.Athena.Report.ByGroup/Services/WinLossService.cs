@@ -2,6 +2,7 @@
 using Fanex.Athena.Report.ByGroup.MetaModels;
 using Fanex.Athena.Report.ByGroup.Repositories;
 using Fanex.Athena.Report.ByGroup.ViewModels;
+using Fanex.Athena.Report.Common.Helpers;
 using Fanex.Athena.Report.Common.Model.ViewModel;
 using Fanex.Athena.Report.Common.Services.Interfaces;
 using System;
@@ -17,7 +18,9 @@ namespace Fanex.Athena.Report.ByGroup.Services
         private readonly IDataMapper _dataMapper;
         private readonly ICurrencyService _currencyService;
 
-        public WinLossService(IWinLossRepository winLossRepository, ICurrencyService currencyService, IDataMapper dataMapper)
+        public WinLossService(IWinLossRepository winLossRepository,
+            ICurrencyService currencyService,
+            IDataMapper dataMapper)
         {
             _winLossRepository = winLossRepository;
             _currencyService = currencyService;
@@ -36,16 +39,18 @@ namespace Fanex.Athena.Report.ByGroup.Services
             var result = new SortableResultModel<WinLossRecordViewModel>
             {
                 TotalRows = totalRows,
-                DataList = await ToDataItemViewModels(dataItems, metaModel.IsGroupByCurreny),
+                DataList = await ToDataItemViewModels(dataItems, metaModel),
                 TotalData = ToTotalDataViewModel(dataTotal)
             };
 
             return result;
         }
 
-        private async Task<IEnumerable<WinLossRecordViewModel>> ToDataItemViewModels(IEnumerable<WinLossDataItemDTO> dataItems, bool isGroupByCurreny)
+        private async Task<IEnumerable<WinLossRecordViewModel>> ToDataItemViewModels(IEnumerable<WinLossDataItemDTO> dataItems, WinLossMetaModel metaModel)
         {
             var currencies = await _currencyService.GetCurrencyDictionaryAsync();
+            var isGroupByCurreny = metaModel.IsGroupByCurreny;
+            var drilldownInOriginalCurrency = metaModel.DrilldownInOriginalCurrency;
             return dataItems.GroupBy(
                        _ => isGroupByCurreny ? _dataMapper.ToCurrencyCode(currencies, Int32.Parse(_.Group)) : _.Group,
                        _ =>
@@ -53,7 +58,7 @@ namespace Fanex.Athena.Report.ByGroup.Services
                            _.CurrencyCode = _dataMapper.ToCurrencyCode(currencies, _.CurrencyId);
                            return _;
                        },
-                       Mapper);
+                       Mapper(drilldownInOriginalCurrency));
         }
 
         private WinLossRecordViewModel ToTotalDataViewModel(WinLossDataTotalDTO dataTotal)
@@ -65,40 +70,45 @@ namespace Fanex.Athena.Report.ByGroup.Services
                 BetCount = dataTotal.TotalBetCount,
                 AvgBetAmount = dataTotal.TotalBasedAvgBetAmount,
                 UniquePlayers = dataTotal.TotalUniquePlayers,
-                Margin = dataTotal.TotalMargin
+                Margin = CalculatorHepler.Margin(dataTotal.TotalBasedGGR, dataTotal.TotalBasedTurnoverNoDraw)
             };
         }
 
-        private static Func<string, IEnumerable<WinLossDataItemDTO>, WinLossRecordViewModel> Mapper = (parentKey, childData) =>
+        private static Func<bool, Func<string, IEnumerable<WinLossDataItemDTO>, WinLossRecordViewModel>> Mapper = drilldownInOriginalCurrency => (parentKey, childData) =>
         {
             var (turnoverNoDraw, turnover, ggr, betCount, uniquePlayers) = SumChildData(childData);
+            var firstChild = childData?.FirstOrDefault();
             var parent = new WinLossRecordViewModel
             {
                 Group = parentKey,
+                SabaId = firstChild?.SabaId,
+                SabaSystemId = firstChild?.SabaSystemId,
                 Turnover = turnover,
                 Ggr = ggr,
                 BetCount = betCount,
                 UniquePlayers = uniquePlayers,
                 AvgBetAmount = turnover / betCount,
-                Margin = turnoverNoDraw == 0.0m ? 0.00 : (double)(ggr / turnoverNoDraw) * 100.00,
-                DrillDownData = SelectDrillDownData(parentKey, childData)
+                Margin = CalculatorHepler.Margin(ggr, turnoverNoDraw),
+                DrillDownData = SelectDrillDownData(parentKey, childData, drilldownInOriginalCurrency)
             };
 
             return parent;
         };
 
-        private static IEnumerable<WinLossRecordViewModel> SelectDrillDownData(string parentKey, IEnumerable<WinLossDataItemDTO> childData)
+        private static IEnumerable<WinLossRecordViewModel> SelectDrillDownData(string parentKey, IEnumerable<WinLossDataItemDTO> childData, bool drilldownInOriginalCurrency)
         {
             return childData.Select(_ => new WinLossRecordViewModel
             {
                 Parent = parentKey,
                 Group = _.CurrencyCode,
-                Turnover = _.Turnover,
-                Ggr = _.GGR,
+                SabaId = _.SabaId,
+                SabaSystemId = _.SabaSystemId,
+                Turnover = drilldownInOriginalCurrency ? _.Turnover : _.BasedTurnover,
+                Ggr = drilldownInOriginalCurrency ? _.GGR : _.BasedGGR,
                 BetCount = _.BetCount,
-                AvgBetAmount = _.AvgBetAmount,
+                AvgBetAmount = drilldownInOriginalCurrency ? _.AvgBetAmount : _.BasedAvgBetAmount,
                 UniquePlayers = _.UniquePlayers,
-                Margin = _.Margin
+                Margin = CalculatorHepler.Margin(_.BasedGGR, _.BasedTurnoverNoDraw)
             });
         }
 
