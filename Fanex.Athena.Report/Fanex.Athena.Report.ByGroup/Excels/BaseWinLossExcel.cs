@@ -76,7 +76,7 @@ namespace Fanex.Athena.Report.ByGroup.Excels
 
         private void AssignTitle(ISheet sheet, ISheet templateSheet, WinLossMetaModel metaModel)
         {
-            var title = $"{ViewResources.WinLoss}, {metaModel.FromDate.ToString(DateFormat)} - {metaModel.ToDate.ToString(DateFormat)}," +
+            var title = $"{ViewResources.WinLossAnalysis}, {metaModel.FromDate.ToString(DateFormat)} - {metaModel.ToDate.ToString(DateFormat)}," +
                 $" {ViewResources.DisplayCurreny}: {metaModel.BaseCurrency.ToUpperInvariant()}";
 
             _builder.SetRowValue(sheet, templateSheet, sourceRowIndex: RowTitleTemplate, destRowIndex: RowTitleTemplate, columnCount: ColumnTemplateCount, value: title);
