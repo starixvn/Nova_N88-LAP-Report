@@ -1,4 +1,5 @@
-﻿using Fanex.Athena.Report.ByGroup.MetaModels;
+﻿using Fanex.Athena.Report.ByGroup.Helpers;
+using Fanex.Athena.Report.ByGroup.MetaModels;
 using Fanex.Athena.Report.ByGroup.ViewModels;
 using Fanex.Athena.Report.Common.Excel;
 using Fanex.Athena.Report.Common.Model.ViewModel;
@@ -77,7 +78,8 @@ namespace Fanex.Athena.Report.ByGroup.Excels
         private void AssignTitle(ISheet sheet, ISheet templateSheet, WinLossMetaModel metaModel)
         {
             var title = $"{ViewResources.WinLossAnalysis}, {metaModel.FromDate.ToString(DateFormat)} - {metaModel.ToDate.ToString(DateFormat)}," +
-                $" {ViewResources.DisplayCurreny}: {metaModel.BaseCurrency.ToUpperInvariant()}";
+                $" {ViewResources.DisplayCurreny}: {metaModel.BaseCurrency.ToUpperInvariant()}," +
+                $" {DataHelper.GetTimezoneName(metaModel.Timezone)}";
 
             _builder.SetRowValue(sheet, templateSheet, sourceRowIndex: RowTitleTemplate, destRowIndex: RowTitleTemplate, columnCount: ColumnTemplateCount, value: title);
 
