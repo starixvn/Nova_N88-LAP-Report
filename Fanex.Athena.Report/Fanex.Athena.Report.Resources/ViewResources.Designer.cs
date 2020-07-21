@@ -376,6 +376,33 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GMT+0.
+        /// </summary>
+        public static string GMT0 {
+            get {
+                return ResourceManager.GetString("GMT0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GMT+8.
+        /// </summary>
+        public static string GMT8 {
+            get {
+                return ResourceManager.GetString("GMT8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GMT-4.
+        /// </summary>
+        public static string GMTNegative4 {
+            get {
+                return ResourceManager.GetString("GMTNegative4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Group.
         /// </summary>
         public static string Group {

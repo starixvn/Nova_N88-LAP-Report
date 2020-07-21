@@ -14,6 +14,8 @@ namespace Fanex.Athena.Report.ByGroup.MetaModels
 
         public byte GroupBy { get; set; }
 
+        public int Timezone { get; set; }
+
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
 
