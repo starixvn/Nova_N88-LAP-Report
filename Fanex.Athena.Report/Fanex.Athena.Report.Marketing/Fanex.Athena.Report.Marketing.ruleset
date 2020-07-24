@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="SonarQube - Legion / LAP.ReportAPI Nexcel CSharp" ToolsVersion="15.0">
+  <Include Path="..\.sonarlint\n88_lap_reportcsharp.ruleset" Action="Default" />
+</RuleSet>
