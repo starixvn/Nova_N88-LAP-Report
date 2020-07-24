@@ -1,8 +1,5 @@
 ﻿namespace Fanex.Athena.Report
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
     using Fanex.Athena.Report.Common;
     using Fanex.Athena.Report.Common.Excels;
     using Fanex.Athena.Report.Core.DTO;
@@ -19,6 +16,9 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.FileProviders;
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
 
     public class Startup
     {
@@ -56,6 +56,7 @@
             BySite.ReportBySiteDIConfig.Setup(services);
             ByPlayer.ReportByPlayerDIConfig.Setup(services);
             ByGroup.ReportByGroupDIConfig.Setup(services);
+            Marketing.ReportMarketingDIConfig.Setup(services);
 
             CompositeResolver.RegisterAndSetAsDefault(
                      //// resolver custom types first

@@ -11,4 +11,7 @@
   <Funtion Name="ReportByGroup">
     <Setting Key="N88_Rpt_Winloss" SpName="N88_Rpt_Winloss" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
   </Funtion>
+  <Function Name="ReportMarketing">
+    <Setting Key="N88_Rpt_Marketing_BusinessPerformance" SpName="N88_Rpt_Marketing_BusinessPerformance" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
+  </Function>
 </Functions>
