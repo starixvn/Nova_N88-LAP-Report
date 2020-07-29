@@ -1,9 +1,10 @@
-﻿using Fanex.Data;
+﻿using Fanex.Athena.Report.Common.Model.MetaModels;
+using Fanex.Data;
 using System;
 
 namespace Fanex.Athena.Report.ByGroup.MetaModels
 {
-    public class WinLossMetaModel
+    public class WinLossMetaModel : ILicenseeMetaModel, ITimezoneMetaModel
     {
         private const int GroupByCurrency = 4;
 

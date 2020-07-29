@@ -12,7 +12,7 @@ namespace Fanex.Athena.Report.ByGroup.Repositories
     {
         public async Task<(IEnumerable<WinLossDataItemDTO>, WinLossDataTotalDTO, int)> GetData(WinLossMetaModel metaModel)
         {
-            using (var db = ObjectDbFactory.CreateInstance(SpConsts.WinLossReport))
+            using (var db = GetObjectDb(SpConsts.WinLossReport))
             {
                 var (dataItems, dataTotal) = await GetDataSet(metaModel, db);
                 var totalRows = GetTotalRows(db);

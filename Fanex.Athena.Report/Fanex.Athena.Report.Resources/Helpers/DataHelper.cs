@@ -4,7 +4,12 @@
     {
         public static string GetProductName(string productCode)
         {
-            return ViewResources.ResourceManager.GetString(productCode);
+            return GetValue(productCode);
+        }
+
+        public static string GetValue(string key)
+        {
+            return ViewResources.ResourceManager.GetString(key);
         }
     }
 }

@@ -13,8 +13,9 @@ namespace Fanex.Athena.Report.Common.Repositories
     {
         protected virtual string TotalRowsParamName => "TotalRows";
 
-        protected BaseRepository()
+        protected virtual IObjectDb GetObjectDb(string key)
         {
+            return ObjectDbFactory.CreateInstance(key);
         }
 
         protected IEnumerable<T> GetDataItems<T>(IDataReader reader)

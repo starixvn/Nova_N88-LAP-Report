@@ -17,7 +17,7 @@ namespace Fanex.Athena.Report.Marketing.Repositories
         }
 
         [HttpPost]
-        public async Task<JsonResult> GetData(PerformanceHighlightMetaModel metaModel)
+        public async Task<JsonResult> GetData([FromBody]PerformanceHighlightMetaModel metaModel)
         {
             var result = await _service.GetData(metaModel);
             return new JsonResult(result);

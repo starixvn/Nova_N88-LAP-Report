@@ -9,7 +9,12 @@ namespace Fanex.Athena.Report.Marketing
         public static void Setup(IServiceCollection services)
         {
             services.AddTransient<IPerformanceHighlightRepository, PerformanceHighlightRepository>();
+            services.AddTransient<IUserActivitiesRepository, UserActivitiesRepository>();
+            services.AddTransient<IRevenueRepository, RevenueRepository>();
+
             services.AddTransient<IPerformanceHighlightService, PerformanceHighlightService>();
+            services.AddTransient<IUserActivitiesService, UserActivitiesService>();
+            services.AddTransient<IRevenueService, RevenueService>();
         }
     }
 }
