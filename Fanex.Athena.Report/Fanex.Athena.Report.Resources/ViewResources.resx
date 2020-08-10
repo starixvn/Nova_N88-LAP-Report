@@ -430,4 +430,32 @@
     <value>GMT-4</value>
     <comment>137064</comment>
   </data>
+  <data name="DayOfWeek_0" xml:space="preserve">
+    <value>Sunday</value>
+    <comment>137395</comment>
+  </data>
+  <data name="DayOfWeek_1" xml:space="preserve">
+    <value>Monday</value>
+    <comment>137395</comment>
+  </data>
+  <data name="DayOfWeek_2" xml:space="preserve">
+    <value>Tuesday</value>
+    <comment>137395</comment>
+  </data>
+  <data name="DayOfWeek_3" xml:space="preserve">
+    <value>Wednesday</value>
+    <comment>137395</comment>
+  </data>
+  <data name="DayOfWeek_4" xml:space="preserve">
+    <value>Thursday</value>
+    <comment>137395</comment>
+  </data>
+  <data name="DayOfWeek_5" xml:space="preserve">
+    <value>Friday</value>
+    <comment>137395</comment>
+  </data>
+  <data name="DayOfWeek_6" xml:space="preserve">
+    <value>Saturday</value>
+    <comment>137395</comment>
+  </data>
 </root>

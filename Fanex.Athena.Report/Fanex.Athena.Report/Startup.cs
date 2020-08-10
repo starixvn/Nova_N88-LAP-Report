@@ -55,7 +55,7 @@
             SharedServiceDIConfig.Setup(services);
             BySite.ReportBySiteDIConfig.Setup(services);
             ByPlayer.ReportByPlayerDIConfig.Setup(services);
-            ByGroup.ReportByGroupDIConfig.Setup(services);
+            WinLossAnalysis.ReportByGroupDIConfig.Setup(services);
             Marketing.ReportMarketingDIConfig.Setup(services);
 
             CompositeResolver.RegisterAndSetAsDefault(

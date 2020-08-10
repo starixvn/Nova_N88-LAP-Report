@@ -39,3 +39,5 @@ packages/
 /Fanex.Athena.Report/UnitTests/Fanex.Athena.Report.Common.UnitTests/coverage.opencover.xml
 /Fanex.Athena.Report/UnitTests/Fanex.Athena.Report.Core.UnitTests/coverage.cobertura.xml
 /Fanex.Athena.Report/UnitTests/Fanex.Athena.Report.Core.UnitTests/coverage.opencover.xml
+coverage.cobertura.xml
+coverage.opencover.xml

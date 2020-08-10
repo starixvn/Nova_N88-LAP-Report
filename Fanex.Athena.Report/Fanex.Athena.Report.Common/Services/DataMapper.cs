@@ -6,9 +6,14 @@ namespace Fanex.Athena.Report.Common.Services
 {
     public class DataMapper : IDataMapper
     {
-        public string ToCurrencyCode(IDictionary<int, Currency> currencies, int currencyId)
+        public string ToCurrencyCode(IDictionary<int, Currency> currencies, int id)
         {
-            return currencies.ContainsKey(currencyId) ? currencies[currencyId].Name : currencyId.ToString();
+            return currencies.ContainsKey(id) ? currencies[id].Name : id.ToString();
+        }
+
+        public string ToTpProductName(IDictionary<int, TpProduct> tpProducts, int id)
+        {
+            return tpProducts.ContainsKey(id) ? tpProducts[id].Name : id.ToString();
         }
     }
 }
