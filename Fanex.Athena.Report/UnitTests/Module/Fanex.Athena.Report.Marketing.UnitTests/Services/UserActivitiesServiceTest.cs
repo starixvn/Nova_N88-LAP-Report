@@ -26,26 +26,6 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
             _targetService = new UserActivitiesService(_mockRepository.Object);
         }
 
-        [Fact]
-        public async Task GetData_DayOfWeekViewMode_DisplayTimeAsDayOfWeek()
-        {
-            //Arrange
-            var metaModel = _fixture.Create<UserActivitiesMetaModel>();
-            metaModel.ViewMode = (byte)ViewMode.Daily;
-            metaModel.FromDate = new DateTime(2020, 8, 4);
-            metaModel.ToDate = metaModel.FromDate.AddDays(-6);
-
-            var (rawData, expectedResult) = FakeDataForDayOfWeekViewMode();
-
-            _mockRepository.Setup(_ => _.GetData(metaModel)).Returns(Task.FromResult<IEnumerable<UserActivitiesDTO>>(rawData));
-
-            //Act
-            var actualResult = await _targetService.GetData(metaModel);
-
-            //Assert
-            actualResult.Should().BeEquivalentTo(expectedResult);
-        }
-
         [Theory]
         [InlineData(1)]
         [InlineData(2)]
