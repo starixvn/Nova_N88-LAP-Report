@@ -3,10 +3,8 @@
     public class PerformanceHighlightViewModel
     {
         public int TotalUsers { get; set; }
-        public double GrowthRateTotalUsers { get; set; }
 
         public int PaidUsers { get; set; }
-        public double GrowthRatePaidUsers { get; set; }
 
         public int NewlyRegisterUsers { get; set; }
         public double GrowthRateNewlyRegisterUsers { get; set; }

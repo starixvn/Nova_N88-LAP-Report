@@ -33,9 +33,9 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
             var rawData = new PerformanceHighlightDTO
             {
                 TotalUsers = 11384,
-                CompareTotalUsers = 10248,
+                UptoTotalUsers = 123,
+                CompareUptoTotalUsers = 10248,
                 PaidUsers = 109,
-                ComparePaidUsers = 109,
                 NewlyRegisterUsers = 1101,
                 CompareNewlyRegisterUsers = 2015,
                 ActiveUsers = 541,
@@ -45,9 +45,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
             var expectedResult = new PerformanceHighlightViewModel
             {
                 TotalUsers = 11384,
-                GrowthRateTotalUsers = 11.1,
                 PaidUsers = 109,
-                GrowthRatePaidUsers = 0,
                 NewlyRegisterUsers = 1101,
                 GrowthRateNewlyRegisterUsers = 45,
                 ActiveUsers = 541,
@@ -61,19 +59,17 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
             var metaModel = _fixture.Create<PerformanceHighlightMetaModel>();
             _mockRepository.Setup(_ => _.GetData(metaModel)).Returns(Task.FromResult(rawData));
 
-            _mockCalculationService.Setup(_ => _.CalculateGrowth(rawData.TotalUsers, rawData.CompareTotalUsers)).Returns(expectedResult.GrowthRateTotalUsers);
-            _mockCalculationService.Setup(_ => _.CalculateGrowth(rawData.PaidUsers, rawData.ComparePaidUsers)).Returns(expectedResult.GrowthRatePaidUsers);
             _mockCalculationService.Setup(_ => _.CalculateGrowth(rawData.ActiveUsers, rawData.CompareActiveUsers)).Returns(expectedResult.GrowthRateActiveUsers);
             _mockCalculationService.Setup(_ => _.CalculateGrowth(rawData.NewlyRegisterUsers, rawData.CompareNewlyRegisterUsers)).Returns(expectedResult.GrowthRateNewlyRegisterUsers);
 
-            _mockCalculationService.Setup(_ => _.CalculateDistribution(rawData.TotalUsers - rawData.ActiveUsers, rawData.TotalUsers)).Returns(expectedResult.ChurnRate);
-            _mockCalculationService.Setup(_ => _.CalculateDistribution(rawData.CompareTotalUsers - rawData.CompareActiveUsers, rawData.CompareTotalUsers)).Returns(expectedResult.ChurnRate - expectedResult.DifferentChurnRate);
+            _mockCalculationService.Setup(_ => _.CalculateDistribution(rawData.UptoTotalUsers - rawData.ActiveUsers, rawData.UptoTotalUsers)).Returns(expectedResult.ChurnRate);
+            _mockCalculationService.Setup(_ => _.CalculateDistribution(rawData.CompareUptoTotalUsers - rawData.CompareActiveUsers, rawData.CompareUptoTotalUsers)).Returns(expectedResult.ChurnRate - expectedResult.DifferentChurnRate);
 
             //Act
             var actualResult = await _targetService.GetData(metaModel);
 
             //Assert
-            expectedResult.Should().Equals(actualResult);
+            expectedResult.Should().BeEquivalentTo(actualResult);
         }
     }
 }

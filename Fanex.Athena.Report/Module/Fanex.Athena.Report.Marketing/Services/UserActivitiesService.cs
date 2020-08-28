@@ -29,31 +29,17 @@ namespace Fanex.Athena.Report.Marketing.Services
 
         private IEnumerable<UserActivitiesViewModel> HandleRawData(IEnumerable<UserActivitiesDTO> rawData, UserActivitiesMetaModel metaModel)
         {
-            var isDayOfWeekViewMode = IsDayOfWeekViewMode(metaModel);
             return rawData.Select(rawModel =>
             {
                 var viewModel = new UserActivitiesViewModel
                 {
                     ActiveUsers = rawModel.ActiveUsers,
                     NewlyRegisterUsers = rawModel.NewlyRegisterUsers,
+                    Time = rawModel.ViewBy
                 };
-
-                BindTimeDisplay(viewModel, rawModel, isDayOfWeekViewMode);
 
                 return viewModel;
             });
-        }
-
-        private static void BindTimeDisplay(UserActivitiesViewModel model, UserActivitiesDTO rawModel, bool isDayOfWeekViewMode) =>
-            model.Time = isDayOfWeekViewMode && DateTime.TryParse(rawModel.ViewBy, out DateTime date)
-                ? DataHelper.GetValue($"{nameof(date.DayOfWeek)}_{(byte)date.DayOfWeek}")
-                : rawModel.ViewBy;
-
-        private static bool IsDayOfWeekViewMode(UserActivitiesMetaModel metaModel)
-        {
-            const int MaxDiffDaysToViewDayOfWeek = 7;
-            var diffDays = metaModel.ToDate.Subtract(metaModel.FromDate).Days;
-            return metaModel.ViewMode == (byte)ViewMode.Daily && diffDays < MaxDiffDaysToViewDayOfWeek;
         }
     }
 }

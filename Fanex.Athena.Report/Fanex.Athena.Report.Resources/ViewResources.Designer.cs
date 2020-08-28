@@ -286,69 +286,6 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sunday.
-        /// </summary>
-        public static string DayOfWeek_0 {
-            get {
-                return ResourceManager.GetString("DayOfWeek_0", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Monday.
-        /// </summary>
-        public static string DayOfWeek_1 {
-            get {
-                return ResourceManager.GetString("DayOfWeek_1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tuesday.
-        /// </summary>
-        public static string DayOfWeek_2 {
-            get {
-                return ResourceManager.GetString("DayOfWeek_2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Wednesday.
-        /// </summary>
-        public static string DayOfWeek_3 {
-            get {
-                return ResourceManager.GetString("DayOfWeek_3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Thursday.
-        /// </summary>
-        public static string DayOfWeek_4 {
-            get {
-                return ResourceManager.GetString("DayOfWeek_4", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Friday.
-        /// </summary>
-        public static string DayOfWeek_5 {
-            get {
-                return ResourceManager.GetString("DayOfWeek_5", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Saturday.
-        /// </summary>
-        public static string DayOfWeek_6 {
-            get {
-                return ResourceManager.GetString("DayOfWeek_6", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Deep Link.
         /// </summary>
         public static string DeepLink {

@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AB" xml:space="preserve">
-    <value>AllBet</value>
-  </data>
   <data name="All" xml:space="preserve">
     <value>全部</value>
   </data>
@@ -402,33 +399,5 @@
   <data name="GMTNegative4" xml:space="preserve">
     <value>GMT-4</value>
     <comment>137064</comment>
-  </data>
-  <data name="DayOfWeek_0" xml:space="preserve">
-    <value>Sunday</value>
-    <comment>137395</comment>
-  </data>
-  <data name="DayOfWeek_1" xml:space="preserve">
-    <value>Monday</value>
-    <comment>137395</comment>
-  </data>
-  <data name="DayOfWeek_2" xml:space="preserve">
-    <value>Tuesday</value>
-    <comment>137395</comment>
-  </data>
-  <data name="DayOfWeek_3" xml:space="preserve">
-    <value>Wednesday</value>
-    <comment>137395</comment>
-  </data>
-  <data name="DayOfWeek_4" xml:space="preserve">
-    <value>Thursday</value>
-    <comment>137395</comment>
-  </data>
-  <data name="DayOfWeek_5" xml:space="preserve">
-    <value>Friday</value>
-    <comment>137395</comment>
-  </data>
-  <data name="DayOfWeek_6" xml:space="preserve">
-    <value>Saturday</value>
-    <comment>137395</comment>
   </data>
 </root>

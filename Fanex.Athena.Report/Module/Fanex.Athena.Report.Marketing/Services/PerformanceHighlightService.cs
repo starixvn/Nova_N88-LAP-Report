@@ -32,10 +32,8 @@ namespace Fanex.Athena.Report.Marketing.Services
             var data = new PerformanceHighlightViewModel();
 
             data.TotalUsers = rawData.TotalUsers;
-            data.GrowthRateTotalUsers = _calculationService.CalculateGrowth(rawData.TotalUsers, rawData.CompareTotalUsers);
 
             data.PaidUsers = rawData.PaidUsers;
-            data.GrowthRatePaidUsers = _calculationService.CalculateGrowth(rawData.PaidUsers, rawData.ComparePaidUsers);
 
             data.ActiveUsers = rawData.ActiveUsers;
             data.GrowthRateActiveUsers = _calculationService.CalculateGrowth(rawData.ActiveUsers, rawData.CompareActiveUsers);
@@ -43,8 +41,8 @@ namespace Fanex.Athena.Report.Marketing.Services
             data.NewlyRegisterUsers = rawData.NewlyRegisterUsers;
             data.GrowthRateNewlyRegisterUsers = _calculationService.CalculateGrowth(rawData.NewlyRegisterUsers, rawData.CompareNewlyRegisterUsers);
 
-            data.ChurnRate = _calculationService.CalculateDistribution(rawData.TotalUsers - rawData.ActiveUsers, rawData.TotalUsers);
-            var compareChurnRate = _calculationService.CalculateDistribution(rawData.CompareTotalUsers - rawData.CompareActiveUsers, rawData.CompareTotalUsers);
+            data.ChurnRate = _calculationService.CalculateDistribution(rawData.UptoTotalUsers - rawData.ActiveUsers, rawData.UptoTotalUsers);
+            var compareChurnRate = _calculationService.CalculateDistribution(rawData.CompareUptoTotalUsers - rawData.CompareActiveUsers, rawData.CompareUptoTotalUsers);
             data.DifferentChurnRate = data.ChurnRate - compareChurnRate;
 
             const int fullPercent = 100;
