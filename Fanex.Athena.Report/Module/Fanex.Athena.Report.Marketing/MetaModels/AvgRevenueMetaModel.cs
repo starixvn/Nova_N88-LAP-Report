@@ -2,7 +2,7 @@
 
 namespace Fanex.Athena.Report.Marketing.MetaModels
 {
-    public class AvgRevenueMetaModel : BaseReportMetaModel
+    public class AvgRevenueMetaModel : BaseMarketingReportMetaModel
     {
         public string ProductIds { get; set; }
 

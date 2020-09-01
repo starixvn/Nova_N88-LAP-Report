@@ -400,4 +400,52 @@
     <value>GMT-4</value>
     <comment>137064</comment>
   </data>
+  <data name="Campaign" xml:space="preserve">
+    <value>Campaign</value>
+    <comment>137395</comment>
+  </data>
+  <data name="ChangePercent" xml:space="preserve">
+    <value>% Change</value>
+    <comment>137395</comment>
+  </data>
+  <data name="CompareDate" xml:space="preserve">
+    <value>Compare Date</value>
+    <comment>137395</comment>
+  </data>
+  <data name="FirstDepositAmount" xml:space="preserve">
+    <value>First Deposit Amount</value>
+    <comment>137395</comment>
+  </data>
+  <data name="Marketing" xml:space="preserve">
+    <value>Marketing</value>
+    <comment>137395</comment>
+  </data>
+  <data name="NewlyRegisteredUsers" xml:space="preserve">
+    <value>Newly Registered Users</value>
+    <comment>137395</comment>
+  </data>
+  <data name="NewlyRegisteredUsersAcronym" xml:space="preserve">
+    <value>NRU</value>
+    <comment>137395</comment>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+    <comment>137395</comment>
+  </data>
+  <data name="RegisteredDate" xml:space="preserve">
+    <value>Registered Date</value>
+    <comment>137395</comment>
+  </data>
+  <data name="ReportDate" xml:space="preserve">
+    <value>Report Date</value>
+    <comment>137395</comment>
+  </data>
+  <data name="SignupUrl" xml:space="preserve">
+    <value>Signup URL</value>
+    <comment>137395</comment>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+    <comment>137395</comment>
+  </data>
 </root>
