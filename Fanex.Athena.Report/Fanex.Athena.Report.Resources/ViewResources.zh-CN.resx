@@ -400,10 +400,6 @@
     <value>GMT-4</value>
     <comment>137064</comment>
   </data>
-  <data name="Campaign" xml:space="preserve">
-    <value>Campaign</value>
-    <comment>137395</comment>
-  </data>
   <data name="ChangePercent" xml:space="preserve">
     <value>% Change</value>
     <comment>137395</comment>
@@ -446,6 +442,10 @@
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
+    <comment>137395</comment>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>None</value>
     <comment>137395</comment>
   </data>
 </root>

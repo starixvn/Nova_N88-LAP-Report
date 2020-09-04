@@ -55,7 +55,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
             var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: DetailSheetTemplateHeader, destRowIndex: ++DetailCurrentRowIndex);
 
             row.Cells[DetailSheetRowIdCol].SetCellValue("#");
-            row.Cells[DetailSheetCampaignNameCol].SetCellValue(ViewResources.Campaign);
+            row.Cells[DetailSheetCampaignNameCol].SetCellValue(ViewResources.Bonus);
             row.Cells[DetailSheetUsernameCol].SetCellValue(ViewResources.Username);
             row.Cells[DetailSheetRegisteredDateCol].SetCellValue(ViewResources.RegisteredDate);
             row.Cells[DetailSheetSignupUrlCol].SetCellValue(ViewResources.SignupUrl);
@@ -76,12 +76,21 @@ namespace Fanex.Athena.Report.Marketing.Excels
             var row = _builder.CopyRow(sheet, templateSheet, DetailSheetTemplateContent, lastRowIndex + 1);
 
             row.Cells[DetailSheetRowIdCol].SetCellValue(rowData.RowId);
-            row.Cells[DetailSheetCampaignNameCol].SetCellValue(rowData.CampaignName);
+            row.Cells[DetailSheetCampaignNameCol].SetCellValue(string.IsNullOrEmpty(rowData.BonusCode) ? ViewResources.None : rowData.BonusCode);
             row.Cells[DetailSheetUsernameCol].SetCellValue(rowData.Username);
             row.Cells[DetailSheetRegisteredDateCol].SetCellValue(rowData.RegisteredDateDisplay);
-            row.Cells[DetailSheetSignupUrlCol].SetCellValue(rowData.SignupUrl);
-            row.Cells[DetailSheetDepositCol].SetCellValue(rowData.IsDeposit ? ViewResources.Yes : ViewResources.No);
-            row.Cells[DetailSheetFirstDepositAmountCol].SetCellValue((double)rowData.FirstDepositAmount);
+            row.Cells[DetailSheetSignupUrlCol].SetCellValue(string.IsNullOrEmpty(rowData.SignupUrl) ? ViewResources.None : rowData.SignupUrl);
+
+            if (rowData.IsDeposit)
+            {
+                row.Cells[DetailSheetFirstDepositAmountCol].SetCellValue((double)rowData.FirstDepositAmount);
+                row.Cells[DetailSheetDepositCol].SetCellValue(ViewResources.Yes);
+            }
+            else
+            {
+                row.Cells[DetailSheetDepositCol].SetCellValue(ViewResources.No);
+                row.Cells[DetailSheetFirstDepositAmountCol].SetCellValue("-");
+            }
         }
     }
 }

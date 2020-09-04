@@ -102,7 +102,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
         {
             var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: SummarySheetTemplateCampaignHeader, destRowIndex: ++SummaryCurrentRowIndex);
 
-            row.Cells[SummarySheetCampaignNameCol].SetCellValue(ViewResources.Campaign);
+            row.Cells[SummarySheetCampaignNameCol].SetCellValue(ViewResources.Bonus);
             row.Cells[SummarySheetCampaignNRUCol].SetCellValue(ViewResources.NewlyRegisteredUsersAcronym);
             row.Cells[SummarySheetCampaignDepositCol].SetCellValue(ViewResources.Deposit);
             row.Cells[SummarySheetCampaignFirstDepositAmountCol].SetCellValue(ViewResources.FirstDepositAmount);
@@ -119,7 +119,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
         private void AssignSummaryCampaignRowData(ISheet sheet, ISheet templateSheet, int lastRowIndex, CampaignNewlyRegisterUsersDTO rowData)
         {
             var row = _builder.CopyRow(sheet, templateSheet, SummarySheetTemplateCampaignContent, lastRowIndex + 1);
-            row.Cells[SummarySheetCampaignNameCol].SetCellValue(rowData.CampaignName);
+            row.Cells[SummarySheetCampaignNameCol].SetCellValue(string.IsNullOrEmpty(rowData.BonusCode) ? ViewResources.None : rowData.BonusCode);
             row.Cells[SummarySheetCampaignNRUCol].SetCellValue(rowData.NewlyRegisterUsers);
             row.Cells[SummarySheetCampaignDepositCol].SetCellValue(rowData.DepositUsers);
             row.Cells[SummarySheetCampaignFirstDepositAmountCol].SetCellValue((double)rowData.FirstDepositAmount);
@@ -145,7 +145,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
         private void AssignSummarySignupRowData(ISheet sheet, ISheet templateSheet, int lastRowIndex, SignupUrlNewlyRegisterUsersDTO rowData)
         {
             var row = _builder.CopyRow(sheet, templateSheet, SummarySheetTemplateSingupContent, lastRowIndex + 1);
-            row.Cells[SummarySheetSingupNameCol].SetCellValue(rowData.SignupUrl);
+            row.Cells[SummarySheetSingupNameCol].SetCellValue(string.IsNullOrEmpty(rowData.SignupUrl) ? ViewResources.None : rowData.SignupUrl);
             row.Cells[SummarySheetSingupNRUCol].SetCellValue(rowData.NewlyRegisterUsers);
             row.Cells[SummarySheetSingupDepositCol].SetCellValue(rowData.DepositUsers);
             row.Cells[SummarySheetSingupFirstDepositAmountCol].SetCellValue((double)rowData.FirstDepositAmount);

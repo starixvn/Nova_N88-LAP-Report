@@ -14,8 +14,7 @@ namespace Fanex.Athena.Report.Marketing.DTO
 
     public class CampaignNewlyRegisterUsersDTO
     {
-        [SqlColumn(ColumnName = "BonusCode")]
-        public string CampaignName { get; set; }
+        public string BonusCode { get; set; }
 
         public int NewlyRegisterUsers { get; set; }
 

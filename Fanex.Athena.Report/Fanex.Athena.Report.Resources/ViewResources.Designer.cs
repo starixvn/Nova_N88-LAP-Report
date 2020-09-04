@@ -196,15 +196,6 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Campaign.
-        /// </summary>
-        public static string Campaign {
-            get {
-                return ResourceManager.GetString("Campaign", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Card Club.
         /// </summary>
         public static string CC {
@@ -624,6 +615,15 @@ namespace Fanex.Athena.Report.Resources {
         public static string NoInfo {
             get {
                 return ResourceManager.GetString("NoInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        public static string None {
+            get {
+                return ResourceManager.GetString("None", resourceCulture);
             }
         }
         

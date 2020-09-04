@@ -9,8 +9,7 @@ namespace Fanex.Athena.Report.Marketing.DTO
     {
         public int RowId { get; set; }
 
-        [SqlColumn(ColumnName = "BonusCode")]
-        public string CampaignName { get; set; }
+        public string BonusCode { get; set; }
 
         public string Username { get; set; }
 
