@@ -18,7 +18,7 @@ namespace Fanex.Athena.Report.Marketing.DTO
         public DateTime RegisteredDate { get; set; }
 
         [SqlColumn(Ignored = true)]
-        public string RegisteredDateDisplay => RegisteredDate.ToString(DateTimeFormat.FullMonthName);
+        public string RegisteredDateDisplay => RegisteredDate.ToString(DateTimeFormat.MonthName);
 
         public string SignupUrl { get; set; }
         public bool IsDeposit { get; set; }
