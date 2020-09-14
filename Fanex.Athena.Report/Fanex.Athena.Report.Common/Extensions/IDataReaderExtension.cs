@@ -13,7 +13,8 @@ namespace Fanex.Athena.Report.Common.Extensions
             { typeof(decimal), (dataReader, columnName) => GetVal<decimal>(dataReader, columnName) },
             { typeof(int), (dataReader, columnName) => GetVal<int>(dataReader, columnName) },
             { typeof(double), (dataReader, columnName) => GetVal<double>(dataReader, columnName) },
-            { typeof(DateTime), (dataReader, columnName) => GetVal<DateTime>(dataReader, columnName) }
+            { typeof(DateTime), (dataReader, columnName) => GetVal<DateTime>(dataReader, columnName) },
+            { typeof(bool), (dataReader, columnName) => GetVal<bool>(dataReader, columnName) }
         };
 
         public static T GetVal<T>(this IDataReader dataReader, string columnName, T defauleValue = default(T))

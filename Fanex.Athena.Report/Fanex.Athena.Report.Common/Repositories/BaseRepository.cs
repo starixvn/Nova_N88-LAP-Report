@@ -18,16 +18,21 @@ namespace Fanex.Athena.Report.Common.Repositories
             return ObjectDbFactory.CreateInstance(key);
         }
 
-        protected IEnumerable<T> GetDataItems<T>(IDataReader reader)
+        protected IEnumerable<T> GetDataItems<T>(IDataReader reader, bool nextResult = false)
         {
             var dataItems = new List<T>();
-            var properties = GetProperties<T>();
 
-            while (reader.Read())
+            if (!nextResult || reader.NextResult())
             {
-                var dataItem = ReadDataOfType<T>(reader, properties);
-                dataItems.Add(dataItem);
+                var properties = GetProperties<T>();
+
+                while (reader.Read())
+                {
+                    var dataItem = ReadDataOfType<T>(reader, properties);
+                    dataItems.Add(dataItem);
+                }
             }
+
             return dataItems;
         }
 

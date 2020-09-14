@@ -1,10 +1,7 @@
 ﻿using Fanex.Athena.Report.Marketing.DTO;
-using Fanex.Athena.Report.Marketing.Enums;
 using Fanex.Athena.Report.Marketing.MetaModels;
 using Fanex.Athena.Report.Marketing.Repositories;
 using Fanex.Athena.Report.Marketing.ViewModels;
-using Fanex.Athena.Report.Resources.Helpers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,11 +20,11 @@ namespace Fanex.Athena.Report.Marketing.Services
         public async Task<IEnumerable<UserActivitiesViewModel>> GetData(UserActivitiesMetaModel metaModel)
         {
             var rawData = await _repository.GetData(metaModel);
-            var data = HandleRawData(rawData, metaModel);
+            var data = HandleRawData(rawData);
             return data;
         }
 
-        private IEnumerable<UserActivitiesViewModel> HandleRawData(IEnumerable<UserActivitiesDTO> rawData, UserActivitiesMetaModel metaModel)
+        private IEnumerable<UserActivitiesViewModel> HandleRawData(IEnumerable<UserActivitiesDTO> rawData)
         {
             return rawData.Select(rawModel =>
             {

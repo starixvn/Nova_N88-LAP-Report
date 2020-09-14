@@ -25,6 +25,7 @@
   <ItemGroup>
     <None Remove="ExcelTemplate\CustomerReports\CustomerWinLoss.xls" />
     <None Remove="ExcelTemplate\CustomerReports\CustomerWinLoss.xlsx" />
+    <None Remove="ExcelTemplate\Marketing\NewlyRegisterUsers.xls" />
     <None Remove="ExcelTemplate\PromotionPrize.xls" />
     <None Remove="ExcelTemplate\WinLossReports\WinLossByPlayerReport.xlsx" />
     <None Remove="ExcelTemplate\WinLossReports\WinLossReport.xlsx" />
@@ -36,6 +37,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ExcelTemplate\CustomerReports\CustomerWinLoss.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ExcelTemplate\Marketing\NewlyRegisterUsers.xls">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ExcelTemplate\PromotionPrize.xls">

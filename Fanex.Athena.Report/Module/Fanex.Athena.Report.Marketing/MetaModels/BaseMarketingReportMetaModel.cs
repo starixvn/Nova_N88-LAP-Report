@@ -3,7 +3,7 @@ using System;
 
 namespace Fanex.Athena.Report.Marketing.MetaModels
 {
-    public class BaseReportMetaModel : ILicenseeMetaModel, ITimezoneMetaModel
+    public class BaseMarketingReportMetaModel : ILicenseeMetaModel, ITimezoneMetaModel
     {
         private const int DefaultTimezone = 8;
 
