@@ -4,7 +4,7 @@ using System;
 
 namespace Fanex.Athena.Report.Marketing.MetaModels
 {
-    public class BaseReportMetaModel : ITimezoneMetaModel
+    public class BaseMarketingReportMetaModel : ITimezoneMetaModel
     {
         private const int DefaultTimezone = 8;
 

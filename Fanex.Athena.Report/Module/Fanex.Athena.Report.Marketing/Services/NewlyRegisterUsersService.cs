@@ -41,7 +41,7 @@ namespace Fanex.Athena.Report.Marketing.Services
         {
             var summaryMetaModel = new NewlyRegisterUsersSummaryMetaModel
             {
-                LicenseeId = metaModel.LicenseeId,
+                BrandId = metaModel.BrandId,
                 FromDate = metaModel.FromDate,
                 ToDate = metaModel.ToDate,
                 CompareFromDate = metaModel.CompareFromDate,
@@ -51,7 +51,7 @@ namespace Fanex.Athena.Report.Marketing.Services
 
             var detailMetaModel = new NewlyRegisterUsersDetailMetaModel
             {
-                LicenseeId = metaModel.LicenseeId,
+                BrandId = metaModel.BrandId,
                 FromDate = metaModel.FromDate,
                 ToDate = metaModel.ToDate,
                 BaseCurrency = metaModel.BaseCurrency,

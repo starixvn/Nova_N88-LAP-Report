@@ -86,7 +86,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
 
             var expectedSummaryMetaModel = new NewlyRegisterUsersSummaryMetaModel
             {
-                LicenseeId = metaModel.LicenseeId,
+                BrandId = metaModel.BrandId,
                 FromDate = metaModel.FromDate,
                 ToDate = metaModel.ToDate,
                 CompareFromDate = metaModel.CompareFromDate,
@@ -96,7 +96,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
 
             var expectedDetailMetaModel = new NewlyRegisterUsersDetailMetaModel
             {
-                LicenseeId = metaModel.LicenseeId,
+                BrandId = metaModel.BrandId,
                 FromDate = metaModel.FromDate,
                 ToDate = metaModel.ToDate,
                 BaseCurrency = metaModel.BaseCurrency,
