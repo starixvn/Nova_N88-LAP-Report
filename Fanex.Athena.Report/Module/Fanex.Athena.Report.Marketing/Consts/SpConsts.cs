@@ -3,6 +3,7 @@
     public static class SpConsts
     {
         public const string PerformanceHighlight = "N88_Rpt_Marketing_BusinessPerformance";
+        public const string PerformanceHighlightExport = "N88_Rpt_Marketing_Main_ExportExcel";
         public const string UserActivities = "N88_Rpt_Marketing_UserActivities";
         public const string AvgRevenue = "N88_Rpt_Marketing_Revenue";
         public const string NewlyRegisteredUsersSummary = "N88_Rpt_Marketing_NewlyRegisteredUsers";

@@ -71,7 +71,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 BetCount = dataTotal.TotalBetCount,
                 AvgBetAmount = dataTotal.TotalBasedAvgBetAmount,
                 UniquePlayers = dataTotal.TotalUniquePlayers,
-                Margin = CalculatorHepler.Margin(dataTotal.TotalBasedGGR, dataTotal.TotalBasedTurnoverNoDraw)
+                Margin = NumberHepler.Margin(dataTotal.TotalBasedGGR, dataTotal.TotalBasedTurnoverNoDraw)
             };
         }
 
@@ -105,7 +105,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 BetCount = betCount,
                 UniquePlayers = uniquePlayers,
                 AvgBetAmount = turnover / betCount,
-                Margin = CalculatorHepler.Margin(ggr, turnoverNoDraw),
+                Margin = NumberHepler.Margin(ggr, turnoverNoDraw),
                 DrillDownData = SelectDrillDownData(parentKey, childData, drilldownInOriginalCurrency, isGroupByPlayer)
             };
 
@@ -116,6 +116,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
         {
             return childData.Select(_ => new WinLossRecordViewModel
             {
+                Key = $"{parentKey}#{ _.CurrencyCode}",
                 Parent = parentKey,
                 ParentName = isGroupByPlayer ? _.Group : parentKey,
                 Group = _.CurrencyCode,
@@ -126,7 +127,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 BetCount = _.BetCount,
                 AvgBetAmount = drilldownInOriginalCurrency ? _.AvgBetAmount : _.BasedAvgBetAmount,
                 UniquePlayers = _.UniquePlayers,
-                Margin = CalculatorHepler.Margin(_.BasedGGR, _.BasedTurnoverNoDraw)
+                Margin = NumberHepler.Margin(_.BasedGGR, _.BasedTurnoverNoDraw)
             });
         }
 

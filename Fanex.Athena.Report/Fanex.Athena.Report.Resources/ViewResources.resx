@@ -479,4 +479,12 @@
     <value>None</value>
     <comment>137395</comment>
   </data>
+  <data name="AllTime" xml:space="preserve">
+    <value>All time</value>
+    <comment>141575</comment>
+  </data>
+  <data name="BusinessPerformanceHighlight" xml:space="preserve">
+    <value>Business Performance Highlight</value>
+    <comment>141575</comment>
+  </data>
 </root>
