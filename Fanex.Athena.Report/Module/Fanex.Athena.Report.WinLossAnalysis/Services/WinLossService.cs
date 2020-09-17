@@ -1,10 +1,11 @@
-﻿using Fanex.Athena.Report.WinLossAnalysis.DTO;
+﻿using Fanex.Athena.Report.Common.Helpers;
+using Fanex.Athena.Report.Common.Model.DTO;
+using Fanex.Athena.Report.Common.Model.ViewModel;
+using Fanex.Athena.Report.Common.Services.Interfaces;
+using Fanex.Athena.Report.WinLossAnalysis.DTO;
 using Fanex.Athena.Report.WinLossAnalysis.MetaModels;
 using Fanex.Athena.Report.WinLossAnalysis.Repositories;
 using Fanex.Athena.Report.WinLossAnalysis.ViewModels;
-using Fanex.Athena.Report.Common.Helpers;
-using Fanex.Athena.Report.Common.Model.ViewModel;
-using Fanex.Athena.Report.Common.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,16 +50,16 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
         private async Task<IEnumerable<WinLossRecordViewModel>> ToDataItemViewModels(IEnumerable<WinLossDataItemDTO> dataItems, WinLossMetaModel metaModel)
         {
             var currencies = await _currencyService.GetCurrencyDictionaryAsync();
-            var isGroupByCurreny = metaModel.IsGroupByCurreny;
             var drilldownInOriginalCurrency = metaModel.DrilldownInOriginalCurrency;
+
             return dataItems.GroupBy(
-                       _ => isGroupByCurreny ? _dataMapper.ToCurrencyCode(currencies, Int32.Parse(_.Group)) : _.Group,
+                       data => Grouping(data, metaModel, currencies),
                        _ =>
                        {
                            _.CurrencyCode = _dataMapper.ToCurrencyCode(currencies, _.CurrencyId);
                            return _;
                        },
-                       Mapper(drilldownInOriginalCurrency));
+                       Mapper(drilldownInOriginalCurrency, metaModel.IsGroupByPlayer));
         }
 
         private WinLossRecordViewModel ToTotalDataViewModel(WinLossDataTotalDTO dataTotal)
@@ -74,13 +75,29 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
             };
         }
 
-        private static Func<bool, Func<string, IEnumerable<WinLossDataItemDTO>, WinLossRecordViewModel>> Mapper = drilldownInOriginalCurrency => (parentKey, childData) =>
+        private string Grouping(WinLossDataItemDTO data, WinLossMetaModel metaModel, IDictionary<int, Currency> currencies)
+        {
+            if (metaModel.IsGroupByCurreny)
+            {
+                return _dataMapper.ToCurrencyCode(currencies, Int32.Parse(data.Group));
+            }
+
+            if (metaModel.IsGroupByPlayer)
+            {
+                return $"{data.Group}_{data.SabaId}";
+            }
+
+            return data.Group;
+        }
+
+        private static Func<bool, bool, Func<string, IEnumerable<WinLossDataItemDTO>, WinLossRecordViewModel>> Mapper = (drilldownInOriginalCurrency, isGroupByPlayer) => (parentKey, childData) =>
         {
             var (turnoverNoDraw, turnover, ggr, betCount, uniquePlayers) = SumChildData(childData);
             var firstChild = childData?.FirstOrDefault();
             var parent = new WinLossRecordViewModel
             {
-                Group = parentKey,
+                Key = parentKey,
+                Group = isGroupByPlayer ? firstChild.Group : parentKey,
                 SabaId = firstChild?.SabaId,
                 SabaSystemId = firstChild?.SabaSystemId,
                 Turnover = turnover,
@@ -89,17 +106,18 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 UniquePlayers = uniquePlayers,
                 AvgBetAmount = turnover / betCount,
                 Margin = CalculatorHepler.Margin(ggr, turnoverNoDraw),
-                DrillDownData = SelectDrillDownData(parentKey, childData, drilldownInOriginalCurrency)
+                DrillDownData = SelectDrillDownData(parentKey, childData, drilldownInOriginalCurrency, isGroupByPlayer)
             };
 
             return parent;
         };
 
-        private static IEnumerable<WinLossRecordViewModel> SelectDrillDownData(string parentKey, IEnumerable<WinLossDataItemDTO> childData, bool drilldownInOriginalCurrency)
+        private static IEnumerable<WinLossRecordViewModel> SelectDrillDownData(string parentKey, IEnumerable<WinLossDataItemDTO> childData, bool drilldownInOriginalCurrency, bool isGroupByPlayer)
         {
             return childData.Select(_ => new WinLossRecordViewModel
             {
                 Parent = parentKey,
+                ParentName = isGroupByPlayer ? _.Group : parentKey,
                 Group = _.CurrencyCode,
                 SabaId = _.SabaId,
                 SabaSystemId = _.SabaSystemId,

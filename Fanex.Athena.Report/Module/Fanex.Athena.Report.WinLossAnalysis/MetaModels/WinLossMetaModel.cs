@@ -7,6 +7,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
     public class WinLossMetaModel: ITimezoneMetaModel
     {
         private const int GroupByCurrency = 4;
+        private const int GroupByPlayer = 5;
 
         [SpParam(SqlParamName = "FilterBy")]
         public byte DateType { get; set; }
@@ -40,6 +41,9 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
 
         [SpParam(Ignored = true)]
         public bool IsGroupByCurreny => GroupBy == GroupByCurrency;
+
+        [SpParam(Ignored = true)]
+        public bool IsGroupByPlayer => GroupBy == GroupByPlayer;
 
         [SpParam(Ignored = true)]
         public bool DrilldownInOriginalCurrency { get; set; }
