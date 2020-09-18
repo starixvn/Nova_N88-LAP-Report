@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <Folder Include="Excels\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
