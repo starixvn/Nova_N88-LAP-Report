@@ -1,10 +1,10 @@
-﻿using Fanex.Athena.Report.WinLossAnalysis.Consts;
+﻿using Fanex.Athena.Report.Common.Extensions;
+using Fanex.Athena.Report.Common.Model.ViewModel;
+using Fanex.Athena.Report.WinLossAnalysis.Consts;
 using Fanex.Athena.Report.WinLossAnalysis.Excels;
 using Fanex.Athena.Report.WinLossAnalysis.MetaModels;
 using Fanex.Athena.Report.WinLossAnalysis.Services;
 using Fanex.Athena.Report.WinLossAnalysis.ViewModels;
-using Fanex.Athena.Report.Common.Extensions;
-using Fanex.Athena.Report.Common.Model.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Threading.Tasks;

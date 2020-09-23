@@ -4,11 +4,10 @@ using System;
 
 namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
 {
-    public class WinLossMetaModel : ILicenseeMetaModel, ITimezoneMetaModel
+    public class WinLossMetaModel: ITimezoneMetaModel
     {
         private const int GroupByCurrency = 4;
-
-        public int LicenseeId { get; set; }
+        private const int GroupByPlayer = 5;
 
         [SpParam(SqlParamName = "FilterBy")]
         public byte DateType { get; set; }
@@ -21,6 +20,10 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         public DateTime ToDate { get; set; }
 
         public string ProductIds { get; set; }
+
+        [SpParam(SqlParamName = "LicenseeIds")]
+        public string BrandIds { get; set; }
+
         public byte UserNameFilterId { get; set; }
         public string UserName { get; set; }
         public bool IsIncludedTestData { get; set; }
@@ -38,6 +41,9 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
 
         [SpParam(Ignored = true)]
         public bool IsGroupByCurreny => GroupBy == GroupByCurrency;
+
+        [SpParam(Ignored = true)]
+        public bool IsGroupByPlayer => GroupBy == GroupByPlayer;
 
         [SpParam(Ignored = true)]
         public bool DrilldownInOriginalCurrency { get; set; }

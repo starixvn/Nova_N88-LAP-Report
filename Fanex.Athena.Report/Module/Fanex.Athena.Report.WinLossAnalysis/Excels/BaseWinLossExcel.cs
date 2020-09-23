@@ -1,9 +1,9 @@
-﻿using Fanex.Athena.Report.WinLossAnalysis.Helpers;
-using Fanex.Athena.Report.WinLossAnalysis.MetaModels;
-using Fanex.Athena.Report.WinLossAnalysis.ViewModels;
-using Fanex.Athena.Report.Common.Excel;
+﻿using Fanex.Athena.Report.Common.Excel;
 using Fanex.Athena.Report.Common.Model.ViewModel;
 using Fanex.Athena.Report.Resources;
+using Fanex.Athena.Report.WinLossAnalysis.Helpers;
+using Fanex.Athena.Report.WinLossAnalysis.MetaModels;
+using Fanex.Athena.Report.WinLossAnalysis.ViewModels;
 using Microsoft.Extensions.FileProviders;
 using NPOI.SS.UserModel;
 using System.Collections.Generic;
@@ -116,7 +116,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
         {
             var isParent = string.IsNullOrEmpty(rowData.Parent);
             var row = CreateRow(sheet, templateSheet, lastRowIndex, isParent);
-            row.Cells[ColumnGroup].SetCellValue(isParent ? rowData.Group : rowData.Parent);
+            row.Cells[ColumnGroup].SetCellValue(isParent ? rowData.Group : rowData.ParentName);
             row.Cells[ColumnCurrency].SetCellValue(isParent ? ViewResources.All : rowData.Group);
             AssignRowData(row, rowData);
         }

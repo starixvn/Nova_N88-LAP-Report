@@ -83,8 +83,8 @@ namespace Fanex.Athena.Report.Marketing.Excels
 
             if (rowData.IsDeposit)
             {
-                row.Cells[DetailSheetFirstDepositAmountCol].SetCellValue((double)rowData.FirstDepositAmount);
                 row.Cells[DetailSheetDepositCol].SetCellValue(ViewResources.Yes);
+                row.Cells[DetailSheetFirstDepositAmountCol].SetCellValue((double)rowData.FirstDepositAmount);
             }
             else
             {
