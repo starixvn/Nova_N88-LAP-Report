@@ -3,6 +3,7 @@ using Fanex.Athena.Report.Marketing.DTO;
 using Fanex.Athena.Report.Marketing.MetaModels;
 using Fanex.Athena.Report.Marketing.Repositories;
 using Fanex.Athena.Report.Marketing.ViewModels;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Fanex.Athena.Report.Marketing.Services
@@ -25,6 +26,12 @@ namespace Fanex.Athena.Report.Marketing.Services
             var rawData = await _repository.GetData(metaModel);
             var result = HandleData(rawData);
             return result;
+        }
+
+        public async Task<IEnumerable<PerformanceHighlightExportDTO>> ExportData(PerformanceHighlightExportMetaModel metaModel)
+        {
+            var data = await _repository.ExportData(metaModel);
+            return data;
         }
 
         private PerformanceHighlightViewModel HandleData(PerformanceHighlightDTO rawData)

@@ -1,8 +1,9 @@
 ﻿namespace Fanex.Athena.Report.Common.Helpers
 {
-    public static class CalculatorHepler
+    public static class NumberHepler
     {
         private const decimal Zero = 0.0m;
+        private const string DecimalFormat = "{0:#,##0.##}";
 
         public static double Margin(decimal profit, decimal turnover)
         {
@@ -13,10 +14,19 @@
             return Percent((double)(profit / turnover));
         }
 
-        public static double Percent(double value)
+        private static double Percent(double value)
         {
             const double percent = 100.00;
             return value * percent;
+        }
+
+        public static string Format(decimal? number)
+        {
+            if (!number.HasValue)
+            {
+                return string.Empty;
+            }
+            return string.Format(DecimalFormat, number.Value);
         }
     }
 }

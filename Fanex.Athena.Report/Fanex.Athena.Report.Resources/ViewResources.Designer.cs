@@ -106,6 +106,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All time.
+        /// </summary>
+        public static string AllTime {
+            get {
+                return ResourceManager.GetString("AllTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Amount.
         /// </summary>
         public static string Amount {
@@ -192,6 +201,15 @@ namespace Fanex.Athena.Report.Resources {
         public static string Bonus {
             get {
                 return ResourceManager.GetString("Bonus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Business Performance Highlight.
+        /// </summary>
+        public static string BusinessPerformanceHighlight {
+            get {
+                return ResourceManager.GetString("BusinessPerformanceHighlight", resourceCulture);
             }
         }
         

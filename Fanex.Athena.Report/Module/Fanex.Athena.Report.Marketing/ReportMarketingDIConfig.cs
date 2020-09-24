@@ -20,6 +20,7 @@ namespace Fanex.Athena.Report.Marketing
             services.AddTransient<INewlyRegisterUsersService, NewlyRegisterUsersService>();
 
             services.AddTransient<INewlyRegisterUsersExcel, NewlyRegisterUsersExcel>();
+            services.AddTransient<IPerformanceHighlightExcel, PerformanceHighlightExcel>();
         }
     }
 }

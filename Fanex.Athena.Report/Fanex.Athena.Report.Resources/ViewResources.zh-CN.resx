@@ -349,6 +349,9 @@
   <data name="TG" xml:space="preserve">
     <value>桌面游戏</value>
   </data>
+  <data name="SXG" xml:space="preserve">
+    <value>性感百家</value>
+  </data>
   <data name="AvgBetAmount" xml:space="preserve">
     <value>Avg. Bet Amount</value>
     <comment>133254</comment>
@@ -448,5 +451,13 @@
   <data name="SXG" xml:space="preserve">
     <value>AE 真人</value>
     <comment>#141118</comment>
+  </data>  
+  <data name="AllTime" xml:space="preserve">
+    <value>All time</value>
+    <comment>141575</comment>
+  </data>
+  <data name="BusinessPerformanceHighlight" xml:space="preserve">
+    <value>Business Performance Highlight</value>
+    <comment>141575</comment>
   </data>
 </root>
