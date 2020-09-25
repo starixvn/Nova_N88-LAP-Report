@@ -28,10 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Excels\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Module\Fanex.Athena.Report.WinLossAnalysis\Fanex.Athena.Report.WinLossAnalysis.csproj" />
   </ItemGroup>
 </Project>

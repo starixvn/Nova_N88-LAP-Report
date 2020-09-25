@@ -39,7 +39,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
         }
 
         [Fact]
-        public void Export_TitleDetailSheet_CorrectTitle()
+        public void Export_AssignTitleDetailSheet_CorrectTitle()
         {
             //Arrange
             var metaModel = _fixture.Create<NewlyRegisterUsersExportMetaModel>();
@@ -71,7 +71,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
         [Theory]
         [InlineData(true, 12321)]
         [InlineData(false, 0)]
-        public void Export_DetailSheet_FirstDepositLogic_CorrectData(bool isDeposit, decimal firstDepositAmount)
+        public void Export_AssignDataDetailSheet_FirstDepositLogic_CorrectData(bool isDeposit, decimal firstDepositAmount)
         {
             //Arrange
             SetupTemplate();
@@ -129,7 +129,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
         [Theory]
         [InlineData(null, "SignupUrl")]
         [InlineData("BonusCode", null)]
-        public void Export_DetailSheet_BonusOrSignupIsNull_CorrectData1(string bonusCode, string signupUrl)
+        public void Export_AssingDataDetailSheet_BonusOrSignupIsNull_CorrectData1(string bonusCode, string signupUrl)
         {
             //Arrange
             SetupTemplate();
