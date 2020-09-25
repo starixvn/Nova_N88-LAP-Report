@@ -39,7 +39,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
         }
 
         [Fact]
-        public void Export_TitleSummarySheet_CorrectTitle()
+        public void Export_AssignTitleSummarySheet_CorrectTitle()
         {
             //Arrange
             SetupTemplate();

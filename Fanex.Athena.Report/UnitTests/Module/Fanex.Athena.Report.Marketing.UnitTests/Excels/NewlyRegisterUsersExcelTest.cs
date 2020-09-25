@@ -37,17 +37,15 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
         {
             //Arrange
             const string templatePath = "/templatePath/physicalpath";
-            var mockFileInfo = new Mock<IFileInfo>();
             var mockRow = new Mock<IRow>();
 
-            _mockExcelBuilder.Setup(_ => _.CloneSheet(It.IsAny<IWorkbook>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Mock.Of<ISheet>());
             _mockWorkbook.Setup(_ => _.GetSheet(It.IsAny<string>())).Returns(Mock.Of<ISheet>());
 
             mockRow.Setup(_ => _.Cells).Returns(MockListCell(15).ToList());
             _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>())).Returns(mockRow.Object);
 
-            mockFileInfo.Setup(_ => _.PhysicalPath).Returns(templatePath);
-            _mockFileProvider.Setup(_ => _.GetFileInfo("/ExcelTemplate/Marketing/NewlyRegisterUsers.xls")).Returns(mockFileInfo.Object);
+            _mockFileInfo.Setup(_ => _.PhysicalPath).Returns(templatePath);
+            _mockFileProvider.Setup(_ => _.GetFileInfo("/ExcelTemplate/Marketing/NewlyRegisterUsers.xls")).Returns(_mockFileInfo.Object);
 
             _mockExcelBuilder.Setup(_ => _.LoadTemplate(templatePath)).Returns(_mockWorkbook.Object);
 

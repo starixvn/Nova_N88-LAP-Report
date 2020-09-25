@@ -39,7 +39,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
             var template = _fileProvider.GetFileInfo(TemplatePath).PhysicalPath;
             var workBook = _builder.LoadTemplate(template);
             var templateSheet = workBook.GetSheet(TemplateSheetName);
-            var sheet = _builder.CloneSheet(workBook, templateSheet.SheetName, SheetName);
+            var sheet = _builder.CloneSheet(workBook, TemplateSheetName, SheetName);
 
             AssignTitle(sheet, templateSheet, metaModel);
             AssignHeader(sheet, templateSheet, metaModel);
