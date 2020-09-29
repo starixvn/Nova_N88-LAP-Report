@@ -3,12 +3,16 @@
     using Fanex.Athena.Report.BySite.Excels.Interfaces;
     using Fanex.Athena.Report.BySite.MetaModels;
     using Fanex.Athena.Report.BySite.Repositories.Interfaces;
+    using Fanex.Athena.Report.Core.Attributes;
+    using Fanex.NVC.Authentication.Extensions;
+    using Fanex.NVC.Authentication.Infrastructure;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.FileProviders;
     using System.IO;
     using System.Threading.Tasks;
 
     [ApiController]
+    [NVCAuthorize(NVCFunctionKeys.ReportLicenseeWinLoss)]
     [Route("api/[controller]/[action]")]
     public class PromotionPrizeController : ControllerBase
     {
@@ -20,10 +24,12 @@
         }
 
         [HttpPost]
+        [RequestValidation(validateCurrency: true)]
+        [AutoBindingMetaModel(bindAgent: true)]
         public async Task<FileContentResult> Export(
             [FromServices] IFileProvider file,
             [FromServices] IPromotionPrizeExcel excel,
-            PromotionPrizeMetaModel metaModel)
+            [FromForm]PromotionPrizeMetaModel metaModel)
         {
             var template = file.GetFileInfo("/ExcelTemplate/PromotionPrize.xls").PhysicalPath;
 

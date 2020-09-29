@@ -16,11 +16,11 @@
     <Setting Key="N88_Rpt_Winloss" SpName="N88_Rpt_Winloss" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
   </Funtion>
   <Function Name="ReportMarketing">
-    <Setting Key="N88_Rpt_Marketing_BusinessPerformance" SpName="N88_Rpt_Marketing_BusinessPerformance_xtest" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
+    <Setting Key="N88_Rpt_Marketing_BusinessPerformance" SpName="N88_Rpt_Marketing_BusinessPerformance" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
     <Setting Key="N88_Rpt_Marketing_UserActivities" SpName="N88_Rpt_Marketing_UserActivities" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
     <Setting Key="N88_Rpt_Marketing_Revenue" SpName="N88_Rpt_Marketing_Revenue" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
     <Setting Key="N88_Rpt_Marketing_NewlyRegisteredUsers" SpName="N88_Rpt_Marketing_NewlyRegisteredUsers" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
     <Setting Key="N88_Rpt_Marketing_NewlyRegisteredUsers_Detail" SpName="N88_Rpt_Marketing_NewlyRegisteredUsers_Detail" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
-    <Setting Key="N88_Rpt_Marketing_Main_ExportExcel" SpName="N88_Rpt_Marketing_Main_ExportExcel_xtest" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
+    <Setting Key="N88_Rpt_Marketing_Main_ExportExcel" SpName="N88_Rpt_Marketing_Main_ExportExcel" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
   </Function>
 </Functions>

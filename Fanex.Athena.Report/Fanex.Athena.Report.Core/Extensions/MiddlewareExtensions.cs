@@ -22,7 +22,7 @@
 
         public static IApplicationBuilder UseCustomApiAuth(this IApplicationBuilder builder)
         {
-            return builder.UseMiddleware<CustomApiAuthentication>();
+            return builder.UseMiddleware<InternalAPIProtect>();
         }
         public static IApplicationBuilder UseCustomHealthCheck(this IApplicationBuilder builder)
         {

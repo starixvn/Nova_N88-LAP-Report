@@ -82,9 +82,9 @@ namespace Fanex.Athena.Report.Core.UnitTests.Middleware
             }
         }
 
-        private CustomApiAuthentication CreateMiddleware()
+        private InternalAPIProtect CreateMiddleware()
         {
-            return new CustomApiAuthentication(
+            return new InternalAPIProtect(
                 next: (innerHttpContext) =>
                 {
                     innerHttpContext.Response.WriteAsync(ExpectedResponseBody);
@@ -96,7 +96,7 @@ namespace Fanex.Athena.Report.Core.UnitTests.Middleware
 
         private HttpContext CreateHttpContext(string authKey = "AuthKey", string requestPath = "/")
         {
-            var header = Mock.Of<IHeaderDictionary>(x => x["AUTH_TOKEN"] == new StringValues(authKey));
+            var header = Mock.Of<IHeaderDictionary>(x => x["X-Internal-Auth-Key"] == new StringValues(authKey));
             var request = Mock.Of<HttpRequest>(r =>
                 r.Headers == header &&
                 r.Path == new PathString(requestPath));

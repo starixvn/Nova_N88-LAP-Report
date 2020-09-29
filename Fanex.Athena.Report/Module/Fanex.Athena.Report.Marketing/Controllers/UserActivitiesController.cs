@@ -1,13 +1,17 @@
-﻿using Fanex.Athena.Report.Marketing.MetaModels;
+﻿using Fanex.Athena.Report.Core.Attributes;
+using Fanex.Athena.Report.Marketing.MetaModels;
 using Fanex.Athena.Report.Marketing.Services;
+using Fanex.NVC.Authentication.Extensions;
+using Fanex.NVC.Authentication.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace Fanex.Athena.Report.Marketing.Controllers
 {
     [ApiController]
-    [Route("api/[controller]/[action]")]
-    public class UserActivitiesController
+    [Route("api/Marketing/[controller]/[action]")]
+    [NVCAuthorize(NVCFunctionKeys.ReportMarketing)]
+    public class UserActivitiesController : ControllerBase
     {
         private readonly IUserActivitiesService _service;
 
@@ -17,6 +21,7 @@ namespace Fanex.Athena.Report.Marketing.Controllers
         }
 
         [HttpPost]
+        [RequestValidation(validateBrand: true)]
         public async Task<JsonResult> GetData([FromBody]UserActivitiesMetaModel metaModel)
         {
             var result = await _service.GetData(metaModel);

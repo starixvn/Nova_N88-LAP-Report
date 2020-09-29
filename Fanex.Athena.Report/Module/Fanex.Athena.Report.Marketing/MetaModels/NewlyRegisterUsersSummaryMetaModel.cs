@@ -10,5 +10,9 @@ namespace Fanex.Athena.Report.Marketing.MetaModels
 
         [SpParam(SqlParamName = "DisplayCurrency")]
         public string BaseCurrency { get; set; }
+
+        public override bool IsValid => base.IsValid &&
+            CompareFromDate <= CompareToDate &&
+            FromDate > CompareToDate;
     }
 }
