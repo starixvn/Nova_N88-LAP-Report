@@ -9,6 +9,6 @@ namespace Fanex.Athena.Report.Marketing.Repositories
     {
         Task<PerformanceHighlightDTO> GetData(PerformanceHighlightMetaModel metaModel);
 
-        Task<IEnumerable<PerformanceHighlightExportDTO>> ExportData(PerformanceHighlightExportMetaModel metaModel);
+        Task<IEnumerable<PerformanceHighlightExportDTO>> ExportData(PerformanceHighlightExportAllMetaModel metaModel);
     }
 }

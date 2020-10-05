@@ -3,11 +3,13 @@
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
+    using System;
 
     public static class Program
     {
         public static void Main(string[] args)
         {
+            Console.Title = "N88 Report API";
             CreateWebHostBuilder(args).Build().Run();
         }
 

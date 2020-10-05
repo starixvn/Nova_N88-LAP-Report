@@ -30,7 +30,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
 
             //Act
             _ = _target.Export(_fixture.Create<NewlyRegisterUsersSummaryDTO>(),
-                _fixture.Create<ResultModel<NewlyRegisterUsersDetailDTO>>(),
+                _fixture.CreateMany<NewlyRegisterUsersDetailDTO>(),
                 _fixture.Create<NewlyRegisterUsersExportMetaModel>());
 
             //Assert
@@ -54,13 +54,13 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             mockRow.Setup(_ => _.Cells).Returns(MockListCell(15).ToList());
             _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>())).Returns(mockRow.Object);
 
-            var expectedTitle = $"{ViewResources.NewlyRegisteredUsersAcronym} - {ViewResources.NewlyRegisteredUsers}, " +
+            var expectedTitle = $"{ViewResources.NewlyRegisteredUsers}, " +
                 $"{metaModel.FromDate.ToString(DateTimeFormat.Date)} - {metaModel.ToDate.ToString(DateTimeFormat.Date)}, " +
                 $"{ViewResources.Viewin.Replace("{0}", metaModel.BaseCurrency.ToUpperInvariant())}";
 
             //Act
             _ = _target.Export(_fixture.Create<NewlyRegisterUsersSummaryDTO>(),
-                _fixture.Create<ResultModel<NewlyRegisterUsersDetailDTO>>(),
+                _fixture.CreateMany<NewlyRegisterUsersDetailDTO>(),
                 metaModel);
 
             //Assert

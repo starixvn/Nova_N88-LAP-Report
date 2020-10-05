@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Functions SiteId="31" SiteName="LRF">
+  <Function Name="Common">
+    <Setting Key="Lrf_SelBalanceUpDay" SpName="Lrf_SelBalanceUpDay" DbName="DBEXT.bodb02.bodbLicenseeNet" />
+    <Setting Key="N88_GetListGameType" SpName="N88_GetListGameType" DbName="DBN88.bodb_N88.bodbLicenseeNet">
+      <Mapping DataField="Type" ObjectProperty="Id" />
+      <Mapping DataField="TypeName" ObjectProperty="Name" />
+    </Setting>
+  </Function>
+  <Function Name="Report">
+    <Setting Key="Lrf_Rpt_WinLoss" SpName="Lrf_Rpt_WinLoss" DbName="DBEXT.bodb02.bodbLicenseeNet" />
+    <Setting Key="Lrf_Rpt_PromotionPrize" SpName="Lrf_Rpt_PromotionPrize" DbName="DBEXT.bodb02.bodbLicenseeNet" />
+    <Setting Key="Lrf_CurrencySel" SpName="Lrf_CurrencySel" DbName="DBEXT.bodb02.bodbLicenseeNet" />
+  </Function>
+  <Funtion Name="ReportByGroup">
+    <Setting Key="N88_Rpt_Winloss" SpName="N88_Rpt_Winloss" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
+  </Funtion>
+  <Function Name="ReportMarketing">
+    <Setting Key="N88_Rpt_Marketing_BusinessPerformance" SpName="N88_Rpt_Marketing_BusinessPerformance" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
+    <Setting Key="N88_Rpt_Marketing_UserActivities" SpName="N88_Rpt_Marketing_UserActivities" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
+    <Setting Key="N88_Rpt_Marketing_Revenue" SpName="N88_Rpt_Marketing_Revenue" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
+    <Setting Key="N88_Rpt_Marketing_NewlyRegisteredUsers" SpName="N88_Rpt_Marketing_NewlyRegisteredUsers" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
+    <Setting Key="N88_Rpt_Marketing_NewlyRegisteredUsers_Detail" SpName="N88_Rpt_Marketing_NewlyRegisteredUsers_Detail" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
+    <Setting Key="N88_Rpt_Marketing_Main_ExportExcel" SpName="N88_Rpt_Marketing_Main_ExportExcel" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
+    <Setting Key="N88_Rpt_Marketing_BonusClaimed" SpName="N88_Rpt_Marketing_BonusClaimed" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
+    <Setting Key="N88_Rpt_Marketing_BonusClaimed_Detail" SpName="N88_Rpt_Marketing_BonusClaimed_Detail" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
+    <Setting Key="N88_Rpt_Marketing_Withdrawal" SpName="N88_Rpt_Marketing_Withdrawal" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
+    <Setting Key="N88_Rpt_Marketing_Withdrawal_Detail" SpName="N88_Rpt_Marketing_Withdrawal_Detail" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
+  </Function>
+</Functions>

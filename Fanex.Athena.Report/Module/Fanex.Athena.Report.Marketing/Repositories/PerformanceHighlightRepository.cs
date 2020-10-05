@@ -23,7 +23,7 @@ namespace Fanex.Athena.Report.Marketing.Repositories
             }
         }
 
-        public async Task<IEnumerable<PerformanceHighlightExportDTO>> ExportData(PerformanceHighlightExportMetaModel metaModel)
+        public async Task<IEnumerable<PerformanceHighlightExportDTO>> ExportData(PerformanceHighlightExportAllMetaModel metaModel)
         {
             using (var db = GetObjectDb(SpConsts.PerformanceHighlightExport))
             {

@@ -1,5 +1,4 @@
-﻿using Fanex.Athena.Report.Marketing.Consts;
-using Fanex.Athena.Report.Marketing.DTO;
+﻿using Fanex.Athena.Report.Marketing.DTO;
 using Fanex.Athena.Report.Marketing.MetaModels;
 using Fanex.Athena.Report.Resources;
 using NPOI.SS.UserModel;
@@ -40,7 +39,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
 
         private int SummaryCurrentRowIndex = -1;
 
-        private void BuildSummarySheet(IWorkbook workBook, NewlyRegisterUsersExportMetaModel metaModel, NewlyRegisterUsersSummaryDTO summaryData)
+        protected override void BuildSummarySheet(IWorkbook workBook, NewlyRegisterUsersExportMetaModel metaModel, NewlyRegisterUsersSummaryDTO summaryData)
         {
             var sheet = _builder.CloneSheet(workBook, SummaryTemplateSheetName, SummarySheetName);
             var templateSheet = workBook.GetSheet(SummaryTemplateSheetName);
@@ -70,10 +69,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
 
         private void AssignSummarySheetTitle(ISheet sheet, ISheet templateSheet, NewlyRegisterUsersExportMetaModel metaModel)
         {
-            var title = $"{ViewResources.NewlyRegisteredUsersAcronym} - {ViewResources.NewlyRegisteredUsers}, " +
-                $"{metaModel.FromDate.ToString(DateTimeFormat.Date)} - {metaModel.ToDate.ToString(DateTimeFormat.Date)}, " +
-                $"{ViewResources.Viewin.Replace("{0}", metaModel.BaseCurrency.ToUpperInvariant())}";
-
+            var title = BuildTitle(metaModel);
             _builder.SetRowValue(sheet, templateSheet, sourceRowIndex: SummarySheetTemplateTitle, destRowIndex: ++SummaryCurrentRowIndex, columnCount: SummarySheetColCount, value: title);
             _builder.ClearTemplate(sheet, SummaryCurrentRowIndex + 1);
         }

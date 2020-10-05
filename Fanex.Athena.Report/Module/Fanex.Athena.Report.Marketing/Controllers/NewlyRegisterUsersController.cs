@@ -40,12 +40,10 @@ namespace Fanex.Athena.Report.Marketing.Controllers
 
         [HttpPost]
         [RequestValidation(validateBrand: true)]
-        public async Task<FileResult> ExportData(
-            [FromServices]INewlyRegisterUsersExcel excel,
-            NewlyRegisterUsersExportMetaModel metaModel)
+        public async Task<FileResult> ExportData([FromServices]INewlyRegisterUsersExcel excel, NewlyRegisterUsersExportMetaModel metaModel)
         {
             var (summaryData, detailData) = await _service.GetExportData(metaModel);
-            var workBook = excel.Export(summaryData, detailData, metaModel);
+            var workBook = excel.Export(summaryData, detailData.DataList, metaModel);
             var stream = new MemoryStream();
             workBook.Write(stream);
 

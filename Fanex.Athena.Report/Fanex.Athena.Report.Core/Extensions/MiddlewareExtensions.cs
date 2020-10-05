@@ -1,12 +1,12 @@
 ﻿namespace Fanex.Athena.Report.Core.Extensions
 {
-    using System.Linq;
     using Fanex.Athena.Report.Core.Middleware;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Diagnostics.HealthChecks;
     using Microsoft.AspNetCore.Http;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
+    using System.Linq;
 
     public static class MiddlewareExtensions
     {
@@ -15,15 +15,11 @@
             return builder.UseMiddleware<ErrorHandling>();
         }
 
-        public static IApplicationBuilder UseIPFilter(this IApplicationBuilder builder)
-        {
-            return builder.UseMiddleware<IPFilter>();
-        }
-
-        public static IApplicationBuilder UseCustomApiAuth(this IApplicationBuilder builder)
+        public static IApplicationBuilder UseInternalAPIProtect(this IApplicationBuilder builder)
         {
             return builder.UseMiddleware<InternalAPIProtect>();
         }
+
         public static IApplicationBuilder UseCustomHealthCheck(this IApplicationBuilder builder)
         {
             return builder.UseHealthChecks("/health", new HealthCheckOptions

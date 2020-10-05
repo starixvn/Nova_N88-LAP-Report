@@ -16,7 +16,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Kestrel.Fanex.Athena.Report": {
+    "SelfHost-Kestrel": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "health",

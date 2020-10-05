@@ -152,8 +152,7 @@
             }
 
             app.UseCustomHealthCheck();
-            app.UseIPFilter();
-            app.UseCustomApiAuth();
+            app.UseInternalAPIProtect();
             app.UseAuthentication();
             app.UseMvc();
         }

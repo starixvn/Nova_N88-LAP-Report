@@ -51,7 +51,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             _mockExcelBuilder.Setup(_ => _.LoadTemplate(templatePath)).Returns(_mockWorkbook.Object);
 
             //Act
-            _ = _target.Export(_fixture.Create<IEnumerable<PerformanceHighlightExportDTO>>(), _fixture.Create<PerformanceHighlightExportMetaModel>());
+            _ = _target.Export(_fixture.Create<IEnumerable<PerformanceHighlightExportDTO>>(), _fixture.Create<PerformanceHighlightExportAllMetaModel>());
 
             //Assert
             _mockWorkbook.Verify(_ => _.GetSheet("Template"), Times.Once);
@@ -62,7 +62,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
         public void Export_AssignTitle_CorrectTitle()
         {
             //Arrange
-            var metaModel = _fixture.Create<PerformanceHighlightExportMetaModel>();
+            var metaModel = _fixture.Create<PerformanceHighlightExportAllMetaModel>();
 
             var mockRow = new Mock<IRow>();
             var sheet = Mock.Of<ISheet>();
@@ -93,7 +93,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
         public void Export_AssignHeader_CorrectHeader()
         {
             //Arrange
-            var metaModel = _fixture.Create<PerformanceHighlightExportMetaModel>();
+            var metaModel = _fixture.Create<PerformanceHighlightExportAllMetaModel>();
 
             var mockRow = new Mock<IRow>();
             var mockRowHeader = new Mock<IRow>();
@@ -141,7 +141,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
         public void Export_AssignRowData_CorrectRowData(double? dateRange, double? allRange, byte? dataType)
         {
             //Arrange
-            var metaModel = _fixture.Create<PerformanceHighlightExportMetaModel>();
+            var metaModel = _fixture.Create<PerformanceHighlightExportAllMetaModel>();
             var fakeRowData = new PerformanceHighlightExportDTO
             {
                 Name = _fixture.Create<string>(),

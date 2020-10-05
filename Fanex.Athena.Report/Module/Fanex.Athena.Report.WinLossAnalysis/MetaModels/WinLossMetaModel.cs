@@ -63,14 +63,14 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         public bool DrilldownInOriginalCurrency { get; set; }
 
         [SpParam(Ignored = true)]
-#pragma warning disable S1067, S109 // Expressions should not be too complex, Magic number
-        public bool IsValid => !string.IsNullOrWhiteSpace(ProductIds) && !string.IsNullOrWhiteSpace(BrandIds) &&
+#pragma warning disable S1067, S109, S1541 // Expressions should not be too complex, Magic number
+        public bool IsValid => !string.IsNullOrWhiteSpace(ProductIds) && !string.IsNullOrWhiteSpace(BrandIds) && !string.IsNullOrWhiteSpace(BaseCurrency) &&
             GroupBy >= 1 && GroupBy <= 5 &&
             DateType >= 1 && DateType <= 2 &&
             UserNameFilterId >= 1 && UserNameFilterId <= 3 &&
             FromDate <= ToDate &&
             PageSize <= MaxPageSize &&
             ListTimezoneValid.Any(_ => _ == Timezone);
-#pragma warning restore S1067, S109 // Expressions should not be too complex, Magic number
+#pragma warning restore S1067, S109,S1541 // Expressions should not be too complex, Magic number
     }
 }

@@ -32,9 +32,7 @@ namespace Fanex.Athena.Report.Marketing.Repositories
 
         [HttpPost]
         [RequestValidation(validateBrand: true)]
-        public async Task<FileResult> ExportData(
-           [FromServices]IPerformanceHighlightExcel excel,
-           PerformanceHighlightExportMetaModel metaModel)
+        public async Task<FileResult> ExportData([FromServices]IPerformanceHighlightExcel excel, PerformanceHighlightExportAllMetaModel metaModel)
         {
             var data = await _service.ExportData(metaModel);
             var workBook = excel.Export(data, metaModel);

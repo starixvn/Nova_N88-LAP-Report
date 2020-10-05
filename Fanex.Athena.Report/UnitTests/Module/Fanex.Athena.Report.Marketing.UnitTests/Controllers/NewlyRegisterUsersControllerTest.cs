@@ -72,7 +72,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Controllers
 
             _mockService.Setup(_ => _.GetExportData(metaModel)).Returns(Task.FromResult((fakeSummaryData, fakeDetailsData)));
             workBook.Setup(_ => _.Write(It.IsAny<Stream>())).Callback<Stream>(stream => expectedStream = stream as MemoryStream);
-            mockExcel.Setup(_ => _.Export(fakeSummaryData, fakeDetailsData, metaModel))
+            mockExcel.Setup(_ => _.Export(fakeSummaryData, fakeDetailsData.DataList, metaModel))
                 .Returns(workBook.Object);
 
             //Act

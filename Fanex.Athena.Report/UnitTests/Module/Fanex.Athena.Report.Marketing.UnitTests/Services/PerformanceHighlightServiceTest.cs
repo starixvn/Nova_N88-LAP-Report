@@ -35,7 +35,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
                 TotalUsers = 11384,
                 UptoTotalUsers = 123,
                 CompareUptoTotalUsers = 10248,
-                PaidUsers = 109,
+                TotalDepositUsers = 109,
                 NewlyRegisterUsers = 1101,
                 CompareNewlyRegisterUsers = 2015,
                 ActiveUsers = 541,
@@ -45,7 +45,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
             var expectedResult = new PerformanceHighlightViewModel
             {
                 TotalUsers = 11384,
-                PaidUsers = 109,
+                TotalDepositUsers = 109,
                 NewlyRegisterUsers = 1101,
                 GrowthRateNewlyRegisterUsers = 45,
                 ActiveUsers = 541,

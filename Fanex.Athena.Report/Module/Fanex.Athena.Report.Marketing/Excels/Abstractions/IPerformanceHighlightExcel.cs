@@ -7,6 +7,6 @@ namespace Fanex.Athena.Report.Marketing.Excels
 {
     public interface IPerformanceHighlightExcel
     {
-        IWorkbook Export(IEnumerable<PerformanceHighlightExportDTO> data, PerformanceHighlightExportMetaModel metaModel);
+        IWorkbook Export(IEnumerable<PerformanceHighlightExportDTO> data, PerformanceHighlightExportAllMetaModel metaModel);
     }
 }

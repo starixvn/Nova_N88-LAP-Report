@@ -51,7 +51,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
 
             //Act
             var actualWorkBoook = _target.Export(_fixture.Create<NewlyRegisterUsersSummaryDTO>(),
-                _fixture.Create<ResultModel<NewlyRegisterUsersDetailDTO>>(),
+                _fixture.CreateMany<NewlyRegisterUsersDetailDTO>(),
                 _fixture.Create<NewlyRegisterUsersExportMetaModel>());
 
             //Assert

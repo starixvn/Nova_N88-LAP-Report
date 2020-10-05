@@ -11,13 +11,13 @@ using Xunit;
 
 namespace Fanex.Athena.Report.Core.UnitTests.Middleware
 {
-    public class CustomApiAuthenticationTest
+    public class InternalAPIProtectTest
     {
         private readonly Mock<IOptions<ApplicationOptions>> applicationOptionAccessor;
 
         private const string ExpectedResponseBody = "Completed";
 
-        public CustomApiAuthenticationTest()
+        public InternalAPIProtectTest()
         {
             applicationOptionAccessor = new Mock<IOptions<ApplicationOptions>>();
             applicationOptionAccessor.Setup(app => app.Value).Returns(new ApplicationOptions
