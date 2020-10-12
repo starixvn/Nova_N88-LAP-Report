@@ -123,7 +123,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
         [Theory]
         [InlineData(null, "SignupUrl")]
         [InlineData("BonusCode", null)]
-        public void Export_AssingDataDetailSheet_BonusOrSignupIsNull_CorrectData1(string bonusCode, string signupUrl)
+        public void Export_AssingDataDetailSheet_BonusOrSignupIsNull_CorrectData(string bonusCode, string signupUrl)
         {
             //Arrange
             SetupTemplate();
