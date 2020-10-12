@@ -5,14 +5,22 @@
     using Fanex.Athena.Report.Core.DTO;
     using Fanex.Athena.Report.Core.Extensions;
     using Fanex.Athena.Report.Core.Middleware;
+    using Fanex.Core.Authentication;
+    using Fanex.Core.Utils;
+    using Fanex.NVC.Authentication;
+    using Fanex.NVC.Authentication.Extensions;
+    using Fanex.NVC.Authentication.Infrastructure;
+    using Fanex.NVC.Utils;
     using Fanex.RemotingRef;
     using MessagePack.AspNetCoreMvcFormatter;
     using MessagePack.Resolvers;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.HttpOverrides;
     using Microsoft.AspNetCore.Localization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Authorization;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.FileProviders;
@@ -54,9 +62,24 @@
                 );
             SharedServiceDIConfig.Setup(services);
             BySite.ReportBySiteDIConfig.Setup(services);
-            ByPlayer.ReportByPlayerDIConfig.Setup(services);
             WinLossAnalysis.ReportByGroupDIConfig.Setup(services);
             Marketing.ReportMarketingDIConfig.Setup(services);
+
+            var authConfig = Configuration.GetSection("MPAAuth").Get<AuthSharedSessionOption>();
+            NVCSharedAuthManager
+                .UseOptions(authConfig);
+
+            services.AddAuthentication(option =>
+            {
+                option.DefaultScheme = NVCAuthSchema.NVCSharedAuth;
+                option.DefaultAuthenticateScheme = NVCAuthSchema.NVCSharedAuth;
+                option.DefaultChallengeScheme = NVCAuthSchema.NVCSharedAuth;
+            }).AddNVCSharedAuth()
+            .Services.AddCoreServices();
+
+            services.AddSingleton<INVCMetaModelBindingService, NVCMetaModelBindingService>();
+            services.AddSingleton<ICurrencyValidation, CurrencyValidation>();
+            services.AddSingleton<IBrandValidation, BrandValidation>();
 
             CompositeResolver.RegisterAndSetAsDefault(
                      //// resolver custom types first
@@ -73,10 +96,15 @@
                 options.KnownNetworks.Clear();
                 options.KnownProxies.Clear();
             });
-            services.AddMvc(option =>
+            services.AddMvc(options =>
             {
-                option.OutputFormatters.Add(new MessagePackOutputFormatter());
-                option.InputFormatters.Add(new MessagePackInputFormatter());
+                var policy = new AuthorizationPolicyBuilder()
+                                .RequireAuthenticatedUser()
+                                .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+                options.OutputFormatters.Add(new MessagePackOutputFormatter());
+                options.InputFormatters.Add(new MessagePackInputFormatter());
+
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -122,9 +150,10 @@
             {
                 app.UseErrorHandler();
             }
+
             app.UseCustomHealthCheck();
-            app.UseIPFilter();
-            app.UseCustomApiAuth();
+            app.UseInternalAPIProtect();
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

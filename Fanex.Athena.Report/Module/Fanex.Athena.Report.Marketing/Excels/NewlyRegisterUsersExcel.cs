@@ -1,34 +1,31 @@
 ﻿using Fanex.Athena.Report.Common.Excel;
-using Fanex.Athena.Report.Common.Model.ViewModel;
+using Fanex.Athena.Report.Marketing.Consts;
 using Fanex.Athena.Report.Marketing.DTO;
 using Fanex.Athena.Report.Marketing.MetaModels;
+using Fanex.Athena.Report.Resources;
 using Microsoft.Extensions.FileProviders;
-using NPOI.SS.UserModel;
+using System.Collections.Generic;
 
 namespace Fanex.Athena.Report.Marketing.Excels
 {
-    public partial class NewlyRegisterUsersExcel : INewlyRegisterUsersExcel
+    public partial class NewlyRegisterUsersExcel : PerformanceHighlightDetailExcel<
+        NewlyRegisterUsersExportMetaModel,
+        NewlyRegisterUsersSummaryDTO,
+        IEnumerable<NewlyRegisterUsersDetailDTO>>, INewlyRegisterUsersExcel
     {
-        private const string TemplatePath = "/ExcelTemplate/Marketing/NewlyRegisterUsers.xls";
-
-        private readonly IExcelBuilder _builder;
-        private readonly IFileProvider _fileProvider;
-
         public NewlyRegisterUsersExcel(IExcelBuilder builder, IFileProvider fileProvider)
+            : base(builder, fileProvider)
         {
-            _builder = builder;
-            _fileProvider = fileProvider;
         }
 
-        public IWorkbook Export(NewlyRegisterUsersSummaryDTO summaryData, ResultModel<NewlyRegisterUsersDetailDTO> detailData, NewlyRegisterUsersExportMetaModel metaModel)
+        protected override string TemplatePath => "/ExcelTemplate/Marketing/NewlyRegisterUsers.xls";
+
+        protected override string BuildTitle(NewlyRegisterUsersExportMetaModel metaModel)
         {
-            var template = _fileProvider.GetFileInfo(TemplatePath).PhysicalPath;
-            var workBook = _builder.LoadTemplate(template);
-
-            BuildSummarySheet(workBook, metaModel, summaryData);
-            BuildDetailSheet(workBook, metaModel, detailData);
-
-            return workBook;
+            var title = $"{ViewResources.NewlyRegisteredUsers}, " +
+              $"{metaModel.FromDate.ToString(DateTimeFormat.Date)} - {metaModel.ToDate.ToString(DateTimeFormat.Date)}, " +
+              $"{ViewResources.Viewin.Replace("{0}", metaModel.BaseCurrency.ToUpperInvariant())}";
+            return title;
         }
     }
 }

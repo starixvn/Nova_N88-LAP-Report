@@ -34,7 +34,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
             _fileProvider = fileProvider;
         }
 
-        public IWorkbook Export(IEnumerable<PerformanceHighlightExportDTO> data, PerformanceHighlightExportMetaModel metaModel)
+        public IWorkbook Export(IEnumerable<PerformanceHighlightExportDTO> data, PerformanceHighlightExportAllMetaModel metaModel)
         {
             var template = _fileProvider.GetFileInfo(TemplatePath).PhysicalPath;
             var workBook = _builder.LoadTemplate(template);
@@ -50,7 +50,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
             return workBook;
         }
 
-        private void AssignTitle(ISheet sheet, ISheet templateSheet, PerformanceHighlightExportMetaModel metaModel)
+        private void AssignTitle(ISheet sheet, ISheet templateSheet, PerformanceHighlightExportAllMetaModel metaModel)
         {
             var title = $"{ViewResources.Marketing} - {ViewResources.BusinessPerformanceHighlight}, " +
                 $"{metaModel.FromDate.ToString(DateTimeFormat.Date)} - {metaModel.ToDate.ToString(DateTimeFormat.Date)}, " +
@@ -60,7 +60,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
             _builder.ClearTemplate(sheet, RowTitleTemplate + 1);
         }
 
-        private void AssignHeader(ISheet sheet, ISheet templateSheet, PerformanceHighlightExportMetaModel metaModel)
+        private void AssignHeader(ISheet sheet, ISheet templateSheet, PerformanceHighlightExportAllMetaModel metaModel)
         {
             var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: RowHeaderTemplate, destRowIndex: RowHeaderTemplate);
             var rangeHeaer = $"{metaModel.FromDate.ToString(DateTimeFormat.Date)} - {metaModel.ToDate.ToString(DateTimeFormat.Date)}";

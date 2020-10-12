@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.Extensions.Primitives;
 using System;
 using System.Threading.Tasks;
 
@@ -10,6 +9,7 @@ namespace Fanex.Athena.Report.Core.Extensions
     {
         private const string LANGUAGEKEY = "Language";
         private const string DefaultCulture = "en-US";
+
         public override Task<ProviderCultureResult> DetermineProviderCultureResult(HttpContext httpContext)
         {
             if (httpContext == null)

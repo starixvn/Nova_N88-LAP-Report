@@ -15,6 +15,7 @@
     {
         private readonly RequestDelegate _next;
         private readonly ILogger _logger;
+
         public ErrorHandling(RequestDelegate next, ILogger<ErrorHandling> logger)
         {
             _next = next;

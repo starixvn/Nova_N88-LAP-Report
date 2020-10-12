@@ -1,12 +1,10 @@
 ﻿using AutoFixture;
-using Fanex.Athena.Report.Common.Excel;
 using Fanex.Athena.Report.Common.Helpers;
 using Fanex.Athena.Report.Marketing.Consts;
 using Fanex.Athena.Report.Marketing.DTO;
 using Fanex.Athena.Report.Marketing.Excels;
 using Fanex.Athena.Report.Marketing.MetaModels;
 using Fanex.Athena.Report.Resources;
-using Microsoft.Extensions.FileProviders;
 using Moq;
 using NPOI.SS.UserModel;
 using System.Collections.Generic;
@@ -15,24 +13,8 @@ using Xunit;
 
 namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
 {
-    public class PerformanceHighlightExcelTest
+    public class PerformanceHighlightExcelTest : ExcelTest<PerformanceHighlightExcel>
     {
-        private readonly PerformanceHighlightExcel _target;
-        private readonly Mock<IExcelBuilder> _mockExcelBuilder;
-        private readonly Mock<IFileProvider> _mockFileProvider;
-        private readonly Mock<IFileInfo> _mockFileInfo;
-        private readonly Mock<IWorkbook> _mockWorkbook;
-        private readonly IFixture _fixture = new Fixture();
-
-        public PerformanceHighlightExcelTest()
-        {
-            _mockExcelBuilder = new Mock<IExcelBuilder>();
-            _mockFileProvider = new Mock<IFileProvider>();
-            _mockFileInfo = new Mock<IFileInfo>();
-            _mockWorkbook = new Mock<IWorkbook>();
-            _target = new PerformanceHighlightExcel(_mockExcelBuilder.Object, _mockFileProvider.Object);
-        }
-
         [Fact]
         public void Export_TemplateSheet_CorrectTemplateSheet()
         {
@@ -51,7 +33,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             _mockExcelBuilder.Setup(_ => _.LoadTemplate(templatePath)).Returns(_mockWorkbook.Object);
 
             //Act
-            _ = _target.Export(_fixture.Create<IEnumerable<PerformanceHighlightExportDTO>>(), _fixture.Create<PerformanceHighlightExportMetaModel>());
+            _ = _target.Export(_fixture.Create<IEnumerable<PerformanceHighlightExportDTO>>(), _fixture.Create<PerformanceHighlightExportAllMetaModel>());
 
             //Assert
             _mockWorkbook.Verify(_ => _.GetSheet("Template"), Times.Once);
@@ -62,7 +44,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
         public void Export_AssignTitle_CorrectTitle()
         {
             //Arrange
-            var metaModel = _fixture.Create<PerformanceHighlightExportMetaModel>();
+            var metaModel = _fixture.Create<PerformanceHighlightExportAllMetaModel>();
 
             var mockRow = new Mock<IRow>();
             var sheet = Mock.Of<ISheet>();
@@ -93,7 +75,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
         public void Export_AssignHeader_CorrectHeader()
         {
             //Arrange
-            var metaModel = _fixture.Create<PerformanceHighlightExportMetaModel>();
+            var metaModel = _fixture.Create<PerformanceHighlightExportAllMetaModel>();
 
             var mockRow = new Mock<IRow>();
             var mockRowHeader = new Mock<IRow>();
@@ -141,7 +123,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
         public void Export_AssignRowData_CorrectRowData(double? dateRange, double? allRange, byte? dataType)
         {
             //Arrange
-            var metaModel = _fixture.Create<PerformanceHighlightExportMetaModel>();
+            var metaModel = _fixture.Create<PerformanceHighlightExportAllMetaModel>();
             var fakeRowData = new PerformanceHighlightExportDTO
             {
                 Name = _fixture.Create<string>(),
@@ -190,16 +172,6 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             mockCellName.Verify(_ => _.SetCellValue(fakeRowData.Name), Times.Once);
             mockCellRange.Verify(_ => _.SetCellValue(!string.IsNullOrEmpty(cellRangeValue) && fakeRowData.DataType == 3 ? cellRangeValue + "%" : cellRangeValue), Times.Once);
             mockCellAllTime.Verify(_ => _.SetCellValue(!string.IsNullOrEmpty(cellAllTimeValue) && fakeRowData.DataType == 3 ? cellAllTimeValue + "%" : cellAllTimeValue), Times.Once);
-        }
-
-        private IEnumerable<ICell> MockListCell(int count)
-        {
-            var mockListCell = new List<ICell>();
-            for (int i = 0; i < count; i++)
-            {
-                mockListCell.Add(Mock.Of<ICell>());
-            }
-            return mockListCell;
         }
     }
 }

@@ -10,6 +10,6 @@ namespace Fanex.Athena.Report.Marketing.Services
     {
         Task<PerformanceHighlightViewModel> GetData(PerformanceHighlightMetaModel metaModel);
 
-        Task<IEnumerable<PerformanceHighlightExportDTO>> ExportData(PerformanceHighlightExportMetaModel metaModel);
+        Task<IEnumerable<PerformanceHighlightExportDTO>> ExportData(PerformanceHighlightExportAllMetaModel metaModel);
     }
 }

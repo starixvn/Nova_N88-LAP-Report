@@ -28,7 +28,7 @@ namespace Fanex.Athena.Report.Marketing.Services
             return result;
         }
 
-        public async Task<IEnumerable<PerformanceHighlightExportDTO>> ExportData(PerformanceHighlightExportMetaModel metaModel)
+        public async Task<IEnumerable<PerformanceHighlightExportDTO>> ExportData(PerformanceHighlightExportAllMetaModel metaModel)
         {
             var data = await _repository.ExportData(metaModel);
             return data;
@@ -40,13 +40,27 @@ namespace Fanex.Athena.Report.Marketing.Services
 
             data.TotalUsers = rawData.TotalUsers;
 
-            data.PaidUsers = rawData.PaidUsers;
+            data.TotalDepositUsers = rawData.TotalDepositUsers;
+
+            data.TotalActiveUsers = rawData.TotalActiveUsers;
+
+            data.DepositUsers = rawData.DepositUsers;
+            data.GrowthRateDepositUsers = _calculationService.CalculateGrowth(rawData.DepositUsers, rawData.CompareDepositUsers);
 
             data.ActiveUsers = rawData.ActiveUsers;
             data.GrowthRateActiveUsers = _calculationService.CalculateGrowth(rawData.ActiveUsers, rawData.CompareActiveUsers);
 
             data.NewlyRegisterUsers = rawData.NewlyRegisterUsers;
             data.GrowthRateNewlyRegisterUsers = _calculationService.CalculateGrowth(rawData.NewlyRegisterUsers, rawData.CompareNewlyRegisterUsers);
+
+            data.DepositAmount = rawData.DepositAmount;
+            data.GrowthRateDepositAmount = _calculationService.CalculateGrowth((double)rawData.DepositAmount, (double)rawData.CompareDepositAmount);
+
+            data.WithdrawalAmount = rawData.WithdrawalAmount;
+            data.GrowthRateWithdrawalAmount = _calculationService.CalculateGrowth((double)rawData.WithdrawalAmount, (double)rawData.CompareWithdrawalAmount);
+
+            data.BonusClaimeds = rawData.BonusClaimeds;
+            data.GrowthRateBonusClaimeds = _calculationService.CalculateGrowth(rawData.BonusClaimeds, rawData.CompareBonusClaimeds);
 
             data.ChurnRate = _calculationService.CalculateDistribution(rawData.UptoTotalUsers - rawData.ActiveUsers, rawData.UptoTotalUsers);
             var compareChurnRate = _calculationService.CalculateDistribution(rawData.CompareUptoTotalUsers - rawData.CompareActiveUsers, rawData.CompareUptoTotalUsers);

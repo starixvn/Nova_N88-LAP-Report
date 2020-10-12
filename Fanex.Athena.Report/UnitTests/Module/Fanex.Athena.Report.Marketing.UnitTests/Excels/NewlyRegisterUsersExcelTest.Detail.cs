@@ -1,10 +1,8 @@
 ﻿using AutoFixture;
-using Fanex.Athena.Report.Common.Model.ViewModel;
 using Fanex.Athena.Report.Marketing.Consts;
 using Fanex.Athena.Report.Marketing.DTO;
 using Fanex.Athena.Report.Marketing.MetaModels;
 using Fanex.Athena.Report.Resources;
-using Microsoft.Extensions.FileProviders;
 using Moq;
 using NPOI.SS.UserModel;
 using System.Collections.Generic;
@@ -30,7 +28,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>())).Returns(mockRow.Object);
             //Act
             _ = _target.Export(_fixture.Create<NewlyRegisterUsersSummaryDTO>(),
-                   _fixture.Create<ResultModel<NewlyRegisterUsersDetailDTO>>(),
+                   _fixture.CreateMany<NewlyRegisterUsersDetailDTO>(),
                    _fixture.Create<NewlyRegisterUsersExportMetaModel>());
 
             //Assert
@@ -54,14 +52,13 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             mockRow.Setup(_ => _.Cells).Returns(MockListCell(15).ToList());
             _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>())).Returns(mockRow.Object);
 
-
-            var expectedTitle = $"{ViewResources.NewlyRegisteredUsersAcronym} - {ViewResources.NewlyRegisteredUsers}, " +
+            var expectedTitle = $"{ViewResources.NewlyRegisteredUsers}, " +
                 $"{metaModel.FromDate.ToString(DateTimeFormat.Date)} - {metaModel.ToDate.ToString(DateTimeFormat.Date)}, " +
                 $"{ViewResources.Viewin.Replace("{0}", metaModel.BaseCurrency.ToUpperInvariant())}";
 
             //Act
             _ = _target.Export(_fixture.Create<NewlyRegisterUsersSummaryDTO>(),
-                _fixture.Create<ResultModel<NewlyRegisterUsersDetailDTO>>(),
+                _fixture.CreateMany<NewlyRegisterUsersDetailDTO>(),
                 metaModel);
 
             //Assert
@@ -82,13 +79,10 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
                 FirstDepositAmount = firstDepositAmount
             };
 
-            var fakeDetailData = new ResultModel<NewlyRegisterUsersDetailDTO>
-            {
-                DataList = new List<NewlyRegisterUsersDetailDTO>
+            var fakeDetailData = new List<NewlyRegisterUsersDetailDTO>
                 {
                     fakeRowData
-                }
-            };
+                };
 
             var metaModel = _fixture.Create<NewlyRegisterUsersExportMetaModel>();
             var mockRow = new Mock<IRow>();
@@ -129,7 +123,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
         [Theory]
         [InlineData(null, "SignupUrl")]
         [InlineData("BonusCode", null)]
-        public void Export_AssingDataDetailSheet_BonusOrSignupIsNull_CorrectData1(string bonusCode, string signupUrl)
+        public void Export_AssingDataDetailSheet_BonusOrSignupIsNull_CorrectData(string bonusCode, string signupUrl)
         {
             //Arrange
             SetupTemplate();
@@ -140,13 +134,10 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
                 SignupUrl = signupUrl
             };
 
-            var fakeDetailData = new ResultModel<NewlyRegisterUsersDetailDTO>
-            {
-                DataList = new List<NewlyRegisterUsersDetailDTO>
+            var fakeDetailData = new List<NewlyRegisterUsersDetailDTO>
                 {
                     fakeRowData
-                }
-            };
+                };
 
             var metaModel = _fixture.Create<NewlyRegisterUsersExportMetaModel>();
             var mockRow = new Mock<IRow>();
@@ -175,7 +166,6 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             //Assert
             mockBonusCodeCell.Verify(_ => _.SetCellValue(string.IsNullOrEmpty(fakeRowData.BonusCode) ? ViewResources.None : fakeRowData.BonusCode), Times.Once);
             mockSignupUrlCell.Verify(_ => _.SetCellValue(string.IsNullOrEmpty(fakeRowData.SignupUrl) ? ViewResources.None : fakeRowData.SignupUrl), Times.Once);
-
         }
 
         private void SetupDetailSheet(ISheet sheet, ISheet templateSheet)

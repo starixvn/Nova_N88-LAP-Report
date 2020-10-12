@@ -27,24 +27,21 @@ namespace Fanex.Athena.Report.Marketing.Excels
 
         private int DetailCurrentRowIndex = -1;
 
-        private void BuildDetailSheet(IWorkbook workBook, NewlyRegisterUsersExportMetaModel metaModel, ResultModel<NewlyRegisterUsersDetailDTO> detailData)
+        protected override void BuildDetailSheet(IWorkbook workBook, NewlyRegisterUsersExportMetaModel metaModel, IEnumerable<NewlyRegisterUsersDetailDTO> detailData)
         {
             var sheet = _builder.CloneSheet(workBook, DetailTemplateSheetName, DetailSheetName);
             var templateSheet = workBook.GetSheet(DetailTemplateSheetName);
 
             AssignDetailTitle(sheet, templateSheet, metaModel);
             AssignDetailHeader(sheet, templateSheet);
-            AssignDetailData(sheet, templateSheet, detailData.DataList);
+            AssignDetailData(sheet, templateSheet, detailData);
 
             _builder.RemoveSheet(workBook, DetailTemplateSheetName);
         }
 
         private void AssignDetailTitle(ISheet sheet, ISheet templateSheet, NewlyRegisterUsersExportMetaModel metaModel)
         {
-            var title = $"{ViewResources.NewlyRegisteredUsersAcronym} - {ViewResources.NewlyRegisteredUsers}, " +
-                $"{metaModel.FromDate.ToString(DateTimeFormat.Date)} - {metaModel.ToDate.ToString(DateTimeFormat.Date)}, " +
-                $"{ViewResources.Viewin.Replace("{0}", metaModel.BaseCurrency.ToUpperInvariant())}";
-
+            var title = BuildTitle(metaModel);
             _builder.SetRowValue(sheet, templateSheet, sourceRowIndex: DetailSheetTemplateTitle, destRowIndex: ++DetailCurrentRowIndex, columnCount: DetailSheetColCount, value: title);
 
             _builder.ClearTemplate(sheet, DetailCurrentRowIndex + 1);

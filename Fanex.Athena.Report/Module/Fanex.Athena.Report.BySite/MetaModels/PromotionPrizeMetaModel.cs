@@ -1,13 +1,14 @@
 ﻿namespace Fanex.Athena.Report.BySite.MetaModels
 {
-    using System;
     using Fanex.Athena.Report.Common.Model.DataDomain;
+    using Fanex.Core.Utils;
+    using System;
 
-    public class PromotionPrizeMetaModel
+    public class PromotionPrizeMetaModel : IAgentMetaModel, IDataTestableMetaModel, ICurrencyIdMetaModel, IValidationMetaModel
     {
         public int CurrencyId { get; set; }
 
-        public String CurrencyName { get; set; }
+        public string CurrencyName { get; set; }
 
         public DateTime FromDate { get; set; }
 
@@ -17,8 +18,12 @@
 
         public string AgentListXml { get; set; }
 
+        public bool IsExcludedTestData { get; set; }
+
         public int AgentId { get; set; }
 
         public string DefaultBaseCurrency { get; } = SystemBaseCurrency.EUR;
+
+        public bool IsValid => FromDate <= ToDate;
     }
 }
