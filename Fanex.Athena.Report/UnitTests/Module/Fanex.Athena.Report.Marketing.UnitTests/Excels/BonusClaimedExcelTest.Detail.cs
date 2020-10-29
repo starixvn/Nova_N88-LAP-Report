@@ -21,12 +21,12 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             SetupTemplate();
 
             var mockRow = new Mock<IRow>();
-
             _mockExcelBuilder.Setup(_ => _.CloneSheet(It.IsAny<IWorkbook>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Mock.Of<ISheet>());
             _mockWorkbook.Setup(_ => _.GetSheet(It.IsAny<string>())).Returns(Mock.Of<ISheet>());
 
             mockRow.Setup(_ => _.Cells).Returns(MockListCell(7).ToList());
             _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>())).Returns(mockRow.Object);
+
             //Act
             _ = _target.Export(_fixture.Create<BonusClaimedSummaryDTO>(),
                  _fixture.CreateMany<BonusClaimedDetailDTO>(),
@@ -53,7 +53,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             mockRow.Setup(_ => _.Cells).Returns(MockListCell(7).ToList());
             _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>())).Returns(mockRow.Object);
 
-            var expectedTitle = $"{ViewResources.BonusClaimed}, " +
+            var expectedTitle = $"{ViewResources.BonusAmountClaimed}, " +
                 $"{metaModel.FromDate.ToString(DateTimeFormat.Date)} - {metaModel.ToDate.ToString(DateTimeFormat.Date)}, " +
                 $"{ViewResources.Viewin.Replace("{0}", metaModel.BaseCurrency.ToUpperInvariant())}";
 

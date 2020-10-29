@@ -53,7 +53,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             mockRow.Setup(_ => _.Cells).Returns(MockListCell(7).ToList());
             _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>())).Returns(mockRow.Object);
 
-            var expectedTitle = $"{ViewResources.BonusClaimed}, " +
+            var expectedTitle = $"{ViewResources.BonusAmountClaimed}, " +
                           $"{metaModel.FromDate.ToString(DateTimeFormat.Date)} - {metaModel.ToDate.ToString(DateTimeFormat.Date)}, " +
                           $"{ViewResources.Viewin.Replace("{0}", metaModel.BaseCurrency.ToUpperInvariant())}";
 
@@ -66,13 +66,17 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             _mockExcelBuilder.Verify(_ => _.SetRowValue(sheet, templateSheet, 0, 0, 4, expectedTitle), Times.Once);
         }
 
-        [Fact]
-        public void Export_AssingTotalHeaderNameSummarySheet_CorrectHeaderName()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void Export_AssingTotalHeaderNameSummarySheet_CorrectHeaderName(bool allowedCompare)
         {
             //Arrange
             SetupTemplate();
 
             var metaModel = _fixture.Create<BonusClaimedExportMetaModel>();
+            metaModel.AllowedCompare = allowedCompare;
+
             var mockRow = new Mock<IRow>();
             var mockRowHeader = new Mock<IRow>();
             var sheet = Mock.Of<ISheet>();
@@ -103,8 +107,17 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             //Assert
             mockCellName.Verify(_ => _.SetCellValue(ViewResources.Total), Times.Once);
             mockCellReportDate.Verify(_ => _.SetCellValue(ViewResources.ReportDate), Times.Once);
-            mockCellCompareDate.Verify(_ => _.SetCellValue(ViewResources.CompareDate), Times.Once);
-            mockCellChangeRate.Verify(_ => _.SetCellValue(ViewResources.ChangePercent), Times.Once);
+            if(metaModel.AllowedCompare)
+            {
+                mockCellCompareDate.Verify(_ => _.SetCellValue(ViewResources.CompareDate), Times.Once);
+                mockCellChangeRate.Verify(_ => _.SetCellValue(ViewResources.ChangePercent), Times.Once);
+            }
+            else
+            {
+                mockCellCompareDate.Verify(_ => _.SetCellValue(ViewResources.CompareDate), Times.Never);
+                mockCellChangeRate.Verify(_ => _.SetCellValue(ViewResources.ChangePercent), Times.Never);
+            }
+           
         }
 
         [Fact]
