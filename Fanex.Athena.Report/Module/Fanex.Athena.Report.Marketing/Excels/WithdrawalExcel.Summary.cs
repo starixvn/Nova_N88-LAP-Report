@@ -27,8 +27,8 @@ namespace Fanex.Athena.Report.Marketing.Excels
             var templateSheet = workBook.GetSheet(SummaryTemplateSheetName);
 
             AssignSummarySheetTitle(sheet, templateSheet, metaModel);
-            AssignSummarySheetHeader(sheet, templateSheet);
-            AssignSummarySheetData(sheet, templateSheet, summaryData);
+            AssignSummarySheetHeader(sheet, templateSheet, metaModel);
+            AssignSummarySheetData(sheet, templateSheet, summaryData, metaModel);
 
             _builder.RemoveSheet(workBook, SummaryTemplateSheetName);
         }
@@ -40,39 +40,65 @@ namespace Fanex.Athena.Report.Marketing.Excels
             _builder.ClearTemplate(sheet, SummarySheetTemplateTitle + 1);
         }
 
-        private void AssignSummarySheetHeader(ISheet sheet, ISheet templateSheet)
+        private void AssignSummarySheetHeader(ISheet sheet, ISheet templateSheet, WithdrawalExportMetaModel metaModel)
         {
             var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: SummarySheetTemplateHeader, destRowIndex: SummarySheetTemplateHeader);
             row.Cells[SummarySheetNameCol].SetCellValue(string.Empty);
             row.Cells[SummarySheetReportDateCol].SetCellValue(ViewResources.ReportDate);
             row.Cells[SummarySheetCompareDateCol].SetCellValue(ViewResources.CompareDate);
             row.Cells[SummarySheetChangePercentCol].SetCellValue(ViewResources.ChangePercent);
+
+            if (metaModel.AllowedCompare)
+            {
+                row.Cells[SummarySheetCompareDateCol].SetCellValue(ViewResources.CompareDate);
+                row.Cells[SummarySheetChangePercentCol].SetCellValue(ViewResources.ChangePercent);
+            }
+            else
+            {
+                MergeCellContent(sheet, row, SummarySheetReportDateCol, SummarySheetChangePercentCol);
+            }
         }
 
-        private void AssignSummarySheetData(ISheet sheet, ISheet templateSheet, WithdrawalSummaryDTO data)
+        private void AssignSummarySheetData(ISheet sheet, ISheet templateSheet, WithdrawalSummaryDTO data, WithdrawalExportMetaModel metaModel)
         {
-            AssignSummarySheetAmountData(sheet, templateSheet, data);
-            AssignSummarySheetUsersData(sheet, templateSheet, data);
+            AssignSummarySheetAmountData(sheet, templateSheet, data, metaModel.AllowedCompare);
+            AssignSummarySheetUsersData(sheet, templateSheet, data, metaModel.AllowedCompare);
         }
 
-        private void AssignSummarySheetAmountData(ISheet sheet, ISheet templateSheet, WithdrawalSummaryDTO data)
+        private void AssignSummarySheetAmountData(ISheet sheet, ISheet templateSheet, WithdrawalSummaryDTO data, bool allowedCompare)
         {
             var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: SummarySheetTemplateAmountRow, destRowIndex: SummarySheetTemplateAmountRow);
 
             row.Cells[SummarySheetNameCol].SetCellValue(ViewResources.TotalWithdrawalAmount);
             row.Cells[SummarySheetReportDateCol].SetCellValue((double)data.WithdrawalAmount);
-            row.Cells[SummarySheetCompareDateCol].SetCellValue((double)data.CompareWithdrawalAmount);
-            row.Cells[SummarySheetChangePercentCol].SetCellValue(data.WithdrawalAmountChangeRate);
+
+            if (allowedCompare)
+            {
+                row.Cells[SummarySheetCompareDateCol].SetCellValue((double)data.CompareWithdrawalAmount);
+                row.Cells[SummarySheetChangePercentCol].SetCellValue(data.WithdrawalAmountChangeRate);
+            }
+            else
+            {
+                MergeCellContent(sheet, row, SummarySheetReportDateCol, SummarySheetChangePercentCol);
+            }
         }
 
-        private void AssignSummarySheetUsersData(ISheet sheet, ISheet templateSheet, WithdrawalSummaryDTO data)
+        private void AssignSummarySheetUsersData(ISheet sheet, ISheet templateSheet, WithdrawalSummaryDTO data, bool allowedCompare)
         {
             var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: SummarySheetTemplateUsersRow, destRowIndex: SummarySheetTemplateUsersRow);
 
             row.Cells[SummarySheetNameCol].SetCellValue(ViewResources.TotalWithdrawalUsers);
             row.Cells[SummarySheetReportDateCol].SetCellValue(data.WithdrawalUsers);
-            row.Cells[SummarySheetCompareDateCol].SetCellValue(data.CompareWithdrawalUsers);
-            row.Cells[SummarySheetChangePercentCol].SetCellValue(data.WithdrawalUsersChangeRate);
+
+            if (allowedCompare)
+            {
+                row.Cells[SummarySheetCompareDateCol].SetCellValue(data.CompareWithdrawalUsers);
+                row.Cells[SummarySheetChangePercentCol].SetCellValue(data.WithdrawalUsersChangeRate);
+            }
+            else
+            {
+                MergeCellContent(sheet, row, SummarySheetReportDateCol, SummarySheetChangePercentCol);
+            }
         }
     }
 }

@@ -23,8 +23,8 @@
         public decimal WithdrawalAmount { get; set; }
         public double GrowthRateWithdrawalAmount { get; set; }
 
-        public int BonusClaimeds { get; set; }
-        public double GrowthRateBonusClaimeds { get; set; }
+        public decimal BonusAmountClaimeds { get; set; }
+        public double GrowthRateBonusAmountClaimeds { get; set; }
 
         public double ChurnRate { get; set; }
         public double DifferentChurnRate { get; set; }

@@ -5,8 +5,8 @@ namespace Fanex.Athena.Report.Marketing.DTO
 {
     public class TotalBonusClaimedDTO
     {
-        public int BonusClaimeds { get; set; }
-        public int CompareBonusClaimeds { get; set; }
+        public decimal BonusAmountClaimeds { get; set; }
+        public decimal CompareBonusAmountClaimeds { get; set; }
 
         [SqlColumn(Ignored = true)]
         public double ChangeRate { get; set; }

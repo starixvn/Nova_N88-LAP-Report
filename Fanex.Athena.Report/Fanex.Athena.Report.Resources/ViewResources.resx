@@ -490,10 +490,6 @@
   <data name="PPC" xml:space="preserve">
     <value>PP Jackpot Contribution</value>
   </data>
-  <data name="BonusClaimed" xml:space="preserve">
-    <value>Bonus Claimed</value>
-    <comment>141575</comment>
-  </data>
   <data name="NoOfBonusClaimed" xml:space="preserve">
     <value>No. Of Bonus Claimed</value>
     <comment>141575</comment>
@@ -521,6 +517,18 @@
   <data name="WithdrawalAmount" xml:space="preserve">
     <value>Withdrawal Amount</value>
     <comment>141575</comment>
+  </data>
+  <data name="BonusAmountClaimed" xml:space="preserve">
+    <value>Bonus Amount Claimed</value>
+    <comment>143879</comment>
+  </data>
+  <data name="FromLaunchDate" xml:space="preserve">
+    <value>From {0}</value>
+    <comment>143879</comment>
+  </data>
+  <data name="MonthToDate" xml:space="preserve">
+    <value>MTD</value>
+    <comment>143879</comment>
   </data>
   <data name="CCB" xml:space="preserve">
     <value>Arcadia Gaming Bonus</value>

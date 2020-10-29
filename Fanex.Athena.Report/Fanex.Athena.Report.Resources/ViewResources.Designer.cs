@@ -19,7 +19,7 @@ namespace Fanex.Athena.Report.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ViewResources {
@@ -205,11 +205,11 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bonus Claimed.
+        ///   Looks up a localized string similar to Bonus Amount Claimed.
         /// </summary>
-        public static string BonusClaimed {
+        public static string BonusAmountClaimed {
             get {
-                return ResourceManager.GetString("BonusClaimed", resourceCulture);
+                return ResourceManager.GetString("BonusAmountClaimed", resourceCulture);
             }
         }
         
@@ -430,6 +430,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to From {0}.
+        /// </summary>
+        public static string FromLaunchDate {
+            get {
+                return ResourceManager.GetString("FromLaunchDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fishing World.
         /// </summary>
         public static string FW {
@@ -597,6 +606,15 @@ namespace Fanex.Athena.Report.Resources {
         public static string MobileLiteVersion {
             get {
                 return ResourceManager.GetString("MobileLiteVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MTD.
+        /// </summary>
+        public static string MonthToDate {
+            get {
+                return ResourceManager.GetString("MonthToDate", resourceCulture);
             }
         }
         

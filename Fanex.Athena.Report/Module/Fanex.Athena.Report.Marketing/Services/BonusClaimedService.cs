@@ -60,18 +60,18 @@ namespace Fanex.Athena.Report.Marketing.Services
                 PageIndex = 1,
                 PageSize = int.MaxValue - 100
             };
-
             var (summaryData, detailData) = await CommonExtensions.TaskExtensions.WhenAll(GetSummaryData(summaryMetaModel), GetDetailsData(detailMetaModel));
 
             return (summaryData, detailData);
         }
 
         private void HandleSummaryRawData(BonusClaimedSummaryDTO rawData)
+
         {
             var totalData = rawData.TotalData.FirstOrDefault();
             if (totalData != null)
             {
-                totalData.ChangeRate = _calculationService.CalculateGrowth(totalData.BonusClaimeds, totalData.CompareBonusClaimeds);
+                totalData.ChangeRate = _calculationService.CalculateGrowth((double)totalData.BonusAmountClaimeds, (double)totalData.CompareBonusAmountClaimeds);
             }
 
             rawData.TotalDetailData.TotalBonusClaimeds = rawData.DetailData.Sum(_ => _.NumberOfBonusClaimed);
