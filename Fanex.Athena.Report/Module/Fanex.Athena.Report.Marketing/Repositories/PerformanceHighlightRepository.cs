@@ -2,7 +2,6 @@
 using Fanex.Athena.Report.Marketing.Consts;
 using Fanex.Athena.Report.Marketing.DTO;
 using Fanex.Athena.Report.Marketing.MetaModels;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,14 +22,20 @@ namespace Fanex.Athena.Report.Marketing.Repositories
             }
         }
 
-        public async Task<IEnumerable<PerformanceHighlightExportDTO>> ExportData(PerformanceHighlightExportAllMetaModel metaModel)
+        public async Task<PerformanceHighlightExportDTO> ExportData(PerformanceHighlightExportAllMetaModel metaModel)
         {
             using (var db = GetObjectDb(SpConsts.PerformanceHighlightExport))
             {
                 using (var reader = await db.ExecuteReaderAsync(metaModel))
                 {
-                    var data = GetDataItems<PerformanceHighlightExportDTO>(reader);
-                    return data;
+                    var commonData = GetDataItems<PerformanceHighlightCommonExportDTO>(reader);
+                    var registrationDetailsData = GetDataItems<PerformanceHighlightRegistrationExportDTO>(reader, true);
+
+                    return new PerformanceHighlightExportDTO
+                    {
+                        CommonData = commonData,
+                        RegistrationData = registrationDetailsData
+                    };
                 }
             }
         }

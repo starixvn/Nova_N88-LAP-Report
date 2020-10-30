@@ -500,6 +500,26 @@
     <value>MTD</value>
     <comment>143879</comment>
   </data>
+  <data name="AllTimeVN" xml:space="preserve">
+    <value>Toàn bộ dữ liệu</value>
+    <comment>143879</comment>
+  </data>
+  <data name="FromLaunchDateVN" xml:space="preserve">
+    <value>Từ {0}</value>
+    <comment>143879</comment>
+  </data>
+  <data name="MonthToDateVN" xml:space="preserve">
+    <value>Từ đầu tháng</value>
+    <comment>143879</comment>
+  </data>
+  <data name="RegistrationDetails" xml:space="preserve">
+    <value>Registration Details</value>
+    <comment>143879</comment>
+  </data>
+  <data name="RegistrationDetailsVN" xml:space="preserve">
+    <value>Trang Đăng Ký</value>
+    <comment>143879</comment>
+  </data>
   <data name="CCB" xml:space="preserve">
     <value>乐卡迪亚红利</value>
   </data>

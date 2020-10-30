@@ -47,7 +47,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Controllers
         {
             //Arrange
             var metaModel = _fixture.Create<PerformanceHighlightExportAllMetaModel>();
-            var fakeData = _fixture.CreateMany<PerformanceHighlightExportDTO>();
+            var fakeData = _fixture.Create<PerformanceHighlightExportDTO>();
 
             var mockExcel = new Mock<IPerformanceHighlightExcel>();
             var workBook = new Mock<IWorkbook>();

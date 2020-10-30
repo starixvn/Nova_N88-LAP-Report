@@ -11,7 +11,6 @@ namespace Fanex.Athena.Report.Common.Consts
 
         public static readonly IReadOnlyDictionary<int, string> LaunchDate = new Dictionary<int, string>
         {
-            { N88SiteId, ViewResources.AllTime },
             { N8GSiteId, "09/12/2020" },
             { N8BSiteId, "08/14/2020" }
         };

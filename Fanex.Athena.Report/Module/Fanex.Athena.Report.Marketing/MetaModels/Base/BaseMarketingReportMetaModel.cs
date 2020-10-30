@@ -1,4 +1,5 @@
 ﻿using Fanex.Athena.Report.Common.Model.MetaModels;
+using Fanex.Athena.Report.Marketing.Consts;
 using Fanex.Core.Utils;
 using Fanex.Data;
 using Fanex.NVC.Authentication.Infrastructure;
@@ -8,16 +9,15 @@ namespace Fanex.Athena.Report.Marketing.MetaModels
 {
     public class BaseMarketingReportMetaModel : ITimezoneMetaModel, IBrandIdMetaModel, IValidationMetaModel
     {
-        private const int DefaultTimezone = 8;
-
         [SpParam(SqlParamName = "LicenseeId")]
         public int BrandId { get; set; }
 
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
-        public int Timezone { get; set; } = DefaultTimezone;
+        public int Timezone { get; set; } = FilterConsts.DefaultTimezone;
 
         [SpParam(Ignored = true)]
-        public virtual bool IsValid => BrandId > 0 && FromDate <= ToDate;
+        public virtual bool IsValid => BrandId > 0 && FromDate <= ToDate &&
+            ToDate.Subtract(FromDate).TotalDays <= FilterConsts.MaxRange;
     }
 }

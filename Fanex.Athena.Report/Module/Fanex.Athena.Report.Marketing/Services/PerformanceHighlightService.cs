@@ -28,7 +28,7 @@ namespace Fanex.Athena.Report.Marketing.Services
             return result;
         }
 
-        public async Task<IEnumerable<PerformanceHighlightExportDTO>> ExportData(PerformanceHighlightExportAllMetaModel metaModel)
+        public async Task<PerformanceHighlightExportDTO> ExportData(PerformanceHighlightExportAllMetaModel metaModel)
         {
             var data = await _repository.ExportData(metaModel);
             return data;

@@ -115,6 +115,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toàn bộ dữ liệu.
+        /// </summary>
+        public static string AllTimeVN {
+            get {
+                return ResourceManager.GetString("AllTimeVN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Amount.
         /// </summary>
         public static string Amount {
@@ -439,6 +448,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Từ {0}.
+        /// </summary>
+        public static string FromLaunchDateVN {
+            get {
+                return ResourceManager.GetString("FromLaunchDateVN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fishing World.
         /// </summary>
         public static string FW {
@@ -615,6 +633,15 @@ namespace Fanex.Athena.Report.Resources {
         public static string MonthToDate {
             get {
                 return ResourceManager.GetString("MonthToDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Từ đầu tháng.
+        /// </summary>
+        public static string MonthToDateVN {
+            get {
+                return ResourceManager.GetString("MonthToDateVN", resourceCulture);
             }
         }
         
@@ -840,6 +867,24 @@ namespace Fanex.Athena.Report.Resources {
         public static string RegisteredDate {
             get {
                 return ResourceManager.GetString("RegisteredDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registration Details.
+        /// </summary>
+        public static string RegistrationDetails {
+            get {
+                return ResourceManager.GetString("RegistrationDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trang Đăng Ký.
+        /// </summary>
+        public static string RegistrationDetailsVN {
+            get {
+                return ResourceManager.GetString("RegistrationDetailsVN", resourceCulture);
             }
         }
         

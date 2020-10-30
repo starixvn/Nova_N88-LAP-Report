@@ -1,6 +1,5 @@
 ﻿using AutoFixture;
 using Fanex.Athena.Report.Common.Consts;
-using Fanex.Athena.Report.Common.Helpers;
 using Fanex.Athena.Report.Marketing.Consts;
 using Fanex.Athena.Report.Marketing.DTO;
 using Fanex.Athena.Report.Marketing.Excels;
@@ -35,7 +34,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             _mockExcelBuilder.Setup(_ => _.LoadTemplate(templatePath)).Returns(_mockWorkbook.Object);
 
             //Act
-            _ = _target.Export(Enumerable.Empty<PerformanceHighlightExportDTO>(), FakeMetaModel());
+            _ = _target.Export(FakeRawData(), FakeMetaModel());
 
             //Assert
             _mockWorkbook.Verify(_ => _.GetSheet("Template"), Times.Once);
@@ -68,17 +67,17 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
                 $"{ViewResources.Viewin.Replace("{0}", metaModel.BaseCurrency.ToUpperInvariant())}";
 
             //Act
-            _ = _target.Export(Enumerable.Empty<PerformanceHighlightExportDTO>(), metaModel);
+            _ = _target.Export(FakeRawData(), metaModel);
 
             //Assert
             _mockExcelBuilder.Verify(_ => _.SetRowValue(sheet, templateSheet, 0, 0, 4, expectedTitle), Times.Exactly(2));
         }
 
         [Theory]
-        [InlineData(402, "All time")]
-        [InlineData(436, "From 09/12/2020")]
-        [InlineData(437, "From 08/14/2020")]
-        public void Export_AssignHeader_CorrectHeader(int brandId, string launchDateHeaderExpected)
+        [InlineData(402, "All time", "Toàn bộ dữ liệu")]
+        [InlineData(436, "From 09/12/2020", "Từ 09/12/2020")]
+        [InlineData(437, "From 08/14/2020", "Từ 08/14/2020")]
+        public void Export_AssignHeader_CorrectHeader(int brandId, string launchDateHeaderExpected, string launchDateHeaderVNExpected)
         {
             //Arrange
             var metaModel = FakeMetaModel(brandId);
@@ -111,17 +110,20 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
 
             _mockExcelBuilder.Setup(_ => _.CopyRow(sheet, templateSheet, It.IsAny<int>(), It.IsAny<int>())).Returns(mockRow.Object);
             _mockExcelBuilder.Setup(_ => _.CopyRow(sheet, templateSheet, 1, 1)).Returns(mockRowHeader.Object);
+            _mockExcelBuilder.Setup(_ => _.CopyRow(sheet, templateSheet, 1, 2)).Returns(mockRowHeader.Object);
             _mockExcelBuilder.Setup(_ => _.CloneSheet(_mockWorkbook.Object, It.IsAny<string>(), It.IsAny<string>())).Returns(sheet);
             _mockWorkbook.Setup(_ => _.GetSheet(It.IsAny<string>())).Returns(templateSheet);
 
             //Act
-            _ = _target.Export(Enumerable.Empty<PerformanceHighlightExportDTO>(), metaModel);
+            _ = _target.Export(FakeRawData(), metaModel);
 
             //Assert
             mockCellName.Verify(_ => _.SetCellValue(string.Empty), Times.Exactly(2));
-            mockCelllRange.Verify(_ => _.SetCellValue($"{metaModel.FromDate.ToString(DateTimeFormat.Date)} - {metaModel.ToDate.ToString(DateTimeFormat.Date)}"), Times.Exactly(2));
+            mockCelllRange.Verify(_ => _.SetCellValue($"{metaModel.FromDate.ToString(DateTimeFormat.Date)} - {metaModel.ToDate.ToString(DateTimeFormat.Date)}"), Times.Exactly(4));
             mockCellMonthToDate.Verify(_ => _.SetCellValue("MTD"), Times.Exactly(2));
+            mockCellMonthToDate.Verify(_ => _.SetCellValue("Từ đầu tháng"), Times.Exactly(2));
             mockCellAllTime.Verify(_ => _.SetCellValue(launchDateHeaderExpected), Times.Exactly(2));
+            mockCellAllTime.Verify(_ => _.SetCellValue(launchDateHeaderVNExpected), Times.Exactly(2));
         }
 
         [Theory]
@@ -131,7 +133,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
         {
             //Arrange
             var metaModel = FakeMetaModel();
-            var fakeRowData = new PerformanceHighlightExportDTO
+            var fakeRowData = new PerformanceHighlightCommonExportDTO
             {
                 Name = _fixture.Create<string>(),
                 NameVN = _fixture.Create<string>(),
@@ -173,8 +175,11 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             _mockExcelBuilder.Setup(_ => _.CloneSheet(_mockWorkbook.Object, It.IsAny<string>(), It.IsAny<string>())).Returns(sheet);
             _mockWorkbook.Setup(_ => _.GetSheet(It.IsAny<string>())).Returns(templateSheet);
 
-            //Act                                                                                                  
-            _ = _target.Export(new List<PerformanceHighlightExportDTO> { fakeRowData }, metaModel);
+            var fakeData = FakeRawData();
+            fakeData.CommonData = new List<PerformanceHighlightCommonExportDTO> { fakeRowData };
+
+            //Act
+            _ = _target.Export(fakeData, metaModel);
 
             //Assert
             AssertData(fakeRowData, mockCellName, mockCellRange, mockMonthToDate, mockCellAllTime);
@@ -187,7 +192,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
         {
             //Arrange
             var metaModel = FakeMetaModel();
-            var fakeRowData = new PerformanceHighlightExportDTO
+            var fakeRowData = new PerformanceHighlightCommonExportDTO
             {
                 Name = _fixture.Create<string>(),
                 NameVN = _fixture.Create<string>(),
@@ -229,8 +234,11 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             _mockExcelBuilder.Setup(_ => _.CloneSheet(_mockWorkbook.Object, It.IsAny<string>(), It.IsAny<string>())).Returns(sheet);
             _mockWorkbook.Setup(_ => _.GetSheet(It.IsAny<string>())).Returns(templateSheet);
 
-            //Act                                                                                                  
-            _ = _target.Export(new List<PerformanceHighlightExportDTO> { fakeRowData }, metaModel);
+            var fakeData = FakeRawData();
+            fakeData.CommonData = new List<PerformanceHighlightCommonExportDTO> { fakeRowData };
+
+            //Act
+            _ = _target.Export(fakeData, metaModel);
 
             //Assert
             AssertData(fakeRowData, mockCellName, mockCellRange, mockMonthToDate, mockCellAllTime);
@@ -243,7 +251,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
         {
             //Arrange
             var metaModel = FakeMetaModel();
-            var fakeRowData = new PerformanceHighlightExportDTO
+            var fakeRowData = new PerformanceHighlightCommonExportDTO
             {
                 Name = _fixture.Create<string>(),
                 NameVN = _fixture.Create<string>(),
@@ -285,14 +293,17 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             _mockExcelBuilder.Setup(_ => _.CloneSheet(_mockWorkbook.Object, It.IsAny<string>(), It.IsAny<string>())).Returns(sheet);
             _mockWorkbook.Setup(_ => _.GetSheet(It.IsAny<string>())).Returns(templateSheet);
 
-            //Act                                                                                                  
-            _ = _target.Export(new List<PerformanceHighlightExportDTO> { fakeRowData }, metaModel);
+            var fakeData = FakeRawData();
+            fakeData.CommonData = new List<PerformanceHighlightCommonExportDTO> { fakeRowData };
+
+            //Act
+            _ = _target.Export(fakeData, metaModel);
 
             //Assert
             AssertData(fakeRowData, mockCellName, mockCellRange, mockMonthToDate, mockCellAllTime);
         }
 
-        private void AssertData(PerformanceHighlightExportDTO fakeRowData, Mock<ICell> mockCellName, Mock<ICell> mockCellRange, Mock<ICell> mockMonthToDate, Mock<ICell> mockCellAllTime)
+        private void AssertData(PerformanceHighlightCommonExportDTO fakeRowData, Mock<ICell> mockCellName, Mock<ICell> mockCellRange, Mock<ICell> mockMonthToDate, Mock<ICell> mockCellAllTime)
         {
             mockCellName.Verify(_ => _.SetCellValue(fakeRowData.Name), Times.Once);
             mockCellName.Verify(_ => _.SetCellValue(fakeRowData.NameVN), Times.Once);
@@ -303,11 +314,11 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
 
         private void VerifyDecimalCell(Mock<ICell> mockCell, decimal? value, Times times)
         {
-            if(!value.HasValue)
+            if (!value.HasValue)
             {
                 mockCell.Verify(_ => _.SetCellValue(string.Empty), times);
             }
-            else if(value == 0)
+            else if (value == 0)
             {
                 mockCell.Verify(_ => _.SetCellValue("-"), times);
             }
@@ -322,6 +333,15 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             var metaModel = _fixture.Create<PerformanceHighlightExportAllMetaModel>();
             metaModel.BrandId = brandId != 0 ? brandId : new[] { Sites.N88SiteId, Sites.N8BSiteId, Sites.N8GSiteId }[new Random().Next(0, 2)];
             return metaModel;
+        }
+
+        private PerformanceHighlightExportDTO FakeRawData()
+        {
+            return new PerformanceHighlightExportDTO
+            {
+                CommonData = Enumerable.Empty<PerformanceHighlightCommonExportDTO>(),
+                RegistrationData = Enumerable.Empty<PerformanceHighlightRegistrationExportDTO>()
+            };
         }
     }
 }
