@@ -5,5 +5,7 @@
         public const string BA = "BA";
 
         public const string SPR = "SPR";
+
+        public const string CCB = "CCB";
     }
 }

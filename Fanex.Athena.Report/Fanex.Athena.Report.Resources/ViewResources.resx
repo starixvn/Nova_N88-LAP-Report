@@ -522,4 +522,13 @@
     <value>Withdrawal Amount</value>
     <comment>141575</comment>
   </data>
+  <data name="CCB" xml:space="preserve">
+    <value>Arcadia Gaming Bonus</value>
+  </data>
+  <data name="GameType" xml:space="preserve">
+    <value>Game Type</value>
+  </data>
+  <data name="ExtraPayout" xml:space="preserve">
+    <value>Extra Payout</value>
+  </data>
 </root>
