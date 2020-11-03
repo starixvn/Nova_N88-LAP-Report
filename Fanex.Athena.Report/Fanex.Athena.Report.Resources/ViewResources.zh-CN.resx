@@ -492,4 +492,10 @@
     <value>Withdrawal Amount</value>
     <comment>141575</comment>
   </data>
+  <data name="CCB" xml:space="preserve">
+    <value>乐卡迪亚红利</value>
+  </data>
+  <data name="ExtraPayout" xml:space="preserve">
+    <value>ExtraPayout</value>
+  </data>
 </root>

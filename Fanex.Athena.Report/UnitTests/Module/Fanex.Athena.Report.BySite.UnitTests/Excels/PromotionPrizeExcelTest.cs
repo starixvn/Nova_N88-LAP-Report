@@ -44,9 +44,8 @@ namespace Fanex.Athena.Report.BySite.UnitTests.Excels
         private Mock<ISheet> _sheet;
         private Mock<ISheet> _templateSheet;
 
-        private const string ProductCode = "SB";
+        private const string ProductCode = "CCB";
         private readonly string ProductName = ViewResources.ResourceManager.GetString(ProductCode);
-        private readonly string SabaPromotion = ViewResources.ResourceManager.GetString(Product.SPR);
 
         [Fact]
         public void AssignTitle_WhenCall_AssignCorrectValueForTitleRows()
@@ -59,7 +58,7 @@ namespace Fanex.Athena.Report.BySite.UnitTests.Excels
             var metaModel = _fixture.Create<PromotionPrizeMetaModel>();
 
             var currencyTitle = metaModel.CurrencyId <= 0 ? ViewResources.AllCurrencies : $"{ViewResources.Currency}: {metaModel.CurrencyName}";
-            var reportTitle = $"{ViewResources.PromotionPrize}, {metaModel.FromDate.ToString(FormatDate)} --> {metaModel.ToDate.ToString(FormatDate)} - {currencyTitle}";
+            var reportTitle = $"{ViewResources.ExtraPayout}, {metaModel.FromDate.ToString(FormatDate)} --> {metaModel.ToDate.ToString(FormatDate)} - {currencyTitle}";
 
             // Action
             excel.Export(TemplatePath, data, metaModel);
@@ -143,43 +142,8 @@ namespace Fanex.Athena.Report.BySite.UnitTests.Excels
             AssertRowData(bodyRow, bodyData);
         }
 
-        [Fact]
-        public void AssignSummaryTotal_WhenCall_CallSetValueCorrectly()
-        {
-            // Arrange
-            var excel = CreateExcel();
-            var rows = CreateRows();
-
-            var totalData = _fixture.Create<PromotionPrize>();
-            var bodyData = _fixture.Build<PromotionPrizeResultModel>()
-                .With(x => x.Data, new List<PromotionPrize> { _fixture.Create<PromotionPrize>() })
-                .With(x => x.SummaryTotal, new List<PromotionPrize> { totalData })
-                .Create();
-            var data = new Dictionary<string, PromotionPrizeResultModel>
-            {
-                { ProductCode, bodyData }
-            };
-            var metaModel = _fixture.Create<PromotionPrizeMetaModel>();
-
-            var totalRow = rows[2];
-            _sheet.Setup(s => s.GetRow(RowContentTemplate + 1)).Returns(totalRow.Object);
-
-            // Action
-            excel.Export(TemplatePath, data, metaModel);
-
-            // Assert
-            Mock.Get(totalRow.Object.Cells[ColumnAmount]).Verify(c => c.SetCellValue(Convert.ToDouble(totalData.Amount)), Times.Once);
-            Mock.Get(totalRow.Object.Cells[ColumnPromotionType]).Verify(c => c.SetCellValue(totalData.PromotionType), Times.Once);
-
-            _excelBuilder.Verify(x => x.MergeCells(_sheet.Object, RowContentTemplate + 1, RowContentTemplate + 1, ColumnPromotionType, ColumnSystemId), Times.Once);
-
-            Mock.Get(totalRow.Object.Cells[ColumnIndex]).Verify(c => c.SetCellValue(string.Format(ViewResources.Totalin, metaModel.DefaultBaseCurrency)), Times.Once);
-            _excelBuilder.Verify(x => x.MergeCells(_sheet.Object, RowContentTemplate + 1, RowContentTemplate + 1, ColumnIndex, ColumnDate), Times.Once);
-        }
-
         [Theory]
-        [InlineData(ProductCode, 2)]
-        [InlineData(Product.SPR, 1)]
+        [InlineData(ProductCode, 1)]
         public void AssignGrandTotal_WhenCall_CallSetValueCorrectly(string productCode, int rowIndexCount)
         {
             // Arrange
@@ -250,10 +214,10 @@ namespace Fanex.Athena.Report.BySite.UnitTests.Excels
             _excelBuilder.Setup(eb => eb.LoadTemplate(TemplatePath)).Returns(workbook.Object);
 
             _sheet = new Mock<ISheet>();
-            _excelBuilder.Setup(eb => eb.CloneSheet(workbook.Object, null, It.Is<string>(x => x == DefaultSheetName || x == ProductName || x == SabaPromotion))).Returns(_sheet.Object);
+            _excelBuilder.Setup(eb => eb.CloneSheet(workbook.Object, null, It.Is<string>(x => x == DefaultSheetName || x == ProductName))).Returns(_sheet.Object);
 
             _templateSheet = new Mock<ISheet>();
-            workbook.Setup(w => w.GetSheet(TemplateSheetName)).Returns(_templateSheet.Object);
+            workbook.Setup(w => w.GetSheet(It.Is<string>(x => x == TemplateSheetName))).Returns(_templateSheet.Object);
 
             return new PromotionPrizeExcel(_excelBuilder.Object);
         }

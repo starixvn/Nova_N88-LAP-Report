@@ -232,6 +232,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Arcadia Gaming Bonus.
+        /// </summary>
+        public static string CCB {
+            get {
+                return ResourceManager.GetString("CCB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to % Change.
         /// </summary>
         public static string ChangePercent {
@@ -403,6 +412,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Extra Payout.
+        /// </summary>
+        public static string ExtraPayout {
+            get {
+                return ResourceManager.GetString("ExtraPayout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to First Deposit Amount.
         /// </summary>
         public static string FirstDepositAmount {
@@ -417,6 +435,15 @@ namespace Fanex.Athena.Report.Resources {
         public static string FW {
             get {
                 return ResourceManager.GetString("FW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game Type.
+        /// </summary>
+        public static string GameType {
+            get {
+                return ResourceManager.GetString("GameType", resourceCulture);
             }
         }
         
