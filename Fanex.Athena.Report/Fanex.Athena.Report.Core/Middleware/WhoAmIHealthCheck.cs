@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,18 +12,22 @@ namespace Fanex.Athena.Report.Core.Middleware
     public class WhoAmIHealthCheck : IHealthCheck
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IHostingEnvironment _env;
 
-        public WhoAmIHealthCheck(IHttpContextAccessor httpContextAccessor)
+        public WhoAmIHealthCheck(IHttpContextAccessor httpContextAccessor, IHostingEnvironment env)
         {
             _httpContextAccessor = httpContextAccessor;
+            _env = env;
         }
 
         public async Task<HealthCheckResult> CheckHealthAsync(
         HealthCheckContext context,
         CancellationToken cancellationToken = default(CancellationToken))
         {
-            IDictionary<string, object> result = new Dictionary<string, object>();
-
+            IDictionary<string, object> result = new Dictionary<string, object>
+            {
+                { "Env", _env.EnvironmentName }
+            };
             await AddServerIPInfo(result);
             AddExtraServerInfo(result, _httpContextAccessor.HttpContext.Connection);
 
