@@ -880,7 +880,7 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Trang Đăng Ký.
+        ///   Looks up a localized string similar to Trang đăng ký.
         /// </summary>
         public static string RegistrationDetailsVN {
             get {

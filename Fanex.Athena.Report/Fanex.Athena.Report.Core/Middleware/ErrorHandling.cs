@@ -62,7 +62,7 @@
             var result = JsonConvert.SerializeObject(new
             {
                 State = "Internal Server Error",
-                Msg = ex.Message,
+                Msg = "Sorry, an error occurred while processing your request.",
                 Code = HttpStatusCode.InternalServerError
             });
 
