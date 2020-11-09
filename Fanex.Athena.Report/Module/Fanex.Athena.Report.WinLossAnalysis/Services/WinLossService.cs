@@ -59,7 +59,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                            _.CurrencyCode = _dataMapper.ToCurrencyCode(currencies, _.CurrencyId);
                            return _;
                        },
-                       Mapper(drilldownInOriginalCurrency, metaModel.IsGroupByPlayer));
+                       Mapper(drilldownInOriginalCurrency, metaModel.IsGroupByPlayer)).ToList();
         }
 
         private WinLossRecordViewModel ToTotalDataViewModel(WinLossDataTotalDTO dataTotal)

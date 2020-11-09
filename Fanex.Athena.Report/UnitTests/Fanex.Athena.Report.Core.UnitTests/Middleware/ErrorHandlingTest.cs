@@ -85,7 +85,7 @@ namespace Fanex.Athena.Report.Core.UnitTests.Middleware
             var expectedResponseContent = JsonConvert.SerializeObject(new
             {
                 State = "Internal Server Error",
-                Msg = ExceptionMessage,
+                Msg = "Sorry, an error occurred while processing your request.",
                 Code = HttpStatusCode.InternalServerError
             });
 
