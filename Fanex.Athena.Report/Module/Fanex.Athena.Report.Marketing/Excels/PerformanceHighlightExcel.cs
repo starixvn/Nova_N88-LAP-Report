@@ -1,5 +1,5 @@
-﻿using Fanex.Athena.Report.Common.Excel;
-using Fanex.Athena.Report.Common.Helpers;
+﻿using Fanex.Athena.Report.Common.Consts;
+using Fanex.Athena.Report.Common.Excel;
 using Fanex.Athena.Report.Marketing.Consts;
 using Fanex.Athena.Report.Marketing.DTO;
 using Fanex.Athena.Report.Marketing.MetaModels;
@@ -19,11 +19,26 @@ namespace Fanex.Athena.Report.Marketing.Excels
 
         private const int RowTitleTemplate = 0;
         private const int RowHeaderTemplate = 1;
-        private const int RowContentTemplate = 2;
-        private const int TotalColumn = 3;
+        private const int RowContentIntegerTemplate = 2;
+        private const int RowContentMoneyTemplate = 3;
+        private const int RowContentPercentTemplate = 4;
+
+        private const int TotalColumn = 4;
         private const int ColumnName = 0;
         private const int ColumnRange = 1;
-        private const int ColumnAllTime = 2;
+        private const int ColumnMonthToDate = 2;
+        private const int ColumnAllTime = 3;
+
+        private static IReadOnlyDictionary<int, int> TemplateRows = new Dictionary<int, int>
+        {
+            { DbColumnDataType.Integer, RowContentIntegerTemplate },
+            { DbColumnDataType.Money, RowContentMoneyTemplate },
+            { DbColumnDataType.Percent, RowContentPercentTemplate }
+        };
+
+        private int _currentRowIndex;
+        private bool _isModeVN;
+        private IWorkbook _workBook;
 
         private readonly IExcelBuilder _builder;
         private readonly IFileProvider _fileProvider;
@@ -34,20 +49,57 @@ namespace Fanex.Athena.Report.Marketing.Excels
             _fileProvider = fileProvider;
         }
 
-        public IWorkbook Export(IEnumerable<PerformanceHighlightExportDTO> data, PerformanceHighlightExportAllMetaModel metaModel)
+        public IWorkbook Export(PerformanceHighlightExportDTO data, PerformanceHighlightExportAllMetaModel metaModel)
         {
             var template = _fileProvider.GetFileInfo(TemplatePath).PhysicalPath;
-            var workBook = _builder.LoadTemplate(template);
-            var templateSheet = workBook.GetSheet(TemplateSheetName);
-            var sheet = _builder.CloneSheet(workBook, TemplateSheetName, SheetName);
+            _workBook = _builder.LoadTemplate(template);
+            var templateSheet = _workBook.GetSheet(TemplateSheetName);
+
+            ResetState();
+
+            BuildSheetEng(templateSheet, data, metaModel);
+            BuildSheetVn(templateSheet, data, metaModel);
+
+            _builder.RemoveSheet(_workBook, TemplateSheetName);
+
+            return _workBook;
+        }
+
+        private void BuildSheetEng(ISheet templateSheet, PerformanceHighlightExportDTO data, PerformanceHighlightExportAllMetaModel metaModel)
+        {
+            var sheet = CloneSheet();
 
             AssignTitle(sheet, templateSheet, metaModel);
-            AssignHeader(sheet, templateSheet, metaModel);
-            AssignData(sheet, templateSheet, data);
 
-            _builder.RemoveSheet(workBook, TemplateSheetName);
+            AssignCommonHeader(sheet, templateSheet, metaModel);
+            AssignCommonData(sheet, templateSheet, data.CommonData);
 
-            return workBook;
+            AssignRegistrationHeader(sheet, templateSheet, metaModel);
+            AssignRegistrationData(sheet, templateSheet, data.RegistrationData);
+        }
+
+        private void BuildSheetVn(ISheet templateSheet, PerformanceHighlightExportDTO data, PerformanceHighlightExportAllMetaModel metaModel)
+        {
+            SwitchToModeVN();
+
+            _currentRowIndex = 0;
+
+            var sheet = CloneSheet();
+
+            AssignTitle(sheet, templateSheet, metaModel);
+
+            AssignCommonHeader(sheet, templateSheet, metaModel);
+            AssignCommonData(sheet, templateSheet, data.CommonData);
+
+            AssignRegistrationHeader(sheet, templateSheet, metaModel);
+            AssignRegistrationData(sheet, templateSheet, data.RegistrationData);
+        }
+
+        private ISheet CloneSheet()
+        {
+            var suffixSheetName = _isModeVN ? "Vn" : "Eng";
+            var sheet = _builder.CloneSheet(_workBook, TemplateSheetName, SheetName + suffixSheetName);
+            return sheet;
         }
 
         private void AssignTitle(ISheet sheet, ISheet templateSheet, PerformanceHighlightExportAllMetaModel metaModel)
@@ -56,46 +108,97 @@ namespace Fanex.Athena.Report.Marketing.Excels
                 $"{metaModel.FromDate.ToString(DateTimeFormat.Date)} - {metaModel.ToDate.ToString(DateTimeFormat.Date)}, " +
                 $"{ViewResources.Viewin.Replace("{0}", metaModel.BaseCurrency.ToUpperInvariant())}";
 
-            _builder.SetRowValue(sheet, templateSheet, sourceRowIndex: RowTitleTemplate, destRowIndex: RowTitleTemplate, columnCount: TotalColumn, value: title);
+            _builder.SetRowValue(sheet, templateSheet, sourceRowIndex: RowTitleTemplate, destRowIndex: _currentRowIndex++, columnCount: TotalColumn, value: title);
             _builder.ClearTemplate(sheet, RowTitleTemplate + 1);
         }
 
-        private void AssignHeader(ISheet sheet, ISheet templateSheet, PerformanceHighlightExportAllMetaModel metaModel)
+        private void AssignCommonHeader(ISheet sheet, ISheet templateSheet, PerformanceHighlightExportAllMetaModel metaModel)
         {
-            var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: RowHeaderTemplate, destRowIndex: RowHeaderTemplate);
+            var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: RowHeaderTemplate, destRowIndex: _currentRowIndex++);
+
             var rangeHeaer = $"{metaModel.FromDate.ToString(DateTimeFormat.Date)} - {metaModel.ToDate.ToString(DateTimeFormat.Date)}";
+            var launchDateHeader = BuildLaunchDateHeader(metaModel.BrandId);
 
             row.Cells[ColumnName].SetCellValue(string.Empty);
             row.Cells[ColumnRange].SetCellValue(rangeHeaer);
-            row.Cells[ColumnAllTime].SetCellValue(ViewResources.AllTime);
+            row.Cells[ColumnMonthToDate].SetCellValue(_isModeVN ? ViewResources.MonthToDateVN : ViewResources.MonthToDate);
+            row.Cells[ColumnAllTime].SetCellValue(launchDateHeader);
         }
 
-        private void AssignData(ISheet sheet, ISheet templateSheet, IEnumerable<PerformanceHighlightExportDTO> data)
+        private void AssignRegistrationHeader(ISheet sheet, ISheet templateSheet, PerformanceHighlightExportAllMetaModel metaModel)
         {
-            var currentRowIndex = RowContentTemplate;
+            var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: RowHeaderTemplate, destRowIndex: _currentRowIndex++);
+
+            var rangeHeaer = $"{metaModel.FromDate.ToString(DateTimeFormat.Date)} - {metaModel.ToDate.ToString(DateTimeFormat.Date)}";
+            var launchDateHeader = BuildLaunchDateHeader(metaModel.BrandId);
+
+            row.Cells[ColumnName].SetCellValue(_isModeVN ? ViewResources.RegistrationDetailsVN : ViewResources.RegistrationDetails);
+            row.Cells[ColumnRange].SetCellValue(rangeHeaer);
+            row.Cells[ColumnMonthToDate].SetCellValue(_isModeVN ? ViewResources.MonthToDateVN : ViewResources.MonthToDate);
+            row.Cells[ColumnAllTime].SetCellValue(launchDateHeader);
+        }
+
+        private void AssignCommonData(ISheet sheet, ISheet templateSheet, IEnumerable<PerformanceHighlightCommonExportDTO> data)
+        {
             foreach (var rowData in data)
             {
-                AssignRowData(sheet, templateSheet, currentRowIndex++, rowData);
+                AssignRowCommonData(sheet, templateSheet, _currentRowIndex++, rowData);
             }
         }
 
-        private void AssignRowData(ISheet sheet, ISheet templateSheet, int currentRowIndex, PerformanceHighlightExportDTO rowData)
+        private void AssignRegistrationData(ISheet sheet, ISheet templateSheet, IEnumerable<PerformanceHighlightRegistrationExportDTO> data)
         {
-            var row = _builder.CopyRow(sheet, templateSheet, RowContentTemplate, currentRowIndex);
-            row.Cells[ColumnName].SetCellValue(rowData.Name);
-            SetValueDecimalCell(row.Cells[ColumnRange], rowData.DateRange, rowData.DataType);
-            SetValueDecimalCell(row.Cells[ColumnAllTime], rowData.AllRange, rowData.DataType);
-        }
-
-        private static void SetValueDecimalCell(ICell cell, decimal? value, byte? dataType)
-        {
-            var numberFormat = NumberHepler.Format(value);
-            if (!string.IsNullOrEmpty(numberFormat) && dataType == DbColumnDataType.Percent)
+            foreach (var rowData in data)
             {
-                numberFormat += "%";
+                AssignRegistrationData(sheet, templateSheet, _currentRowIndex++, rowData);
             }
+        }
 
-            cell.SetCellValue(numberFormat);
+        private void AssignRowCommonData(ISheet sheet, ISheet templateSheet, int currentRowIndex, PerformanceHighlightCommonExportDTO rowData)
+        {
+            var rowTemplateIndex = GetRowTemplateIndex(rowData.DataType);
+            var row = _builder.CopyRow(sheet, templateSheet, rowTemplateIndex, currentRowIndex);
+
+            row.Cells[ColumnName].SetCellValue(_isModeVN ? rowData.NameVN : rowData.Name);
+            ExcelHelper.SetValueCellDecimal(row.Cells[ColumnRange], rowData.DateRange);
+            ExcelHelper.SetValueCellDecimal(row.Cells[ColumnMonthToDate], rowData.MonthToDate);
+            ExcelHelper.SetValueCellDecimal(row.Cells[ColumnAllTime], rowData.AllRange);
+        }
+
+        private void AssignRegistrationData(ISheet sheet, ISheet templateSheet, int currentRowIndex, PerformanceHighlightRegistrationExportDTO rowData)
+        {
+            var rowTemplateIndex = GetRowTemplateIndex(rowData.DataType);
+            var row = _builder.CopyRow(sheet, templateSheet, rowTemplateIndex, currentRowIndex);
+
+            row.Cells[ColumnName].SetCellValue(rowData.SignupUrl);
+            ExcelHelper.SetValueCellDecimal(row.Cells[ColumnRange], rowData.SignupUsers);
+            ExcelHelper.SetValueCellDecimal(row.Cells[ColumnMonthToDate], rowData.MonthToDateSignupUsers);
+            ExcelHelper.SetValueCellDecimal(row.Cells[ColumnAllTime], rowData.TotalSignupUsers);
+        }
+
+        private void ResetState()
+        {
+            _isModeVN = false;
+            _currentRowIndex = 0;
+        }
+
+        private void SwitchToModeVN()
+        {
+            _isModeVN = true;
+        }
+
+        private string BuildLaunchDateHeader(int brandId)
+        {
+            if (brandId == Sites.N88SiteId)
+            {
+                return _isModeVN ? ViewResources.AllTimeVN : ViewResources.AllTime;
+            }
+            return string.Format(_isModeVN ? ViewResources.FromLaunchDateVN : ViewResources.FromLaunchDate, Sites.LaunchDate[brandId]);
+        }
+
+        private static int GetRowTemplateIndex(byte? dataType)
+        {
+            return TemplateRows[dataType ?? RowContentIntegerTemplate];
         }
     }
 }

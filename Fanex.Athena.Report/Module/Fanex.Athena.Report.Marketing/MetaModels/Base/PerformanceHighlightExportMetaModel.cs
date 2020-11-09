@@ -14,6 +14,8 @@ namespace Fanex.Athena.Report.Marketing.MetaModels
         public byte SortbyId { get; set; }
         public bool IsSortAsc { get; set; }
 
+        public bool AllowedCompare { get; set; }
+
 #pragma warning disable S1067, S109 // Expressions should not be too complex
 
         public override bool IsValid => base.IsValid

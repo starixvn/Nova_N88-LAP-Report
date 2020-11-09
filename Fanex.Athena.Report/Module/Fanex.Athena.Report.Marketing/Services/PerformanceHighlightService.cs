@@ -28,7 +28,7 @@ namespace Fanex.Athena.Report.Marketing.Services
             return result;
         }
 
-        public async Task<IEnumerable<PerformanceHighlightExportDTO>> ExportData(PerformanceHighlightExportAllMetaModel metaModel)
+        public async Task<PerformanceHighlightExportDTO> ExportData(PerformanceHighlightExportAllMetaModel metaModel)
         {
             var data = await _repository.ExportData(metaModel);
             return data;
@@ -59,8 +59,8 @@ namespace Fanex.Athena.Report.Marketing.Services
             data.WithdrawalAmount = rawData.WithdrawalAmount;
             data.GrowthRateWithdrawalAmount = _calculationService.CalculateGrowth((double)rawData.WithdrawalAmount, (double)rawData.CompareWithdrawalAmount);
 
-            data.BonusClaimeds = rawData.BonusClaimeds;
-            data.GrowthRateBonusClaimeds = _calculationService.CalculateGrowth(rawData.BonusClaimeds, rawData.CompareBonusClaimeds);
+            data.BonusAmountClaimeds = rawData.BonusAmountClaimeds;
+            data.GrowthRateBonusAmountClaimeds = _calculationService.CalculateGrowth((double)rawData.BonusAmountClaimeds, (double)rawData.CompareBonusAmountClaimeds);
 
             data.ChurnRate = _calculationService.CalculateDistribution(rawData.UptoTotalUsers - rawData.ActiveUsers, rawData.UptoTotalUsers);
             var compareChurnRate = _calculationService.CalculateDistribution(rawData.CompareUptoTotalUsers - rawData.CompareActiveUsers, rawData.CompareUptoTotalUsers);

@@ -40,15 +40,22 @@ namespace Fanex.Athena.Report.Marketing.Excels
 
         protected abstract string BuildTitle(TMetaModel metaModel);
 
-        protected static void SetCellValue(ICell cell, decimal? value)
+        protected void MergeCellContent(ISheet sheet, IRow row, int contentCol, int lastCol)
         {
-            if (!value.HasValue || value == 0)
+            if (contentCol >= lastCol)
             {
-                cell.SetCellValue("-");
+                return;
             }
-            else
+
+            ClearContent(row, contentCol + 1, lastCol);
+            _builder.MergeCells(sheet, row.RowNum, lastRow: row.RowNum, firstCol: contentCol, lastCol: lastCol);
+        }
+
+        private static void ClearContent(IRow row, int firstCol, int lastCol)
+        {
+            for (int colIndex = firstCol; colIndex < lastCol; colIndex++)
             {
-                cell.SetCellValue((double)value.Value);
+                row.Cells[colIndex].SetCellValue(string.Empty);
             }
         }
     }

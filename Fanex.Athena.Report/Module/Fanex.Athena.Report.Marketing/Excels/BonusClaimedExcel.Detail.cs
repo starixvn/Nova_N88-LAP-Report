@@ -1,4 +1,5 @@
-﻿using Fanex.Athena.Report.Marketing.DTO;
+﻿using Fanex.Athena.Report.Common.Excel;
+using Fanex.Athena.Report.Marketing.DTO;
 using Fanex.Athena.Report.Marketing.MetaModels;
 using Fanex.Athena.Report.Resources;
 using NPOI.SS.UserModel;
@@ -74,9 +75,9 @@ namespace Fanex.Athena.Report.Marketing.Excels
             row.Cells[DetailSheetBonusCol].SetCellValue(rowData.BonusCode);
             row.Cells[DetailSheetUsernameCol].SetCellValue(rowData.Username);
             row.Cells[DetailSheetRegisteredDateCol].SetCellValue(rowData.RegisteredDateDisplay);
-            SetCellValue(row.Cells[DetailSheetDepositAmountCol], rowData.DepositAmount);
-            SetCellValue(row.Cells[DetailSheetWithdrawalAmountCol], rowData.WithdrawalAmount);
-            SetCellValue(row.Cells[DetailSheetBonusAmountClaimedCol], rowData.BonusAmount);
+            ExcelHelper.SetValueCellDecimal(row.Cells[DetailSheetDepositAmountCol], rowData.DepositAmount);
+            ExcelHelper.SetValueCellDecimal(row.Cells[DetailSheetWithdrawalAmountCol], rowData.WithdrawalAmount);
+            ExcelHelper.SetValueCellDecimal(row.Cells[DetailSheetBonusAmountClaimedCol], rowData.BonusAmount);
         }
     }
 }

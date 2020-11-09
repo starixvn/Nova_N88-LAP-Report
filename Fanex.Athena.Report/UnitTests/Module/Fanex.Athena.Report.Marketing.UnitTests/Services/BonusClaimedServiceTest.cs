@@ -60,7 +60,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
 
             _mockRepository.Setup(_ => _.GetSummaryData(metaModel)).Returns(Task.FromResult(fakeRawData));
 
-            _mockCalculationService.Setup(_ => _.CalculateGrowth(fakeTotalData.BonusClaimeds, fakeTotalData.CompareBonusClaimeds))
+            _mockCalculationService.Setup(_ => _.CalculateGrowth((double)fakeTotalData.BonusAmountClaimeds, (double)fakeTotalData.CompareBonusAmountClaimeds))
                 .Returns(fakeTotalDataChangeRate);
 
             //Act

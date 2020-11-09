@@ -24,7 +24,7 @@
         public decimal WithdrawalAmount { get; set; }
         public decimal CompareWithdrawalAmount { get; set; }
 
-        public int BonusClaimeds { get; set; }
-        public int CompareBonusClaimeds { get; set; }
+        public decimal BonusAmountClaimeds { get; set; }
+        public decimal CompareBonusAmountClaimeds { get; set; }
     }
 }

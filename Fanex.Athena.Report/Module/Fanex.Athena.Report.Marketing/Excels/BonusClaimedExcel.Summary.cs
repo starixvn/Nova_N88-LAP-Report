@@ -35,8 +35,8 @@ namespace Fanex.Athena.Report.Marketing.Excels
             var templateSheet = workBook.GetSheet(SummaryTemplateSheetName);
 
             AssignSummarySheetTitle(sheet, templateSheet, metaModel);
-            AssignSummarySheetTotalHeader(sheet, templateSheet);
-            AssignSummarySheetTotalData(sheet, templateSheet, summaryData.TotalData);
+            AssignSummarySheetTotalHeader(sheet, templateSheet, metaModel);
+            AssignSummarySheetTotalData(sheet, templateSheet, summaryData.TotalData, metaModel);
 
             AssignSummarySheetCampaignHeader(sheet, templateSheet);
             AssignSummarySheetCampaignData(sheet, templateSheet, summaryData.DetailData, summaryData.TotalDetailData);
@@ -51,24 +51,40 @@ namespace Fanex.Athena.Report.Marketing.Excels
             _builder.ClearTemplate(sheet, SummarySheetTemplateTitle + 1);
         }
 
-        private void AssignSummarySheetTotalHeader(ISheet sheet, ISheet templateSheet)
+        private void AssignSummarySheetTotalHeader(ISheet sheet, ISheet templateSheet, BonusClaimedExportMetaModel metaModel)
         {
             var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: SummarySheetTemplateTotalHeader, destRowIndex: SummarySheetTemplateTotalHeader);
             row.Cells[SummarySheetTotalNameCol].SetCellValue(ViewResources.Total);
             row.Cells[SummarySheetTotalReportDateCol].SetCellValue(ViewResources.ReportDate);
-            row.Cells[SummarySheetTotalCompareDateCol].SetCellValue(ViewResources.CompareDate);
-            row.Cells[SummarySheetTotalChangePercentCol].SetCellValue(ViewResources.ChangePercent);
+
+            if (metaModel.AllowedCompare)
+            {
+                row.Cells[SummarySheetTotalCompareDateCol].SetCellValue(ViewResources.CompareDate);
+                row.Cells[SummarySheetTotalChangePercentCol].SetCellValue(ViewResources.ChangePercent);
+            }
+            else
+            {
+                MergeCellContent(sheet, row, SummarySheetTotalReportDateCol, SummarySheetTotalChangePercentCol);
+            }
         }
 
-        private void AssignSummarySheetTotalData(ISheet sheet, ISheet templateSheet, IEnumerable<TotalBonusClaimedDTO> totalData)
+        private void AssignSummarySheetTotalData(ISheet sheet, ISheet templateSheet, IEnumerable<TotalBonusClaimedDTO> totalData, BonusClaimedExportMetaModel metaModel)
         {
             var data = totalData.FirstOrDefault();
             var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: SummarySheetTemplateTotalContent, destRowIndex: SummarySheetTemplateTotalContent);
 
-            row.Cells[SummarySheetTotalNameCol].SetCellValue(ViewResources.BonusClaimed);
-            row.Cells[SummarySheetTotalReportDateCol].SetCellValue(data.BonusClaimeds);
-            row.Cells[SummarySheetTotalCompareDateCol].SetCellValue(data.CompareBonusClaimeds);
-            row.Cells[SummarySheetTotalChangePercentCol].SetCellValue(data.ChangeRate);
+            row.Cells[SummarySheetTotalNameCol].SetCellValue(ViewResources.BonusAmountClaimed);
+            row.Cells[SummarySheetTotalReportDateCol].SetCellValue((double)data.BonusAmountClaimeds);
+
+            if (metaModel.AllowedCompare)
+            {
+                row.Cells[SummarySheetTotalCompareDateCol].SetCellValue((double)data.CompareBonusAmountClaimeds);
+                row.Cells[SummarySheetTotalChangePercentCol].SetCellValue(data.ChangeRate);
+            }
+            else
+            {
+                MergeCellContent(sheet, row, SummarySheetTotalReportDateCol, SummarySheetTotalChangePercentCol);
+            }
         }
 
         private void AssignSummarySheetCampaignHeader(ISheet sheet, ISheet templateSheet)

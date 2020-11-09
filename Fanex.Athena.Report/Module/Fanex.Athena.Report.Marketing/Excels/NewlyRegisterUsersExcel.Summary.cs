@@ -46,8 +46,8 @@ namespace Fanex.Athena.Report.Marketing.Excels
 
             AssignSummarySheetTitle(sheet, templateSheet, metaModel);
 
-            AssignSummarySheetTotalHeader(sheet, templateSheet);
-            AssignSummarySheetTotalData(sheet, templateSheet, summaryData.TotalData);
+            AssignSummarySheetTotalHeader(sheet, templateSheet, metaModel);
+            AssignSummarySheetTotalData(sheet, templateSheet, summaryData.TotalData, metaModel);
 
             CreateSpaceRow(sheet, templateSheet);
 
@@ -74,24 +74,40 @@ namespace Fanex.Athena.Report.Marketing.Excels
             _builder.ClearTemplate(sheet, SummaryCurrentRowIndex + 1);
         }
 
-        private void AssignSummarySheetTotalHeader(ISheet sheet, ISheet templateSheet)
+        private void AssignSummarySheetTotalHeader(ISheet sheet, ISheet templateSheet, NewlyRegisterUsersExportMetaModel metaModel)
         {
             var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: SummarySheetTemplateTotalHeader, destRowIndex: ++SummaryCurrentRowIndex);
             row.Cells[SummarySheetTotalNameCol].SetCellValue(ViewResources.Total);
             row.Cells[SummarySheetTotalReportDateCol].SetCellValue(ViewResources.ReportDate);
-            row.Cells[SummarySheetTotalCompareDateCol].SetCellValue(ViewResources.CompareDate);
-            row.Cells[SummarySheetTotalChangePercentCol].SetCellValue(ViewResources.ChangePercent);
+
+            if (metaModel.AllowedCompare)
+            {
+                row.Cells[SummarySheetTotalCompareDateCol].SetCellValue(ViewResources.CompareDate);
+                row.Cells[SummarySheetTotalChangePercentCol].SetCellValue(ViewResources.ChangePercent);
+            }
+            else
+            {
+                MergeCellContent(sheet, row, SummarySheetTotalReportDateCol, SummarySheetTotalChangePercentCol);
+            }
         }
 
-        private void AssignSummarySheetTotalData(ISheet sheet, ISheet templateSheet, IEnumerable<TotalNewlyRegisterUsersDTO> totalData)
+        private void AssignSummarySheetTotalData(ISheet sheet, ISheet templateSheet, IEnumerable<TotalNewlyRegisterUsersDTO> totalData, NewlyRegisterUsersExportMetaModel metaModel)
         {
             var data = totalData.FirstOrDefault();
             var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: SummarySheetTemplateTotalContent, destRowIndex: ++SummaryCurrentRowIndex);
 
             row.Cells[SummarySheetTotalNameCol].SetCellValue(ViewResources.NewlyRegisteredUsersAcronym);
             row.Cells[SummarySheetTotalReportDateCol].SetCellValue(data.NewlyRegisterUsers);
-            row.Cells[SummarySheetTotalCompareDateCol].SetCellValue(data.CompareNewlyRegisterUsers);
-            row.Cells[SummarySheetTotalChangePercentCol].SetCellValue(data.ChangeRate);
+
+            if (metaModel.AllowedCompare)
+            {
+                row.Cells[SummarySheetTotalCompareDateCol].SetCellValue(data.CompareNewlyRegisterUsers);
+                row.Cells[SummarySheetTotalChangePercentCol].SetCellValue(data.ChangeRate);
+            }
+            else
+            {
+                MergeCellContent(sheet, row, SummarySheetTotalReportDateCol, SummarySheetTotalChangePercentCol);
+            }
         }
 
         private void AssignSummarySheetCampaignHeader(ISheet sheet, ISheet templateSheet)

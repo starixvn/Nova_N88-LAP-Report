@@ -21,7 +21,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
 
         protected override string BuildTitle(BonusClaimedExportMetaModel metaModel)
         {
-            var title = $"{ViewResources.BonusClaimed}, " +
+            var title = $"{ViewResources.BonusAmountClaimed}, " +
                           $"{metaModel.FromDate.ToString(DateTimeFormat.Date)} - {metaModel.ToDate.ToString(DateTimeFormat.Date)}, " +
                           $"{ViewResources.Viewin.Replace("{0}", metaModel.BaseCurrency.ToUpperInvariant())}";
             return title;

@@ -15,6 +15,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
 {
     public partial class WithdrawalExcelTest : ExcelTest<WithdrawalExcel>
     {
+
         [Fact]
         public void Export_Template_CorrectTemplate()
         {
