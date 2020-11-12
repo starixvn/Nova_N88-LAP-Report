@@ -13,6 +13,7 @@ namespace Fanex.Athena.Report.Common.Extensions
             { typeof(decimal), (dataReader, columnName) => GetVal<decimal>(dataReader, columnName) },
             { typeof(Nullable<Decimal>), (dataReader, columnName) => GetVal<Nullable<Decimal>>(dataReader, columnName) },
             { typeof(int), (dataReader, columnName) => GetVal<int>(dataReader, columnName) },
+            { typeof(Nullable<int>), (dataReader, columnName) => GetVal<Nullable<int>>(dataReader, columnName) },
             { typeof(Nullable<Byte>), (dataReader, columnName) => GetVal<Nullable<Byte>>(dataReader, columnName) },
             { typeof(double), (dataReader, columnName) => GetVal<double>(dataReader, columnName) },
             { typeof(DateTime), (dataReader, columnName) => GetVal<DateTime>(dataReader, columnName) },

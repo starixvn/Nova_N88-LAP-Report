@@ -84,7 +84,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
 
             if (metaModel.IsGroupByPlayer)
             {
-                return $"{data.Group}_{data.SabaId}";
+                return $"{data.Group}_{data.CustId}";
             }
 
             return data.Group;

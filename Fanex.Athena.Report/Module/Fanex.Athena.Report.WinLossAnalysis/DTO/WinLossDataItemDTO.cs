@@ -10,6 +10,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.DTO
         [SqlColumn(Ignored = true)]
         public string CurrencyCode { get; set; }
 
+        public int? CustId { get; set; }
         public string SabaId { get; set; }
         public string SabaSystemId { get; set; }
         public decimal Turnover { get; set; }
