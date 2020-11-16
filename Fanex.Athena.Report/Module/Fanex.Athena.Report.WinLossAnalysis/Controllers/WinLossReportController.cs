@@ -9,6 +9,7 @@ using Fanex.Athena.Report.WinLossAnalysis.ViewModels;
 using Fanex.NVC.Authentication.Extensions;
 using Fanex.NVC.Authentication.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -19,6 +20,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Controllers
     [NVCAuthorize(NVCFunctionKeys.ReportWinLoss)]
     public class WinLossReportController : ControllerBase
     {
+        private const int MaxRowExport = 50000;
         private readonly IWinLossService _winLossService;
 
         public WinLossReportController(IWinLossService winLossService)
@@ -41,16 +43,32 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Controllers
             ExportWinLossMetaModel metaModel
             )
         {
+            EnsureMetaModelExport(metaModel);
+
             var data = await _winLossService.GetData(metaModel);
             var sortAbleList = data.DataList as ISortableList<WinLossRecordViewModel>;
             sortAbleList?.Sort(metaModel.SortBy, metaModel.SortType);
 
-            var excel = excelCreator.CreateWinLossExcel(metaModel.GroupBy);
-            var workBook = excel.Export(data, metaModel);
-            var stream = new MemoryStream();
-            workBook.Write(stream);
+            var stream = null as MemoryStream;
+            try
+            {
+                var excel = excelCreator.CreateWinLossExcel(metaModel.GroupBy);
+                var workBook = excel.Export(data, metaModel);
+                stream = new MemoryStream();
+                workBook.Write(stream);
+                return new FileContentResult(stream.ToArray(), ExcelConsts.OctetStreamContentType);
+            }
+            finally
+            {
+                stream?.Dispose();
+                (data?.DataList as List<WinLossRecordViewModel>)?.Clear();
+            }
+        }
 
-            return new FileContentResult(stream.ToArray(), ExcelConsts.OctetStreamContentType);
+        private static void EnsureMetaModelExport(ExportWinLossMetaModel metaModel)
+        {
+            metaModel.PageIndex = 1;
+            metaModel.PageSize = MaxRowExport;
         }
     }
 }
