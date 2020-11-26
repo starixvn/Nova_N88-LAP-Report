@@ -78,7 +78,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
         private void AssignTitle(ISheet sheet, ISheet templateSheet, WinLossMetaModel metaModel)
         {
             var title = $"{ViewResources.WinLossAnalysis}, {metaModel.FromDate.ToString(DateFormat)} - {metaModel.ToDate.ToString(DateFormat)}," +
-                $" {ViewResources.DisplayCurreny}: {metaModel.BaseCurrency.ToUpperInvariant()}," +
+                $" {string.Format(ViewResources.Viewin, metaModel.BaseCurrency.ToUpperInvariant())}," +
                 $" {DataHelper.GetTimezoneName(metaModel.Timezone)}";
 
             _builder.SetRowValue(sheet, templateSheet, sourceRowIndex: RowTitleTemplate, destRowIndex: RowTitleTemplate, columnCount: ColumnTemplateCount, value: title);
