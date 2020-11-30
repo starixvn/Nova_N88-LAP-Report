@@ -97,7 +97,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
             var parent = new WinLossRecordViewModel
             {
                 Key = parentKey,
-                Group = isGroupByPlayer ? firstChild.Group : parentKey,
+                Group = isGroupByPlayer ? firstChild?.Group : parentKey,
                 SabaId = firstChild?.SabaId,
                 SabaSystemId = firstChild?.SabaSystemId,
                 Turnover = turnover,
