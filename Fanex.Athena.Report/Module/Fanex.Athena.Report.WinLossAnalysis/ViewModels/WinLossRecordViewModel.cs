@@ -12,6 +12,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.ViewModels
         public string SabaId { get; set; }
         public string SabaSystemId { get; set; }
         public decimal Turnover { get; set; }
+        public decimal NetTurnover { get; set; }
         public decimal Ggr { get; set; }
         public int BetCount { get; set; }
         public decimal AvgBetAmount { get; set; }
