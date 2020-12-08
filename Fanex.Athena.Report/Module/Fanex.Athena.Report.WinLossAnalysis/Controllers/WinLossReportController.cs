@@ -49,12 +49,11 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Controllers
             var sortAbleList = data.DataList as ISortableList<WinLossRecordViewModel>;
             sortAbleList?.Sort(metaModel.SortBy, metaModel.SortType);
 
-            var stream = null as MemoryStream;
+            var stream = new MemoryStream();
             try
             {
                 var excel = excelCreator.CreateWinLossExcel(metaModel.GroupBy);
                 var workBook = excel.Export(data, metaModel);
-                stream = new MemoryStream();
                 workBook.Write(stream);
                 return new FileContentResult(stream.ToArray(), ExcelConsts.OctetStreamContentType);
             }

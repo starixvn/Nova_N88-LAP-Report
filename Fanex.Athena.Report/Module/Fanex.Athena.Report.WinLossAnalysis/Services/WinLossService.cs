@@ -67,11 +67,12 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
             return new WinLossRecordViewModel
             {
                 Turnover = dataTotal.TotalBasedTurnover,
+                NetTurnover = dataTotal.TotalBasedNetTurnover,
                 Ggr = dataTotal.TotalBasedGGR,
                 BetCount = dataTotal.TotalBetCount,
                 AvgBetAmount = dataTotal.TotalBasedAvgBetAmount,
                 UniquePlayers = dataTotal.TotalUniquePlayers,
-                Margin = NumberHepler.Margin(dataTotal.TotalBasedGGR, dataTotal.TotalBasedTurnoverNoDraw)
+                Margin = NumberHepler.Margin(dataTotal.TotalBasedGGR, dataTotal.TotalBasedNetTurnover)
             };
         }
 
@@ -92,20 +93,21 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
 
         private static Func<bool, bool, Func<string, IEnumerable<WinLossDataItemDTO>, WinLossRecordViewModel>> Mapper = (drilldownInOriginalCurrency, isGroupByPlayer) => (parentKey, childData) =>
         {
-            var (turnoverNoDraw, turnover, ggr, betCount, uniquePlayers) = SumChildData(childData);
+            var (turnover, netTurnover, ggr, betCount, uniquePlayers) = SumChildData(childData);
             var firstChild = childData?.FirstOrDefault();
             var parent = new WinLossRecordViewModel
             {
                 Key = parentKey,
-                Group = isGroupByPlayer ? firstChild.Group : parentKey,
+                Group = isGroupByPlayer ? firstChild?.Group : parentKey,
                 SabaId = firstChild?.SabaId,
                 SabaSystemId = firstChild?.SabaSystemId,
                 Turnover = turnover,
+                NetTurnover = netTurnover,
                 Ggr = ggr,
                 BetCount = betCount,
                 UniquePlayers = uniquePlayers,
-                AvgBetAmount = turnover / betCount,
-                Margin = NumberHepler.Margin(ggr, turnoverNoDraw),
+                AvgBetAmount = netTurnover / betCount,
+                Margin = NumberHepler.Margin(ggr, netTurnover),
                 DrillDownData = SelectDrillDownData(parentKey, childData, drilldownInOriginalCurrency, isGroupByPlayer)
             };
 
@@ -116,25 +118,26 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
         {
             return childData.Select(_ => new WinLossRecordViewModel
             {
-                Key = $"{parentKey}#{ _.CurrencyCode}",
+                Key = $"{parentKey}#{_.CurrencyCode}",
                 Parent = parentKey,
                 ParentName = isGroupByPlayer ? _.Group : parentKey,
                 Group = _.CurrencyCode,
                 SabaId = _.SabaId,
                 SabaSystemId = _.SabaSystemId,
                 Turnover = drilldownInOriginalCurrency ? _.Turnover : _.BasedTurnover,
+                NetTurnover = drilldownInOriginalCurrency ? _.NetTurnover : _.BasedNetTurnover,
                 Ggr = drilldownInOriginalCurrency ? _.GGR : _.BasedGGR,
                 BetCount = _.BetCount,
                 AvgBetAmount = drilldownInOriginalCurrency ? _.AvgBetAmount : _.BasedAvgBetAmount,
                 UniquePlayers = _.UniquePlayers,
-                Margin = NumberHepler.Margin(_.BasedGGR, _.BasedTurnoverNoDraw)
+                Margin = NumberHepler.Margin(_.BasedGGR, _.BasedNetTurnover)
             });
         }
 
         private static (decimal, decimal, decimal, int, int) SumChildData(IEnumerable<WinLossDataItemDTO> childData)
         {
-            var turnoverNoDraw = 0.0m;
             var turnover = 0.0m;
+            var netTurnover = 0.0m;
             var ggr = 0.0m;
             var betCount = 0;
             var uniquePlayers = 0;
@@ -142,13 +145,13 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
             foreach (var childItem in childData)
             {
                 turnover += childItem.BasedTurnover;
+                netTurnover += childItem.BasedNetTurnover;
                 ggr += childItem.BasedGGR;
                 betCount += childItem.BetCount;
                 uniquePlayers += childItem.UniquePlayers;
-                turnoverNoDraw += childItem.BasedTurnoverNoDraw;
             }
 
-            return (turnoverNoDraw, turnover, ggr, betCount, uniquePlayers);
+            return (turnover, netTurnover, ggr, betCount, uniquePlayers);
         }
     }
 }

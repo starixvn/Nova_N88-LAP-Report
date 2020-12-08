@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 using FluentAssertions;
+using Fanex.Athena.Report.Common.Model.DTO;
 
 namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Services
 {
@@ -45,6 +46,45 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Services
 
             //Assert
             result.Should().BeEquivalentTo(SortableResultModel<WinLossRecordViewModel>.Default);
+        }
+
+        [Fact]
+        public async Task GetData_SuccessfulSameTotalData_ReturnResult()
+        {
+            //Arrange
+            var metaModel = _fixture.Create<WinLossMetaModel>();
+            WinLossDataItemDTO data = new WinLossDataItemDTO() { Group = "g1", CurrencyId = 1, CurrencyCode = "1", CustId = 1, SabaId = "123", SabaSystemId = "111", BetCount = 1000 };
+            WinLossDataTotalDTO dataTotal = new WinLossDataTotalDTO() {
+                TotalBasedTurnoverNoDraw = 0,
+                TotalBasedGGR = 0,
+                TotalBetCount = 0,
+                TotalBasedAvgBetAmount = 0,
+                TotalUniquePlayers = 0
+            };
+            List<WinLossDataItemDTO> listData = new List<WinLossDataItemDTO>() { data };
+            var dataExpected = new Tuple<IEnumerable<WinLossDataItemDTO>, WinLossDataTotalDTO, int>(listData, dataTotal, 1);
+
+            WinLossRecordViewModel dataTotalExpected = new WinLossRecordViewModel()
+            {
+                Turnover = 0,
+                Ggr = 0,
+                BetCount = 0,
+                AvgBetAmount = 0,
+                UniquePlayers = 0,
+                Margin = 0
+            };
+
+            _mockRepository.Setup(_ => _.GetData(metaModel)).Returns(Task.FromResult((dataExpected.Item1, dataExpected.Item2, dataExpected.Item3)));
+            IDictionary<int, Currency> currencies = new Dictionary<int, Currency>();
+            currencies.Add(1, new Currency() { ID = 1, Name = "USD" });
+            _mockCurrencyService.Setup(_ => _.GetCurrencyDictionaryAsync()).Returns(Task.FromResult(currencies));
+
+            //Act
+            var result = await _target.GetData(metaModel);
+
+            //Assert
+            dataTotalExpected.Should().BeEquivalentTo(result.TotalData);
+            Assert.Equal(1, result.TotalRows);
         }
     }
 }

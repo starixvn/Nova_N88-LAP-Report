@@ -14,16 +14,17 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
         private const int _rowTotalDataTemplate = 5;
         private const int _rowNoInfoTemplate = 6;
 
-        private const int _columnTemplateCount = 10;
+        private const int _columnTemplateCount = 11;
 
         private const int ColumnSabaId = 2;
         private const int ColumnSabaSystemId = 3;
         private const int ColumnTurnover = 4;
-        private const int ColumnGGR = 5;
-        private const int ColumnBetCount = 6;
-        private const int ColumnAvgBetAmount = 7;
-        private const int ColumnUniquePlayers = 8;
-        private const int ColumnMargin = 9;
+        private const int ColumnNetTurnover = 5;
+        private const int ColumnGGR = 6;
+        private const int ColumnBetCount = 7;
+        private const int ColumnAvgBetAmount = 8;
+        private const int ColumnUniquePlayers = 9;
+        private const int ColumnMargin = 10;
 
         protected override int RowParentContentTemplate => _rowParentContentTemplate;
 
@@ -46,6 +47,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
             row.Cells[ColumnSabaId].SetCellValue(rowData.SabaId);
             row.Cells[ColumnSabaSystemId].SetCellValue(rowData.SabaSystemId);
             row.Cells[ColumnTurnover].SetCellValue((double)rowData.Turnover);
+            row.Cells[ColumnNetTurnover].SetCellValue((double)rowData.NetTurnover);
             row.Cells[ColumnGGR].SetCellValue((double)rowData.Ggr);
             row.Cells[ColumnBetCount].SetCellValue(rowData.BetCount);
             row.Cells[ColumnAvgBetAmount].SetCellValue((double)rowData.AvgBetAmount);
@@ -60,6 +62,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
             row.Cells[ColumnSabaId].SetCellValue(ViewResources.SabaId);
             row.Cells[ColumnSabaSystemId].SetCellValue(ViewResources.SabaSystemId);
             row.Cells[ColumnTurnover].SetCellValue(ViewResources.Turnover);
+            row.Cells[ColumnNetTurnover].SetCellValue(ViewResources.NetTurnover);
             row.Cells[ColumnGGR].SetCellValue(ViewResources.GGR);
             row.Cells[ColumnBetCount].SetCellValue(ViewResources.BetCount);
             row.Cells[ColumnAvgBetAmount].SetCellValue(ViewResources.AvgBetAmount);
@@ -71,6 +74,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
         {
             row.Cells[ColumnGroup].SetCellValue(ViewResources.Total);
             row.Cells[ColumnTurnover].SetCellValue((double)dataTotal.Turnover);
+            row.Cells[ColumnNetTurnover].SetCellValue((double)dataTotal.NetTurnover);
             row.Cells[ColumnGGR].SetCellValue((double)dataTotal.Ggr);
             row.Cells[ColumnBetCount].SetCellValue(dataTotal.BetCount);
             row.Cells[ColumnAvgBetAmount].SetCellValue((double)dataTotal.AvgBetAmount);
