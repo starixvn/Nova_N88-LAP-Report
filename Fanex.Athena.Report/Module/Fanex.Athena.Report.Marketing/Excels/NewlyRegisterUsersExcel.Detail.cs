@@ -1,6 +1,4 @@
-﻿using Fanex.Athena.Report.Common.Model.ViewModel;
-using Fanex.Athena.Report.Marketing.Consts;
-using Fanex.Athena.Report.Marketing.DTO;
+﻿using Fanex.Athena.Report.Marketing.DTO;
 using Fanex.Athena.Report.Marketing.MetaModels;
 using Fanex.Athena.Report.Resources;
 using NPOI.SS.UserModel;
@@ -77,17 +75,8 @@ namespace Fanex.Athena.Report.Marketing.Excels
             row.Cells[DetailSheetUsernameCol].SetCellValue(rowData.Username);
             row.Cells[DetailSheetRegisteredDateCol].SetCellValue(rowData.RegisteredDateDisplay);
             row.Cells[DetailSheetSignupUrlCol].SetCellValue(string.IsNullOrEmpty(rowData.SignupUrl) ? ViewResources.None : rowData.SignupUrl);
-
-            if (rowData.IsDeposit)
-            {
-                row.Cells[DetailSheetDepositCol].SetCellValue(ViewResources.Yes);
-                row.Cells[DetailSheetFirstDepositAmountCol].SetCellValue((double)rowData.FirstDepositAmount);
-            }
-            else
-            {
-                row.Cells[DetailSheetDepositCol].SetCellValue(ViewResources.No);
-                row.Cells[DetailSheetFirstDepositAmountCol].SetCellValue("-");
-            }
+            row.Cells[DetailSheetFirstDepositAmountCol].SetCellValue((double)rowData.FirstDepositAmount);
+            row.Cells[DetailSheetDepositCol].SetCellValue(rowData.IsDeposit ? ViewResources.Yes : ViewResources.No);
         }
     }
 }

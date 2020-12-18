@@ -24,8 +24,9 @@ namespace Fanex.Athena.Report.Marketing.DTO
         public decimal FirstDepositAmount { get; set; }
     }
 
-    public class SignupUrlNewlyRegisterUsersDTO
+    public class SignupUrlNewlyRegisterUsersDTO : ISignupDTO<SignupUrlNewlyRegisterUsersDTO>
     {
+        public string SignUpSource { get; set; }
         public string SignupUrl { get; set; }
 
         public int NewlyRegisterUsers { get; set; }
@@ -34,12 +35,33 @@ namespace Fanex.Athena.Report.Marketing.DTO
         public int DepositUsers { get; set; }
 
         public decimal FirstDepositAmount { get; set; }
+
+        [SqlColumn(Ignored = true)]
+        public bool NoGrouping { get; set; }
+
+        [SqlColumn(Ignored = true)]
+        public IEnumerable<SignupUrlNewlyRegisterUsersDTO> Childs { get; set; }
+    }
+
+    public class TotalSignupUrlNewlyRegisterUsersDTO
+    {
+        public int TotalNewlyRegisterUsers { get; set; }
+
+        public int TotalDepositUsers { get; set; }
+
+        public decimal TotalFirstDepositAmount { get; set; }
     }
 
     public class NewlyRegisterUsersSummaryDTO
     {
+        public NewlyRegisterUsersSummaryDTO()
+        {
+            TotalSignupData = new TotalSignupUrlNewlyRegisterUsersDTO();
+        }
+
         public IEnumerable<TotalNewlyRegisterUsersDTO> TotalData { get; set; }
         public IEnumerable<CampaignNewlyRegisterUsersDTO> CampaignData { get; set; }
         public IEnumerable<SignupUrlNewlyRegisterUsersDTO> SignupData { get; set; }
+        public TotalSignupUrlNewlyRegisterUsersDTO TotalSignupData { get; set; }
     }
 }

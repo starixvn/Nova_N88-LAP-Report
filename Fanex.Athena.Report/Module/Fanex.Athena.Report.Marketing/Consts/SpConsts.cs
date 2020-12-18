@@ -12,5 +12,7 @@
         public const string WithdrawalDetail = "N88_Rpt_Marketing_Withdrawal_Detail";
         public const string BonusClaimedSummary = "N88_Rpt_Marketing_BonusClaimed";
         public const string BonusClaimedDetail = "N88_Rpt_Marketing_BonusClaimed_Detail";
+        public const string DepositAmountSummary = "N88_Rpt_Marketing_Deposit";
+        public const string DepositAmountDetail = "N88_Rpt_Marketing_Deposit_Detail";
     }
 }

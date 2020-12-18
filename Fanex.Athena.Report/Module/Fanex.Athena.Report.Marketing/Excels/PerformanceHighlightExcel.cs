@@ -170,7 +170,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
             var rowTemplateIndex = GetRowTemplateIndex(rowData.DataType);
             var row = _builder.CopyRow(sheet, templateSheet, rowTemplateIndex, currentRowIndex);
 
-            row.Cells[ColumnName].SetCellValue(rowData.SignupUrl);
+            row.Cells[ColumnName].SetCellValue(_isModeVN ? rowData.SignupUrlVN : rowData.SignupUrl);
             ExcelHelper.SetValueCellDecimal(row.Cells[ColumnRange], rowData.SignupUsers);
             ExcelHelper.SetValueCellDecimal(row.Cells[ColumnMonthToDate], rowData.MonthToDateSignupUsers);
             ExcelHelper.SetValueCellDecimal(row.Cells[ColumnAllTime], rowData.TotalSignupUsers);

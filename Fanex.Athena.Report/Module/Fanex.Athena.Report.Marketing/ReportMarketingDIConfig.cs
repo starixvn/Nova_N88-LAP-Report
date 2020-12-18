@@ -23,6 +23,7 @@ namespace Fanex.Athena.Report.Marketing
             services.AddTransient<INewlyRegisterUsersRepository, NewlyRegisterUsersRepository>();
             services.AddTransient<IWithdrawalRepository, WithdrawalRepository>();
             services.AddTransient<IBonusClaimedRepository, BonusClaimedRepository>();
+            services.AddTransient<IDepositAmountRepository, DepositAmountRepository>();
 
             return services;
         }
@@ -35,6 +36,7 @@ namespace Fanex.Athena.Report.Marketing
             services.AddTransient<INewlyRegisterUsersService, NewlyRegisterUsersService>();
             services.AddTransient<IWithdrawalService, WithdrawalService>();
             services.AddTransient<IBonusClaimedService, BonusClaimedService>();
+            services.AddTransient<IDepositAmountService, DepositAmountService>();
 
             return services;
         }
@@ -45,6 +47,7 @@ namespace Fanex.Athena.Report.Marketing
             services.AddTransient<IPerformanceHighlightExcel, PerformanceHighlightExcel>();
             services.AddTransient<IWithdrawalExcel, WithdrawalExcel>();
             services.AddTransient<IBonusClaimedExcel, BonusClaimedExcel>();
+            services.AddTransient<IDepositAmountExcel, DepositAmountExcel>();
 
             return services;
         }
