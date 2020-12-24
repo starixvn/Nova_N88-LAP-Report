@@ -664,7 +664,7 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Net Turnover.
+        ///   Looks up a localized string similar to Valid Turnover.
         /// </summary>
         public static string NetTurnover {
             get {
