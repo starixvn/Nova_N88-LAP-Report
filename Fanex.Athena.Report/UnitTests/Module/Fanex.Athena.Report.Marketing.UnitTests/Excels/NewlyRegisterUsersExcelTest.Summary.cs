@@ -29,7 +29,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>())).Returns(mockRow.Object);
 
             //Act
-            _ = _target.Export(_fixture.Create<NewlyRegisterUsersSummaryDTO>(),
+            _ = _target.Export(FakeSummaryDTO(),
                 _fixture.CreateMany<NewlyRegisterUsersDetailDTO>(),
                 _fixture.Create<NewlyRegisterUsersExportMetaModel>());
 
@@ -59,7 +59,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
                 $"{ViewResources.Viewin.Replace("{0}", metaModel.BaseCurrency.ToUpperInvariant())}";
 
             //Act
-            _ = _target.Export(_fixture.Create<NewlyRegisterUsersSummaryDTO>(),
+            _ = _target.Export(FakeSummaryDTO(),
                 _fixture.CreateMany<NewlyRegisterUsersDetailDTO>(),
                 metaModel);
 
