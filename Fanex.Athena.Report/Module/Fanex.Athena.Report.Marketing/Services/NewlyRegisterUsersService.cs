@@ -1,8 +1,11 @@
 ﻿using Fanex.Athena.Report.Common.Model.ViewModel;
 using Fanex.Athena.Report.Common.Services.Interfaces;
 using Fanex.Athena.Report.Marketing.DTO;
+using Fanex.Athena.Report.Marketing.Helpers;
 using Fanex.Athena.Report.Marketing.MetaModels;
 using Fanex.Athena.Report.Marketing.Repositories;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CommonExtensions = Fanex.Athena.Report.Common.Extensions;
@@ -73,6 +76,18 @@ namespace Fanex.Athena.Report.Marketing.Services
             {
                 totalData.ChangeRate = _calculationService.CalculateGrowth(totalData.NewlyRegisterUsers, totalData.CompareNewlyRegisterUsers);
             }
+
+
+            rawData.TotalSignupData.TotalNewlyRegisterUsers = rawData.SignupData.Sum(_ => _.NewlyRegisterUsers);
+            rawData.TotalSignupData.TotalDepositUsers = rawData.SignupData.Sum(_ => _.DepositUsers);
+            rawData.TotalSignupData.TotalFirstDepositAmount = rawData.SignupData.Sum(_ => _.FirstDepositAmount);
+
+            rawData.SignupData = GroupingHelper.GroupingSignupData(rawData.SignupData, (item, childs) =>
+            {
+                item.NewlyRegisterUsers = childs.Sum(_ => _.NewlyRegisterUsers);
+                item.DepositUsers = childs.Sum(_ => _.DepositUsers);
+                item.FirstDepositAmount = childs.Sum(_ => _.FirstDepositAmount);
+            });
         }
     }
 }

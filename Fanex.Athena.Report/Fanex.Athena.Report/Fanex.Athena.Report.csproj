@@ -38,6 +38,9 @@
     <Content Include="ExcelTemplate\Marketing\BonusClaimed.xls">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="ExcelTemplate\Marketing\DepositAmount.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="ExcelTemplate\Marketing\NewlyRegisterUsers.xls">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

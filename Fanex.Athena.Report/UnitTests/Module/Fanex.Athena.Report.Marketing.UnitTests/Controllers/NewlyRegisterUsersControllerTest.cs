@@ -31,7 +31,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Controllers
         {
             //Arrange
             var metaModel = _fixture.Create<NewlyRegisterUsersSummaryMetaModel>();
-            var expectedResult = _fixture.Create<NewlyRegisterUsersSummaryDTO>();
+            var expectedResult = new NewlyRegisterUsersSummaryDTO();
 
             _mockService.Setup(_ => _.GetSummaryData(metaModel)).Returns(Task.FromResult(expectedResult));
 
@@ -64,7 +64,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Controllers
             //Arrange
             var metaModel = _fixture.Create<NewlyRegisterUsersExportMetaModel>();
             var fakeDetailsData = _fixture.Create<ResultModel<NewlyRegisterUsersDetailDTO>>();
-            var fakeSummaryData = _fixture.Create<NewlyRegisterUsersSummaryDTO>();
+            var fakeSummaryData = new NewlyRegisterUsersSummaryDTO();
 
             var mockExcel = new Mock<INewlyRegisterUsersExcel>();
             var workBook = new Mock<IWorkbook>();

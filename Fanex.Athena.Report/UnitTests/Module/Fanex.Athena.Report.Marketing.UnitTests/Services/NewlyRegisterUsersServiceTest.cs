@@ -42,7 +42,58 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
                     fakeTotalData
                 },
                 CampaignData = _fixture.Create<IEnumerable<CampaignNewlyRegisterUsersDTO>>(),
-                SignupData = _fixture.Create<IEnumerable<SignupUrlNewlyRegisterUsersDTO>>()
+                SignupData = new List<SignupUrlNewlyRegisterUsersDTO>
+                {
+                    new SignupUrlNewlyRegisterUsersDTO
+                    {
+                        SignUpSource = "AFF",
+                        SignupUrl = "AFF",
+                        DepositUsers = _fixture.Create<int>(),
+                        NewlyRegisterUsers = _fixture.Create<int>(),
+                        FirstDepositAmount = _fixture.Create<decimal>()
+                    },
+                    new SignupUrlNewlyRegisterUsersDTO
+                    {
+                        SignUpSource = "Credit Site",
+                        SignupUrl = "Credit Site",
+                        DepositUsers = _fixture.Create<int>(),
+                        NewlyRegisterUsers = _fixture.Create<int>(),
+                        FirstDepositAmount = _fixture.Create<decimal>()
+                    },
+                    new SignupUrlNewlyRegisterUsersDTO
+                    {
+                        SignUpSource = "None",
+                        SignupUrl =  "None",
+                        DepositUsers = _fixture.Create<int>(),
+                        NewlyRegisterUsers = _fixture.Create<int>(),
+                        FirstDepositAmount = _fixture.Create<decimal>()
+                    },
+                    new SignupUrlNewlyRegisterUsersDTO
+                    {
+                        SignUpSource = "Nova88.net",
+                        SignupUrl = "nova88.com",
+                        DepositUsers = _fixture.Create<int>(),
+                        NewlyRegisterUsers = _fixture.Create<int>(),
+                        FirstDepositAmount = _fixture.Create<decimal>()
+                    },
+                    new SignupUrlNewlyRegisterUsersDTO
+                    {
+                        SignUpSource = "Nova88.net",
+                        SignupUrl = "nova88.net",
+                        DepositUsers = _fixture.Create<int>(),
+                        NewlyRegisterUsers = _fixture.Create<int>(),
+                        FirstDepositAmount = _fixture.Create<decimal>()
+                    },
+                    new SignupUrlNewlyRegisterUsersDTO
+                    {
+                        SignUpSource = "Nova88.net",
+                        SignupUrl = "m.nova88.net",
+                        DepositUsers = _fixture.Create<int>(),
+                        NewlyRegisterUsers = _fixture.Create<int>(),
+                        FirstDepositAmount = _fixture.Create<decimal>()
+                    }
+                },
+
             };
 
             _mockRepository.Setup(_ => _.GetSummaryData(metaModel)).Returns(Task.FromResult(expectedResult));
@@ -54,6 +105,23 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
             //Assert
             Assert.Equal(fakeTotalRate, actualResult.TotalData.FirstOrDefault()?.ChangeRate);
             Assert.Equal(expectedResult, actualResult);
+
+            Assert.Equal(expectedResult.SignupData.Sum(_ => _.DepositUsers), actualResult.TotalSignupData.TotalDepositUsers);
+            Assert.Equal(expectedResult.SignupData.Sum(_ => _.NewlyRegisterUsers), actualResult.TotalSignupData.TotalNewlyRegisterUsers);
+            Assert.Equal(expectedResult.SignupData.Sum(_ => _.FirstDepositAmount), actualResult.TotalSignupData.TotalFirstDepositAmount);
+
+            var affSignup = actualResult.SignupData.FirstOrDefault(_ => _.SignUpSource.Equals("AFF"));
+            Assert.True(affSignup.NoGrouping);
+
+            var creditSignup = actualResult.SignupData.FirstOrDefault(_ => _.SignUpSource.Equals("Credit Site"));
+            Assert.True(creditSignup.NoGrouping);
+
+            var noneSignup = actualResult.SignupData.FirstOrDefault(_ => _.SignUpSource.Equals("None"));
+            Assert.True(noneSignup.NoGrouping);
+
+            var mainSignup = actualResult.SignupData.FirstOrDefault(_ => _.SignUpSource.Equals("Nova88.net"));
+            Assert.False(mainSignup.NoGrouping);
+            Assert.Equal(3, mainSignup.Childs.Count());
         }
 
         [Fact]
@@ -108,7 +176,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
 
 
             _mockRepository.Setup(_ => _.GetSummaryData(It.IsAny<NewlyRegisterUsersSummaryMetaModel>()))
-                .Returns(Task.FromResult(_fixture.Create<NewlyRegisterUsersSummaryDTO>()))
+                .Returns(Task.FromResult(FakeSummaryDTO()))
                 .Callback<NewlyRegisterUsersSummaryMetaModel>(model => actualSummaryMetaModel = model);
 
             _mockRepository.Setup(_ => _.GetDetailsData(It.IsAny<NewlyRegisterUsersDetailMetaModel>()))
@@ -128,7 +196,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
         {
             //Arrange
             var metaModel = _fixture.Create<NewlyRegisterUsersExportMetaModel>();
-            var expectedSummaryData = _fixture.Create<NewlyRegisterUsersSummaryDTO>();
+            var expectedSummaryData = FakeSummaryDTO();
             var expectedDetailResult = new ResultModel<NewlyRegisterUsersDetailDTO>
             {
                 DataList = _fixture.Create<IEnumerable<NewlyRegisterUsersDetailDTO>>(),
@@ -145,6 +213,17 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
             //Assert
             actualSummaryResult.Should().BeEquivalentTo(expectedSummaryData);
             actualDetailResult.Should().BeEquivalentTo(expectedDetailResult);
+        }
+
+        private NewlyRegisterUsersSummaryDTO FakeSummaryDTO()
+        {
+            return new NewlyRegisterUsersSummaryDTO
+            {
+                TotalData = _fixture.CreateMany<TotalNewlyRegisterUsersDTO>(),
+                CampaignData = _fixture.CreateMany<CampaignNewlyRegisterUsersDTO>(),
+                TotalSignupData = _fixture.Create<TotalSignupUrlNewlyRegisterUsersDTO>(),
+                SignupData = new List<SignupUrlNewlyRegisterUsersDTO>()
+            };
         }
     }
 }

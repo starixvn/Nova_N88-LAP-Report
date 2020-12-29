@@ -16,7 +16,7 @@ namespace Fanex.Athena.Report.Common.Excel
             }
         }
 
-        public static void SetValueCellDecimal(ICell cell, decimal? value, bool allowedZero = false, string emptySympol = EmptySympol)
+        public static void SetValueCellDecimal(ICell cell, decimal? value, bool allowedZero = true, string emptySympol = EmptySympol)
         {
             if (!value.HasValue)
             {

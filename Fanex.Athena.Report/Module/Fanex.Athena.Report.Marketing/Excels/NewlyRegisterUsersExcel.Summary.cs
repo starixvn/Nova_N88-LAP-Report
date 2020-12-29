@@ -37,7 +37,9 @@ namespace Fanex.Athena.Report.Marketing.Excels
         private const int SummarySheetSingupDepositCol = 2;
         private const int SummarySheetSingupFirstDepositAmountCol = 3;
 
-        private int SummaryCurrentRowIndex = -1;
+        private const int SummarySheetTemplateSingupTotalContent = 8;
+
+        private int SummaryCurrentRowIndex = -1; 
 
         protected override void BuildSummarySheet(IWorkbook workBook, NewlyRegisterUsersExportMetaModel metaModel, NewlyRegisterUsersSummaryDTO summaryData)
         {
@@ -58,6 +60,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
 
             AssignSummarySheetSignupHeader(sheet, templateSheet);
             AssignSummarySheetSignupData(sheet, templateSheet, summaryData.SignupData);
+            AssignSummarySheetSignupTotalData(sheet, templateSheet, SummaryCurrentRowIndex, summaryData.TotalSignupData);
 
             _builder.RemoveSheet(workBook, SummaryTemplateSheetName);
         }
@@ -150,7 +153,14 @@ namespace Fanex.Athena.Report.Marketing.Excels
         {
             foreach (var item in signupData)
             {
-                AssignSummarySignupRowData(sheet, templateSheet, SummaryCurrentRowIndex++, item);
+                if(item.Childs != null && item.Childs.Any())
+                {
+                    AssignSummarySheetSignupData(sheet, templateSheet, item.Childs);
+                }
+                else
+                {
+                    AssignSummarySignupRowData(sheet, templateSheet, SummaryCurrentRowIndex++, item);
+                }
             }
         }
 
@@ -161,6 +171,16 @@ namespace Fanex.Athena.Report.Marketing.Excels
             row.Cells[SummarySheetSingupNRUCol].SetCellValue(rowData.NewlyRegisterUsers);
             row.Cells[SummarySheetSingupDepositCol].SetCellValue(rowData.DepositUsers);
             row.Cells[SummarySheetSingupFirstDepositAmountCol].SetCellValue((double)rowData.FirstDepositAmount);
+        }
+
+        private void AssignSummarySheetSignupTotalData(ISheet sheet, ISheet templateSheet, int lastRowIndex, TotalSignupUrlNewlyRegisterUsersDTO rowData)
+        {
+            var row = _builder.CopyRow(sheet, templateSheet, SummarySheetTemplateSingupTotalContent, lastRowIndex + 1);
+
+            row.Cells[SummarySheetSingupNameCol].SetCellValue(ViewResources.Total);
+            row.Cells[SummarySheetSingupNRUCol].SetCellValue(rowData.TotalNewlyRegisterUsers);
+            row.Cells[SummarySheetSingupDepositCol].SetCellValue(rowData.TotalDepositUsers);
+            row.Cells[SummarySheetSingupFirstDepositAmountCol].SetCellValue((double)rowData.TotalFirstDepositAmount);
         }
     }
 }

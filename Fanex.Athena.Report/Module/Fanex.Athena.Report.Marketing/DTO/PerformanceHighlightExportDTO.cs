@@ -16,6 +16,8 @@ namespace Fanex.Athena.Report.Marketing.DTO
     public class PerformanceHighlightRegistrationExportDTO
     {
         public string SignupUrl { get; set; }
+        public string SignupUrlVN { get; set; }
+
         public int SignupUsers { get; set; }
 
         [SqlColumn(ColumnName = "MTD_SignupUsers")]

@@ -174,14 +174,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
 
         protected void AssertDecimalCell(Mock<ICell> mockCell, decimal value, Func<Times> times)
         {
-            if (value == 0)
-            {
-                mockCell.Verify(_ => _.SetCellValue("-"), times);
-            }
-            else
-            {
                 mockCell.Verify(_ => _.SetCellValue((double)value), times);
-            }
         }
 
         private void SetupDetailSheet(ISheet sheet, ISheet templateSheet)

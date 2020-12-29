@@ -27,7 +27,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             mockRow.Setup(_ => _.Cells).Returns(MockListCell(15).ToList());
             _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>())).Returns(mockRow.Object);
             //Act
-            _ = _target.Export(_fixture.Create<NewlyRegisterUsersSummaryDTO>(),
+            _ = _target.Export(FakeSummaryDTO(),
                    _fixture.CreateMany<NewlyRegisterUsersDetailDTO>(),
                    _fixture.Create<NewlyRegisterUsersExportMetaModel>());
 
@@ -57,7 +57,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
                 $"{ViewResources.Viewin.Replace("{0}", metaModel.BaseCurrency.ToUpperInvariant())}";
 
             //Act
-            _ = _target.Export(_fixture.Create<NewlyRegisterUsersSummaryDTO>(),
+            _ = _target.Export(FakeSummaryDTO(),
                 _fixture.CreateMany<NewlyRegisterUsersDetailDTO>(),
                 metaModel);
 
@@ -104,7 +104,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             _mockExcelBuilder.Setup(_ => _.CopyRow(sheet, templateSheet, 2, 2)).Returns(mockRowDataItem.Object);
 
             //Act
-            _ = _target.Export(_fixture.Create<NewlyRegisterUsersSummaryDTO>(),
+            _ = _target.Export(FakeSummaryDTO(),
                 fakeDetailData,
                 metaModel);
 
@@ -116,7 +116,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             }
             else
             {
-                mockDepositAmountCell.Verify(_ => _.SetCellValue("-"), Times.Once);
+                mockDepositAmountCell.Verify(_ => _.SetCellValue(0), Times.Once);
             }
         }
 
@@ -159,7 +159,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             _mockExcelBuilder.Setup(_ => _.CopyRow(sheet, templateSheet, 2, 2)).Returns(mockRowDataItem.Object);
 
             //Act
-            _ = _target.Export(_fixture.Create<NewlyRegisterUsersSummaryDTO>(),
+            _ = _target.Export(FakeSummaryDTO(),
                 fakeDetailData,
                 metaModel);
 

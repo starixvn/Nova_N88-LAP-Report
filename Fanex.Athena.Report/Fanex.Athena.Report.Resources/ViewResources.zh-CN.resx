@@ -526,4 +526,12 @@
   <data name="ExtraPayout" xml:space="preserve">
     <value>ExtraPayout</value>
   </data>
+  <data name="DepositAmount" xml:space="preserve">
+    <value>Deposit Amount</value>
+    <comment>146760</comment>
+  </data>
+  <data name="NumberOfDeposits" xml:space="preserve">
+    <value>Number of Deposits</value>
+    <comment>146760</comment>
+  </data>
 </root>

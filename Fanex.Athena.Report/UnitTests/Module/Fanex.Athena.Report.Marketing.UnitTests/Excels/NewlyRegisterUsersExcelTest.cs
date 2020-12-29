@@ -4,6 +4,7 @@ using Fanex.Athena.Report.Marketing.Excels;
 using Fanex.Athena.Report.Marketing.MetaModels;
 using Moq;
 using NPOI.SS.UserModel;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -29,12 +30,23 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             _mockExcelBuilder.Setup(_ => _.LoadTemplate(templatePath)).Returns(_mockWorkbook.Object);
 
             //Act
-            var actualWorkBoook = _target.Export(_fixture.Create<NewlyRegisterUsersSummaryDTO>(),
+            var actualWorkBoook = _target.Export(FakeSummaryDTO(),
                 _fixture.CreateMany<NewlyRegisterUsersDetailDTO>(),
                 _fixture.Create<NewlyRegisterUsersExportMetaModel>());
 
             //Assert
             Assert.Equal(_mockWorkbook.Object, actualWorkBoook);
+        }
+
+        private NewlyRegisterUsersSummaryDTO FakeSummaryDTO()
+        {
+            return new NewlyRegisterUsersSummaryDTO
+            {
+                TotalData = _fixture.CreateMany<TotalNewlyRegisterUsersDTO>(),
+                CampaignData = _fixture.CreateMany<CampaignNewlyRegisterUsersDTO>(),
+                TotalSignupData = _fixture.Create<TotalSignupUrlNewlyRegisterUsersDTO>(),
+                SignupData = new List<SignupUrlNewlyRegisterUsersDTO>()
+            };
         }
     }
 }
