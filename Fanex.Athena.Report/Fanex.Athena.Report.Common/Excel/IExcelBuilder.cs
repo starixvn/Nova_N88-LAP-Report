@@ -12,6 +12,8 @@
 
         IRow CopyRow(ISheet sheet, ISheet sourceSheet, int sourceRowIndex, int destRowIndex);
 
+        IRow CopyRow(ISheet sheet, ISheet sourceSheet, int sourceRowIndex, int destRowIndex, int[] orderCellContent);
+
         void SetRowValue(ISheet sheet, ISheet sourceSheet, int sourceRowIndex, int destRowIndex, int columnCount, string value);
 
         void ClearTemplate(ISheet sheet, int startRowIndex);

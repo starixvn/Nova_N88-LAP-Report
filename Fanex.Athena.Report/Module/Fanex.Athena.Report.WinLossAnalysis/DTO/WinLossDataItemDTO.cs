@@ -22,6 +22,12 @@ namespace Fanex.Athena.Report.WinLossAnalysis.DTO
         public int BetCount { get; set; }
         public decimal AvgBetAmount { get; set; }
         public decimal BasedAvgBetAmount { get; set; }
-        public int UniquePlayers { get; set; }    
+        public int UniquePlayers { get; set; }
+        public int NumberOfDeposit { get; set; }
+        public decimal DepositAmount { get; set; }
+        public decimal BasedDepositAmount { get; set; }
+        public int NumberOfWithdrawal { get; set; }
+        public decimal WithdrawalAmount { get; set; }
+        public decimal BasedWithdrawalAmount { get; set; }
     }
 }

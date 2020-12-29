@@ -10,5 +10,9 @@
         public int TotalBetCount { get; set; }
         public int TotalUniquePlayers { get; set; }
         public double TotalMargin { get; set; }
+        public int TotalNumberOfDeposit { get; set; }
+        public decimal TotalBasedDepositAmount { get; set; }
+        public int TotalNumberOfWithdrawal { get; set; }
+        public decimal TotalBasedWithdrawalAmount { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using System.Data.SqlTypes;
 
 namespace Fanex.Athena.Report.Common.Extensions
 {
-    public static class IDataReaderExtension
+    public static class DataReaderExtension
     {
         private static readonly IDictionary<Type, Func<IDataReader, string, object>> GetValByTypeFuncs = new Dictionary<Type, Func<IDataReader, string, object>>
         {

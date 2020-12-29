@@ -22,7 +22,7 @@ namespace Fanex.Athena.Report.Marketing.Helpers
                     SignUpSource = signupSource,
                     SignupUrl = signupSource,
                     NoGrouping = noGrouping,
-                    Childs = noGrouping ? Enumerable.Empty<T>() : childs
+                    Childs = noGrouping ? Enumerable.Empty<T>() : childs.OrderBy(_ => _.SignupUrl)
                 };
 
                 if (childHandler != null)
@@ -31,7 +31,8 @@ namespace Fanex.Athena.Report.Marketing.Helpers
                 }
 
                 return result;
-            });
+            })
+                .OrderByDescending(_ => SignupDataConsts.SignupSourceOrderWeights.ContainsKey(_.SignUpSource) ? SignupDataConsts.SignupSourceOrderWeights[_.SignUpSource] : default(int));
         }
     }
 }

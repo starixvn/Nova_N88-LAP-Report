@@ -495,7 +495,7 @@
     <comment>141575</comment>
   </data>
   <data name="NumberOfWithdrawals" xml:space="preserve">
-    <value>Number Of Withdrawals</value>
+    <value>Number of Withdrawals</value>
     <comment>141575</comment>
   </data>
   <data name="TotalBonusAmountClaimed" xml:space="preserve">
@@ -566,5 +566,13 @@
   <data name="NumberOfDeposits" xml:space="preserve">
     <value>Number of Deposits</value>
     <comment>146760</comment>
+  </data>
+  <data name="NoOfWithdrawal" xml:space="preserve">
+    <value>No. Withdrawal</value>
+    <comment>147542</comment>
+  </data>
+  <data name="NoOfDeposit" xml:space="preserve">
+    <value>No. Deposit</value>
+    <comment>147542</comment>
   </data>
 </root>

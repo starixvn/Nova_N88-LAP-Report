@@ -54,8 +54,8 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
                     },
                     new SignupUrlNewlyRegisterUsersDTO
                     {
-                        SignUpSource = "Credit Site",
-                        SignupUrl = "Credit Site",
+                        SignUpSource = "Bong88/Viva88",
+                        SignupUrl = "Bong88/Viva88",
                         DepositUsers = _fixture.Create<int>(),
                         NewlyRegisterUsers = _fixture.Create<int>(),
                         FirstDepositAmount = _fixture.Create<decimal>()
@@ -113,7 +113,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
             var affSignup = actualResult.SignupData.FirstOrDefault(_ => _.SignUpSource.Equals("AFF"));
             Assert.True(affSignup.NoGrouping);
 
-            var creditSignup = actualResult.SignupData.FirstOrDefault(_ => _.SignUpSource.Equals("Credit Site"));
+            var creditSignup = actualResult.SignupData.FirstOrDefault(_ => _.SignUpSource.Equals("Bong88/Viva88"));
             Assert.True(creditSignup.NoGrouping);
 
             var noneSignup = actualResult.SignupData.FirstOrDefault(_ => _.SignUpSource.Equals("None"));

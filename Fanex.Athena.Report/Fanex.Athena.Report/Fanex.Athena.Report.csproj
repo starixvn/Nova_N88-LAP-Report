@@ -28,7 +28,6 @@
     <None Remove="ExcelTemplate\Marketing\PerformanceHighlight.xls" />
     <None Remove="ExcelTemplate\Marketing\WithdrawalAmount.xls" />
     <None Remove="ExcelTemplate\PromotionPrize.xls" />
-    <None Remove="ExcelTemplate\WinLossReports\WinLossByPlayerReport.xlsx" />
     <None Remove="ExcelTemplate\WinLossReports\WinLossReport.xlsx" />
     <None Remove="SpConfig\FanexSpName.PROD.xml" />
     <None Remove="SpConfig\FanexSpName.xml" />
@@ -51,9 +50,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ExcelTemplate\PromotionPrize.xls">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ExcelTemplate\WinLossReports\WinLossByPlayerReport.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ExcelTemplate\WinLossReports\WinLossReport.xlsx">
