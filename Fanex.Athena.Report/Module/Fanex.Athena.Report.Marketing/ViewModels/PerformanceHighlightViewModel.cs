@@ -17,6 +17,9 @@
         public int NewlyRegisterUsers { get; set; }
         public double GrowthRateNewlyRegisterUsers { get; set; }
 
+        public int NewlyActiveRegisterUsers { get; set; }
+        public double GrowthRateNewlyActiveRegisterUsers { get; set; }
+
         public decimal DepositAmount { get; set; }
         public double GrowthRateDepositAmount { get; set; }
 

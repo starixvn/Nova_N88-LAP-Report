@@ -52,6 +52,9 @@ namespace Fanex.Athena.Report.Marketing.Services
             data.NewlyRegisterUsers = rawData.NewlyRegisterUsers;
             data.GrowthRateNewlyRegisterUsers = _calculationService.CalculateGrowth(rawData.NewlyRegisterUsers, rawData.CompareNewlyRegisterUsers);
 
+            data.NewlyActiveRegisterUsers = rawData.NewlyActiveRegisterUsers;
+            data.GrowthRateNewlyActiveRegisterUsers = _calculationService.CalculateGrowth(rawData.NewlyActiveRegisterUsers, rawData.CompareNewlyActiveRegisterUsers);
+
             data.DepositAmount = rawData.DepositAmount;
             data.GrowthRateDepositAmount = _calculationService.CalculateGrowth((double)rawData.DepositAmount, (double)rawData.CompareDepositAmount);
 

@@ -38,6 +38,8 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
                 TotalDepositUsers = 109,
                 NewlyRegisterUsers = 1101,
                 CompareNewlyRegisterUsers = 2015,
+                NewlyActiveRegisterUsers = 1235,
+                CompareNewlyActiveRegisterUsers = 56959,
                 ActiveUsers = 541,
                 CompareActiveUsers = 153
             };
@@ -48,6 +50,8 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
                 TotalDepositUsers = 109,
                 NewlyRegisterUsers = 1101,
                 GrowthRateNewlyRegisterUsers = 45,
+                NewlyActiveRegisterUsers = 1235,
+                GrowthRateNewlyActiveRegisterUsers = 1.6,
                 ActiveUsers = 541,
                 GrowthRateActiveUsers = 254,
                 ChurnRate = 95,
@@ -61,6 +65,8 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
 
             _mockCalculationService.Setup(_ => _.CalculateGrowth(rawData.ActiveUsers, rawData.CompareActiveUsers)).Returns(expectedResult.GrowthRateActiveUsers);
             _mockCalculationService.Setup(_ => _.CalculateGrowth(rawData.NewlyRegisterUsers, rawData.CompareNewlyRegisterUsers)).Returns(expectedResult.GrowthRateNewlyRegisterUsers);
+
+            _mockCalculationService.Setup(_ => _.CalculateGrowth(rawData.NewlyActiveRegisterUsers, rawData.CompareNewlyActiveRegisterUsers)).Returns(expectedResult.GrowthRateNewlyActiveRegisterUsers);
 
             _mockCalculationService.Setup(_ => _.CalculateDistribution(rawData.UptoTotalUsers - rawData.ActiveUsers, rawData.UptoTotalUsers)).Returns(expectedResult.ChurnRate);
             _mockCalculationService.Setup(_ => _.CalculateDistribution(rawData.CompareUptoTotalUsers - rawData.CompareActiveUsers, rawData.CompareUptoTotalUsers)).Returns(expectedResult.ChurnRate - expectedResult.DifferentChurnRate);

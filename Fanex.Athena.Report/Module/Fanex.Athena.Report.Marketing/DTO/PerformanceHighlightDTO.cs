@@ -15,6 +15,9 @@
         public int NewlyRegisterUsers { get; set; }
         public int CompareNewlyRegisterUsers { get; set; }
 
+        public int NewlyActiveRegisterUsers { get; set; }
+        public int CompareNewlyActiveRegisterUsers { get; set; }
+
         public int ActiveUsers { get; set; }
         public int CompareActiveUsers { get; set; }
 

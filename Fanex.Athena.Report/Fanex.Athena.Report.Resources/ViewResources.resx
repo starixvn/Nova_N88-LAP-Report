@@ -310,7 +310,7 @@
     <value>Draw Game</value>
   </data>
   <data name="NetTurnover" xml:space="preserve">
-    <value>Net Turnover</value>
+    <value>Valid Turnover</value>
   </data>
   <data name="PendingFunds" xml:space="preserve">
     <value>Pending Funds</value>
