@@ -1,13 +1,10 @@
 ﻿using AutoFixture;
-using Fanex.Athena.Report.Common.Excel;
 using Fanex.Athena.Report.Marketing.DTO;
 using Fanex.Athena.Report.Marketing.Excels;
 using Fanex.Athena.Report.Marketing.MetaModels;
-using Microsoft.Extensions.FileProviders;
+using Fanex.Athena.Report.UnitTestUtils.Excels;
 using Moq;
 using NPOI.SS.UserModel;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -15,7 +12,6 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
 {
     public partial class WithdrawalExcelTest : ExcelTest<WithdrawalExcel>
     {
-
         [Fact]
         public void Export_Template_CorrectTemplate()
         {
