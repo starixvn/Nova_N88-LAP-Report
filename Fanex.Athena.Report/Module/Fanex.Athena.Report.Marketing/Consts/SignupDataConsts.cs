@@ -9,7 +9,8 @@ namespace Fanex.Athena.Report.Marketing.Consts
         {
             { "None", true },
             { "AFF", true },
-            { "Bong88/Viva88", true }
+            { "Bong88/Viva88", true },
+            { "APP", true }
         };
 
         public static readonly IReadOnlyDictionary<string, int> SignupSourceOrderWeights = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
@@ -18,6 +19,7 @@ namespace Fanex.Athena.Report.Marketing.Consts
             { "Goal123.com", 1000 },
             { "Bwing.com", 1000 },
             { "AFF", 900 },
+            { "APP", 850 },
             { "Bong88/Viva88", 800 },
             { "Landing Pages", 700 },
             { "None", 600 }
