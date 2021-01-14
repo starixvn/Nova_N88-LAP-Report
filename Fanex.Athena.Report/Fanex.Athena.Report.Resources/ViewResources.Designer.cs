@@ -745,6 +745,24 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No. Deposit.
+        /// </summary>
+        public static string NoOfDeposit {
+            get {
+                return ResourceManager.GetString("NoOfDeposit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No. Withdrawal.
+        /// </summary>
+        public static string NoOfWithdrawal {
+            get {
+                return ResourceManager.GetString("NoOfWithdrawal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number of Deposits.
         /// </summary>
         public static string NumberOfDeposits {
@@ -754,7 +772,7 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Number Of Withdrawals.
+        ///   Looks up a localized string similar to Number of Withdrawals.
         /// </summary>
         public static string NumberOfWithdrawals {
             get {

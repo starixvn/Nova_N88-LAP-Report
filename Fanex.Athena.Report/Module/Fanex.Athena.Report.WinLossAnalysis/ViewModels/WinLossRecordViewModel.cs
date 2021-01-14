@@ -18,5 +18,9 @@ namespace Fanex.Athena.Report.WinLossAnalysis.ViewModels
         public decimal AvgBetAmount { get; set; }
         public int UniquePlayers { get; set; }
         public double Margin { get; set; }
+        public int NumberOfDeposit { get; set; }
+        public decimal DepositAmount { get; set; }
+        public int NumberOfWithdrawal { get; set; }
+        public decimal WithdrawalAmount { get; set; }
     }
 }

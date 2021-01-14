@@ -39,7 +39,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Controllers
         [HttpPost]
         [RequestValidation(validateBrandList: true)]
         public async Task<FileResult> ExportData(
-            [FromServices]IWinLossExcelCreator excelCreator,
+            [FromServices]IWinLossExcel excel,
             ExportWinLossMetaModel metaModel
             )
         {
@@ -52,7 +52,6 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Controllers
             var stream = new MemoryStream();
             try
             {
-                var excel = excelCreator.CreateWinLossExcel(metaModel.GroupBy);
                 var workBook = excel.Export(data, metaModel);
                 workBook.Write(stream);
                 return new FileContentResult(stream.ToArray(), ExcelConsts.OctetStreamContentType);

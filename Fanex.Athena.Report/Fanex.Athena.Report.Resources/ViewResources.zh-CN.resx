@@ -534,4 +534,12 @@
     <value>Number of Deposits</value>
     <comment>146760</comment>
   </data>
+  <data name="NoOfWithdrawal" xml:space="preserve">
+    <value>No. Withdrawal</value>
+    <comment>147542</comment>
+  </data>
+  <data name="NoOfDeposit" xml:space="preserve">
+    <value>No. Deposit</value>
+    <comment>147542</comment>
+  </data>
 </root>

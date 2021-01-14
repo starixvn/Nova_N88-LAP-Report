@@ -17,7 +17,7 @@
             using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 IWorkbook workbook = IsXlsxFormat(path) ? new XSSFWorkbook(stream) as IWorkbook
-                    : new HSSFWorkbook(stream) as IWorkbook;
+                    : new HSSFWorkbook(stream);
                 var defaultStyle = workbook.CreateCellStyle();
                 defaultStyle.ShrinkToFit = true;
                 defaultStyle.WrapText = true;
@@ -62,6 +62,11 @@
 
         public IRow CopyRow(ISheet sheet, ISheet sourceSheet, int sourceRowIndex, int destRowIndex)
         {
+            return CopyRow(sheet, sourceSheet, sourceRowIndex, destRowIndex, null);
+        }
+
+        public IRow CopyRow(ISheet sheet, ISheet sourceSheet, int sourceRowIndex, int destRowIndex, int[] orderCellContent)
+        {
             if (sheet.LastRowNum < destRowIndex)
             {
                 for (var i = sheet.LastRowNum + 1; i <= destRowIndex; i++)
@@ -77,11 +82,12 @@
             var sourceRow = sourceSheet.GetRow(sourceRowIndex);
             if (sourceRow != null)
             {
+                var hasOrder = orderCellContent != null;
                 // Loop through source columns to add to new row
                 for (int i = 0; i < sourceRow.LastCellNum; i++)
                 {
                     // Grab a copy of the old/new cell
-                    var oldCell = sourceRow.GetCell(i);
+                    var oldCell = sourceRow.GetCell(hasOrder && i < orderCellContent.Length ? orderCellContent[i] : i);
                     var newCell = newRow.CreateCell(i);
 
                     CopyCell(oldCell, newCell);

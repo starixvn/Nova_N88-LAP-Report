@@ -6,10 +6,10 @@ using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
 
-namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
+namespace Fanex.Athena.Report.UnitTestUtils.Excels
 {
     public class ExcelTest<T>
-       where T : class
+        where T : class
     {
         protected readonly T _target;
         protected readonly Mock<IExcelBuilder> _mockExcelBuilder;

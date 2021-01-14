@@ -60,17 +60,12 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Controllers
             mockDataList.Setup(_ => _.GetEnumerator()).Returns(new List<WinLossRecordViewModel>() { new WinLossRecordViewModel() }.GetEnumerator());
             _winLossService.Setup(_ => _.GetData(metaModel)).Returns(Task.FromResult(expectedResult.Object));
 
-            var mockExcelCreator = new Mock<IWinLossExcelCreator>();
             var mockExcel = new Mock<IWinLossExcel>();
-
-            mockExcelCreator.Setup(_ => _.CreateWinLossExcel(It.IsAny<byte>()))
-                .Returns(mockExcel.Object);
-
             mockExcel.Setup(_ => _.Export(It.IsAny<SortableResultModel<WinLossRecordViewModel>>(), metaModel))
                 .Returns(Mock.Of<IWorkbook>());
 
             //Act
-            await _target.ExportData(mockExcelCreator.Object, metaModel);
+            await _target.ExportData(mockExcel.Object, metaModel);
 
             //Assert
             mockDataList.Verify(_ => _.Sort(expectedSortBy, expectedSortType), Times.Once);
@@ -88,21 +83,17 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Controllers
 
             _winLossService.Setup(_ => _.GetData(metaModel)).Returns(Task.FromResult(expectedResult));
 
-            var mockExcelCreator = new Mock<IWinLossExcelCreator>();
             var mockExcel = new Mock<IWinLossExcel>();
             var workBook = new Mock<IWorkbook>();
 
             MemoryStream expectedStream = null;
             workBook.Setup(_ => _.Write(It.IsAny<Stream>())).Callback<Stream>(stream => expectedStream = stream as MemoryStream);
 
-            mockExcelCreator.Setup(_ => _.CreateWinLossExcel(metaModel.GroupBy))
-                .Returns(mockExcel.Object);
-
             mockExcel.Setup(_ => _.Export(expectedResult, metaModel))
                 .Returns(workBook.Object);
 
             //Act
-            var result = await _target.ExportData(mockExcelCreator.Object, metaModel);
+            var result = await _target.ExportData(mockExcel.Object, metaModel);
 
             //Assert
             var fileContentResult = result as FileContentResult;

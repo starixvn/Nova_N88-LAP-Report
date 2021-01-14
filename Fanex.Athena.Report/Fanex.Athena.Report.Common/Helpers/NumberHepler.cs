@@ -14,6 +14,15 @@
             return Percent((double)(profit / turnover));
         }
 
+        public static decimal Divide(decimal divisor, int dividend)
+        {
+            if (dividend == Zero)
+            {
+                return Zero;
+            }
+            return divisor / dividend;
+        }
+
         private static double Percent(double value)
         {
             const double percent = 100.00;

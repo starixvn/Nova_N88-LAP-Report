@@ -72,7 +72,11 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 BetCount = dataTotal.TotalBetCount,
                 AvgBetAmount = dataTotal.TotalBasedAvgBetAmount,
                 UniquePlayers = dataTotal.TotalUniquePlayers,
-                Margin = NumberHepler.Margin(dataTotal.TotalBasedGGR, dataTotal.TotalBasedNetTurnover)
+                Margin = NumberHepler.Margin(dataTotal.TotalBasedGGR, dataTotal.TotalBasedNetTurnover),
+                NumberOfDeposit = dataTotal.TotalNumberOfDeposit,
+                DepositAmount = dataTotal.TotalBasedDepositAmount,
+                NumberOfWithdrawal = dataTotal.TotalNumberOfWithdrawal,
+                WithdrawalAmount = dataTotal.TotalBasedWithdrawalAmount
             };
         }
 
@@ -93,7 +97,9 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
 
         private static Func<bool, bool, Func<string, IEnumerable<WinLossDataItemDTO>, WinLossRecordViewModel>> Mapper = (drilldownInOriginalCurrency, isGroupByPlayer) => (parentKey, childData) =>
         {
-            var (turnover, netTurnover, ggr, betCount, uniquePlayers) = SumChildData(childData);
+            var (turnover, netTurnover, ggr, betCount, uniquePlayers,
+                numberOfDeposit, depositAmount, numberOfWithdrawal, withdrawalAmount) = SumChildData(childData);
+
             var firstChild = childData?.FirstOrDefault();
             var parent = new WinLossRecordViewModel
             {
@@ -106,8 +112,12 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 Ggr = ggr,
                 BetCount = betCount,
                 UniquePlayers = uniquePlayers,
-                AvgBetAmount = netTurnover / betCount,
+                AvgBetAmount = NumberHepler.Divide(netTurnover, betCount),
                 Margin = NumberHepler.Margin(ggr, netTurnover),
+                NumberOfDeposit = numberOfDeposit,
+                DepositAmount = depositAmount,
+                NumberOfWithdrawal = numberOfWithdrawal,
+                WithdrawalAmount = withdrawalAmount,
                 DrillDownData = SelectDrillDownData(parentKey, childData, drilldownInOriginalCurrency, isGroupByPlayer)
             };
 
@@ -130,17 +140,26 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 BetCount = _.BetCount,
                 AvgBetAmount = drilldownInOriginalCurrency ? _.AvgBetAmount : _.BasedAvgBetAmount,
                 UniquePlayers = _.UniquePlayers,
-                Margin = NumberHepler.Margin(_.BasedGGR, _.BasedNetTurnover)
+                Margin = NumberHepler.Margin(_.BasedGGR, _.BasedNetTurnover),
+                NumberOfDeposit = _.NumberOfDeposit,
+                DepositAmount = drilldownInOriginalCurrency ? _.DepositAmount : _.BasedDepositAmount,
+                NumberOfWithdrawal = _.NumberOfWithdrawal,
+                WithdrawalAmount = drilldownInOriginalCurrency ? _.WithdrawalAmount : _.BasedWithdrawalAmount
             });
         }
 
-        private static (decimal, decimal, decimal, int, int) SumChildData(IEnumerable<WinLossDataItemDTO> childData)
+        private static (decimal, decimal, decimal, int, int,
+            int, decimal, int, decimal) SumChildData(IEnumerable<WinLossDataItemDTO> childData)
         {
             var turnover = 0.0m;
             var netTurnover = 0.0m;
             var ggr = 0.0m;
             var betCount = 0;
             var uniquePlayers = 0;
+            var numberOfDeposit = 0;
+            var depositAmount = 0.0m;
+            var numberOfWithdrawal = 0;
+            var withdrawalAmount = 0.0m;
 
             foreach (var childItem in childData)
             {
@@ -149,9 +168,14 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 ggr += childItem.BasedGGR;
                 betCount += childItem.BetCount;
                 uniquePlayers += childItem.UniquePlayers;
+                numberOfDeposit += childItem.NumberOfDeposit;
+                depositAmount += childItem.BasedDepositAmount;
+                numberOfWithdrawal += childItem.NumberOfWithdrawal;
+                withdrawalAmount += childItem.BasedWithdrawalAmount;
             }
 
-            return (turnover, netTurnover, ggr, betCount, uniquePlayers);
+            return (turnover, netTurnover, ggr, betCount, uniquePlayers,
+                numberOfDeposit, depositAmount, numberOfWithdrawal, withdrawalAmount);
         }
     }
 }

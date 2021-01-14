@@ -1,79 +1,175 @@
 ﻿using Fanex.Athena.Report.Common.Excel;
+using Fanex.Athena.Report.Common.Model.ViewModel;
 using Fanex.Athena.Report.Resources;
+using Fanex.Athena.Report.WinLossAnalysis.Consts;
+using Fanex.Athena.Report.WinLossAnalysis.Helpers;
+using Fanex.Athena.Report.WinLossAnalysis.MetaModels;
 using Fanex.Athena.Report.WinLossAnalysis.ViewModels;
 using Microsoft.Extensions.FileProviders;
 using NPOI.SS.UserModel;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Fanex.Athena.Report.WinLossAnalysis.Excels
 {
-    public class WinLossExcel : BaseWinLossExcel, IWinLossExcel
+    public class WinLossExcel : IWinLossExcel
     {
-        private const string _templatePath = "/ExcelTemplate/WinLossReports/WinLossReport.xlsx";
-        private const int _rowParentContentTemplate = 3;
-        private const int _rowChildContentTemplate = 4;
-        private const int _rowTotalDataTemplate = 6;
-        private const int _rowNoInfoTemplate = 7;
+        protected const string TemplateSheetName = "Template";
+        protected const string SheetName = "Data";
+        protected const string DateFormat = "MM/dd/yyyy";
 
-        private const int _columnTemplateCount = 9;
+        protected const int RowTitleTemplate = 0;
+        protected const int RowHeaderTemplate = 1;
 
-        private const int ColumnTurnover = 2;
-        private const int ColumnNetTurnover = 3;
-        private const int ColumnGGR = 4;
-        private const int ColumnBetCount = 5;
-        private const int ColumnAvgBetAmount = 6;
-        private const int ColumnUniquePlayers = 7;
-        private const int ColumnMargin = 8;
+        protected const int ColumnGroup = 0;
+        protected const int ColumnCurrency = 1;
 
-        protected override int RowParentContentTemplate => _rowParentContentTemplate;
+        private const int RowParentContentTemplate = 3;
+        private const int RowChildContentTemplate = 4;
+        private const int RowTotalDataTemplate = 5;
+        private const int RowNoInfoTemplate = 6;
+        private const int ColumnTemplateCount = 15;
 
-        protected override int RowChildContentTemplate => _rowChildContentTemplate;
+        private const string TemplatePath = "/ExcelTemplate/WinLossReports/WinLossReport.xlsx";
 
-        protected override int RowNoInfoTemplate => _rowNoInfoTemplate;
+        private static readonly IEnumerable<int> DefaultColumns = new List<int> { ColumnGroup, ColumnCurrency };
 
-        protected override int ColumnTemplateCount => _columnTemplateCount;
+        protected int[] OrderColumns { get; set; }
 
-        protected override int RowTotalDataTemplate => _rowTotalDataTemplate;
-
-        protected override string TemplatePath => _templatePath;
+        protected readonly IExcelBuilder _builder;
+        private readonly IFileProvider _fileProvider;
 
         public WinLossExcel(IExcelBuilder builder, IFileProvider fileProvider)
-            : base(builder, fileProvider)
-        { }
-
-        protected override void AssignRowData(IRow row, WinLossRecordViewModel rowData)
         {
-            row.Cells[ColumnTurnover].SetCellValue((double)rowData.Turnover);
-            row.Cells[ColumnNetTurnover].SetCellValue((double)rowData.NetTurnover);
-            row.Cells[ColumnGGR].SetCellValue((double)rowData.Ggr);
-            row.Cells[ColumnBetCount].SetCellValue(rowData.BetCount);
-            row.Cells[ColumnAvgBetAmount].SetCellValue((double)rowData.AvgBetAmount);
-            row.Cells[ColumnUniquePlayers].SetCellValue(rowData.UniquePlayers);
-            row.Cells[ColumnMargin].SetCellValue(rowData.Margin);
+            _builder = builder;
+            _fileProvider = fileProvider;
         }
 
-        protected override void AssignHeader(IRow row)
+        public IWorkbook Export(ResultModel<WinLossRecordViewModel> data, ExportWinLossMetaModel metaModel)
         {
+            var template = _fileProvider.GetFileInfo(TemplatePath).PhysicalPath;
+            var workBook = _builder.LoadTemplate(template);
+            var templateSheet = workBook.GetSheet(TemplateSheetName);
+            var sheet = _builder.CloneSheet(workBook, TemplateSheetName, SheetName);
+
+            OrderColumns = GetOrderColumns(metaModel);
+
+            AssignTitle(sheet, templateSheet, metaModel);
+            AssignHeader(sheet, templateSheet, metaModel.OrderCols);
+
+            if (data.TotalRows == 0 || !data.DataList.Any())
+            {
+                AssignNoInfoRow(sheet, templateSheet);
+            }
+            else
+            {
+                AssignData(sheet, templateSheet, data.DataList, metaModel.OrderCols);
+                AssignTotalData(sheet, templateSheet, data.TotalData, metaModel.OrderCols);
+                HideColumns(sheet, metaModel.OrderCols);
+            }
+
+            _builder.RemoveSheet(workBook, TemplateSheetName);
+
+            return workBook;
+        }
+
+        private void HideColumns(ISheet sheet, IEnumerable<string> orderCols)
+        {
+            var numberOfHideCols = ExcelConsts.InfoColumns.Count - orderCols.Count();
+            if (numberOfHideCols > 0)
+            {
+                var hideRange = Enumerable.Range(OrderColumns.Count(), numberOfHideCols);
+                _builder.HideColumn(sheet, hideRange.ToArray());
+            }
+        }
+
+        private void AssignNoInfoRow(ISheet sheet, ISheet templateSheet)
+        {
+            _builder.SetRowValue(sheet, templateSheet, RowNoInfoTemplate, RowParentContentTemplate, ColumnTemplateCount, ViewResources.NoInfo);
+        }
+
+        private void AssignTitle(ISheet sheet, ISheet templateSheet, ExportWinLossMetaModel metaModel)
+        {
+            var title = $"{ViewResources.WinLossAnalysis}, {metaModel.FromDate.ToString(DateFormat)} - {metaModel.ToDate.ToString(DateFormat)}," +
+                $" {string.Format(ViewResources.Viewin, metaModel.BaseCurrency.ToUpperInvariant())}," +
+                $" {DataHelper.GetTimezoneName(metaModel.Timezone)}";
+
+            _builder.SetRowValue(sheet, templateSheet, sourceRowIndex: RowTitleTemplate, destRowIndex: RowTitleTemplate, columnCount: ColumnTemplateCount, value: title);
+
+            _builder.ClearTemplate(sheet, RowParentContentTemplate);
+        }
+
+        private void AssignHeader(ISheet sheet, ISheet templateSheet, IEnumerable<string> orderCols)
+        {
+            var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: RowHeaderTemplate, destRowIndex: RowHeaderTemplate, orderCellContent: OrderColumns);
+
             row.Cells[ColumnGroup].SetCellValue(ViewResources.Group);
             row.Cells[ColumnCurrency].SetCellValue(ViewResources.Currency);
-            row.Cells[ColumnTurnover].SetCellValue(ViewResources.Turnover);
-            row.Cells[ColumnNetTurnover].SetCellValue(ViewResources.NetTurnover);
-            row.Cells[ColumnGGR].SetCellValue(ViewResources.GGR);
-            row.Cells[ColumnBetCount].SetCellValue(ViewResources.BetCount);
-            row.Cells[ColumnAvgBetAmount].SetCellValue(ViewResources.AvgBetAmount);
-            row.Cells[ColumnUniquePlayers].SetCellValue(ViewResources.UniquePlayers);
-            row.Cells[ColumnMargin].SetCellValue(ViewResources.Margin);
+
+            var colIndex = DefaultColumns.Count();
+            foreach (var col in orderCols)
+            {
+                row.Cells[colIndex++].SetCellValue(ExcelConsts.InfoColumns[col].headerName);
+            }
         }
 
-        protected override void AssignTotalData(IRow row, WinLossRecordViewModel dataTotal)
+        private void AssignTotalData(ISheet sheet, ISheet templateSheet, WinLossRecordViewModel dataTotal, IEnumerable<string> orderCols)
         {
+            var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: RowTotalDataTemplate, destRowIndex: sheet.LastRowNum + 1, orderCellContent: OrderColumns);
             row.Cells[ColumnGroup].SetCellValue(ViewResources.Total);
-            row.Cells[ColumnTurnover].SetCellValue((double)dataTotal.Turnover);
-            row.Cells[ColumnNetTurnover].SetCellValue((double)dataTotal.NetTurnover);
-            row.Cells[ColumnGGR].SetCellValue((double)dataTotal.Ggr);
-            row.Cells[ColumnBetCount].SetCellValue(dataTotal.BetCount);
-            row.Cells[ColumnAvgBetAmount].SetCellValue((double)dataTotal.AvgBetAmount);
-            row.Cells[ColumnUniquePlayers].SetCellValue(dataTotal.UniquePlayers);
-            row.Cells[ColumnMargin].SetCellValue(dataTotal.Margin);
+
+            var colIndex = DefaultColumns.Count();
+            foreach (var col in orderCols)
+            {
+                var infoCol = ExcelConsts.InfoColumns[col];
+                if (infoCol.hasTotal)
+                {
+                    var value = dataTotal.Value(ExcelConsts.InfoColumns[col].propertyName) ?? string.Empty;
+                    row.Cells[colIndex].SetCellValue(value);
+                }
+                colIndex++;
+            }
+        }
+
+        private void AssignData(ISheet sheet, ISheet templateSheet, IEnumerable<WinLossRecordViewModel> data, IEnumerable<string> orderCols)
+        {
+            var currentRowIndex = 0;
+            foreach (var groupData in data)
+            {
+                AssignRowData(sheet, templateSheet, currentRowIndex++, groupData, orderCols);
+                foreach (var childData in groupData.DrillDownData)
+                {
+                    AssignRowData(sheet, templateSheet, currentRowIndex++, childData, orderCols);
+                }
+            }
+        }
+
+        private void AssignRowData(ISheet sheet, ISheet templateSheet, int lastRowIndex, WinLossRecordViewModel rowData, IEnumerable<string> orderCols)
+        {
+            var isParent = string.IsNullOrEmpty(rowData.Parent);
+            var row = CreateRow(sheet, templateSheet, lastRowIndex, isParent);
+            row.Cells[ColumnGroup].SetCellValue(isParent ? rowData.Group : rowData.ParentName);
+            row.Cells[ColumnCurrency].SetCellValue(isParent ? ViewResources.All : rowData.Group);
+
+            var colIndex = DefaultColumns.Count();
+            foreach (var col in orderCols)
+            {
+                var value = rowData.Value(ExcelConsts.InfoColumns[col].propertyName) ?? string.Empty;
+                row.Cells[colIndex++].SetCellValue(value);
+            }
+        }
+
+        private IRow CreateRow(ISheet sheet, ISheet templateSheet, int lastRowIndex, bool isParent)
+        {
+            var rowContentTemplate = isParent ? RowParentContentTemplate : RowChildContentTemplate;
+            return _builder.CopyRow(sheet, templateSheet, rowContentTemplate, RowParentContentTemplate + lastRowIndex, OrderColumns);
+        }
+
+        private static int[] GetOrderColumns(ExportWinLossMetaModel metaModel)
+        {
+            var orderCell = new List<int>(DefaultColumns);
+            orderCell.AddRange(metaModel.OrderCols.Select(orderCol => ExcelConsts.InfoColumns[orderCol].colTemplate));
+            return orderCell.ToArray();
         }
     }
 }
