@@ -6,6 +6,7 @@ using Fanex.Athena.Report.BonusInfo.MetaModels;
 using Fanex.Athena.Report.BonusInfo.Services;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Newtonsoft.Json;
 using NPOI.SS.UserModel;
 using System.IO;
 using System.Threading.Tasks;
@@ -23,6 +24,22 @@ namespace Fanex.Athena.Report.BonusInfo.UnitTests.Controllers
         {
             _mockService = new Mock<IBonusInfoService>();
             _targetController = new BonusInfoController(_mockService.Object);
+        }
+
+        [Fact]
+        public void GetSetting_WhenCall_ReturnDataCorrectly()
+        {
+            //Arrange
+            var expectedResult = new BonusInfoDropdownOptionsDTO();
+
+            //Act
+            var actualResult = _targetController.GetSetting();
+
+            var actualResultJson = JsonConvert.SerializeObject(actualResult.Value);
+            var expectedResultJson = JsonConvert.SerializeObject(expectedResult);
+
+            //Assert
+            Assert.Equal(expectedResultJson, actualResultJson);
         }
 
         [Fact]
