@@ -30,22 +30,16 @@ namespace Fanex.Athena.Report.BonusInfo.DTO
         public decimal TotalWithdrawal { get; set; }
 
         [SqlColumn(Ignored = true)]
-        public string StartDateString { get { return StartDate.ToString("dd-MMM-yyyy"); } }
+        public string StartDateString => StartDate.ToString("dd-MMM-yyyy");
 
         [SqlColumn(Ignored = true)]
-        public string EndDateString { get { return EndDate.ToString("dd-MMM-yyyy"); } }
+        public string EndDateString => EndDate.ToString("dd-MMM-yyyy");
 
         [SqlColumn(Ignored = true)]
-        public string BonusStatusText
-        {
-            get { return BonusInfoDropdownOptions.BonusStatusList.Where(_ => _.Key == BonusStatus).Select(_ => _.Value).FirstOrDefault(); }
-        }
+        public string BonusStatusText => BonusInfoDropdownOptions.BonusStatusList.FirstOrDefault(_ => _.Key == BonusStatus)?.Value;
 
         [SqlColumn(Ignored = true)]
-        public string BonusTypeText
-        {
-            get { return BonusInfoDropdownOptions.BonusTypeList.Where(_ => _.Key == BonusType).Select(_ => _.Value).FirstOrDefault(); }
-        }
+        public string BonusTypeText => BonusInfoDropdownOptions.BonusTypeList.FirstOrDefault(_ => _.Key == BonusType)?.Value;
     }
 
     public class BonusInfoSummaryTotalDTO : ClaimStatusDTO

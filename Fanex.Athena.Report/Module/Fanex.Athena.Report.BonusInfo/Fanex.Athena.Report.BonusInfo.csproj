@@ -5,7 +5,12 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <ApplicationIcon />
     <StartupObject />
+    <CodeAnalysisRuleSet>..\..\.sonarlint\n88_lap_reportcsharp.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\.sonarlint\n88_lap_report\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Fanex.Athena.Report.Common\Fanex.Athena.Report.Common.csproj" />

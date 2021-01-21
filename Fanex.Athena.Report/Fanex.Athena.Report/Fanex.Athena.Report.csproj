@@ -36,6 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AdditionalFiles Include="..\.sonarlint\n88_lap_report\CSharp\SonarLint.xml" Link="SonarLint.xml" />
     <Content Include="ExcelTemplate\Marketing\BonusClaimed.xls">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -13,6 +13,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <AdditionalFiles Include="..\.sonarlint\n88_lap_report\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Fanex.Data" Version="4.2.0" />
     <PackageReference Include="Fanex.Data.SqlServer" Version="4.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.HealthChecks" Version="2.2.0" />
