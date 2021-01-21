@@ -29,11 +29,14 @@
     <None Remove="ExcelTemplate\Marketing\WithdrawalAmount.xls" />
     <None Remove="ExcelTemplate\PromotionPrize.xls" />
     <None Remove="ExcelTemplate\WinLossReports\WinLossReport.xlsx" />
+    <None Remove="ExcelTemplate\BonusInfo\BonusInfo_Detail.xls" />
+    <None Remove="ExcelTemplate\BonusInfo\BonusInfo_Summary.xls" />
     <None Remove="SpConfig\FanexSpName.PROD.xml" />
     <None Remove="SpConfig\FanexSpName.xml" />
   </ItemGroup>
 
   <ItemGroup>
+    <AdditionalFiles Include="..\.sonarlint\n88_lap_report\CSharp\SonarLint.xml" Link="SonarLint.xml" />
     <Content Include="ExcelTemplate\Marketing\BonusClaimed.xls">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -53,6 +56,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ExcelTemplate\WinLossReports\WinLossReport.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ExcelTemplate\BonusInfo\BonusInfo_Detail.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ExcelTemplate\BonusInfo\BonusInfo_Summary.xls">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="SpConfig\FanexSpName.PROD.xml">
@@ -85,6 +94,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Module\Fanex.Athena.Report.BonusInfo\Fanex.Athena.Report.BonusInfo.csproj" />
     <ProjectReference Include="..\Fanex.Athena.Report.Common\Fanex.Athena.Report.Common.csproj" />
     <ProjectReference Include="..\Fanex.Athena.Report.Core\Fanex.Athena.Report.Core.csproj" />
     <ProjectReference Include="..\Fanex.Athena.Report.Resources\Fanex.Athena.Report.Resources.csproj" />

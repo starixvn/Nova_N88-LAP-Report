@@ -575,4 +575,104 @@
     <value>No. Deposit</value>
     <comment>147542</comment>
   </data>
+  <data name="BonusCode" xml:space="preserve">
+    <value>Bonus Code</value>
+  </data>
+  <data name="BonusInfo" xml:space="preserve">
+    <value>Bonus Info</value>
+    <comment>146759</comment>
+  </data>
+  <data name="BonusName" xml:space="preserve">
+    <value>Bonus Name</value>
+  </data>
+  <data name="BonusStatus" xml:space="preserve">
+    <value>Bonus Status</value>
+  </data>
+  <data name="BonusType" xml:space="preserve">
+    <value>Bonus Type</value>
+  </data>
+  <data name="Brand" xml:space="preserve">
+    <value>Brand</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ClaimDate" xml:space="preserve">
+    <value>Claim Date</value>
+  </data>
+  <data name="Completion" xml:space="preserve">
+    <value>Completion</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="Fullfill" xml:space="preserve">
+    <value>Fullfill</value>
+  </data>
+  <data name="Running" xml:space="preserve">
+    <value>Running</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="TotalClaimants" xml:space="preserve">
+    <value>Total Claimants</value>
+  </data>
+  <data name="TotalClaimedAmount" xml:space="preserve">
+    <value>Total Claimed Amount</value>
+  </data>
+  <data name="TotalDeposit" xml:space="preserve">
+    <value>Total Deposit</value>
+  </data>
+  <data name="TotalWithdrawal" xml:space="preserve">
+    <value>Total Withdrawal</value>
+  </data>
+  <data name="TransferOut" xml:space="preserve">
+    <value>Transfer Out</value>
+  </data>
+  <data name="ClaimStatus" xml:space="preserve">
+    <value>Claim Status</value>
+  </data>
+  <data name="Expiry" xml:space="preserve">
+    <value>Expiry</value>
+  </data>
+  <data name="BonusStatusOptionActive" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="BonusStatusOptionInactive" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+  <data name="BonusTypeOptionCashback" xml:space="preserve">
+    <value>Cashback</value>
+  </data>
+  <data name="BonusTypeOptionFreeBet" xml:space="preserve">
+    <value>FreeBet</value>
+  </data>
+  <data name="BonusTypeOptionRebate" xml:space="preserve">
+    <value>Rebate</value>
+  </data>
+  <data name="BonusTypeOptionReDeposit" xml:space="preserve">
+    <value>ReDeposit</value>
+  </data>
+  <data name="BonusTypeOptionWelcomeDeposit" xml:space="preserve">
+    <value>Welcome Deposit (First Deposit)</value>
+  </data>
+  <data name="ClaimStatusOptionCanceled" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
+  <data name="ClaimStatusOptionFulfill" xml:space="preserve">
+    <value>Fulfill</value>
+  </data>
+  <data name="ClaimStatusOptionRunning" xml:space="preserve">
+    <value>Running</value>
+  </data>
+  <data name="OtherPlatform" xml:space="preserve">
+    <value>Other Platform</value>
+  </data>
+  <data name="ClaimStatusOptionOtherPlatform" xml:space="preserve">
+    <value>Other Platform</value>
+  </data>
+  <data name="Canceled" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
 </root>

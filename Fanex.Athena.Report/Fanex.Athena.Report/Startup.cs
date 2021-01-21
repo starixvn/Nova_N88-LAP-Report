@@ -64,6 +64,7 @@
             BySite.ReportBySiteDIConfig.Setup(services);
             WinLossAnalysis.ReportByGroupDIConfig.Setup(services);
             Marketing.ReportMarketingDIConfig.Setup(services);
+            BonusInfo.ReportBonusInfoDIConfig.Setup(services);
 
             var authConfig = Configuration.GetSection("MPAAuth").Get<AuthSharedSessionOption>();
             NVCSharedAuthManager

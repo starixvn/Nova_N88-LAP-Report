@@ -9,6 +9,13 @@ namespace Fanex.Athena.Report.Common.Consts
         public const int N8GSiteId = 436;
         public const int N8BSiteId = 437;
 
+        public static readonly IDictionary<int, string> SiteNameList = new Dictionary<int, string>
+        {
+            { N88SiteId, "N88" },
+            { N8GSiteId, "N8G" },
+            { N8BSiteId, "N8B" }
+        };
+
         public static readonly IReadOnlyDictionary<int, string> LaunchDate = new Dictionary<int, string>
         {
             { N8GSiteId, "09/12/2020" },
