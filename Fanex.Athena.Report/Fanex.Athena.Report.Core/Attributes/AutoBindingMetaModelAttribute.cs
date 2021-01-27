@@ -1,8 +1,11 @@
-﻿using Fanex.NVC.Authentication;
+﻿using Fanex.Core.Utils;
+using Fanex.NVC.Authentication;
+using Fanex.NVC.Authentication.Infrastructure;
 using Fanex.NVC.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Fanex.Athena.Report.Core.Attributes
@@ -13,7 +16,7 @@ namespace Fanex.Athena.Report.Core.Attributes
         public AutoBindingMetaModelAttribute(bool bindAgent = false)
             : base(typeof(AutoBindingMetaModelImplAttribute))
         {
-            Arguments = new[] { bindAgent as object };
+            Arguments = new object[] { bindAgent };
         }
     }
 
@@ -39,10 +42,29 @@ namespace Fanex.Athena.Report.Core.Attributes
         {
             if (_bindAgent)
             {
-                _bindingService.BindAgentXml(context.ActionArguments, _authInfoService.CurrencyAgentList);
+                HandleBindAgent(context);
             }
 
             await next();
+        }
+
+        private void HandleBindAgent(ActionExecutingContext context)
+        {
+            IDictionary<int, int[]> agentList = null;
+            if (MetaModelHelper.IsMetaModel(context.ActionArguments, out IBrandIdListMetaModel brandIdListMetaModel))
+            {
+                agentList = BrandHelper.GetAgentList(_authInfoService.BrandList, brandIdListMetaModel.BrandIds);
+            }
+            else if (MetaModelHelper.IsMetaModel(context.ActionArguments, out IBrandIdMetaModel brandIdMetaModel))
+            {
+                agentList = BrandHelper.GetAgentList(_authInfoService.BrandList, new[] { brandIdMetaModel.BrandId });
+            }
+            else
+            {
+                agentList = _authInfoService.CurrencyAgentList;
+            }
+
+            _bindingService.BindAgentXml(context.ActionArguments, agentList);
         }
     }
 }

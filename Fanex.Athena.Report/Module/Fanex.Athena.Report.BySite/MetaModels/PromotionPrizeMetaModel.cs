@@ -2,9 +2,10 @@
 {
     using Fanex.Athena.Report.Common.Model.DataDomain;
     using Fanex.Core.Utils;
+    using Fanex.NVC.Authentication.Infrastructure;
     using System;
 
-    public class PromotionPrizeMetaModel : IAgentMetaModel, IDataTestableMetaModel, ICurrencyIdMetaModel, IValidationMetaModel
+    public class PromotionPrizeMetaModel : IAgentMetaModel, IDataTestableMetaModel, ICurrencyIdMetaModel, IValidationMetaModel, IBrandIdListMetaModel
     {
         public int CurrencyId { get; set; }
 
@@ -25,5 +26,7 @@
         public string DefaultBaseCurrency { get; } = SystemBaseCurrency.EUR;
 
         public bool IsValid => FromDate <= ToDate;
+
+        public string BrandIds { get; set; }
     }
 }

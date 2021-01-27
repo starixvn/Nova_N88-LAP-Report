@@ -25,9 +25,9 @@
   <ItemGroup>
     <PackageReference Include="Fanex.Data" Version="4.2.0" />
     <PackageReference Include="Fanex.Data.SqlServer" Version="4.2.0" />
-    <PackageReference Include="Fanex.NVC.Authentication" Version="1.0.3" />
+    <PackageReference Include="Fanex.NVC.Authentication" Version="1.0.4" />
     <PackageReference Include="Fanex.NVC.Authentication.Extensions" Version="1.0.2" />
-    <PackageReference Include="Fanex.NVC.Utils" Version="1.0.2" />
+    <PackageReference Include="Fanex.NVC.Utils" Version="1.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.HealthChecks" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />

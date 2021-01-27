@@ -24,7 +24,7 @@
         }
 
         [HttpPost]
-        [RequestValidation(validateCurrency: true)]
+        [RequestValidation(validateBrandList: true)]
         [AutoBindingMetaModel(bindAgent: true)]
         public async Task<FileContentResult> Export(
             [FromServices] IFileProvider file,
