@@ -603,4 +603,7 @@
     <value>No. Deposit</value>
     <comment>147542</comment>
   </data>
+  <data name="SabaPromotionPrizes" xml:space="preserve">
+    <value>沙巴促销活动</value>
+  </data>
 </root>
