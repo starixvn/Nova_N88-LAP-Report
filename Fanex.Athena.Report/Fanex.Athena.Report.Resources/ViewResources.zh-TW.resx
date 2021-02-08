@@ -412,4 +412,7 @@
   <data name="Expiry" xml:space="preserve">
     <value>Expiry</value>
   </data>
+  <data name="SabaPromotionPrizes" xml:space="preserve">
+    <value>沙巴促銷活動</value>
+  </data>
 </root>

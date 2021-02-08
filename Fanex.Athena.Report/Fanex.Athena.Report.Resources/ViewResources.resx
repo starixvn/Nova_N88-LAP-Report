@@ -675,4 +675,7 @@
   <data name="Canceled" xml:space="preserve">
     <value>Canceled</value>
   </data>
+  <data name="SabaPromotionPrizes" xml:space="preserve">
+    <value>Saba Promotion Prizes</value>
+  </data>
 </root>

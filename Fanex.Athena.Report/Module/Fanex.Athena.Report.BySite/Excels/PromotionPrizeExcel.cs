@@ -42,7 +42,8 @@
         private static readonly Dictionary<string, Tuple<string, string>> ProductOrderMap =
             new Dictionary<string, Tuple<string, string>>(StringComparer.OrdinalIgnoreCase)
         {
-                {Product.CCB, new Tuple<string, string>("", DefaultTemplateSheetName) }
+                {Product.CCB, new Tuple<string, string>("", DefaultTemplateSheetName) },
+                {Product.SPR, new Tuple<string, string>("", DefaultTemplateSheetName) }
         };
 
         public PromotionPrizeExcel(IExcelBuilder builder)
