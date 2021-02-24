@@ -24,6 +24,9 @@ namespace Fanex.Athena.Report.BonusInfo.MetaModels
         public int PageSize { get; set; }
 
         [SpParam(Ignored = true)]
+        public int GroupBy { get; set; }
+
+        [SpParam(Ignored = true)]
         public override bool IsValid => PageSize <= MaxPageSize && base.IsValid;
     }
 }

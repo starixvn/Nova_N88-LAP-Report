@@ -1,4 +1,5 @@
-﻿using Fanex.Athena.Report.BonusInfo.DTO;
+﻿using Fanex.Athena.Report.BonusInfo.Consts;
+using Fanex.Athena.Report.BonusInfo.DTO;
 using Fanex.Athena.Report.BonusInfo.MetaModels;
 using Fanex.Athena.Report.Common.Consts;
 using Fanex.Athena.Report.Common.Excel;
@@ -15,8 +16,8 @@ namespace Fanex.Athena.Report.BonusInfo.Excels
         private const string TemplatePath = "/ExcelTemplate/BonusInfo/BonusInfo_Detail.xls";
         private const string TemplateSheetName = "Template";
         protected const string SheetName = "Data";
-        protected const string DateFormat = "MM/dd/yyyy";
-        protected const string DateCellFormat = "dd-MMM-yyyy";
+        protected const string DateFormat = DateTimeFormat.USDate;
+        protected const string DateCellFormat = DateTimeFormat.MonthAbbreviationsDate;
 
         private const int ColumnUserName = 0;
         private const int ColumnBonusCode = 1;
@@ -75,9 +76,9 @@ namespace Fanex.Athena.Report.BonusInfo.Excels
         private void AssignTitle(ISheet sheet, ISheet templateSheet, BonusInfoDetailMetaModel metaModel)
         {
             Sites.SiteNameList.TryGetValue(metaModel.BrandId, out string brandName);
-
-            var title = $"{ViewResources.BonusInfo}, {metaModel.FromDate.ToString(DateFormat)} - {metaModel.ToDate.ToString(DateFormat)}, {brandName}," +
-                $" {string.Format(ViewResources.Viewin, metaModel.BaseCurrency.ToUpperInvariant())}, {metaModel.BonusCode}";
+            string title = metaModel.GroupBy == GroupBy.BonusCode ? $"{ViewResources.BonusInfo}, {metaModel.FromDate.ToString(DateFormat)} - {metaModel.ToDate.ToString(DateFormat)}, {brandName}," +
+                    $" {string.Format(ViewResources.Viewin, metaModel.BaseCurrency.ToUpperInvariant())}, {metaModel.BonusCode}" : $"{ViewResources.BonusInfo}, {brandName}," +
+                    $" {string.Format(ViewResources.Viewin, metaModel.BaseCurrency.ToUpperInvariant())}, {metaModel.BonusCode}, {metaModel.FromDate.ToString(DateFormat)}";
 
             _builder.SetRowValue(sheet, templateSheet, sourceRowIndex: RowTitleTemplate, destRowIndex: RowTitleTemplate, columnCount: ColumnTemplateCount, value: title);
 

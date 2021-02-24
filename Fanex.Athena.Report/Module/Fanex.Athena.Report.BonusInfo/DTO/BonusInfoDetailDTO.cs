@@ -25,7 +25,7 @@ namespace Fanex.Athena.Report.BonusInfo.DTO
         public double PercentagedCompletion { get; set; }
 
         [SqlColumn(Ignored = true)]
-        public string ClaimDateString => ClaimedDate.ToString("dd-MMM-yyyy");
+        public string ClaimDateString => ClaimedDate.ToString(DateTimeFormat.MonthAbbreviationsDate);
 
         [SqlColumn(Ignored = true)]
         public string StatusText => BonusInfoDropdownOptions.ClaimStatusList.FirstOrDefault(_ => _.Key == Status)?.Value;

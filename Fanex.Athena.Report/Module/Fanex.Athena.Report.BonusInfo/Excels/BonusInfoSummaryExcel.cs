@@ -17,26 +17,28 @@ namespace Fanex.Athena.Report.BonusInfo.Excels
         private const string TemplatePath = "/ExcelTemplate/BonusInfo/BonusInfo_Summary.xls";
         private const string TemplateSheetName = "Template";
         protected const string SheetName = "Data";
-        protected const string DateFormat = "MM/dd/yyyy";
-        protected const string DateCellFormat = "dd-MMM-yyyy";
+        protected const string DateFormat = DateTimeFormat.USDate;
+        protected const string DateCellFormat = DateTimeFormat.MonthAbbreviationsDate;
 
-        private const int ColumnBonusName = 0;
-        private const int ColumnBonusCode = 1;
-        private const int ColumnBonusType = 2;
-        private const int ColumnStartDate = 3;
-        private const int ColumnEndDate = 4;
-        private const int ColumnBonusStatus = 5;
-        private const int ColumnTotalClaimants = 10;
-        private const int ColumnTotalClaimedAmount = 11;
-        private const int ColumnTotalDeposit = 12;
-        private const int ColumnTotalWithdrawal = 13;
+        private const int ColumnDate = 0;
+        private const int ColumnBonusName = 1;
+        private const int ColumnBonusCode = 2;
+        private const int ColumnBonusType = 3;
+        private const int ColumnStartDate = 4;
+        private const int ColumnEndDate = 5;
+        private const int ColumnBonusStatus = 6;
+        private const int ColumnTotalClaimants = 11;
+        private const int ColumnTotalClaimedAmount = 12;
+        private const int ColumnGGR = 13;
+        private const int ColumnTotalDeposit = 14;
+        private const int ColumnTotalWithdrawal = 15;
 
-        private const int ColumnStatusRunning = 6;
-        private const int ColumnStatusCancel = 7;
-        private const int ColumnStatusFullfill = 8;
-        private const int ColumnStatusOtherPlatform = 9;
+        private const int ColumnStatusRunning = 7;
+        private const int ColumnStatusCancel = 8;
+        private const int ColumnStatusFullfill = 9;
+        private const int ColumnStatusOtherPlatform = 10;
 
-        private const int ColumnTemplateCount = 14;
+        private const int ColumnTemplateCount = 16;
 
         private const int RowTitleTemplate = 0;
         private const int RowHeaderTemplate = 1;
@@ -83,12 +85,12 @@ namespace Fanex.Athena.Report.BonusInfo.Excels
 
             if (data.SortedData.TotalRows == 0 || !data.SortedData.DataList.Any())
             {
-                AssignNoInfoRow(sheet, templateSheet);
+                AssignNoInfoRow(sheet, templateSheet, metaModel);
             }
             else
             {
                 AssignData(sheet, templateSheet, data.SortedData.DataList);
-                AssignTotalData(sheet, templateSheet, data.SortedData.TotalData);
+                AssignTotalData(sheet, templateSheet, data.SortedData.TotalData, metaModel.GroupBy);
             }
 
             _builder.MergeCells(sheet, firstRow: RowHeaderTemplate, lastRow: RowHeaderTemplate, firstCol: ColumnClaimStatus, lastCol: ColumnStatusOtherPlatform);
@@ -98,24 +100,33 @@ namespace Fanex.Athena.Report.BonusInfo.Excels
                 _builder.HideColumn(sheet, ClaimStatusMap[statusId]);
             }
 
+            if (metaModel.GroupBy == GroupBy.BonusCode)
+            {
+                _builder.HideColumn(sheet, ColumnDate);
+            }
+
             _builder.RemoveSheet(workBook, TemplateSheetName);
 
             return workBook;
         }
 
-        private void AssignNoInfoRow(ISheet sheet, ISheet templateSheet)
+        private void AssignNoInfoRow(ISheet sheet, ISheet templateSheet, BonusInfoSummaryMetaModel metaModel)
         {
-            _builder.SetRowValue(sheet, templateSheet, RowNoInfoTemplate, RowContentTemplate, ColumnTemplateCount, ViewResources.NoInfo);
+            var columnNoInfo = metaModel.GroupBy == GroupBy.BonusCodeAndDate ? ColumnDate : ColumnDate + 1;
+
+            _builder.SetRowValueBeginCell(sheet, templateSheet, RowNoInfoTemplate, RowContentTemplate, ColumnTemplateCount, columnNoInfo, ViewResources.NoInfo);
         }
 
         private void AssignTitle(ISheet sheet, ISheet templateSheet, BonusInfoSummaryMetaModel metaModel)
         {
+            var columnTite = metaModel.GroupBy == GroupBy.BonusCodeAndDate ? ColumnDate : ColumnDate + 1;
+
             Sites.SiteNameList.TryGetValue(metaModel.BrandId, out string brandName);
 
             var title = $"{ViewResources.BonusInfo}, {metaModel.FromDate.ToString(DateFormat)} - {metaModel.ToDate.ToString(DateFormat)}, {brandName}," +
                 $" {string.Format(ViewResources.Viewin, metaModel.BaseCurrency.ToUpperInvariant())}";
 
-            _builder.SetRowValue(sheet, templateSheet, sourceRowIndex: RowTitleTemplate, destRowIndex: RowTitleTemplate, columnCount: ColumnTemplateCount, value: title);
+            _builder.SetRowValueBeginCell(sheet, templateSheet, sourceRowIndex: RowTitleTemplate, destRowIndex: RowTitleTemplate, columnCount: ColumnTemplateCount, columnTite, value: title);
 
             sheet.CreateFreezePane(0, RowContentTemplate);
             _builder.ClearTemplate(sheet, RowContentTemplate);
@@ -124,6 +135,7 @@ namespace Fanex.Athena.Report.BonusInfo.Excels
         private void AssignHeader(ISheet sheet, ISheet templateSheet)
         {
             var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: RowHeaderTemplate, destRowIndex: RowHeaderTemplate);
+            row.Cells[ColumnDate].SetCellValue(ViewResources.Date);
             row.Cells[ColumnBonusName].SetCellValue(ViewResources.BonusName);
             row.Cells[ColumnBonusCode].SetCellValue(ViewResources.BonusCode);
             row.Cells[ColumnBonusType].SetCellValue(ViewResources.BonusType);
@@ -133,6 +145,7 @@ namespace Fanex.Athena.Report.BonusInfo.Excels
             row.Cells[ColumnClaimStatus].SetCellValue(ViewResources.ClaimStatus);
             row.Cells[ColumnTotalClaimants].SetCellValue(ViewResources.TotalClaimants);
             row.Cells[ColumnTotalClaimedAmount].SetCellValue(ViewResources.TotalClaimedAmount);
+            row.Cells[ColumnGGR].SetCellValue(ViewResources.GGR);
             row.Cells[ColumnTotalDeposit].SetCellValue(ViewResources.TotalDeposit);
             row.Cells[ColumnTotalWithdrawal].SetCellValue(ViewResources.TotalWithdrawal);
 
@@ -153,17 +166,20 @@ namespace Fanex.Athena.Report.BonusInfo.Excels
             }
         }
 
-        private void AssignTotalData(ISheet sheet, ISheet templateSheet, BonusInfoSummaryItemDTO dataTotal)
+        private void AssignTotalData(ISheet sheet, ISheet templateSheet, BonusInfoSummaryItemDTO dataTotal, int groupBy)
         {
-            var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: RowTotalDataTemplate, destRowIndex: sheet.LastRowNum + 1);
-            row.Cells[ColumnBonusName].SetCellValue(ViewResources.Total);
+            var columnTotal = groupBy == GroupBy.BonusCodeAndDate ? ColumnDate : ColumnDate + 1;
 
+            var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: RowTotalDataTemplate, destRowIndex: sheet.LastRowNum + 1);
+
+            row.Cells[columnTotal].SetCellValue(ViewResources.Total);
             row.Cells[ColumnStatusRunning].SetCellValue(dataTotal.Running);
             row.Cells[ColumnStatusCancel].SetCellValue(dataTotal.Canceled);
             row.Cells[ColumnStatusFullfill].SetCellValue(dataTotal.Fulfill);
             row.Cells[ColumnStatusOtherPlatform].SetCellValue(dataTotal.OtherPlatform);
             row.Cells[ColumnTotalClaimants].SetCellValue((double)dataTotal.TotalClaimants);
             row.Cells[ColumnTotalClaimedAmount].SetCellValue((double)dataTotal.TotalClaimedAmount);
+            row.Cells[ColumnGGR].SetCellValue((double)dataTotal.GGR);
             row.Cells[ColumnTotalDeposit].SetCellValue((double)dataTotal.TotalDeposit);
             row.Cells[ColumnTotalWithdrawal].SetCellValue((double)dataTotal.TotalWithdrawal);
 
@@ -173,6 +189,7 @@ namespace Fanex.Athena.Report.BonusInfo.Excels
         private void AssignRowData(ISheet sheet, ISheet templateSheet, int lastRowIndex, BonusInfoSummaryItemDTO rowData)
         {
             var row = _builder.CopyRow(sheet, templateSheet, RowContentTemplate, lastRowIndex + RowContentTemplate);
+            row.Cells[ColumnDate].SetCellValue(rowData.Date.ToString(DateCellFormat));
             row.Cells[ColumnBonusName].SetCellValue(rowData.BonusName);
             row.Cells[ColumnBonusCode].SetCellValue(rowData.BonusCode);
             row.Cells[ColumnBonusType].SetCellValue(rowData.BonusTypeText);
@@ -185,6 +202,7 @@ namespace Fanex.Athena.Report.BonusInfo.Excels
             row.Cells[ColumnStatusOtherPlatform].SetCellValue(rowData.OtherPlatform);
             row.Cells[ColumnTotalClaimants].SetCellValue((double)rowData.TotalClaimants);
             row.Cells[ColumnTotalClaimedAmount].SetCellValue((double)rowData.TotalClaimedAmount);
+            row.Cells[ColumnGGR].SetCellValue((double)rowData.GGR);
             row.Cells[ColumnTotalDeposit].SetCellValue((double)rowData.TotalDeposit);
             row.Cells[ColumnTotalWithdrawal].SetCellValue((double)rowData.TotalWithdrawal);
         }
