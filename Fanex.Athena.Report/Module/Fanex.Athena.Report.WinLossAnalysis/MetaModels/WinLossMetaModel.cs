@@ -60,6 +60,10 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         [SpParam(Ignored = true)]
         public bool DrilldownInOriginalCurrency { get; set; }
 
+        public byte SortbyId { get; set; }
+        public bool IsSortAsc { get; set; }
+
+#pragma warning disable S1067, S109, S1541
         [SpParam(Ignored = true)]
         public bool IsValid => !string.IsNullOrWhiteSpace(ProductIds) && !string.IsNullOrWhiteSpace(BrandIds) && !string.IsNullOrWhiteSpace(BaseCurrency) &&
             GroupBy >= 1 && GroupBy <= 5 &&
@@ -67,7 +71,6 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
             UserNameFilterId >= 1 && UserNameFilterId <= 3 &&
             FromDate <= ToDate &&
             PageSize <= MaxPageSize;
-
-#pragma warning restore S1067, S109,S1541 // Expressions should not be too complex, Magic number
+#pragma warning restore S1067, S109, S1541
     }
 }

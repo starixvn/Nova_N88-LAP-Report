@@ -1051,6 +1051,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Player Win Loss.
+        /// </summary>
+        public static string PlayerWinloss {
+            get {
+                return ResourceManager.GetString("PlayerWinloss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PP.
         /// </summary>
         public static string PP {

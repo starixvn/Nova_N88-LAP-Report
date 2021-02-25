@@ -5,6 +5,7 @@
         public decimal TotalBasedTurnover { get; set; }
         public decimal TotalBasedNetTurnover { get; set; }
         public decimal TotalBasedGGR { get; set; }
+        public decimal TotalBasedPlayerWinloss { get; set; }
         public decimal TotalBasedTurnoverNoDraw { get; set; }
         public decimal TotalBasedAvgBetAmount { get; set; }
         public int TotalBetCount { get; set; }

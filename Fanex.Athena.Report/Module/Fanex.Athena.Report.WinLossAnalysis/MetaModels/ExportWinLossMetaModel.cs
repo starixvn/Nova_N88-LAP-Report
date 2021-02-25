@@ -4,14 +4,8 @@ using System.Collections.Generic;
 
 namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
 {
-    public class ExportWinLossMetaModel : WinLossMetaModel, ISortOptionMetaModel
+    public class ExportWinLossMetaModel : WinLossMetaModel 
     {
-        [SpParam(Ignored = true)]
-        public string SortType { get; set; }
-
-        [SpParam(Ignored = true)]
-        public string SortBy { get; set; }
-
         [SpParam(Ignored = true)]
         public IEnumerable<string> OrderCols { get; set; }
     }

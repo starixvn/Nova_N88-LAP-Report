@@ -1,5 +1,4 @@
-﻿using Fanex.Athena.Report.Common.Extensions;
-using Fanex.Athena.Report.Common.Model.ViewModel;
+﻿using Fanex.Athena.Report.Common.Model.ViewModel;
 using Fanex.Athena.Report.Core.Attributes;
 using Fanex.Athena.Report.WinLossAnalysis.Consts;
 using Fanex.Athena.Report.WinLossAnalysis.Excels;
@@ -9,7 +8,6 @@ using Fanex.Athena.Report.WinLossAnalysis.Services;
 using Fanex.Athena.Report.WinLossAnalysis.ViewModels;
 using Fanex.NVC.Authentication.Extensions;
 using Fanex.NVC.Authentication.Infrastructure;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.IO;
@@ -52,16 +50,13 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Controllers
         [HttpPost]
         [RequestValidation(validateBrandList: true)]
         public async Task<FileResult> ExportData(
-            [FromServices]IWinLossExcel excel,
+            [FromServices] IWinLossExcel excel,
             ExportWinLossMetaModel metaModel
             )
         {
             EnsureMetaModelExport(metaModel);
 
             var data = await _winLossService.GetData(metaModel);
-            var sortAbleList = data.DataList as ISortableList<WinLossRecordViewModel>;
-            sortAbleList?.Sort(metaModel.SortBy, metaModel.SortType);
-
             var stream = new MemoryStream();
             try
             {

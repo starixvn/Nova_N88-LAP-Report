@@ -19,6 +19,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.DTO
         public decimal BasedNetTurnover { get; set; }
         public decimal GGR { get; set; }
         public decimal BasedGGR { get; set; }
+        public decimal PlayerWinloss { get; set; }
+        public decimal BasedPlayerWinloss { get; set; }
         public int BetCount { get; set; }
         public decimal AvgBetAmount { get; set; }
         public decimal BasedAvgBetAmount { get; set; }

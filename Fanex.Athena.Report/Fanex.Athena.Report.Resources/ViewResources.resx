@@ -687,4 +687,8 @@
   <data name="SBCFB" xml:space="preserve">
     <value>Saba.club Free Bets</value>
   </data>
+  <data name="PlayerWinloss" xml:space="preserve">
+    <value>Player Win Loss</value>
+    <comment>150398</comment>
+  </data>
 </root>
