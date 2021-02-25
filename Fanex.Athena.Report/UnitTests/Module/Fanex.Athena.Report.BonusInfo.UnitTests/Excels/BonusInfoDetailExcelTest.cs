@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using Fanex.Athena.Report.BonusInfo.Consts;
 
 namespace Fanex.Athena.Report.BonusInfo.UnitTests.Excels
 {
@@ -55,6 +56,7 @@ namespace Fanex.Athena.Report.BonusInfo.UnitTests.Excels
 
             var data = new BonusInfoDetailDTO();
             var metaModel = _fixture.Create<BonusInfoDetailMetaModel>();
+            metaModel.GroupBy = GroupBy.BonusCode;
             Sites.SiteNameList.TryGetValue(metaModel.BrandId, out string brandName);
 
             var reportTitle = $"{ViewResources.BonusInfo}, {metaModel.FromDate.ToString(DateFormat)} - {metaModel.ToDate.ToString(DateFormat)}, {brandName}," +

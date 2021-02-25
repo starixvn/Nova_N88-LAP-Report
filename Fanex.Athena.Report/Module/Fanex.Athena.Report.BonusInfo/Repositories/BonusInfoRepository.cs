@@ -56,7 +56,8 @@ namespace Fanex.Athena.Report.BonusInfo.Repositories
                 TotalClaimants = dataTotal.TotalClaimants,
                 TotalClaimedAmount = dataTotal.TotalClaimedAmount,
                 TotalDeposit = dataTotal.TotalDeposit,
-                TotalWithdrawal = dataTotal.TotalWithdrawal
+                TotalWithdrawal = dataTotal.TotalWithdrawal,
+                GGR = dataTotal.GGR
             };
         }
 

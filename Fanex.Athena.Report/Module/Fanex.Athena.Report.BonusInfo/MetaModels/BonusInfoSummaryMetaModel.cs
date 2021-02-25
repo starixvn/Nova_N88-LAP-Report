@@ -4,6 +4,8 @@ namespace Fanex.Athena.Report.BonusInfo.MetaModels
 {
     public class BonusInfoSummaryMetaModel : BaseBonusInfoReportMetaModel
     {
+        public int GroupBy { get; set; }
+
         public string BonusName { get; set; }
 
         [SpParam(SqlParamName = "BonusTypeIds")]

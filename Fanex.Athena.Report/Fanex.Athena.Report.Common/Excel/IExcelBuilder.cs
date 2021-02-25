@@ -16,6 +16,8 @@
 
         void SetRowValue(ISheet sheet, ISheet sourceSheet, int sourceRowIndex, int destRowIndex, int columnCount, string value);
 
+        void SetRowValueBeginCell(ISheet sheet, ISheet sourceSheet, int sourceRowIndex, int destRowIndex, int columnCount, int cellIndex, string value);
+
         void ClearTemplate(ISheet sheet, int startRowIndex);
 
         int MergeCells(ISheet sheet, int firstRow, int lastRow, int firstCol, int lastCol);

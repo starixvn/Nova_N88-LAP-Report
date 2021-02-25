@@ -52,7 +52,7 @@
 
         protected static int CompareAscending(object x, object y)
         {
-            if (y == null)
+            if (x == null && y == null)
             {
                 return 0;
             }
@@ -60,6 +60,11 @@
             if (x == null)
             {
                 return -1;
+            }
+
+            if (y == null)
+            {
+                return 1;
             }
 
             var value = x as IComparable;

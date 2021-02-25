@@ -226,5 +226,13 @@
         {
             sheet.RemoveRow(sheet.GetRow(rowIndex));
         }
+
+        public void SetRowValueBeginCell(ISheet sheet, ISheet sourceSheet, int sourceRowIndex, int destRowIndex, int columnCount, int cellIndex, string value)
+        {
+            var row = this.CopyRow(sheet, sourceSheet, sourceRowIndex, destRowIndex);
+
+            this.MergeCells(sheet, firstRow: destRowIndex, lastRow: destRowIndex, firstCol: cellIndex, lastCol: columnCount - 1);
+            row.Cells[cellIndex].SetCellValue(value);
+        }
     }
 }

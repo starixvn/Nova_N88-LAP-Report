@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using Fanex.Athena.Report.BonusInfo.Consts;
 
 namespace Fanex.Athena.Report.BonusInfo.UnitTests.Excels
 {
@@ -26,23 +27,25 @@ namespace Fanex.Athena.Report.BonusInfo.UnitTests.Excels
         protected const string DateFormat = "MM/dd/yyyy";
         protected const string DateCellFormat = "dd-MMM-yyyy";
 
-        private const int ColumnBonusName = 0;
-        private const int ColumnBonusCode = 1;
-        private const int ColumnBonusType = 2;
-        private const int ColumnStartDate = 3;
-        private const int ColumnEndDate = 4;
-        private const int ColumnBonusStatus = 5;
-        private const int ColumnTotalClaimants = 10;
-        private const int ColumnTotalClaimedAmount = 11;
-        private const int ColumnTotalDeposit = 12;
-        private const int ColumnTotalWithdrawal = 13;
+        private const int ColumnDate = 0;
+        private const int ColumnBonusName = 1;
+        private const int ColumnBonusCode = 2;
+        private const int ColumnBonusType = 3;
+        private const int ColumnStartDate = 4;
+        private const int ColumnEndDate = 5;
+        private const int ColumnBonusStatus = 6;
+        private const int ColumnTotalClaimants = 11;
+        private const int ColumnTotalClaimedAmount = 12;
+        private const int ColumnGGR = 13;
+        private const int ColumnTotalDeposit = 14;
+        private const int ColumnTotalWithdrawal = 15;
 
-        private const int ColumnStatusRunning = 6;
-        private const int ColumnStatusCancel = 7;
-        private const int ColumnStatusFullfill = 8;
-        private const int ColumnStatusOtherPlatform = 9;
+        private const int ColumnStatusRunning = 7;
+        private const int ColumnStatusCancel = 8;
+        private const int ColumnStatusFullfill = 9;
+        private const int ColumnStatusOtherPlatform = 10;
 
-        private const int ColumnTemplateCount = 14;
+        private const int ColumnTemplateCount = 16;
 
         private const int RowTitleTemplate = 0;
         private const int RowHeaderTemplate = 1;
@@ -64,6 +67,7 @@ namespace Fanex.Athena.Report.BonusInfo.UnitTests.Excels
 
             var data = new BonusInfoSummaryDTO();
             var metaModel = _fixture.Create<BonusInfoSummaryMetaModel>();
+            metaModel.GroupBy = GroupBy.BonusCodeAndDate;
             metaModel.ClaimStatus = "1";
             Sites.SiteNameList.TryGetValue(metaModel.BrandId, out string brandName);
 
@@ -74,8 +78,8 @@ namespace Fanex.Athena.Report.BonusInfo.UnitTests.Excels
             excel.Export(data, metaModel);
 
             // Assert
-            _excelBuilder.Verify(ex => ex.SetRowValue(_sheet.Object, _templateSheet.Object,
-                RowTitleTemplate, RowTitleTemplate, ColumnTemplateCount, reportTitle), Times.Once);
+            _excelBuilder.Verify(ex => ex.SetRowValueBeginCell(_sheet.Object, _templateSheet.Object,
+                RowTitleTemplate, RowTitleTemplate, ColumnTemplateCount, 0, reportTitle), Times.Once);
         }
 
         [Fact]
@@ -87,14 +91,15 @@ namespace Fanex.Athena.Report.BonusInfo.UnitTests.Excels
 
             var data = new BonusInfoSummaryDTO();
             var metaModel = _fixture.Create<BonusInfoSummaryMetaModel>();
+            metaModel.GroupBy = GroupBy.BonusCodeAndDate;
             metaModel.ClaimStatus = "1";
 
             // Action
             excel.Export(data, metaModel);
 
             // Assert
-            _excelBuilder.Verify(ex => ex.SetRowValue(_sheet.Object, _templateSheet.Object,
-                RowNoInfoTemplate, RowContentTemplate, ColumnTemplateCount, ViewResources.NoInfo), Times.Once);
+            _excelBuilder.Verify(ex => ex.SetRowValueBeginCell(_sheet.Object, _templateSheet.Object,
+                RowNoInfoTemplate, RowContentTemplate, ColumnTemplateCount, 0, ViewResources.NoInfo), Times.Once);
         }
 
         [Fact]

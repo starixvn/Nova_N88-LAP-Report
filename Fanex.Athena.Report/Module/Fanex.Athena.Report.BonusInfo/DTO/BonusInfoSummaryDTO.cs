@@ -29,11 +29,18 @@ namespace Fanex.Athena.Report.BonusInfo.DTO
 
         public decimal TotalWithdrawal { get; set; }
 
-        [SqlColumn(Ignored = true)]
-        public string StartDateString => StartDate.ToString("dd-MMM-yyyy");
+        public decimal GGR { get; set; }
+
+        public DateTime Date { get; set; }
 
         [SqlColumn(Ignored = true)]
-        public string EndDateString => EndDate.ToString("dd-MMM-yyyy");
+        public string StartDateString => StartDate == DateTime.MinValue ? "" : StartDate.ToString(DateTimeFormat.MonthAbbreviationsDate);
+
+        [SqlColumn(Ignored = true)]
+        public string EndDateString => EndDate == DateTime.MinValue ? "" : EndDate.ToString(DateTimeFormat.MonthAbbreviationsDate);
+
+        [SqlColumn(Ignored = true)]
+        public string DateString => Date.ToString(DateTimeFormat.MonthAbbreviationsDate);
 
         [SqlColumn(Ignored = true)]
         public string BonusStatusText => BonusInfoDropdownOptions.BonusStatusList.FirstOrDefault(_ => _.Key == BonusStatus)?.Value;
@@ -51,6 +58,8 @@ namespace Fanex.Athena.Report.BonusInfo.DTO
         public decimal TotalDeposit { get; set; }
 
         public decimal TotalWithdrawal { get; set; }
+
+        public decimal GGR { get; set; }
     }
 
     public class BonusInfoSummaryDTO
