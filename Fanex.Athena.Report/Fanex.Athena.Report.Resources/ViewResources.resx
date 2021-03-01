@@ -678,4 +678,10 @@
   <data name="SabaPromotionPrizes" xml:space="preserve">
     <value>Saba Promotion Prizes</value>
   </data>
+  <data name="ContributionAmount" xml:space="preserve">
+    <value>Contribution Amount</value>
+  </data>
+  <data name="SBCC" xml:space="preserve">
+    <value>Saba.club Jackpot Contribution</value>
+  </data>
 </root>
