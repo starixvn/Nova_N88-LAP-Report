@@ -7,5 +7,9 @@
         public const string SPR = "SPR";
 
         public const string CCB = "CCB";
+
+        public const string SBCC = "SBCC";
+
+        public const string SBC = "SBC";
     }
 }
