@@ -6,10 +6,18 @@
 
         public const string SPR = "SPR";
 
+        public const string PPC = "PPC";
+
+        public const string PP = "PP";
+
+        public const string SAG = "SAG";
+
         public const string CCB = "CCB";
 
         public const string SBCC = "SBCC";
 
         public const string SBC = "SBC";
+        
+        public const string SBCFB = "SBCFB";
     }
 }

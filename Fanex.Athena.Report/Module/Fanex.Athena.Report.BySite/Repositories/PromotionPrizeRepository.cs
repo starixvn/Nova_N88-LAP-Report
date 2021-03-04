@@ -70,6 +70,14 @@
             while (reader.Read())
             {
                 var productCode = reader.GetVal<string>("ProductCode");
+                groupData[productCode].CurrencyTotal.Add(ReadCurrencyTotalData(reader, currencyList));
+            }
+
+            reader.NextResult();
+
+            while (reader.Read())
+            {
+                var productCode = reader.GetVal<string>("ProductCode");
                 groupData[productCode].Data.Add(ReadMainData(reader, currencyList));
             }
 
@@ -87,7 +95,8 @@
                     PromotionType = this.GetBetTypeName(reader.GetVal<string>("BetType")),
                     Amount = reader.GetVal<decimal>("SumAmount"),
                     Turnover = reader.GetVal<decimal>("SumTurnover"),
-                    ContributionAmount = reader.GetVal<decimal>("SumContributionAmount")
+                    ContributionAmount = reader.GetVal<decimal>("SumContributionAmount"),
+                    TipSharing = reader.GetVal<decimal>("SumTipSharing")
                 };
 
                 if (!data.TryAdd(
@@ -96,17 +105,36 @@
                     {
                         SummaryTotal = new List<PromotionPrize> { summary },
                         Data = new List<PromotionPrize>(),
+                        CurrencyTotal = new List<CurrencyTotal>(),
                         GrandTotal = summary.Amount,
                         TurnoverTotal = summary.Turnover,
-                        ContributionAmountTotal = summary.ContributionAmount
+                        ContributionAmountTotal = summary.ContributionAmount,
+                        TipTotal = summary.TipSharing
                     }))
                 {
                     data[productCode].GrandTotal += summary.Amount;
+                    data[productCode].TipTotal += summary.TipSharing;
                     data[productCode].SummaryTotal.Add(summary);
                 }
             }
 
             return data;
+        }
+
+        private CurrencyTotal ReadCurrencyTotalData(IDataReader reader, IEnumerable<Currency> currencyList)
+        {
+            var currencyId = reader.GetVal<int>("CurrencyId");
+            var currencyTotal = new CurrencyTotal
+            {
+                CurrencyId = currencyId,
+                SumAmount = reader.GetVal<decimal>("SumAmount"),
+                SumTurnover = reader.GetVal<decimal>("SumTurnover"),
+                SumContributionAmount = reader.GetVal<decimal>("SumContributionAmount"),
+                SumTipSharing = reader.GetVal<decimal>("SumTipSharing"),
+                CurrencyName = currencyList.FirstOrDefault(x => x.ID == currencyId)?.Name
+            };
+
+            return currencyTotal;
         }
 
         private PromotionPrize ReadMainData(IDataReader reader, IEnumerable<Currency> currencyList)

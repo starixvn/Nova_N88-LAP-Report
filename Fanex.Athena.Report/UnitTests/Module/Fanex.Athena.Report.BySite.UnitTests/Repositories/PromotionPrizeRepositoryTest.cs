@@ -79,8 +79,8 @@ namespace Fanex.Athena.Report.BySite.UnitTests.Repositories
         {
             var metaModel = _fixture.Create<PromotionPrizeMetaModel>();
             var reader = new Mock<IDataReader>();
-            reader.Setup(r => r.Read()).Returns(new Queue<bool>(new[] { true, true, false, true, false }).Dequeue);
-            reader.Setup(r => r.NextResult()).Returns(new Queue<bool>(new[] { true, false }).Dequeue);
+            reader.Setup(r => r.Read()).Returns(new Queue<bool>(new[] { true, true, false, true, false, true, false }).Dequeue);
+            reader.Setup(r => r.NextResult()).Returns(new Queue<bool>(new[] { true, false, true, false }).Dequeue);
 
             var expectedSummaryDataItem = _fixture.Create<PromotionPrize>();
             var expectedPromitionPrizeData = _fixture.Create<PromotionPrize>();
@@ -89,6 +89,12 @@ namespace Fanex.Athena.Report.BySite.UnitTests.Repositories
                 { "ProductCode", ProductCode },
                 { "BetType", BetTypeName },
                 { "SumAmount", expectedSummaryDataItem.Amount },
+                { "SumTurnover", expectedSummaryDataItem.Turnover },
+                { "SumContributionAmount", expectedSummaryDataItem.ContributionAmount },
+                { "SumTipSharing", expectedSummaryDataItem.TipSharing },
+                { "ContributionAmount", expectedPromitionPrizeData.ContributionAmount },
+                { "Turnover", expectedPromitionPrizeData.Turnover },
+                { "TipSharing", expectedPromitionPrizeData.TipSharing },
                 { "CurrencyId", 1 },
                 { "UserName", expectedPromitionPrizeData.SystemId },
                 { "NickName", expectedPromitionPrizeData.ExternalId },

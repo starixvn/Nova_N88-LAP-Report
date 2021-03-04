@@ -9,10 +9,14 @@
 
         public IList<PromotionPrize> SummaryTotal { get; set; }
 
-        public decimal GrandTotal { get; set; }
+        public IList<CurrencyTotal> CurrencyTotal { get; set; }
 
         public decimal TurnoverTotal { get; set; }
 
         public decimal ContributionAmountTotal { get; set; }
+
+        public decimal GrandTotal { get; set; }
+
+        public decimal TipTotal { get; set; }
     }
 }
