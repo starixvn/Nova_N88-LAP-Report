@@ -19,7 +19,7 @@ namespace Fanex.Athena.Report.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ViewResources {
@@ -1240,6 +1240,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Saba.club Free Bets.
+        /// </summary>
+        public static string SBCFB {
+            get {
+                return ResourceManager.GetString("SBCFB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SG.
         /// </summary>
         public static string SG {
@@ -1326,6 +1335,33 @@ namespace Fanex.Athena.Report.Resources {
         public static string TG {
             get {
                 return ResourceManager.GetString("TG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tip Amount.
+        /// </summary>
+        public static string TipAmount {
+            get {
+                return ResourceManager.GetString("TipAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tips.
+        /// </summary>
+        public static string Tips {
+            get {
+                return ResourceManager.GetString("Tips", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tip Sharing.
+        /// </summary>
+        public static string TipSharing {
+            get {
+                return ResourceManager.GetString("TipSharing", resourceCulture);
             }
         }
         

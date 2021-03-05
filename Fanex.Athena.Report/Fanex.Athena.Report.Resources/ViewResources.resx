@@ -684,4 +684,19 @@
   <data name="SBCC" xml:space="preserve">
     <value>Saba.club Jackpot Contribution</value>
   </data>
+  <data name="TipAmount" xml:space="preserve">
+    <value>Tip Amount</value>
+    <comment>128493</comment>
+  </data>
+  <data name="Tips" xml:space="preserve">
+    <value>Tips</value>
+    <comment>128493</comment>
+  </data>
+  <data name="TipSharing" xml:space="preserve">
+    <value>Tip Sharing</value>
+    <comment>128493</comment>
+  </data>
+  <data name="SBCFB" xml:space="preserve">
+    <value>Saba.club Free Bets</value>
+  </data>
 </root>

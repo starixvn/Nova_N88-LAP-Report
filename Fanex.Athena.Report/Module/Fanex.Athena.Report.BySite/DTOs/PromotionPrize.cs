@@ -12,12 +12,14 @@
 
         public decimal Amount { get; set; }
 
-        public string CurrencyName { get; set; }
-
-        public string PromotionType { get; set; }
-
         public decimal Turnover { get; set; }
 
         public decimal ContributionAmount { get; set; }
+
+        public decimal TipSharing { get; set; }
+
+        public string CurrencyName { get; set; }
+
+        public string PromotionType { get; set; }
     }
 }

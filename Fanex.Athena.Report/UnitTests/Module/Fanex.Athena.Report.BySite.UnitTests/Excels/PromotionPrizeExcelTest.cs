@@ -18,8 +18,7 @@ namespace Fanex.Athena.Report.BySite.UnitTests.Excels
     public class PromotionPrizeExcelTest
     {
         private readonly IFixture _fixture = new Fixture();
-        private const string TemplateSheetName = "Template";
-        private const string DefaultSheetName = "Data";
+        private const string DefaultTemplateSheetName = "Template";
         public const string FormatDate = "MM/dd/yyyy";
 
         private const int ColumnIndex = 0;
@@ -30,12 +29,14 @@ namespace Fanex.Athena.Report.BySite.UnitTests.Excels
         private const int ColumnSystemId = 5;
         private const int ColumnAmount = 6;
 
+        private const int TotalColumnTemplateCount = 9;
         private const int ColumnTemplateCount = 7;
 
         private const int RowTitleTemplate = 0;
         private const int RowHeaderTemplate = 1;
         private const int RowContentTemplate = 2;
         private const int RowTotal = 4;
+        private const int RowCurrencyTotal = 5;
         private const int RowGrandTotal = 6;
         private const int RowNoInfoTemplate = 7;
 
@@ -44,8 +45,9 @@ namespace Fanex.Athena.Report.BySite.UnitTests.Excels
         private Mock<ISheet> _sheet;
         private Mock<ISheet> _templateSheet;
 
-        private const string ProductCode = "CCB";
+        private const string ProductCode = "SBC";
         private readonly string ProductName = ViewResources.ResourceManager.GetString(ProductCode);
+        private readonly string SabaPromotion = ViewResources.ResourceManager.GetString(Product.SPR);
 
         [Fact]
         public void AssignTitle_WhenCall_AssignCorrectValueForTitleRows()
@@ -123,6 +125,7 @@ namespace Fanex.Athena.Report.BySite.UnitTests.Excels
 
             var bodyData = _fixture.Build<PromotionPrizeResultModel>()
                 .With(x => x.Data, new List<PromotionPrize> { _fixture.Create<PromotionPrize>() })
+                .With(x => x.CurrencyTotal, new List<CurrencyTotal> { _fixture.Create<CurrencyTotal>() })
                 .With(x => x.SummaryTotal, new List<PromotionPrize> { _fixture.Create<PromotionPrize>() })
                 .Create();
             var data = new Dictionary<string, PromotionPrizeResultModel>
@@ -142,8 +145,77 @@ namespace Fanex.Athena.Report.BySite.UnitTests.Excels
             AssertRowData(bodyRow, bodyData);
         }
 
+        [Fact]
+        public void AssignSummaryTotal_WhenCall_CallSetValueCorrectly()
+        {
+            // Arrange
+            var excel = CreateExcel();
+            var rows = CreateRows();
+
+            var totalData = _fixture.Create<PromotionPrize>();
+            var bodyData = _fixture.Build<PromotionPrizeResultModel>()
+                .With(x => x.Data, new List<PromotionPrize> { _fixture.Create<PromotionPrize>() })
+                .With(x => x.CurrencyTotal, new List<CurrencyTotal> { _fixture.Create<CurrencyTotal>() })
+                .With(x => x.SummaryTotal, new List<PromotionPrize> { totalData })
+                .Create();
+            var data = new Dictionary<string, PromotionPrizeResultModel>
+            {
+                { ProductCode, bodyData }
+            };
+            var metaModel = _fixture.Create<PromotionPrizeMetaModel>();
+
+            var totalRow = rows[2];
+            _sheet.Setup(s => s.GetRow(RowContentTemplate + 1)).Returns(totalRow.Object);
+            var currencyTotalRow = bodyData.CurrencyTotal.Count;
+            var rowTotal = RowContentTemplate + 1 + currencyTotalRow;
+
+            // Action
+            excel.Export(TemplatePath, data, metaModel);
+
+            // Assert
+            Mock.Get(totalRow.Object.Cells[ColumnAmount]).Verify(c => c.SetCellValue(Convert.ToDouble(totalData.Amount)), Times.Once);
+            Mock.Get(totalRow.Object.Cells[ColumnPromotionType]).Verify(c => c.SetCellValue(totalData.PromotionType), Times.Once);
+
+            _excelBuilder.Verify(x => x.MergeCells(_sheet.Object, rowTotal, rowTotal, ColumnPromotionType, ColumnSystemId), Times.Once);
+
+            Mock.Get(totalRow.Object.Cells[ColumnIndex]).Verify(c => c.SetCellValue(string.Format(ViewResources.Totalin, metaModel.DefaultBaseCurrency)), Times.Once);
+            _excelBuilder.Verify(x => x.MergeCells(_sheet.Object, rowTotal, rowTotal, ColumnIndex, ColumnDate), Times.Once);
+        }
+
+        [Fact]
+        public void AssignCurrencyTotal_WhenCall_CallSetValueCorrectly()
+        {
+            // Arrange
+            var excel = CreateExcel();
+            var rows = CreateRows();
+
+            var totalData = _fixture.Create<PromotionPrize>();
+            var bodyData = _fixture.Build<PromotionPrizeResultModel>()
+                .With(x => x.Data, new List<PromotionPrize> { _fixture.Create<PromotionPrize>() })
+                .With(x => x.CurrencyTotal, new List<CurrencyTotal> { _fixture.Create<CurrencyTotal>() })
+                .With(x => x.SummaryTotal, new List<PromotionPrize> { totalData })
+                .Create();
+            var data = new Dictionary<string, PromotionPrizeResultModel>
+            {
+                { ProductCode, bodyData }
+            };
+            var metaModel = _fixture.Create<PromotionPrizeMetaModel>();
+
+            var totalRow = rows[4];
+            _sheet.Setup(s => s.GetRow(RowContentTemplate + 1)).Returns(totalRow.Object);
+            var rowCurrencyTotal = RowContentTemplate + bodyData.CurrencyTotal.Count;
+
+            // Action
+            excel.Export(TemplatePath, data, metaModel);
+
+            // Assert
+            Mock.Get(totalRow.Object.Cells[ColumnIndex]).Verify(c => c.SetCellValue($"{ViewResources.Total} {bodyData.CurrencyTotal[0].CurrencyName}"), Times.Once);
+            Mock.Get(totalRow.Object.Cells[ColumnAmount]).Verify(c => c.SetCellValue((double)bodyData.CurrencyTotal[0].SumAmount), Times.Once);
+            _excelBuilder.Verify(x => x.MergeCells(_sheet.Object, rowCurrencyTotal, rowCurrencyTotal, ColumnIndex, ColumnSystemId), Times.Once);
+        }
+
         [Theory]
-        [InlineData(ProductCode, 1)]
+        [InlineData(Product.SPR, 2)]
         public void AssignGrandTotal_WhenCall_CallSetValueCorrectly(string productCode, int rowIndexCount)
         {
             // Arrange
@@ -154,6 +226,7 @@ namespace Fanex.Athena.Report.BySite.UnitTests.Excels
             var bodyData = _fixture.Build<PromotionPrizeResultModel>()
                 .With(x => x.Data, new List<PromotionPrize> { _fixture.Create<PromotionPrize>() })
                 .With(x => x.SummaryTotal, new List<PromotionPrize> { _fixture.Create<PromotionPrize>() })
+                .With(x => x.CurrencyTotal, new List<CurrencyTotal> { _fixture.Create<CurrencyTotal>() })
                 .With(x => x.GrandTotal, grandTotalData)
                 .Create();
             var data = new Dictionary<string, PromotionPrizeResultModel>
@@ -165,10 +238,11 @@ namespace Fanex.Athena.Report.BySite.UnitTests.Excels
             var totalRow = rows[2];
             var grandTotalRow = rows[3];
             _sheet.Setup(s => s.GetRow(RowContentTemplate + 1)).Returns(totalRow.Object);
+            var currencyTotalRow = bodyData.CurrencyTotal.Count;
+            var rowIndex = RowContentTemplate + rowIndexCount + currencyTotalRow;
 
             // Action
             excel.Export(TemplatePath, data, metaModel);
-            var rowIndex = RowContentTemplate + rowIndexCount;
 
             // Assert
             Mock.Get(grandTotalRow.Object.Cells[ColumnAmount]).Verify(c => c.SetCellValue(Convert.ToDouble(grandTotalData)), Times.Once);
@@ -184,14 +258,17 @@ namespace Fanex.Athena.Report.BySite.UnitTests.Excels
             var bodyRow = rowList[1];
             var totalRow = rowList[2];
             var grandTotalRow = rowList[3];
+            var currencyTotalRow = rowList[4];
 
             _excelBuilder.Setup(ex => ex.CopyRow(_sheet.Object, _templateSheet.Object, RowHeaderTemplate, RowHeaderTemplate))
                 .Returns(headerRow.Object);
             _excelBuilder.Setup(ex => ex.CopyRow(_sheet.Object, _templateSheet.Object, It.Is<int>(x => x == RowContentTemplate || x == RowNoInfoTemplate), RowContentTemplate))
                 .Returns(bodyRow.Object);
-            _excelBuilder.Setup(ex => ex.CopyRow(_sheet.Object, _templateSheet.Object, RowTotal, RowContentTemplate + 1))
+            _excelBuilder.Setup(ex => ex.CopyRow(_sheet.Object, _templateSheet.Object, RowTotal, RowContentTemplate + 2))
                 .Returns(totalRow.Object);
-            _excelBuilder.Setup(ex => ex.CopyRow(_sheet.Object, _templateSheet.Object, RowGrandTotal, It.Is<int>(x => x == RowContentTemplate + 1 || x == RowContentTemplate + 2)))
+            _excelBuilder.Setup(ex => ex.CopyRow(_sheet.Object, _templateSheet.Object, RowCurrencyTotal, It.Is<int>(x => x == RowContentTemplate + 1 || x == RowContentTemplate + 2)))
+                .Returns(currencyTotalRow.Object);
+            _excelBuilder.Setup(ex => ex.CopyRow(_sheet.Object, _templateSheet.Object, RowGrandTotal, It.Is<int>(x => x == RowContentTemplate + 2 || x == RowContentTemplate + 3)))
                 .Returns(grandTotalRow.Object);
 
             return rowList;
@@ -199,12 +276,13 @@ namespace Fanex.Athena.Report.BySite.UnitTests.Excels
 
         private IList<Mock<IRow>> CreateRowList()
         {
-            var headerRow = ExcelTestHelper.MockGetRow(_sheet, ColumnTemplateCount, RowHeaderTemplate);
-            var bodyRow = ExcelTestHelper.MockGetRow(_sheet, ColumnTemplateCount, RowContentTemplate);
-            var totalRow = ExcelTestHelper.MockGetRow(_sheet, ColumnTemplateCount, RowTotal);
-            var grandTotalRow = ExcelTestHelper.MockGetRow(_sheet, ColumnTemplateCount, RowGrandTotal);
+            var headerRow = ExcelTestHelper.MockGetRow(_sheet, TotalColumnTemplateCount, RowHeaderTemplate);
+            var bodyRow = ExcelTestHelper.MockGetRow(_sheet, TotalColumnTemplateCount, RowContentTemplate);
+            var totalRow = ExcelTestHelper.MockGetRow(_sheet, TotalColumnTemplateCount, RowTotal);
+            var grandTotalRow = ExcelTestHelper.MockGetRow(_sheet, TotalColumnTemplateCount, RowGrandTotal);
+            var currencyTotalRow = ExcelTestHelper.MockGetRow(_sheet, TotalColumnTemplateCount, RowCurrencyTotal);
 
-            return new List<Mock<IRow>> { headerRow, bodyRow, totalRow, grandTotalRow };
+            return new List<Mock<IRow>> { headerRow, bodyRow, totalRow, grandTotalRow, currencyTotalRow };
         }
 
         private PromotionPrizeExcel CreateExcel()
@@ -214,10 +292,10 @@ namespace Fanex.Athena.Report.BySite.UnitTests.Excels
             _excelBuilder.Setup(eb => eb.LoadTemplate(TemplatePath)).Returns(workbook.Object);
 
             _sheet = new Mock<ISheet>();
-            _excelBuilder.Setup(eb => eb.CloneSheet(workbook.Object, null, It.Is<string>(x => x == DefaultSheetName || x == ProductName))).Returns(_sheet.Object);
+            _excelBuilder.Setup(eb => eb.CloneSheet(workbook.Object, null, It.Is<string>(x => x == DefaultTemplateSheetName || x == ProductName || x == SabaPromotion))).Returns(_sheet.Object);
 
             _templateSheet = new Mock<ISheet>();
-            workbook.Setup(w => w.GetSheet(It.Is<string>(x => x == TemplateSheetName))).Returns(_templateSheet.Object);
+            workbook.Setup(w => w.GetSheet(DefaultTemplateSheetName)).Returns(_templateSheet.Object);
 
             return new PromotionPrizeExcel(_excelBuilder.Object);
         }
