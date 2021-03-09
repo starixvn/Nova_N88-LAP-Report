@@ -33,7 +33,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Controllers
         {
             //Arrange
             var metaModel = _fixture.Create<WinLossMetaModel>();
-            var expectedResult = new SortableResultModel<WinLossRecordViewModel>();
+            var expectedResult = new ResultModel<WinLossRecordViewModel>();
             _winLossService.Setup(_ => _.GetData(metaModel)).Returns(Task.FromResult(expectedResult));
 
             //Act
@@ -43,40 +43,12 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Controllers
             Assert.Equal(expectedResult, actualResult);
         }
 
-        [Theory]
-        [InlineData("group", "desc", "Group", false)]
-        [InlineData("avgBetAMOUNT", "Asc", "AvgBetAmount", true)]
-        public async Task ExportData_WhenCall_ShouldSortDataList(string sortBy, string sortType, string expectedSortBy, bool expectedSortType)
-        {
-            //Arrange
-            var metaModel = _fixture.Create<ExportWinLossMetaModel>();
-            metaModel.SortBy = sortBy;
-            metaModel.SortType = sortType;
-
-            var mockDataList = new Mock<ISortableList<WinLossRecordViewModel>>();
-            var expectedResult = new Mock<SortableResultModel<WinLossRecordViewModel>>();
-
-            expectedResult.Setup(_ => _.DataList).Returns(mockDataList.Object);
-            mockDataList.Setup(_ => _.GetEnumerator()).Returns(new List<WinLossRecordViewModel>() { new WinLossRecordViewModel() }.GetEnumerator());
-            _winLossService.Setup(_ => _.GetData(metaModel)).Returns(Task.FromResult(expectedResult.Object));
-
-            var mockExcel = new Mock<IWinLossExcel>();
-            mockExcel.Setup(_ => _.Export(It.IsAny<SortableResultModel<WinLossRecordViewModel>>(), metaModel))
-                .Returns(Mock.Of<IWorkbook>());
-
-            //Act
-            await _target.ExportData(mockExcel.Object, metaModel);
-
-            //Assert
-            mockDataList.Verify(_ => _.Sort(expectedSortBy, expectedSortType), Times.Once);
-        }
-
         [Fact]
         public async Task ExportData_WhenCall_ReturnFileResultCorrectly()
         {
             //Arrange
             var metaModel = _fixture.Create<ExportWinLossMetaModel>();
-            var expectedResult = new SortableResultModel<WinLossRecordViewModel>
+            var expectedResult = new ResultModel<WinLossRecordViewModel>
             {
                 DataList = new List<WinLossRecordViewModel>()
             };

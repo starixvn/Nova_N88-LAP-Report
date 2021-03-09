@@ -7,6 +7,6 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
 {
     public interface IWinLossService
     {
-        Task<SortableResultModel<WinLossRecordViewModel>> GetData(WinLossMetaModel metaModel);
+        Task<ResultModel<WinLossRecordViewModel>> GetData(WinLossMetaModel metaModel);
     }
 }

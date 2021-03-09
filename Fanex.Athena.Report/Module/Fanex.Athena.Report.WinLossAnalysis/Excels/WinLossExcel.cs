@@ -30,7 +30,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
         private const int RowNoInfoTemplate = 6;
         private const int ColumnTemplateCount = 15;
 
-        private const string TemplatePath = "/ExcelTemplate/WinLossReports/WinLossReport.xlsx";
+        private const string TemplatePath = "/ExcelTemplate/WinLossAnalysis/WinLossReport.xlsx";
 
         private static readonly IEnumerable<int> DefaultColumns = new List<int> { ColumnGroup, ColumnCurrency };
 

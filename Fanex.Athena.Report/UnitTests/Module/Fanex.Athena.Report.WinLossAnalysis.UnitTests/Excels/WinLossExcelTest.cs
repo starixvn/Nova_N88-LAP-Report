@@ -29,7 +29,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Excels
             _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int[]>())).Returns(mockRow.Object);
 
             _mockFileInfo.Setup(_ => _.PhysicalPath).Returns(templatePath);
-            _mockFileProvider.Setup(_ => _.GetFileInfo("/ExcelTemplate/WinLossReports/WinLossReport.xlsx")).Returns(_mockFileInfo.Object);
+            _mockFileProvider.Setup(_ => _.GetFileInfo("/ExcelTemplate/WinLossAnalysis/WinLossReport.xlsx")).Returns(_mockFileInfo.Object);
 
             _mockExcelBuilder.Setup(_ => _.LoadTemplate(templatePath)).Returns(_mockWorkbook.Object);
 

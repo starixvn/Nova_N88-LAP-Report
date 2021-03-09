@@ -389,18 +389,6 @@
     <value>Saba System Id</value>
     <comment>135372</comment>
   </data>
-  <data name="GMT0" xml:space="preserve">
-    <value>GMT+0</value>
-    <comment>137064</comment>
-  </data>
-  <data name="GMT8" xml:space="preserve">
-    <value>GMT+8</value>
-    <comment>137064</comment>
-  </data>
-  <data name="GMTNegative4" xml:space="preserve">
-    <value>GMT-4</value>
-    <comment>137064</comment>
-  </data>
   <data name="ChangePercent" xml:space="preserve">
     <value>% Change</value>
     <comment>137395</comment>
@@ -605,5 +593,9 @@
   </data>
   <data name="SabaPromotionPrizes" xml:space="preserve">
     <value>沙巴促销活动</value>
+  </data>
+  <data name="PlayerWinloss" xml:space="preserve">
+    <value>Player Win Loss</value>
+    <comment>150398</comment>
   </data>
 </root>

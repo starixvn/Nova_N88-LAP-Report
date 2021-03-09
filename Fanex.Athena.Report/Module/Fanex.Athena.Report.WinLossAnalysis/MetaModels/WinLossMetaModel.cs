@@ -3,7 +3,6 @@ using Fanex.Core.Utils;
 using Fanex.Data;
 using Fanex.NVC.Authentication.Infrastructure;
 using System;
-using System.Linq;
 
 namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
 {
@@ -14,7 +13,6 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
 
         private const int DefaultPageSize = 500;
         private const int MaxPageSize = 2000;
-        private static readonly int[] ListTimezoneValid = new[] { 8, -4, 0 };
 
         public WinLossMetaModel()
         {
@@ -62,15 +60,17 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         [SpParam(Ignored = true)]
         public bool DrilldownInOriginalCurrency { get; set; }
 
+        public byte SortbyId { get; set; }
+        public bool IsSortAsc { get; set; }
+
+#pragma warning disable S1067, S109, S1541
         [SpParam(Ignored = true)]
-#pragma warning disable S1067, S109, S1541 // Expressions should not be too complex, Magic number
         public bool IsValid => !string.IsNullOrWhiteSpace(ProductIds) && !string.IsNullOrWhiteSpace(BrandIds) && !string.IsNullOrWhiteSpace(BaseCurrency) &&
             GroupBy >= 1 && GroupBy <= 5 &&
             DateType >= 1 && DateType <= 2 &&
             UserNameFilterId >= 1 && UserNameFilterId <= 3 &&
             FromDate <= ToDate &&
-            PageSize <= MaxPageSize &&
-            ListTimezoneValid.Any(_ => _ == Timezone);
-#pragma warning restore S1067, S109,S1541 // Expressions should not be too complex, Magic number
+            PageSize <= MaxPageSize;
+#pragma warning restore S1067, S109, S1541
     }
 }

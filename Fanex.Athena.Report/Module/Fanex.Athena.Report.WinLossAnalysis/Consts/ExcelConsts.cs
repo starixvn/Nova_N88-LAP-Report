@@ -17,14 +17,15 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Consts
             { "turnover", ("Turnover", ViewResources.Turnover, 4, true) },
             { "netTurnover", ("NetTurnover", ViewResources.NetTurnover, 5, true) },
             { "ggr", ("Ggr", ViewResources.GGR, 6, true) },
-            { "betCount", ("BetCount", ViewResources.BetCount, 7, true) },
-            { "avgBetAmount", ("AvgBetAmount", ViewResources.AvgBetAmount, 8, true) },
-            { "uniquePlayers", ("UniquePlayers", ViewResources.UniquePlayers, 9, true) },
-            { "margin", ("Margin", ViewResources.Margin, 10, true) },
-            { "numberOfDeposit", ("NumberOfDeposit", ViewResources.NoOfDeposit, 11, true) },
-            { "depositAmount", ("DepositAmount", ViewResources.TotalDepositAmount, 12, true) },
-            { "numberOfWithdrawal", ("NumberOfWithdrawal", ViewResources.NoOfWithdrawal, 13, true) },
-            { "withdrawalAmount", ("WithdrawalAmount", ViewResources.TotalWithdrawalAmount, 14, true) },
+            { "playerWinloss", ("PlayerWinloss", ViewResources.PlayerWinloss, 7, true) },
+            { "betCount", ("BetCount", ViewResources.BetCount, 8, true) },
+            { "avgBetAmount", ("AvgBetAmount", ViewResources.AvgBetAmount, 9, true) },
+            { "uniquePlayers", ("UniquePlayers", ViewResources.UniquePlayers, 10, true) },
+            { "margin", ("Margin", ViewResources.Margin, 11, true) },
+            { "numberOfDeposit", ("NumberOfDeposit", ViewResources.NoOfDeposit, 12, true) },
+            { "depositAmount", ("DepositAmount", ViewResources.TotalDepositAmount, 13, true) },
+            { "numberOfWithdrawal", ("NumberOfWithdrawal", ViewResources.NoOfWithdrawal, 14, true) },
+            { "withdrawalAmount", ("WithdrawalAmount", ViewResources.TotalWithdrawalAmount, 15, true) },
        };
     }
 }

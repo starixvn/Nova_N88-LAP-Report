@@ -419,18 +419,6 @@
   <data name="WinLossAnalysis" xml:space="preserve">
     <value>Win Loss Analysis</value>
   </data>
-  <data name="GMT0" xml:space="preserve">
-    <value>GMT+0</value>
-    <comment>137064</comment>
-  </data>
-  <data name="GMT8" xml:space="preserve">
-    <value>GMT+8</value>
-    <comment>137064</comment>
-  </data>
-  <data name="GMTNegative4" xml:space="preserve">
-    <value>GMT-4</value>
-    <comment>137064</comment>
-  </data>
   <data name="ChangePercent" xml:space="preserve">
     <value>% Change</value>
     <comment>137395</comment>
@@ -698,5 +686,9 @@
   </data>
   <data name="SBCFB" xml:space="preserve">
     <value>Saba.club Free Bets</value>
+  </data>
+  <data name="PlayerWinloss" xml:space="preserve">
+    <value>Player Win Loss</value>
+    <comment>150398</comment>
   </data>
 </root>
