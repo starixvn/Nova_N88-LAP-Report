@@ -1,4 +1,5 @@
 ﻿using Fanex.Athena.Report.Common.Model.MetaModels;
+using Fanex.Athena.Report.WinLossAnalysis.Consts;
 using Fanex.Core.Utils;
 using Fanex.Data;
 using Fanex.NVC.Authentication.Infrastructure;
@@ -8,9 +9,6 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
 {
     public class WinLossMetaModel : ITimezoneMetaModel, IValidationMetaModel, IBrandIdListMetaModel
     {
-        private const int GroupByCurrency = 4;
-        private const int GroupByPlayer = 5;
-
         private const int DefaultPageSize = 500;
         private const int MaxPageSize = 2000;
 
@@ -52,10 +50,10 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         public int PageSize { get; set; }
 
         [SpParam(Ignored = true)]
-        public bool IsGroupByCurreny => GroupBy == GroupByCurrency;
+        public bool IsGroupByCurreny => GroupBy == GroupByConsts.Currency;
 
         [SpParam(Ignored = true)]
-        public bool IsGroupByPlayer => GroupBy == GroupByPlayer;
+        public bool IsGroupByPlayer => GroupBy == GroupByConsts.Player;
 
         [SpParam(Ignored = true)]
         public bool DrilldownInOriginalCurrency { get; set; }

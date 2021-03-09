@@ -47,6 +47,21 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
             return result;
         }
 
+        public async Task<IEnumerable<WinLossDataDetailItemDTO>> GetDetailData(WinLossDetailMetaModel metaModel)
+        {
+            var dataItems = await _winLossRepository.GetDetailData(metaModel);
+            if (dataItems.Any())
+            {
+                var currencies = await _currencyService.GetCurrencyDictionaryAsync();
+                foreach (var item in dataItems)
+                {
+                    item.CurrencyCode = _dataMapper.ToCurrencyCode(currencies, item.CurrencyId);
+                }
+            }
+
+            return dataItems;
+        }
+
         private async Task<IEnumerable<WinLossRecordViewModel>> ToDataItemViewModels(IEnumerable<WinLossDataItemDTO> dataItems, WinLossMetaModel metaModel)
         {
             var currencies = await _currencyService.GetCurrencyDictionaryAsync();

@@ -745,6 +745,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Keep Original Currency.
+        /// </summary>
+        public static string KeepOriginalCurrency {
+            get {
+                return ResourceManager.GetString("KeepOriginalCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to RNG Keno.
         /// </summary>
         public static string KN {
@@ -840,6 +849,15 @@ namespace Fanex.Athena.Report.Resources {
         public static string MobileLiteVersion {
             get {
                 return ResourceManager.GetString("MobileLiteVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Month.
+        /// </summary>
+        public static string Month {
+            get {
+                return ResourceManager.GetString("Month", resourceCulture);
             }
         }
         

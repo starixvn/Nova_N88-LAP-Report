@@ -17,6 +17,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis
         private static void SetupExcel(IServiceCollection services)
         {
             services.AddTransient<IWinLossExcel, WinLossExcel>();
+            services.AddTransient<IWinLossDetailExcel, WinLossDetailExcel>();
         }
     }
 }

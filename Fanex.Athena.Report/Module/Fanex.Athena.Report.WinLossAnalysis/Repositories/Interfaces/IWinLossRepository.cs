@@ -8,5 +8,6 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Repositories
     public interface IWinLossRepository
     {
         Task<(IEnumerable<WinLossDataItemDTO>, WinLossDataTotalDTO, int)> GetData(WinLossMetaModel metaModel);
+        Task<IEnumerable<WinLossDataDetailItemDTO>> GetDetailData(WinLossDetailMetaModel metaModel);
     }
 }

@@ -75,7 +75,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
 
         private void HideColumns(ISheet sheet, IEnumerable<string> orderCols)
         {
-            var numberOfHideCols = ExcelConsts.InfoColumns.Count - orderCols.Count();
+            var numberOfHideCols = ExcelConsts.WinLossInfoColumns.Count - orderCols.Count();
             if (numberOfHideCols > 0)
             {
                 var hideRange = Enumerable.Range(OrderColumns.Count(), numberOfHideCols);
@@ -109,7 +109,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
             var colIndex = DefaultColumns.Count();
             foreach (var col in orderCols)
             {
-                row.Cells[colIndex++].SetCellValue(ExcelConsts.InfoColumns[col].headerName);
+                row.Cells[colIndex++].SetCellValue(ExcelConsts.WinLossInfoColumns[col].headerName);
             }
         }
 
@@ -121,10 +121,10 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
             var colIndex = DefaultColumns.Count();
             foreach (var col in orderCols)
             {
-                var infoCol = ExcelConsts.InfoColumns[col];
+                var infoCol = ExcelConsts.WinLossInfoColumns[col];
                 if (infoCol.hasTotal)
                 {
-                    var value = dataTotal.Value(ExcelConsts.InfoColumns[col].propertyName) ?? string.Empty;
+                    var value = dataTotal.Value(ExcelConsts.WinLossInfoColumns[col].propertyName) ?? string.Empty;
                     row.Cells[colIndex].SetCellValue(value);
                 }
                 colIndex++;
@@ -154,7 +154,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
             var colIndex = DefaultColumns.Count();
             foreach (var col in orderCols)
             {
-                var value = rowData.Value(ExcelConsts.InfoColumns[col].propertyName) ?? string.Empty;
+                var value = rowData.Value(ExcelConsts.WinLossInfoColumns[col].propertyName) ?? string.Empty;
                 row.Cells[colIndex++].SetCellValue(value);
             }
         }
@@ -168,7 +168,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
         private static int[] GetOrderColumns(ExportWinLossMetaModel metaModel)
         {
             var orderCell = new List<int>(DefaultColumns);
-            orderCell.AddRange(metaModel.OrderCols.Select(orderCol => ExcelConsts.InfoColumns[orderCol].colTemplate));
+            orderCell.AddRange(metaModel.OrderCols.Select(orderCol => ExcelConsts.WinLossInfoColumns[orderCol].colTemplate));
             return orderCell.ToArray();
         }
     }

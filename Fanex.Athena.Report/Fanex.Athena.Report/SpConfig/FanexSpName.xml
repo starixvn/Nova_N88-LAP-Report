@@ -13,7 +13,8 @@
     <Setting Key="Lrf_CurrencySel" SpName="Lrf_CurrencySel" DbName="DBEXT.bodb02.bodbLicenseeNet" />
   </Function>
   <Funtion Name="ReportByGroup">
-    <Setting Key="N88_Rpt_Winloss" SpName="N88_Rpt_Winloss_xtest" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
+    <Setting Key="N88_Rpt_Winloss" SpName="N88_Rpt_Winloss" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
+    <Setting Key="N88_Rpt_Winloss_Detail" SpName="N88_Rpt_Winloss_Detail" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
   </Funtion>
   <Function Name="ReportMarketing">
     <Setting Key="N88_Rpt_Marketing_BusinessPerformance" SpName="N88_Rpt_Marketing_BusinessPerformance" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
