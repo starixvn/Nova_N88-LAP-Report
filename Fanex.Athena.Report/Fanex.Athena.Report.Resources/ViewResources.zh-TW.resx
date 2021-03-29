@@ -415,4 +415,7 @@
   <data name="SabaPromotionPrizes" xml:space="preserve">
     <value>沙巴促銷活動</value>
   </data>
+  <data name="SLT" xml:space="preserve">
+    <value>體育時時彩</value>
+  </data>
 </root>
