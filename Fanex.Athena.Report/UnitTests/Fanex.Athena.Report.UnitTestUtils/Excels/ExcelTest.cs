@@ -5,6 +5,7 @@ using Moq;
 using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Fanex.Athena.Report.UnitTestUtils.Excels
 {
@@ -32,6 +33,12 @@ namespace Fanex.Athena.Report.UnitTestUtils.Excels
             _mockFileInfo.Setup(_ => _.PhysicalPath).Returns(_fixture.Create<string>());
             _mockFileProvider.Setup(_ => _.GetFileInfo(It.IsAny<string>())).Returns(_mockFileInfo.Object);
             _mockExcelBuilder.Setup(_ => _.LoadTemplate(It.IsAny<string>())).Returns(_mockWorkbook.Object);
+        }
+
+        protected void SetupRowsWithOrderCell(Mock<IRow> mockRow, int countCell)
+        {
+            mockRow.Setup(_ => _.Cells).Returns(MockListCell(countCell).ToList());
+            _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int[]>())).Returns(mockRow.Object);
         }
 
         protected static IEnumerable<ICell> MockListCell(int count)
