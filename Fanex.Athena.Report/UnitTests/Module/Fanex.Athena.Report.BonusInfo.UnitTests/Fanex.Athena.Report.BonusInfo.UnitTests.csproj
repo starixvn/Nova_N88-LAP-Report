@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Module\Fanex.Athena.Report.BonusInfo\Fanex.Athena.Report.BonusInfo.csproj" />
+    <ProjectReference Include="..\..\Fanex.Athena.Report.UnitTestUtils\Fanex.Athena.Report.UnitTestUtils.csproj" />
   </ItemGroup>
 
 </Project>

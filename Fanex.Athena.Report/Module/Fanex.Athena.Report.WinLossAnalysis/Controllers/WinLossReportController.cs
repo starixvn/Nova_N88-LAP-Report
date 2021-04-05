@@ -71,6 +71,28 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Controllers
             }
         }
 
+        [HttpPost]
+        [RequestValidation(validateBrandList: true)]
+        public async Task<FileResult> ExportDetailData(
+            [FromServices] IWinLossDetailExcel excel,
+            WinLossDetailMetaModel metaModel
+            )
+        {
+
+            var data = await _winLossService.GetDetailData(metaModel);
+            var stream = new MemoryStream();
+            try
+            {
+                var workBook = excel.Export(data, metaModel);
+                workBook.Write(stream);
+                return new FileContentResult(stream.ToArray(), ExcelConsts.OctetStreamContentType);
+            }
+            finally
+            {
+                stream?.Dispose();
+            }
+        }
+
         private static void EnsureMetaModelExport(ExportWinLossMetaModel metaModel)
         {
             metaModel.PageIndex = 1;

@@ -5,7 +5,6 @@ using Fanex.Athena.Report.BonusInfo.MetaModels;
 using Fanex.Athena.Report.Common.Consts;
 using Fanex.Athena.Report.Common.Excel;
 using Fanex.Athena.Report.Resources;
-using Fanex.Athena.Report.BonusInfo.UnitTests.Excels.TestHelpers;
 using Microsoft.Extensions.FileProviders;
 using Moq;
 using NPOI.SS.UserModel;
@@ -14,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 using Fanex.Athena.Report.BonusInfo.Consts;
+using Fanex.Athena.Report.UnitTestUtils.Excels;
 
 namespace Fanex.Athena.Report.BonusInfo.UnitTests.Excels
 {

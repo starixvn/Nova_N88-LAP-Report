@@ -1,5 +1,4 @@
-﻿using Fanex.Athena.Report.Resources;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Fanex.Athena.Report.Common.Consts
 {

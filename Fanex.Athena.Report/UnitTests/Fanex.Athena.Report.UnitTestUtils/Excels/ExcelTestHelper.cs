@@ -3,7 +3,7 @@ using System.Linq;
 using Moq;
 using NPOI.SS.UserModel;
 
-namespace Fanex.Athena.Report.BonusInfo.UnitTests.Excels.TestHelpers
+namespace Fanex.Athena.Report.UnitTestUtils.Excels
 {
     public static class ExcelTestHelper
     {

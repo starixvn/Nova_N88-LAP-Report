@@ -694,4 +694,12 @@
   <data name="SLT" xml:space="preserve">
     <value>Sports Lottery</value>
   </data>
+  <data name="KeepOriginalCurrency" xml:space="preserve">
+    <value>Keep Original Currency</value>
+    <comment>151187</comment>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Month</value>
+    <comment>151187</comment>
+  </data>
 </root>
