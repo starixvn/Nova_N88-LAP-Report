@@ -17,13 +17,17 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
         private readonly BonusClaimedService _target;
         private readonly Mock<IBonusClaimedRepository> _mockRepository;
         private readonly Mock<ICalculationService> _mockCalculationService;
+        private readonly Mock<IDataMapper> _mockDataMapper;
+        private readonly Mock<ICurrencyService> _mockCurrencyService;
         private readonly Fixture _fixture;
 
         public BonusClaimedServiceTest()
         {
             _mockRepository = new Mock<IBonusClaimedRepository>();
             _mockCalculationService = new Mock<ICalculationService>();
-            _target = new BonusClaimedService(_mockRepository.Object, _mockCalculationService.Object);
+            _mockDataMapper = new Mock<IDataMapper>();
+            _mockCurrencyService = new Mock<ICurrencyService>();
+            _target = new BonusClaimedService(_mockRepository.Object, _mockCalculationService.Object, _mockCurrencyService.Object, _mockDataMapper.Object);
             _fixture = new Fixture();
         }
 

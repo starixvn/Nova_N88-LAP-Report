@@ -11,6 +11,8 @@ namespace Fanex.Athena.Report.Marketing.DTO
 
         public string Username { get; set; }
 
+        public string Currency { get; set; }
+
         [SqlColumn(ColumnName = "RegTime")]
         [JsonIgnore]
         public DateTime RegisteredDate { get; set; }
@@ -18,9 +20,9 @@ namespace Fanex.Athena.Report.Marketing.DTO
         [SqlColumn(Ignored = true)]
         public string RegisteredDateDisplay => RegisteredDate.ToString(DateTimeFormat.MonthName);
 
-        [SqlColumn(ColumnName = "BetCount")]
+        [SqlColumn(ColumnName = "NoOfWithdrawals")]
         public int NumberOfWithdrawals { get; set; }
 
-        public decimal WithdrawalAmount { get; set; }
+        public decimal TotalWithdrawalAmount { get; set; }
     }
 }

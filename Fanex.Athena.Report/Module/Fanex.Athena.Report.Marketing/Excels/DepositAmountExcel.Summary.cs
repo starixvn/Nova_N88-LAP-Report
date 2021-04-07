@@ -1,4 +1,5 @@
-﻿using Fanex.Athena.Report.Marketing.DTO;
+﻿using Fanex.Athena.Report.Common.Excel;
+using Fanex.Athena.Report.Marketing.DTO;
 using Fanex.Athena.Report.Marketing.MetaModels;
 using Fanex.Athena.Report.Resources;
 using NPOI.SS.UserModel;
@@ -27,7 +28,8 @@ namespace Fanex.Athena.Report.Marketing.Excels
         private const int SummarySheetTemplateSignupTotalContent = 7;
         private const int SummarySheetSignupNameCol = 0;
         private const int SummarySheetSignupFirstDepositAmountCol = 1;
-        private const int SummarySheetSignupTotalDepositAmountCol = 3;
+        private const int SummarySheetSignupTotalDepositAmountCol = 2;
+        private const int SummarySheetSignupNoOfPlayersCol = 3;
 
         protected override void BuildSummarySheet(IWorkbook workBook, DepositAmountExportMetaModel metaModel, DepositAmountSummaryDTO summaryData)
         {
@@ -96,6 +98,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
             row.Cells[SummarySheetSignupNameCol].SetCellValue(ViewResources.SignupUrl);
             row.Cells[SummarySheetSignupFirstDepositAmountCol].SetCellValue(ViewResources.FirstDepositAmount);
             row.Cells[SummarySheetSignupTotalDepositAmountCol].SetCellValue(ViewResources.TotalDepositAmount);
+            row.Cells[SummarySheetSignupNoOfPlayersCol].SetCellValue(ViewResources.NumberOfPlayers);
         }
 
         private void AssignSummarySheetSignupData(ISheet sheet, ISheet templateSheet, IEnumerable<SignupUrlDepositAmountDTO> signupData, ref int lastRowIndex)
@@ -117,8 +120,9 @@ namespace Fanex.Athena.Report.Marketing.Excels
         {
             var row = _builder.CopyRow(sheet, templateSheet, SummarySheetTemplateSignupContent, lastRowIndex + 1);
             row.Cells[SummarySheetSignupNameCol].SetCellValue(rowData.SignupUrl);
-            row.Cells[SummarySheetSignupFirstDepositAmountCol].SetCellValue((double)rowData.FirstDepositAmount);
-            row.Cells[SummarySheetSignupTotalDepositAmountCol].SetCellValue((double)rowData.DepositAmount);
+            row.Cells[SummarySheetSignupFirstDepositAmountCol].SetCellValue(rowData.FirstDepositAmount);
+            row.Cells[SummarySheetSignupTotalDepositAmountCol].SetCellValue(rowData.TotalDepositAmount);
+            row.Cells[SummarySheetSignupNoOfPlayersCol].SetCellValue(rowData.NoOfPlayers);
         }
 
         private void AssignSummarySignupTotalRowData(ISheet sheet, ISheet templateSheet, int lastRowIndex, TotalSignupUrlDepositAmountDTO rowData)
@@ -126,8 +130,9 @@ namespace Fanex.Athena.Report.Marketing.Excels
             var row = _builder.CopyRow(sheet, templateSheet, SummarySheetTemplateSignupTotalContent, lastRowIndex + 1);
 
             row.Cells[SummarySheetSignupNameCol].SetCellValue(ViewResources.Total);
-            row.Cells[SummarySheetSignupFirstDepositAmountCol].SetCellValue((double)rowData.TotalFirstDepositAmount);
-            row.Cells[SummarySheetSignupTotalDepositAmountCol].SetCellValue((double)rowData.TotalDepositAmount);
+            row.Cells[SummarySheetSignupFirstDepositAmountCol].SetCellValue(rowData.TotalFirstDepositAmount);
+            row.Cells[SummarySheetSignupTotalDepositAmountCol].SetCellValue(rowData.TotalDepositAmount);
+            row.Cells[SummarySheetSignupNoOfPlayersCol].SetCellValue(rowData.TotalNoOfPlayers);
         }
     }
 }

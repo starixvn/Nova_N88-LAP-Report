@@ -125,9 +125,9 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
 
             var fakeDetailData = _fixture.CreateMany<BonusClaimedDetailDTO>(1);
             var fakeRowData = fakeDetailData.First();
-            fakeRowData.DepositAmount = (decimal)depositAmount;
-            fakeRowData.WithdrawalAmount = (decimal)withdrawalAmount;
-            fakeRowData.BonusAmount = (decimal)bonusAmount;
+            fakeRowData.TotalDepositAmount = (decimal)depositAmount;
+            fakeRowData.TotalWithdrawalAmount = (decimal)withdrawalAmount;
+            fakeRowData.TotalBonusAmount = (decimal)bonusAmount;
 
             var metaModel = _fixture.Create<BonusClaimedExportMetaModel>();
             var mockRow = new Mock<IRow>();
@@ -167,9 +167,9 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             mockCellBonus.Verify(_ => _.SetCellValue(fakeRowData.BonusCode), Times.Once);
             mockCellUsername.Verify(_ => _.SetCellValue(fakeRowData.Username), Times.Once);
             mockCellRegisteredDate.Verify(_ => _.SetCellValue(fakeRowData.RegisteredDateDisplay), Times.Once);
-            AssertDecimalCell(mockCellDepositAmount, fakeRowData.DepositAmount, Times.Once);
-            AssertDecimalCell(mockCellWithdrawalAmount, fakeRowData.WithdrawalAmount, Times.Once);
-            AssertDecimalCell(mockCellBonusAmountClaimed, fakeRowData.BonusAmount, Times.Once);
+            AssertDecimalCell(mockCellDepositAmount, fakeRowData.TotalDepositAmount, Times.Once);
+            AssertDecimalCell(mockCellWithdrawalAmount, fakeRowData.TotalWithdrawalAmount, Times.Once);
+            AssertDecimalCell(mockCellBonusAmountClaimed, fakeRowData.TotalBonusAmount, Times.Once);
         }
 
         protected void AssertDecimalCell(Mock<ICell> mockCell, decimal value, Func<Times> times)

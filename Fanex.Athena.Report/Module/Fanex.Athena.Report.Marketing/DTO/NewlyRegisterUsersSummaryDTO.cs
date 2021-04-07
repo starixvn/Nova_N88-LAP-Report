@@ -15,6 +15,7 @@ namespace Fanex.Athena.Report.Marketing.DTO
     public class CampaignNewlyRegisterUsersDTO
     {
         public string BonusCode { get; set; }
+        public string BonusName { get; set; }
 
         public int NewlyRegisterUsers { get; set; }
 
@@ -22,6 +23,7 @@ namespace Fanex.Athena.Report.Marketing.DTO
         public int DepositUsers { get; set; }
 
         public decimal FirstDepositAmount { get; set; }
+        public decimal TotalDepositAmount { get; set; }
     }
 
     public class SignupUrlNewlyRegisterUsersDTO : ISignupDTO<SignupUrlNewlyRegisterUsersDTO>
@@ -35,6 +37,9 @@ namespace Fanex.Athena.Report.Marketing.DTO
         public int DepositUsers { get; set; }
 
         public decimal FirstDepositAmount { get; set; }
+
+        public decimal TotalDepositAmount { get; set; }
+
 
         [SqlColumn(Ignored = true)]
         public bool NoGrouping { get; set; }
@@ -50,6 +55,7 @@ namespace Fanex.Athena.Report.Marketing.DTO
         public int TotalDepositUsers { get; set; }
 
         public decimal TotalFirstDepositAmount { get; set; }
+        public decimal TotalDepositAmount { get; set; }
     }
 
     public class NewlyRegisterUsersSummaryDTO

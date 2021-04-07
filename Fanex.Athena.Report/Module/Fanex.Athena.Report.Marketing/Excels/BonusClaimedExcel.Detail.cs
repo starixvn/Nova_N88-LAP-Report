@@ -11,19 +11,22 @@ namespace Fanex.Athena.Report.Marketing.Excels
     {
         private const string DetailTemplateSheetName = "Details";
         private const string DetailSheetName = "DetailsData";
-        private const int DetailSheetColCount = 7;
+        private const int DetailSheetColCount = 10;
         private const int DetailSheetTemplateTitle = 0;
 
         private const int DetailSheetTemplateHeader = 1;
         private const int DetailSheetTemplateContent = 2;
 
         private const int DetailSheetRowIdCol = 0;
-        private const int DetailSheetBonusCol = 1;
+        private const int DetailSheetBonusCodeCol = 1;
         private const int DetailSheetUsernameCol = 2;
-        private const int DetailSheetRegisteredDateCol = 3;
-        private const int DetailSheetDepositAmountCol = 4;
-        private const int DetailSheetWithdrawalAmountCol = 5;
-        private const int DetailSheetBonusAmountClaimedCol = 6;
+        private const int DetailSheetCurrencyCol = 3;
+        private const int DetailSheetRegisteredDateCol = 4;
+        private const int DetailSheetSignupUrlCol = 5;
+        private const int DetailSheetAffCodeCol = 6;
+        private const int DetailSheetDepositAmountCol = 7;
+        private const int DetailSheetWithdrawalAmountCol = 8;
+        private const int DetailSheetBonusAmountClaimedCol = 9;
 
         protected override void BuildDetailSheet(IWorkbook workBook, BonusClaimedExportMetaModel metaModel, IEnumerable<BonusClaimedDetailDTO> detailData)
         {
@@ -50,9 +53,12 @@ namespace Fanex.Athena.Report.Marketing.Excels
             var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: DetailSheetTemplateHeader, destRowIndex: DetailSheetTemplateHeader);
 
             row.Cells[DetailSheetRowIdCol].SetCellValue("#");
-            row.Cells[DetailSheetBonusCol].SetCellValue(ViewResources.Bonus);
+            row.Cells[DetailSheetBonusCodeCol].SetCellValue(ViewResources.BonusCode);
             row.Cells[DetailSheetUsernameCol].SetCellValue(ViewResources.Username);
+            row.Cells[DetailSheetCurrencyCol].SetCellValue(ViewResources.Currency);
             row.Cells[DetailSheetRegisteredDateCol].SetCellValue(ViewResources.RegisteredDate);
+            row.Cells[DetailSheetSignupUrlCol].SetCellValue(ViewResources.SignupUrl);
+            row.Cells[DetailSheetAffCodeCol].SetCellValue(ViewResources.AffCode);
             row.Cells[DetailSheetDepositAmountCol].SetCellValue(ViewResources.TotalDepositAmount);
             row.Cells[DetailSheetWithdrawalAmountCol].SetCellValue(ViewResources.TotalWithdrawalAmount);
             row.Cells[DetailSheetBonusAmountClaimedCol].SetCellValue(ViewResources.TotalBonusAmountClaimed);
@@ -72,12 +78,15 @@ namespace Fanex.Athena.Report.Marketing.Excels
             var row = _builder.CopyRow(sheet, templateSheet, DetailSheetTemplateContent, lastRowIndex + 1);
 
             row.Cells[DetailSheetRowIdCol].SetCellValue(rowData.RowId);
-            row.Cells[DetailSheetBonusCol].SetCellValue(rowData.BonusCode);
+            row.Cells[DetailSheetBonusCodeCol].SetCellValue(rowData.BonusCode);
             row.Cells[DetailSheetUsernameCol].SetCellValue(rowData.Username);
+            row.Cells[DetailSheetCurrencyCol].SetCellValue(rowData.Currency);
             row.Cells[DetailSheetRegisteredDateCol].SetCellValue(rowData.RegisteredDateDisplay);
-            ExcelHelper.SetValueCellDecimal(row.Cells[DetailSheetDepositAmountCol], rowData.DepositAmount);
-            ExcelHelper.SetValueCellDecimal(row.Cells[DetailSheetWithdrawalAmountCol], rowData.WithdrawalAmount);
-            ExcelHelper.SetValueCellDecimal(row.Cells[DetailSheetBonusAmountClaimedCol], rowData.BonusAmount);
+            row.Cells[DetailSheetSignupUrlCol].SetCellValue(rowData.SignupUrl);
+            row.Cells[DetailSheetAffCodeCol].SetCellValue(rowData.AffCode);
+            ExcelHelper.SetValueCellDecimal(row.Cells[DetailSheetDepositAmountCol], rowData.TotalDepositAmount);
+            ExcelHelper.SetValueCellDecimal(row.Cells[DetailSheetWithdrawalAmountCol], rowData.TotalWithdrawalAmount);
+            ExcelHelper.SetValueCellDecimal(row.Cells[DetailSheetBonusAmountClaimedCol], rowData.TotalBonusAmount);
         }
     }
 }

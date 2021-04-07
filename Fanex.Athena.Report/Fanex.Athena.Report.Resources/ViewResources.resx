@@ -702,4 +702,12 @@
     <value>Month</value>
     <comment>151187</comment>
   </data>
+  <data name="AffCode" xml:space="preserve">
+    <value>AFF Code</value>
+    <comment>150876</comment>
+  </data>
+  <data name="NumberOfPlayers" xml:space="preserve">
+    <value>Number Of Players</value>
+    <comment>150876</comment>
+  </data>
 </root>

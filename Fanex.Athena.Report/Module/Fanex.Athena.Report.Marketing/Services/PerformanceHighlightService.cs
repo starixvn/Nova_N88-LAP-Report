@@ -64,6 +64,9 @@ namespace Fanex.Athena.Report.Marketing.Services
             data.BonusAmountClaimeds = rawData.BonusAmountClaimeds;
             data.GrowthRateBonusAmountClaimeds = _calculationService.CalculateGrowth((double)rawData.BonusAmountClaimeds, (double)rawData.CompareBonusAmountClaimeds);
 
+            data.NetCashAmount = rawData.DepositAmount - rawData.WithdrawalAmount;
+            data.GrowthRateNetCashAmount = _calculationService.CalculateGrowth((double)data.NetCashAmount, (double)(rawData.CompareDepositAmount - rawData.CompareWithdrawalAmount));
+
             data.ChurnRate = _calculationService.CalculateDistribution(rawData.UptoTotalUsers - rawData.ActiveUsers, rawData.UptoTotalUsers);
             var compareChurnRate = _calculationService.CalculateDistribution(rawData.CompareUptoTotalUsers - rawData.CompareActiveUsers, rawData.CompareUptoTotalUsers);
             data.DifferentChurnRate = data.ChurnRate - compareChurnRate;

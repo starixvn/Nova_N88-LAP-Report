@@ -1,8 +1,10 @@
-﻿using Fanex.Athena.Report.Common.Model.ViewModel;
+﻿using Fanex.Athena.Report.Common.Model.DTO;
+using Fanex.Athena.Report.Common.Model.ViewModel;
 using Fanex.Athena.Report.Common.Services.Interfaces;
 using Fanex.Athena.Report.Marketing.DTO;
 using Fanex.Athena.Report.Marketing.MetaModels;
 using Fanex.Athena.Report.Marketing.Repositories;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CommonExtensions = Fanex.Athena.Report.Common.Extensions;
@@ -13,17 +15,25 @@ namespace Fanex.Athena.Report.Marketing.Services
     {
         private readonly IBonusClaimedRepository _repository;
         private readonly ICalculationService _calculationService;
+        private readonly IDataMapper _dataMapper;
+        private readonly ICurrencyService _currencyService;
 
-        public BonusClaimedService(IBonusClaimedRepository repository, ICalculationService calculationService)
+        public BonusClaimedService(
+            IBonusClaimedRepository repository,
+            ICalculationService calculationService,
+            ICurrencyService currencyService,
+            IDataMapper dataMapper)
         {
             _repository = repository;
             _calculationService = calculationService;
+            _currencyService = currencyService;
+            _dataMapper = dataMapper;
         }
 
         public async Task<BonusClaimedSummaryDTO> GetSummaryData(BonusClaimedSummaryMetaModel metaModel)
         {
             var rawData = await _repository.GetSummaryData(metaModel);
-            HandleSummaryRawData(rawData);
+            await HandleSummaryRawData(rawData);
             return rawData;
         }
 
@@ -65,17 +75,53 @@ namespace Fanex.Athena.Report.Marketing.Services
             return (summaryData, detailData);
         }
 
-        private void HandleSummaryRawData(BonusClaimedSummaryDTO rawData)
-
+        private async Task HandleSummaryRawData(BonusClaimedSummaryDTO rawData)
         {
-            var totalData = rawData.TotalData.FirstOrDefault();
-            if (totalData != null)
+            var currencies = await _currencyService.GetCurrencyDictionaryAsync();
+            HandleSummaryTotalRawData(rawData, currencies);
+            HandleSummaryDetailRawData(rawData, currencies);
+        }
+
+        private void HandleSummaryTotalRawData(BonusClaimedSummaryDTO rawData, IDictionary<int, Currency> currencies)
+        {
+            var totalBonusAmountClaimeds = 0.0m;
+            var totalCompareBonusAmountClaimeds = 0.0m;
+
+            foreach (var item in rawData.TotalData)
             {
-                totalData.ChangeRate = _calculationService.CalculateGrowth((double)totalData.BonusAmountClaimeds, (double)totalData.CompareBonusAmountClaimeds);
+                item.ChangeRate = _calculationService.CalculateGrowth((double)item.BonusAmountClaimeds, (double)item.CompareBonusAmountClaimeds);
+                item.CurrencyCode = _dataMapper.ToCurrencyCode(currencies, item.CurrencyId);
+                totalBonusAmountClaimeds += item.BasedBonusAmountClaimeds;
+                totalCompareBonusAmountClaimeds += item.CompareBasedBonusAmountClaimeds;
             }
 
+            rawData.TotalTotalData.BonusAmountClaimeds = totalBonusAmountClaimeds;
+            rawData.TotalTotalData.CompareBonusAmountClaimeds = totalCompareBonusAmountClaimeds;
+            rawData.TotalTotalData.ChangeRate = _calculationService.CalculateGrowth((double)totalBonusAmountClaimeds, (double)totalCompareBonusAmountClaimeds);
+        }
+
+        private void HandleSummaryDetailRawData(BonusClaimedSummaryDTO rawData, IDictionary<int, Currency> currencies)
+        {
             rawData.TotalDetailData.TotalBonusClaimeds = rawData.DetailData.Sum(_ => _.NumberOfBonusClaimed);
-            rawData.TotalDetailData.TotalBonusAmount = rawData.DetailData.Sum(_ => _.BonusAmount);
+            rawData.TotalDetailData.TotalBonusAmount = rawData.DetailData.Sum(_ => _.BasedBonusAmount);
+            rawData.DetailData = rawData.DetailData.GroupBy(_ => _.BonusCode,
+                _ =>
+                {
+
+                    _.CurrencyCode = _dataMapper.ToCurrencyCode(currencies, _.CurrencyId);
+                    return _;
+                },
+                (bonusCode, childs) =>
+                {
+                    return new DetailBonusClaimedDTO
+                    {
+                        BonusCode = bonusCode,
+                        BonusName = childs.First().BonusName,
+                        NumberOfBonusClaimed = childs.Sum(_ => _.NumberOfBonusClaimed),
+                        BonusAmount = childs.Sum(_ => _.BasedBonusAmount),
+                        Childs = childs
+                    };
+                });
         }
     }
 }

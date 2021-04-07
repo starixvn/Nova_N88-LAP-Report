@@ -149,7 +149,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             mockCellUsername.Verify(_ => _.SetCellValue(fakeRowData.Username), Times.Once);
             mockCellRegisteredDate.Verify(_ => _.SetCellValue(fakeRowData.RegisteredDateDisplay), Times.Once);
             mockCellNumberOfWithdrawals.Verify(_ => _.SetCellValue(fakeRowData.NumberOfWithdrawals), Times.Once);
-            mockCellWithdrawalAmount.Verify(_ => _.SetCellValue((double)fakeRowData.WithdrawalAmount), Times.Once);
+            mockCellWithdrawalAmount.Verify(_ => _.SetCellValue((double)fakeRowData.TotalWithdrawalAmount), Times.Once);
         }
 
         private void SetupDetailSheet(ISheet sheet, ISheet templateSheet)

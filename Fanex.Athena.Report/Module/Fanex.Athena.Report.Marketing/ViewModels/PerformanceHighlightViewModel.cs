@@ -29,6 +29,9 @@
         public decimal BonusAmountClaimeds { get; set; }
         public double GrowthRateBonusAmountClaimeds { get; set; }
 
+        public decimal NetCashAmount { get; set; }
+        public double GrowthRateNetCashAmount { get; set; }
+
         public double ChurnRate { get; set; }
         public double DifferentChurnRate { get; set; }
 

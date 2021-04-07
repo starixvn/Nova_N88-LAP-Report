@@ -1,4 +1,5 @@
-﻿using Fanex.Athena.Report.Marketing.DTO;
+﻿using Fanex.Athena.Report.Common.Excel;
+using Fanex.Athena.Report.Marketing.DTO;
 using Fanex.Athena.Report.Marketing.MetaModels;
 using Fanex.Athena.Report.Resources;
 using NPOI.SS.UserModel;
@@ -10,18 +11,21 @@ namespace Fanex.Athena.Report.Marketing.Excels
     {
         private const string DetailTemplateSheetName = "Details";
         private const string DetailSheetName = "DetailsData";
-        private const int DetailSheetColCount = 7;
+        private const int DetailSheetColCount = 10;
         private const int DetailSheetTemplateTitle = 0;
 
         private const int DetailSheetTemplateHeader = 1;
         private const int DetailSheetTemplateContent = 2;
         private const int DetailSheetRowIdCol = 0;
-        private const int DetailSheetCampaignNameCol = 1;
+        private const int DetailSheetBonusCodeCol = 1;
         private const int DetailSheetUsernameCol = 2;
-        private const int DetailSheetRegisteredDateCol = 3;
-        private const int DetailSheetSignupUrlCol = 4;
-        private const int DetailSheetDepositCol = 5;
-        private const int DetailSheetFirstDepositAmountCol = 6;
+        private const int DetailSheetCurrencyCol = 3;
+        private const int DetailSheetRegisteredDateCol = 4;
+        private const int DetailSheetSignupUrlCol = 5;
+        private const int DetailSheetAffCodeCol = 6;
+        private const int DetailSheetDepositCol = 7;
+        private const int DetailSheetFirstDepositAmountCol = 8;
+        private const int DetailSheetTotalDepositAmountCol = 9;
 
         private int DetailCurrentRowIndex = -1;
 
@@ -50,12 +54,15 @@ namespace Fanex.Athena.Report.Marketing.Excels
             var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: DetailSheetTemplateHeader, destRowIndex: ++DetailCurrentRowIndex);
 
             row.Cells[DetailSheetRowIdCol].SetCellValue("#");
-            row.Cells[DetailSheetCampaignNameCol].SetCellValue(ViewResources.Bonus);
+            row.Cells[DetailSheetBonusCodeCol].SetCellValue(ViewResources.BonusCode);
             row.Cells[DetailSheetUsernameCol].SetCellValue(ViewResources.Username);
+            row.Cells[DetailSheetCurrencyCol].SetCellValue(ViewResources.Currency);
             row.Cells[DetailSheetRegisteredDateCol].SetCellValue(ViewResources.RegisteredDate);
             row.Cells[DetailSheetSignupUrlCol].SetCellValue(ViewResources.SignupUrl);
+            row.Cells[DetailSheetAffCodeCol].SetCellValue(ViewResources.AffCode);
             row.Cells[DetailSheetDepositCol].SetCellValue(ViewResources.Deposit);
             row.Cells[DetailSheetFirstDepositAmountCol].SetCellValue(ViewResources.FirstDepositAmount);
+            row.Cells[DetailSheetTotalDepositAmountCol].SetCellValue(ViewResources.TotalDepositAmount);
         }
 
         private void AssignDetailData(ISheet sheet, ISheet templateSheet, IEnumerable<NewlyRegisterUsersDetailDTO> detailData)
@@ -71,12 +78,15 @@ namespace Fanex.Athena.Report.Marketing.Excels
             var row = _builder.CopyRow(sheet, templateSheet, DetailSheetTemplateContent, lastRowIndex + 1);
 
             row.Cells[DetailSheetRowIdCol].SetCellValue(rowData.RowId);
-            row.Cells[DetailSheetCampaignNameCol].SetCellValue(string.IsNullOrEmpty(rowData.BonusCode) ? ViewResources.None : rowData.BonusCode);
+            row.Cells[DetailSheetBonusCodeCol].SetCellValue(string.IsNullOrEmpty(rowData.BonusCode) ? ViewResources.None : rowData.BonusCode);
             row.Cells[DetailSheetUsernameCol].SetCellValue(rowData.Username);
+            row.Cells[DetailSheetCurrencyCol].SetCellValue(rowData.Currency);
             row.Cells[DetailSheetRegisteredDateCol].SetCellValue(rowData.RegisteredDateDisplay);
             row.Cells[DetailSheetSignupUrlCol].SetCellValue(string.IsNullOrEmpty(rowData.SignupUrl) ? ViewResources.None : rowData.SignupUrl);
-            row.Cells[DetailSheetFirstDepositAmountCol].SetCellValue((double)rowData.FirstDepositAmount);
+            row.Cells[DetailSheetAffCodeCol].SetCellValue(rowData.AffCode);
             row.Cells[DetailSheetDepositCol].SetCellValue(rowData.IsDeposit ? ViewResources.Yes : ViewResources.No);
+            row.Cells[DetailSheetFirstDepositAmountCol].SetCellValue(rowData.FirstDepositAmount);
+            row.Cells[DetailSheetTotalDepositAmountCol].SetCellValue(rowData.TotalDepositAmount);
         }
     }
 }
