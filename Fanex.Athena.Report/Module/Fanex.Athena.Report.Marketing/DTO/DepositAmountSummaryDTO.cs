@@ -18,7 +18,10 @@ namespace Fanex.Athena.Report.Marketing.DTO
         public string SignupUrl { get; set; }
 
         public decimal FirstDepositAmount { get; set; }
-        public decimal DepositAmount { get; set; }
+        public decimal TotalDepositAmount { get; set; }
+
+        [SqlColumn(ColumnName = "DepositPlayers")]
+        public int NoOfPlayers { get; set; }
 
         [SqlColumn(Ignored = true)]
         public bool NoGrouping { get; set; }
@@ -32,6 +35,7 @@ namespace Fanex.Athena.Report.Marketing.DTO
         public decimal TotalFirstDepositAmount { get; set; }
 
         public decimal TotalDepositAmount { get; set; }
+        public int TotalNoOfPlayers { get; set; }
     }
 
     public class DepositAmountSummaryDTO

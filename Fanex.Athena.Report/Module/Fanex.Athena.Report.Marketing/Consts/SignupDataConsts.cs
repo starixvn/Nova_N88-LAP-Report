@@ -10,6 +10,7 @@ namespace Fanex.Athena.Report.Marketing.Consts
             { "None", true },
             { "AFF", true },
             { "Bong88/Viva88", true },
+            { "Nova88.com", true },
             { "APP", true }
         };
 
@@ -21,6 +22,7 @@ namespace Fanex.Athena.Report.Marketing.Consts
             { "AFF", 900 },
             { "APP", 850 },
             { "Bong88/Viva88", 800 },
+            { "Nova88.com", 750 },
             { "Landing Pages", 700 },
             { "None", 600 }
         };

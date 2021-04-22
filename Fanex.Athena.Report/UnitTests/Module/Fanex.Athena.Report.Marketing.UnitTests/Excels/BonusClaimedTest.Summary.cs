@@ -28,7 +28,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>())).Returns(mockRow.Object);
 
             //Act
-            _ = _target.Export(_fixture.Create<BonusClaimedSummaryDTO>(),
+            _ = _target.Export(FakeSummaryData(),
                 _fixture.CreateMany<BonusClaimedDetailDTO>(),
                 _fixture.Create<BonusClaimedExportMetaModel>());
 
@@ -50,7 +50,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
 
             SetupSummarySheet(sheet, templateSheet);
 
-            mockRow.Setup(_ => _.Cells).Returns(MockListCell(7).ToList());
+            mockRow.Setup(_ => _.Cells).Returns(MockListCell(10).ToList());
             _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>())).Returns(mockRow.Object);
 
             var expectedTitle = $"{ViewResources.BonusAmountClaimed}, " +
@@ -58,12 +58,12 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
                           $"{ViewResources.Viewin.Replace("{0}", metaModel.BaseCurrency.ToUpperInvariant())}";
 
             //Act
-            _ = _target.Export(_fixture.Create<BonusClaimedSummaryDTO>(),
+            _ = _target.Export(FakeSummaryData(),
                 _fixture.CreateMany<BonusClaimedDetailDTO>(),
                 metaModel);
 
             //Assert
-            _mockExcelBuilder.Verify(_ => _.SetRowValue(sheet, templateSheet, 0, 0, 4, expectedTitle), Times.Once);
+            _mockExcelBuilder.Verify(_ => _.SetRowValue(sheet, templateSheet, 0, 0, 5, expectedTitle), Times.Once);
         }
 
         [Theory]
@@ -94,18 +94,18 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
                 mockCellName.Object, mockCellReportDate.Object, mockCellCompareDate.Object, mockCellChangeRate.Object
             };
 
-            mockRow.Setup(_ => _.Cells).Returns(MockListCell(7).ToList());
+            mockRow.Setup(_ => _.Cells).Returns(MockListCell(10).ToList());
             mockRowHeader.Setup(_ => _.Cells).Returns(listCell);
             _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>())).Returns(mockRow.Object);
             _mockExcelBuilder.Setup(_ => _.CopyRow(sheet, templateSheet, 1, 1)).Returns(mockRowHeader.Object);
 
             //Act
-            _ = _target.Export(_fixture.Create<BonusClaimedSummaryDTO>(),
+            _ = _target.Export(FakeSummaryData(),
                _fixture.CreateMany<BonusClaimedDetailDTO>(),
                metaModel);
 
             //Assert
-            mockCellName.Verify(_ => _.SetCellValue(ViewResources.Total), Times.Once);
+            mockCellName.Verify(_ => _.SetCellValue(ViewResources.TotalBonusAmountClaimed), Times.Once);
             mockCellReportDate.Verify(_ => _.SetCellValue(ViewResources.ReportDate), Times.Once);
             if(metaModel.AllowedCompare)
             {
@@ -134,27 +134,31 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
 
             SetupSummarySheet(sheet, templateSheet);
 
-            var mockCellBonus = new Mock<ICell>();
+            var mockCellBonusCode = new Mock<ICell>(); 
+            var mockCellCurrency = new Mock<ICell>();
+            var mockCellBonusName = new Mock<ICell>();
             var mockCellNumberOfBonusClaimed = new Mock<ICell>();
             var mockCellTotalBonusAmountClaimed = new Mock<ICell>();
 
             var listCell = new List<ICell>
             {
-                mockCellBonus.Object, mockCellNumberOfBonusClaimed.Object, Mock.Of<ICell>(), mockCellTotalBonusAmountClaimed.Object
+                mockCellBonusCode.Object, mockCellCurrency.Object,  mockCellBonusName.Object, mockCellNumberOfBonusClaimed.Object, mockCellTotalBonusAmountClaimed.Object
             };
 
-            mockRow.Setup(_ => _.Cells).Returns(MockListCell(7).ToList());
+            mockRow.Setup(_ => _.Cells).Returns(MockListCell(10).ToList());
             mockRowHeader.Setup(_ => _.Cells).Returns(listCell);
             _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>())).Returns(mockRow.Object);
             _mockExcelBuilder.Setup(_ => _.CopyRow(sheet, templateSheet, 4, 4)).Returns(mockRowHeader.Object);
 
             //Act
-            _ = _target.Export(_fixture.Create<BonusClaimedSummaryDTO>(),
+            _ = _target.Export(FakeSummaryData(),
                _fixture.CreateMany<BonusClaimedDetailDTO>(),
                metaModel);
 
             //Assert
-            mockCellBonus.Verify(_ => _.SetCellValue(ViewResources.Bonus), Times.Once);
+            mockCellBonusCode.Verify(_ => _.SetCellValue(ViewResources.BonusCode), Times.Once);
+            mockCellCurrency.Verify(_ => _.SetCellValue(ViewResources.Currency), Times.Once);
+            mockCellBonusName.Verify(_ => _.SetCellValue(ViewResources.BonusName), Times.Once);
             mockCellNumberOfBonusClaimed.Verify(_ => _.SetCellValue(ViewResources.NoOfBonusClaimed), Times.Once);
             mockCellTotalBonusAmountClaimed.Verify(_ => _.SetCellValue(ViewResources.TotalBonusAmountClaimed), Times.Once);
         }

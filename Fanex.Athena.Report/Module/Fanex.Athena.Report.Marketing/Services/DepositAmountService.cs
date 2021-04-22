@@ -76,12 +76,14 @@ namespace Fanex.Athena.Report.Marketing.Services
             }
 
             rawData.TotalSignupData.TotalFirstDepositAmount = rawData.SignupData.Sum(_ => _.FirstDepositAmount);
-            rawData.TotalSignupData.TotalDepositAmount = rawData.SignupData.Sum(_ => _.DepositAmount);
+            rawData.TotalSignupData.TotalDepositAmount = rawData.SignupData.Sum(_ => _.TotalDepositAmount);
+            rawData.TotalSignupData.TotalNoOfPlayers = rawData.SignupData.Sum(_ => _.NoOfPlayers);
 
             rawData.SignupData = GroupingHelper.GroupingSignupData(rawData.SignupData, (item, childs) =>
             {
                 item.FirstDepositAmount = childs.Sum(_ => _.FirstDepositAmount);
-                item.DepositAmount = childs.Sum(_ => _.DepositAmount);
+                item.TotalDepositAmount = childs.Sum(_ => _.TotalDepositAmount);
+                item.NoOfPlayers = childs.Sum(_ => _.NoOfPlayers);
             });
         }
     }

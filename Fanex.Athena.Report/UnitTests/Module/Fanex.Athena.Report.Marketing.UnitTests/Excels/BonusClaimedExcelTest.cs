@@ -21,7 +21,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
 
             _mockWorkbook.Setup(_ => _.GetSheet(It.IsAny<string>())).Returns(Mock.Of<ISheet>());
 
-            mockRow.Setup(_ => _.Cells).Returns(MockListCell(7).ToList());
+            mockRow.Setup(_ => _.Cells).Returns(MockListCell(10).ToList());
             _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>())).Returns(mockRow.Object);
 
             _mockFileInfo.Setup(_ => _.PhysicalPath).Returns(templatePath);
@@ -30,7 +30,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             _mockExcelBuilder.Setup(_ => _.LoadTemplate(templatePath)).Returns(_mockWorkbook.Object);
 
             //Act
-            var actualWorkBoook = _target.Export(_fixture.Create<BonusClaimedSummaryDTO>(),
+            var actualWorkBoook = _target.Export(FakeSummaryData(),
             _fixture.CreateMany<BonusClaimedDetailDTO>(),
             _fixture.Create<BonusClaimedExportMetaModel>());
 

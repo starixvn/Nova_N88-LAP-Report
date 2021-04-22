@@ -122,7 +122,7 @@
                 LongTimePattern = "h:mm:ss tt"
             };
             var supportedCultures = new[]
-           {
+            {
                 new CultureInfo("en-US"){ DateTimeFormat= dateformat },
             };
             var supportedUICultures = new List<CultureInfo>

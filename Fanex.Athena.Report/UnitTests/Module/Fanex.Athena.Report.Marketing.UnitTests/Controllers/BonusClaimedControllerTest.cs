@@ -32,7 +32,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Controllers
             //Arrange
             var metaModel = _fixture.Create<BonusClaimedExportMetaModel>();
             var fakeDetailsData = _fixture.Create<ResultModel<BonusClaimedDetailDTO>>();
-            var fakeSummaryData = _fixture.Create<BonusClaimedSummaryDTO>();
+            var fakeSummaryData = new BonusClaimedSummaryDTO();
 
             var mockExcel = new Mock<IBonusClaimedExcel>();
             var workBook = new Mock<IWorkbook>();

@@ -90,14 +90,14 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
                 mockCellName.Object, mockCellReportDate.Object, mockCellCompareDate.Object, mockCellChangeRate.Object
             };
 
-            mockRow.Setup(_ => _.Cells).Returns(MockListCell(5).ToList());
+            mockRow.Setup(_ => _.Cells).Returns(MockListCell(6).ToList());
             mockRowHeader.Setup(_ => _.Cells).Returns(listCell);
             _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>())).Returns(mockRow.Object);
             _mockExcelBuilder.Setup(_ => _.CopyRow(sheet, templateSheet, 1, 1)).Returns(mockRowHeader.Object);
 
             //Act
             _ = _target.Export(_fixture.Create<WithdrawalSummaryDTO>(),
-                _fixture.CreateMany<WithdrawalDetailDTO>(),
+                Enumerable.Empty<WithdrawalDetailDTO>(),
                 metaModel);
 
             //Assert

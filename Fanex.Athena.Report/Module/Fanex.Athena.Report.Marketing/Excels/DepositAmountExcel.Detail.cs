@@ -19,11 +19,13 @@ namespace Fanex.Athena.Report.Marketing.Excels
 
         private const int DetailSheetRowIdCol = 0;
         private const int DetailSheetUsernameCol = 1;
-        private const int DetailSheetRegisteredDateCol = 2;
-        private const int DetailSheetSignupUrlCol = 3;
-        private const int DetailSheetFirstDepositAmountCol = 4;
-        private const int DetailSheetNoOfDepositsCol = 5;
-        private const int DetailSheetTotalDepositAmountCol = 6;
+        private const int DetailSheetCurrencyCol = 2;
+        private const int DetailSheetRegisteredDateCol = 3;
+        private const int DetailSheetSignupUrlCol = 4;
+        private const int DetailSheetAffCodeCol = 5;
+        private const int DetailSheetFirstDepositAmountCol = 6;
+        private const int DetailSheetNoOfDepositsCol = 7;
+        private const int DetailSheetTotalDepositAmountCol = 8;
 
         protected override void BuildDetailSheet(IWorkbook workBook, DepositAmountExportMetaModel metaModel, IEnumerable<DepositAmountDetailDTO> detailData)
         {
@@ -51,8 +53,10 @@ namespace Fanex.Athena.Report.Marketing.Excels
 
             row.Cells[DetailSheetRowIdCol].SetCellValue("#");
             row.Cells[DetailSheetUsernameCol].SetCellValue(ViewResources.Username);
+            row.Cells[DetailSheetCurrencyCol].SetCellValue(ViewResources.Currency);
             row.Cells[DetailSheetRegisteredDateCol].SetCellValue(ViewResources.RegisteredDate);
             row.Cells[DetailSheetSignupUrlCol].SetCellValue(ViewResources.SignupUrl);
+            row.Cells[DetailSheetAffCodeCol].SetCellValue(ViewResources.AffCode);
             row.Cells[DetailSheetFirstDepositAmountCol].SetCellValue(ViewResources.FirstDepositAmount);
             row.Cells[DetailSheetNoOfDepositsCol].SetCellValue(ViewResources.NumberOfDeposits);
             row.Cells[DetailSheetTotalDepositAmountCol].SetCellValue(ViewResources.TotalDepositAmount);
@@ -73,11 +77,13 @@ namespace Fanex.Athena.Report.Marketing.Excels
 
             row.Cells[DetailSheetRowIdCol].SetCellValue(rowData.RowId);
             row.Cells[DetailSheetUsernameCol].SetCellValue(rowData.Username);
+            row.Cells[DetailSheetCurrencyCol].SetCellValue(rowData.Currency);
             row.Cells[DetailSheetRegisteredDateCol].SetCellValue(rowData.RegisteredDateDisplay);
             row.Cells[DetailSheetSignupUrlCol].SetCellValue(rowData.SignupUrl);
+            row.Cells[DetailSheetAffCodeCol].SetCellValue(rowData.AffCode);
             ExcelHelper.SetValueCellDecimal(row.Cells[DetailSheetFirstDepositAmountCol], rowData.FirstDepositAmount);
             ExcelHelper.SetValueCellDecimal(row.Cells[DetailSheetNoOfDepositsCol], rowData.NoOfDeposits);
-            ExcelHelper.SetValueCellDecimal(row.Cells[DetailSheetTotalDepositAmountCol], rowData.DepositAmount);
+            ExcelHelper.SetValueCellDecimal(row.Cells[DetailSheetTotalDepositAmountCol], rowData.TotalDepositAmount);
         }
     }
 }

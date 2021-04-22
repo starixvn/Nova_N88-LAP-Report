@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Fanex.Athena.Report.Common.Extensions
@@ -30,5 +31,7 @@ namespace Fanex.Athena.Report.Common.Extensions
             var ascending = sortType.Equals(Ascending, StringComparison.InvariantCultureIgnoreCase);
             sortableList.Sort(propertyName, ascending);
         }
+
+        public static bool IsPresent<T>(this IEnumerable<T> list) => list != null && list.Any();
     }
 }

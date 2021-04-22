@@ -21,9 +21,7 @@ namespace Fanex.Athena.Report.Marketing.MetaModels
         public override bool IsValid => base.IsValid
            && !string.IsNullOrWhiteSpace(BaseCurrency)
            && CompareFromDate <= CompareToDate
-           && FromDate > CompareToDate
-           && SortbyId >= 1 && SortbyId <= 6;
-
+           && FromDate > CompareToDate;
 #pragma warning restore S1067, S109 // Expressions should not be too complex
     }
 }

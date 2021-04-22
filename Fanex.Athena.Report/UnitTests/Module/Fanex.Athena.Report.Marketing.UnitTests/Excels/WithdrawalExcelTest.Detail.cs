@@ -62,7 +62,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
                  metaModel);
 
             //Assert
-            _mockExcelBuilder.Verify(_ => _.SetRowValue(sheet, templateSheet, 0, 0, 5, expectedTitle), Times.Once);
+            _mockExcelBuilder.Verify(_ => _.SetRowValue(sheet, templateSheet, 0, 0, 6, expectedTitle), Times.Once);
         }
 
         [Fact]
@@ -81,15 +81,16 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
 
             var mockCellRowId = new Mock<ICell>();
             var mockCellUsername = new Mock<ICell>();
+            var mockCellCurrency = new Mock<ICell>();
             var mockCellRegisteredDate = new Mock<ICell>();
             var mockCellNumberOfWithdrawals = new Mock<ICell>();
             var mockCellWithdrawalAmount = new Mock<ICell>();
             var listCell = new List<ICell>
             {
-                mockCellRowId.Object, mockCellUsername.Object, mockCellRegisteredDate.Object, mockCellNumberOfWithdrawals.Object, mockCellWithdrawalAmount.Object
+                mockCellRowId.Object, mockCellUsername.Object, mockCellCurrency.Object, mockCellRegisteredDate.Object, mockCellNumberOfWithdrawals.Object, mockCellWithdrawalAmount.Object
             };
 
-            mockRow.Setup(_ => _.Cells).Returns(MockListCell(5).ToList());
+            mockRow.Setup(_ => _.Cells).Returns(MockListCell(6).ToList());
             mockRowHeader.Setup(_ => _.Cells).Returns(listCell);
             _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>())).Returns(mockRow.Object);
             _mockExcelBuilder.Setup(_ => _.CopyRow(sheet, templateSheet, 1, 1)).Returns(mockRowHeader.Object);
@@ -102,6 +103,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             //Assert
             mockCellRowId.Verify(_ => _.SetCellValue("#"), Times.Once);
             mockCellUsername.Verify(_ => _.SetCellValue(ViewResources.Username), Times.Once);
+            mockCellCurrency.Verify(_ => _.SetCellValue(ViewResources.Currency), Times.Once);
             mockCellRegisteredDate.Verify(_ => _.SetCellValue(ViewResources.RegisteredDate), Times.Once);
             mockCellNumberOfWithdrawals.Verify(_ => _.SetCellValue(ViewResources.NumberOfWithdrawals), Times.Once);
             mockCellWithdrawalAmount.Verify(_ => _.SetCellValue(ViewResources.TotalWithdrawalAmount), Times.Once);
@@ -125,15 +127,16 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
 
             var mockCellRowId = new Mock<ICell>();
             var mockCellUsername = new Mock<ICell>();
+            var mockCellCurrency = new Mock<ICell>();
             var mockCellRegisteredDate = new Mock<ICell>();
             var mockCellNumberOfWithdrawals = new Mock<ICell>();
             var mockCellWithdrawalAmount = new Mock<ICell>();
             var listCell = new List<ICell>
             {
-                mockCellRowId.Object, mockCellUsername.Object, mockCellRegisteredDate.Object, mockCellNumberOfWithdrawals.Object, mockCellWithdrawalAmount.Object
+                mockCellRowId.Object, mockCellUsername.Object, mockCellCurrency.Object, mockCellRegisteredDate.Object, mockCellNumberOfWithdrawals.Object, mockCellWithdrawalAmount.Object
             };
 
-            mockRow.Setup(_ => _.Cells).Returns(MockListCell(5).ToList());
+            mockRow.Setup(_ => _.Cells).Returns(MockListCell(6).ToList());
             mockRowDataItem.Setup(_ => _.Cells).Returns(listCell);
             _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>())).Returns(mockRow.Object);
             _mockExcelBuilder.Setup(_ => _.CopyRow(sheet, templateSheet, 2, 2)).Returns(mockRowDataItem.Object);
@@ -147,9 +150,10 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             var fakeRowData = fakeDetailData.FirstOrDefault();
             mockCellRowId.Verify(_ => _.SetCellValue(fakeRowData.RowId), Times.Once);
             mockCellUsername.Verify(_ => _.SetCellValue(fakeRowData.Username), Times.Once);
+            mockCellCurrency.Verify(_ => _.SetCellValue(fakeRowData.Currency), Times.Once);
             mockCellRegisteredDate.Verify(_ => _.SetCellValue(fakeRowData.RegisteredDateDisplay), Times.Once);
             mockCellNumberOfWithdrawals.Verify(_ => _.SetCellValue(fakeRowData.NumberOfWithdrawals), Times.Once);
-            mockCellWithdrawalAmount.Verify(_ => _.SetCellValue((double)fakeRowData.WithdrawalAmount), Times.Once);
+            mockCellWithdrawalAmount.Verify(_ => _.SetCellValue((double)fakeRowData.TotalWithdrawalAmount), Times.Once);
         }
 
         private void SetupDetailSheet(ISheet sheet, ISheet templateSheet)

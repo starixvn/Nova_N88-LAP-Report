@@ -62,7 +62,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
                 metaModel);
 
             //Assert
-            _mockExcelBuilder.Verify(_ => _.SetRowValue(sheet, templateSheet, 0, 0, 7, expectedTitle), Times.Once);
+            _mockExcelBuilder.Verify(_ => _.SetRowValue(sheet, templateSheet, 0, 0, 10, expectedTitle), Times.Once);
         }
 
         [Theory]
@@ -92,11 +92,11 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
 
             SetupDetailSheet(sheet, templateSheet);
 
-            var mockListCell = MockListCell(7).ToList();
+            var mockListCell = MockListCell(10).ToList();
             var mockDepositCell = new Mock<ICell>();
             var mockDepositAmountCell = new Mock<ICell>();
-            mockListCell[5] = mockDepositCell.Object;
-            mockListCell[6] = mockDepositAmountCell.Object;
+            mockListCell[7] = mockDepositCell.Object;
+            mockListCell[8] = mockDepositAmountCell.Object;
 
             mockRow.Setup(_ => _.Cells).Returns(MockListCell(10).ToList());
             mockRowDataItem.Setup(_ => _.Cells).Returns(mockListCell);
@@ -147,11 +147,11 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
 
             SetupDetailSheet(sheet, templateSheet);
 
-            var mockListCell = MockListCell(7).ToList();
+            var mockListCell = MockListCell(10).ToList();
             var mockBonusCodeCell = new Mock<ICell>();
             var mockSignupUrlCell = new Mock<ICell>();
             mockListCell[1] = mockBonusCodeCell.Object;
-            mockListCell[4] = mockSignupUrlCell.Object;
+            mockListCell[5] = mockSignupUrlCell.Object;
 
             mockRow.Setup(_ => _.Cells).Returns(MockListCell(10).ToList());
             mockRowDataItem.Setup(_ => _.Cells).Returns(mockListCell);

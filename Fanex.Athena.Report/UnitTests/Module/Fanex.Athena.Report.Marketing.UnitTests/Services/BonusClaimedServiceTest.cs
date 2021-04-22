@@ -17,13 +17,17 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
         private readonly BonusClaimedService _target;
         private readonly Mock<IBonusClaimedRepository> _mockRepository;
         private readonly Mock<ICalculationService> _mockCalculationService;
+        private readonly Mock<IDataMapper> _mockDataMapper;
+        private readonly Mock<ICurrencyService> _mockCurrencyService;
         private readonly Fixture _fixture;
 
         public BonusClaimedServiceTest()
         {
             _mockRepository = new Mock<IBonusClaimedRepository>();
             _mockCalculationService = new Mock<ICalculationService>();
-            _target = new BonusClaimedService(_mockRepository.Object, _mockCalculationService.Object);
+            _mockDataMapper = new Mock<IDataMapper>();
+            _mockCurrencyService = new Mock<ICurrencyService>();
+            _target = new BonusClaimedService(_mockRepository.Object, _mockCalculationService.Object, _mockCurrencyService.Object, _mockDataMapper.Object);
             _fixture = new Fixture();
         }
 
@@ -41,21 +45,23 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
                     new DetailBonusClaimedDTO
                     {
                         BonusAmount = 10.2m,
+                        BasedBonusAmount = 5.5m,
                         NumberOfBonusClaimed = 5
                     },
                     new DetailBonusClaimedDTO
                     {
                         BonusAmount = 5.8m,
+                        BasedBonusAmount = 4.5m,
                         NumberOfBonusClaimed = 15
                     },
                     new DetailBonusClaimedDTO
                     {
                         BonusAmount = 4,
+                        BasedBonusAmount = 1.0m,
                         NumberOfBonusClaimed = 5
                     }
                 }
             };
-            fakeRawData.TotalData = new List<TotalBonusClaimedDTO> { fakeTotalData };
             var fakeTotalDataChangeRate = _fixture.Create<double>();
 
             _mockRepository.Setup(_ => _.GetSummaryData(metaModel)).Returns(Task.FromResult(fakeRawData));
@@ -69,7 +75,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
             //Assert
             Assert.Equal(fakeRawData, actualResult);
             Assert.Equal(fakeRawData.TotalData.FirstOrDefault().ChangeRate, fakeTotalDataChangeRate);
-            Assert.Equal(20.00, (double)fakeRawData.TotalDetailData.TotalBonusAmount);
+            Assert.Equal(11.00, (double)fakeRawData.TotalDetailData.TotalBonusAmount);
             Assert.Equal(25, fakeRawData.TotalDetailData.TotalBonusClaimeds);
         }
     }

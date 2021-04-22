@@ -10,7 +10,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
     {
         private const string DetailTemplateSheetName = "Details";
         private const string DetailSheetName = "DetailsData";
-        private const int DetailSheetColCount = 5;
+        private const int DetailSheetColCount = 6;
         private const int DetailSheetTemplateTitle = 0;
 
         private const int DetailSheetTemplateHeader = 1;
@@ -18,9 +18,10 @@ namespace Fanex.Athena.Report.Marketing.Excels
 
         private const int DetailSheetRowIdCol = 0;
         private const int DetailSheetUsernameCol = 1;
-        private const int DetailSheetRegisteredDateCol = 2;
-        private const int DetailSheetNumberOfWithdrawalsCol = 3;
-        private const int DetailSheetWithdrawalAmountCol = 4;
+        private const int DetailSheetCurrencyCol = 2;
+        private const int DetailSheetRegisteredDateCol = 3;
+        private const int DetailSheetNumberOfWithdrawalsCol = 4;
+        private const int DetailSheetWithdrawalAmountCol = 5;
 
         protected override void BuildDetailSheet(IWorkbook workBook, WithdrawalExportMetaModel metaModel, IEnumerable<WithdrawalDetailDTO> detailData)
         {
@@ -48,6 +49,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
 
             row.Cells[DetailSheetRowIdCol].SetCellValue("#");
             row.Cells[DetailSheetUsernameCol].SetCellValue(ViewResources.Username);
+            row.Cells[DetailSheetCurrencyCol].SetCellValue(ViewResources.Currency);
             row.Cells[DetailSheetRegisteredDateCol].SetCellValue(ViewResources.RegisteredDate);
             row.Cells[DetailSheetNumberOfWithdrawalsCol].SetCellValue(ViewResources.NumberOfWithdrawals);
             row.Cells[DetailSheetWithdrawalAmountCol].SetCellValue(ViewResources.TotalWithdrawalAmount);
@@ -68,9 +70,10 @@ namespace Fanex.Athena.Report.Marketing.Excels
 
             row.Cells[DetailSheetRowIdCol].SetCellValue(rowData.RowId);
             row.Cells[DetailSheetUsernameCol].SetCellValue(rowData.Username);
+            row.Cells[DetailSheetCurrencyCol].SetCellValue(rowData.Currency);
             row.Cells[DetailSheetRegisteredDateCol].SetCellValue(rowData.RegisteredDateDisplay);
             row.Cells[DetailSheetNumberOfWithdrawalsCol].SetCellValue(rowData.NumberOfWithdrawals);
-            row.Cells[DetailSheetWithdrawalAmountCol].SetCellValue((double)rowData.WithdrawalAmount);
+            row.Cells[DetailSheetWithdrawalAmountCol].SetCellValue((double)rowData.TotalWithdrawalAmount);
         }
     }
 }
