@@ -119,14 +119,15 @@ namespace Fanex.Athena.Report.BonusInfo.Excels
 
         private void AssignTitle(ISheet sheet, ISheet templateSheet, BonusInfoSummaryMetaModel metaModel)
         {
-            var columnTite = metaModel.GroupBy == GroupBy.BonusCodeAndDate ? ColumnDate : ColumnDate + 1;
+            var columnTitle = metaModel.GroupBy == GroupBy.BonusCodeAndDate ? ColumnDate : ColumnDate + 1;
 
             Sites.SiteNameList.TryGetValue(metaModel.BrandId, out string brandName);
 
             var title = $"{ViewResources.BonusInfo}, {metaModel.FromDate.ToString(DateFormat)} - {metaModel.ToDate.ToString(DateFormat)}, {brandName}," +
                 $" {string.Format(ViewResources.Viewin, metaModel.BaseCurrency.ToUpperInvariant())}";
 
-            _builder.SetRowValueBeginCell(sheet, templateSheet, sourceRowIndex: RowTitleTemplate, destRowIndex: RowTitleTemplate, columnCount: ColumnTemplateCount, columnTite, value: title);
+            _builder.SetRowValueBeginCell(sheet, templateSheet, sourceRowIndex: RowTitleTemplate, destRowIndex: RowTitleTemplate,
+                columnCount: ColumnTemplateCount, cellIndex: columnTitle, value: title);
 
             sheet.CreateFreezePane(0, RowContentTemplate);
             _builder.ClearTemplate(sheet, RowContentTemplate);

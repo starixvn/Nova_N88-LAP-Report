@@ -64,7 +64,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
                 metaModel);
 
             //Assert
-            _mockExcelBuilder.Verify(_ => _.SetRowValue(sheet, templateSheet, 0, 0, 4, expectedTitle), Times.Once);
+            _mockExcelBuilder.Verify(_ => _.SetRowValue(sheet, templateSheet, 0, 0, 6, expectedTitle), Times.Once);
         }
 
         private void SetupSummarySheet(ISheet sheet, ISheet templateSheet)
