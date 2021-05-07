@@ -10,7 +10,11 @@ namespace Fanex.Athena.Report.WinLossAnalysis
         public static void Setup(IServiceCollection services)
         {
             services.AddTransient<IWinLossRepository, WinLossRepository>();
+            services.AddTransient<IWinLossPlayerRepository, WinLossPlayerRepository>();
+
+            services.AddTransient<IWinLossPlayerService, WinLossPlayerService>();
             services.AddTransient<IWinLossService, WinLossService>();
+
             SetupExcel(services);
         }
 
@@ -18,6 +22,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis
         {
             services.AddTransient<IWinLossExcel, WinLossExcel>();
             services.AddTransient<IWinLossDetailExcel, WinLossDetailExcel>();
+            services.AddTransient<IWinLossPlayerBetListExcel, WinLossPlayerBetListExcel>();
         }
     }
 }

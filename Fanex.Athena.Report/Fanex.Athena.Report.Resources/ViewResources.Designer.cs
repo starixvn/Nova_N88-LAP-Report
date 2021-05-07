@@ -736,6 +736,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Grand Total.
+        /// </summary>
+        public static string GrandTotal {
+            get {
+                return ResourceManager.GetString("GrandTotal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Group.
         /// </summary>
         public static string Group {
@@ -1033,6 +1042,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Original Currency.
+        /// </summary>
+        public static string OriginalCurrency {
+            get {
+                return ResourceManager.GetString("OriginalCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Other Platform.
         /// </summary>
         public static string OtherPlatform {
@@ -1074,6 +1092,15 @@ namespace Fanex.Athena.Report.Resources {
         public static string PlatformWinLossTitle {
             get {
                 return ResourceManager.GetString("PlatformWinLossTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Player Bet List.
+        /// </summary>
+        public static string PlayerBetList {
+            get {
+                return ResourceManager.GetString("PlayerBetList", resourceCulture);
             }
         }
         
@@ -1299,6 +1326,15 @@ namespace Fanex.Athena.Report.Resources {
         public static string SPR {
             get {
                 return ResourceManager.GetString("SPR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stake.
+        /// </summary>
+        public static string Stake {
+            get {
+                return ResourceManager.GetString("Stake", resourceCulture);
             }
         }
         

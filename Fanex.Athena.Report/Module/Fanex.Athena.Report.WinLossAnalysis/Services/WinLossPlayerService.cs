@@ -1,0 +1,89 @@
+﻿using Fanex.Athena.Report.Common.Helpers;
+using Fanex.Athena.Report.Common.Model.ViewModel;
+using Fanex.Athena.Report.Common.Services.Interfaces;
+using Fanex.Athena.Report.WinLossAnalysis.DTO;
+using Fanex.Athena.Report.WinLossAnalysis.MetaModels;
+using Fanex.Athena.Report.WinLossAnalysis.Repositories;
+using Fanex.Athena.Report.WinLossAnalysis.ViewModels;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Fanex.Athena.Report.WinLossAnalysis.Services
+{
+    public class WinLossPlayerService : IWinLossPlayerService
+    {
+        private const string DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt";
+
+        private readonly IWinLossPlayerRepository _winLossRepository;
+        private readonly IDataMapper _dataMapper;
+
+        public WinLossPlayerService(IWinLossPlayerRepository winLossRepository,
+            ICurrencyService currencyService,
+            IDataMapper dataMapper)
+        {
+            _winLossRepository = winLossRepository;
+            _dataMapper = dataMapper;
+        }
+
+        public async Task<IEnumerable<WinLossRecordViewModel>> GetPlayerDetail(WinLossPlayerDetailMetaModel metaModel)
+        {
+            var dataItems = await _winLossRepository.GetPlayerDetail(metaModel);
+            return ToPlayerDetailViewModel(dataItems, metaModel.DrilldownInOriginalCurrency, metaModel.UsernameParent);
+        }
+
+        public async Task<ResultModel<WinLossPlayerBetListViewModel>> GetPlayerBetList(WinLossPlayerBetListMetaModel metaModel)
+        {
+            var (dataItems, dataTotal, totalRows) = await _winLossRepository.GetPlayerBetList(metaModel);
+            if (totalRows == 0 || !dataItems.Any())
+            {
+                return SortableResultModel<WinLossPlayerBetListViewModel>.Default;
+            }
+
+            var result = new ResultModel<WinLossPlayerBetListViewModel>
+            {
+                TotalRows = totalRows,
+                DataList = ToPlayerBetListViewModel(dataItems, metaModel.DrilldownInOriginalCurrency),
+                TotalData = new WinLossPlayerBetListViewModel
+                {
+                    PlayerWinLoss = metaModel.DrilldownInOriginalCurrency ? dataTotal.TotalPlayerWinLoss : dataTotal.TotalBasedPlayerWinLoss,
+                    GGR = metaModel.DrilldownInOriginalCurrency ? dataTotal.TotalGGR : dataTotal.TotalBasedGGR,
+                }
+            };
+
+            return result;
+        }
+
+        private IEnumerable<WinLossPlayerBetListViewModel> ToPlayerBetListViewModel(IEnumerable<WinLossPlayerBetListDTO> dataItems, bool drilldownInOriginalCurrency)
+            => dataItems.Select(_ => new WinLossPlayerBetListViewModel
+            {
+                RowNumber = _.RowNumber,
+                RefNo = _.RefNo,
+                TransTime = _.TransTime.ToString(DateTimeFormat),
+                Stake = drilldownInOriginalCurrency ? _.Stake : _.BasedStake,
+                PlayerWinLoss = drilldownInOriginalCurrency ? _.PlayerWinLoss : _.BasedPlayerWinLoss,
+                GGR = drilldownInOriginalCurrency ? _.GGR : _.BasedGGR,
+                TicketStatus = _.TicketStatus
+            });
+
+        private IEnumerable<WinLossRecordViewModel> ToPlayerDetailViewModel(IEnumerable<WinLossPlayerDetailDTO> dataItems, bool drilldownInOriginalCurrency, string usernameParent)
+            => dataItems.Select(_ => new WinLossRecordViewModel
+            {
+                Key = $"{_.CustId}_{_.ProductId}",
+                Group = _.ProductName,
+                CustId = _.CustId,
+                ProductId = _.ProductId,
+                SabaId = _.SabaId,
+                SabaSystemId = _.SabaSystemId,
+                ParentName = usernameParent, 
+                Turnover = drilldownInOriginalCurrency ? _.Turnover : _.BasedTurnover,
+                NetTurnover = drilldownInOriginalCurrency ? _.NetTurnover : _.BasedNetTurnover,
+                Ggr = drilldownInOriginalCurrency ? _.GGR : _.BasedGGR,
+                PlayerWinloss = drilldownInOriginalCurrency ? _.PlayerWinloss : _.BasedPlayerWinloss,
+                BetCount = _.BetCount,
+                AvgBetAmount = drilldownInOriginalCurrency ? _.AvgBetAmount : _.BasedAvgBetAmount,
+                UniquePlayers = _.UniquePlayers,
+                Margin = NumberHepler.Margin(_.BasedGGRForMargin, _.BasedNetTurnoverForMargin),
+            });
+    }
+}

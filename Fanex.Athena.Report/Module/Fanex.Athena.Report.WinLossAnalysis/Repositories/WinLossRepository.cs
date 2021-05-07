@@ -32,6 +32,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Repositories
             }
         }
 
+
         private async Task<(IEnumerable<WinLossDataItemDTO>, WinLossDataTotalDTO)> GetDataSet(WinLossMetaModel metaModel, IObjectDb db)
         {
             using (var reader = await db.ExecuteReaderAsync(metaModel))

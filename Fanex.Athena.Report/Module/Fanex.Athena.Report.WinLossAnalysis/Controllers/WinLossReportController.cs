@@ -1,5 +1,4 @@
-﻿using Fanex.Athena.Report.Common.Model.ViewModel;
-using Fanex.Athena.Report.Core.Attributes;
+﻿using Fanex.Athena.Report.Core.Attributes;
 using Fanex.Athena.Report.WinLossAnalysis.Consts;
 using Fanex.Athena.Report.WinLossAnalysis.Excels;
 using Fanex.Athena.Report.WinLossAnalysis.Helpers;
@@ -18,16 +17,10 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Controllers
     [ApiController]
     [Route("api/[controller]/[action]")]
     [NVCAuthorize(NVCFunctionKeys.ReportWinLoss)]
-    public class WinLossReportController : ControllerBase
+    public partial class WinLossReportController : ControllerBase
     {
         private const int MaxRowExport = 50000;
         private const int OneMonthInSecond = 30 * 24 * 60 * 60;
-        private readonly IWinLossService _winLossService;
-
-        public WinLossReportController(IWinLossService winLossService)
-        {
-            _winLossService = winLossService;
-        }
 
         [HttpGet]
         [ResponseCache(Duration = OneMonthInSecond, Location = ResponseCacheLocation.Client)]
@@ -41,22 +34,23 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Controllers
 
         [HttpPost]
         [RequestValidation(validateBrandList: true)]
-        public async Task<ResultModel<WinLossRecordViewModel>> GetData(WinLossMetaModel metaModel)
+        public async Task<JsonResult> GetData([FromServices] IWinLossService service, WinLossMetaModel metaModel)
         {
-            var data = await _winLossService.GetData(metaModel);
-            return data;
+            var data = await service.GetData(metaModel);
+            return new JsonResult(data);
         }
 
         [HttpPost]
         [RequestValidation(validateBrandList: true)]
         public async Task<FileResult> ExportData(
             [FromServices] IWinLossExcel excel,
+            [FromServices] IWinLossService service,
             ExportWinLossMetaModel metaModel
             )
         {
             EnsureMetaModelExport(metaModel);
 
-            var data = await _winLossService.GetData(metaModel);
+            var data = await service.GetData(metaModel);
             var stream = new MemoryStream();
             try
             {
@@ -75,11 +69,11 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Controllers
         [RequestValidation(validateBrandList: true)]
         public async Task<FileResult> ExportDetailData(
             [FromServices] IWinLossDetailExcel excel,
+            [FromServices] IWinLossService service,
             WinLossDetailMetaModel metaModel
             )
         {
-
-            var data = await _winLossService.GetDetailData(metaModel);
+            var data = await service.GetDetailData(metaModel);
             var stream = new MemoryStream();
             try
             {
