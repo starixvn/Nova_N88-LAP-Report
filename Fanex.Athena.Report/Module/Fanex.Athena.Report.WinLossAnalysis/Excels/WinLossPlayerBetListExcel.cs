@@ -15,7 +15,6 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
     {
         protected const string TemplateSheetName = "Template";
         protected const string SheetName = "Data";
-        protected const string DateFormat = "MM/dd/yyyy";
 
         protected const int RowTitleTemplate = 0;
         protected const int RowHeaderTemplate = 1;
@@ -34,6 +33,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
         private const int ColumnTemplateCount = 7;
 
         private const string TemplatePath = "/ExcelTemplate/WinLossAnalysis/WinLossPlayerBetList.xlsx";
+        private const string TitleFormat = "{0} {1} → {2} - {3} - {4}{5} - {6}, {7}";
 
         protected readonly IExcelBuilder _builder;
         private readonly IFileProvider _fileProvider;
@@ -76,13 +76,9 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
 
         private void AssignTitle(ISheet sheet, ISheet templateSheet, ExportWinLossPlayerBetListMetaModel metaModel)
         {
-            const string titlePattern = "{0} {1} - {2} - {3} ({4}), {5}, {6}";
-            var title = string.Format(titlePattern,
-                ViewResources.PlayerBetList,
-                metaModel.FromDate.ToString(DateFormat),
-                metaModel.ToDate.ToString(DateFormat),
-                metaModel.Username, metaModel.SabaSystemId,
-                string.Format(ViewResources.Viewin, metaModel.DrilldownInOriginalCurrency ? ViewResources.OriginalCurrency.ToLowerInvariant() : metaModel.BaseCurrency.ToUpperInvariant()),
+            var title = string.Format(TitleFormat, ViewResources.PlayerBetList, metaModel.FromDate.ToShortDateString(), metaModel.ToDate.ToShortDateString(), metaModel.ProductName, metaModel.Username,
+                string.IsNullOrWhiteSpace(metaModel.SabaSystemId) ? string.Empty : $" ({metaModel.SabaSystemId})",
+                string.Format(ViewResources.Viewin, (metaModel.DrilldownInOriginalCurrency ? metaModel.OriginalCurrency : metaModel.BaseCurrency).ToUpperInvariant()),
                 DataHelper.GetTimezoneName(metaModel.Timezone));
 
             _builder.SetRowValue(sheet, templateSheet, sourceRowIndex: RowTitleTemplate, destRowIndex: RowTitleTemplate, columnCount: ColumnTemplateCount, value: title);

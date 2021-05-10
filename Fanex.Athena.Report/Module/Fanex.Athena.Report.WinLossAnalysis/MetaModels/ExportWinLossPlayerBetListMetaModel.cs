@@ -17,5 +17,11 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
 
         [SpParam(Ignored = true)]
         public string SabaSystemId { get; set; }
+
+        [SpParam(Ignored = true)]
+        public string OriginalCurrency { get; set; }
+
+        [SpParam(Ignored = true)]
+        public string ProductName { get; set; }
     }
 }

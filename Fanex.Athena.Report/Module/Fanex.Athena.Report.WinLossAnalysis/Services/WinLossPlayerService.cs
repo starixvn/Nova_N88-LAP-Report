@@ -1,6 +1,5 @@
 ﻿using Fanex.Athena.Report.Common.Helpers;
 using Fanex.Athena.Report.Common.Model.ViewModel;
-using Fanex.Athena.Report.Common.Services.Interfaces;
 using Fanex.Athena.Report.WinLossAnalysis.DTO;
 using Fanex.Athena.Report.WinLossAnalysis.MetaModels;
 using Fanex.Athena.Report.WinLossAnalysis.Repositories;
@@ -16,20 +15,16 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
         private const string DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt";
 
         private readonly IWinLossPlayerRepository _winLossRepository;
-        private readonly IDataMapper _dataMapper;
 
-        public WinLossPlayerService(IWinLossPlayerRepository winLossRepository,
-            ICurrencyService currencyService,
-            IDataMapper dataMapper)
+        public WinLossPlayerService(IWinLossPlayerRepository winLossRepository)
         {
             _winLossRepository = winLossRepository;
-            _dataMapper = dataMapper;
         }
 
         public async Task<IEnumerable<WinLossRecordViewModel>> GetPlayerDetail(WinLossPlayerDetailMetaModel metaModel)
         {
             var dataItems = await _winLossRepository.GetPlayerDetail(metaModel);
-            return ToPlayerDetailViewModel(dataItems, metaModel.DrilldownInOriginalCurrency, metaModel.UsernameParent);
+            return ToPlayerDetailViewModel(dataItems, metaModel.DrilldownInOriginalCurrency, metaModel.UsernameParent, metaModel.OriginalCurrency);
         }
 
         public async Task<ResultModel<WinLossPlayerBetListViewModel>> GetPlayerBetList(WinLossPlayerBetListMetaModel metaModel)
@@ -66,7 +61,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 TicketStatus = _.TicketStatus
             });
 
-        private IEnumerable<WinLossRecordViewModel> ToPlayerDetailViewModel(IEnumerable<WinLossPlayerDetailDTO> dataItems, bool drilldownInOriginalCurrency, string usernameParent)
+        private IEnumerable<WinLossRecordViewModel> ToPlayerDetailViewModel(IEnumerable<WinLossPlayerDetailDTO> dataItems, bool drilldownInOriginalCurrency,
+            string usernameParent, string originalCurrency)
             => dataItems.Select(_ => new WinLossRecordViewModel
             {
                 Key = $"{_.CustId}_{_.ProductId}",
@@ -75,7 +71,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 ProductId = _.ProductId,
                 SabaId = _.SabaId,
                 SabaSystemId = _.SabaSystemId,
-                ParentName = usernameParent, 
+                ParentName = usernameParent,
+                OriginalCurrency = originalCurrency,
                 Turnover = drilldownInOriginalCurrency ? _.Turnover : _.BasedTurnover,
                 NetTurnover = drilldownInOriginalCurrency ? _.NetTurnover : _.BasedNetTurnover,
                 Ggr = drilldownInOriginalCurrency ? _.GGR : _.BasedGGR,

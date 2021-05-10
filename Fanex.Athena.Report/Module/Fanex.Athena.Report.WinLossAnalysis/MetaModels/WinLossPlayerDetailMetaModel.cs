@@ -30,6 +30,9 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         [SpParam(Ignored = true)]
         public string UsernameParent { get; set; }
 
+        [SpParam(Ignored = true)]
+        public string OriginalCurrency { get; set; }
+
 #pragma warning disable S1067
 
         [SpParam(Ignored = true)]
