@@ -34,25 +34,22 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Controllers
         [RequestValidation]
         public async Task<FileResult> ExportPlayerBetList(
            [FromServices] IWinLossPlayerBetListExcel excel,
-           [FromServices] IWinLossPlayerService service,
            [FromServices] IProductService productService,
            [FromServices] IDataMapper dataMapper,
            ExportWinLossPlayerBetListMetaModel metaModel
            )
         {
-            var data = await service.GetPlayerBetList(metaModel);
             var stream = new MemoryStream();
             try
             {
                 await BindProductName(metaModel, productService, dataMapper);
-                var workBook = excel.Export(data, metaModel);
+                var workBook = await excel.Export(metaModel);
                 workBook.Write(stream);
                 return new FileContentResult(stream.ToArray(), ExcelConsts.OctetStreamContentType);
             }
             finally
             {
                 stream?.Dispose();
-                (data?.DataList as List<WinLossPlayerBetListViewModel>)?.Clear();
             }
         }
 

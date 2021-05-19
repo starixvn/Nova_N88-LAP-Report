@@ -4,12 +4,12 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
 {
     public class ExportWinLossPlayerBetListMetaModel : WinLossPlayerBetListMetaModel
     {
-        private const int MaxRowExport = 150000;
+        private const int MaxPageSize = 50000;
 
         public ExportWinLossPlayerBetListMetaModel()
         {
             PageIndex = 1;
-            PageSize = MaxRowExport;
+            PageSize = MaxPageSize;
         }
 
         [SpParam(Ignored = true)]
@@ -23,5 +23,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
 
         [SpParam(Ignored = true)]
         public string ProductName { get; set; }
+
+        [SpParam(Ignored = true)]
+        public int TotalRows { get; set; }
     }
 }

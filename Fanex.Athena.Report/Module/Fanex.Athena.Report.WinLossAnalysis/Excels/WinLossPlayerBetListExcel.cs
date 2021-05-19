@@ -1,14 +1,15 @@
 ﻿using Fanex.Athena.Report.Common.Excel;
-using Fanex.Athena.Report.Common.Model.ViewModel;
 using Fanex.Athena.Report.Resources;
 using Fanex.Athena.Report.WinLossAnalysis.Helpers;
 using Fanex.Athena.Report.WinLossAnalysis.MetaModels;
+using Fanex.Athena.Report.WinLossAnalysis.Services;
 using Fanex.Athena.Report.WinLossAnalysis.ViewModels;
 using Microsoft.Extensions.FileProviders;
 using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Fanex.Athena.Report.WinLossAnalysis.Excels
 {
@@ -33,28 +34,33 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
 
         private const int ColumnTemplateCount = 7;
 
+        private const int MaxRows = 400000;
+
         private const string TemplatePath = "/ExcelTemplate/WinLossAnalysis/WinLossPlayerBetList.xlsx";
         private const string TitleFormat = "{0} {1} → {2} - {3} - {4}{5} - {6}, {7}";
-        private const int SheetSize = 50000;
 
         protected readonly IExcelBuilder _builder;
         private readonly IFileProvider _fileProvider;
+        private readonly IWinLossPlayerService _betlistService;
 
-        public WinLossPlayerBetListExcel(IExcelBuilder builder, IFileProvider fileProvider)
+        public WinLossPlayerBetListExcel(IExcelBuilder builder, IFileProvider fileProvider, IWinLossPlayerService betlistService)
         {
             _builder = builder;
             _fileProvider = fileProvider;
+            _betlistService = betlistService;
         }
 
-        private static int GetNumberOfSheets(int numberOfItems, int pageSize) => (int)Math.Ceiling(numberOfItems * 1.0 / pageSize);
+        private static int GetNumberOfSheets(int numberOfItems, int pageSize) => Math.Min(
+            (int)Math.Ceiling(numberOfItems * 1.0 / pageSize),
+            (int)Math.Ceiling(MaxRows * 1.0 / pageSize));
 
-        public IWorkbook Export(ResultModel<WinLossPlayerBetListViewModel> data, ExportWinLossPlayerBetListMetaModel metaModel)
+        public async Task<IWorkbook> Export(ExportWinLossPlayerBetListMetaModel metaModel)
         {
             var template = _fileProvider.GetFileInfo(TemplatePath).PhysicalPath;
             var workBook = _builder.LoadTemplate(template);
             var templateSheet = workBook.GetSheet(TemplateSheetName);
 
-            if (data.TotalRows == 0 || !data.DataList.Any())
+            if (metaModel.TotalRows <= 0)
             {
                 var sheet = _builder.CloneSheet(workBook, TemplateSheetName, SheetName);
                 AssignTitle(sheet, templateSheet, metaModel);
@@ -63,7 +69,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
             }
             else
             {
-                AssignMultiSheet(workBook, templateSheet, data, metaModel);
+                await AssignMultiSheet(workBook, templateSheet, metaModel.TotalRows, metaModel);
             }
 
             _builder.RemoveSheet(workBook, TemplateSheetName);
@@ -71,18 +77,27 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
             return workBook;
         }
 
-        private void AssignMultiSheet(IWorkbook workBook, ISheet templateSheet, ResultModel<WinLossPlayerBetListViewModel> data, ExportWinLossPlayerBetListMetaModel metaModel)
+        private async Task AssignMultiSheet(IWorkbook workBook, ISheet templateSheet, int totalRows, ExportWinLossPlayerBetListMetaModel metaModel)
         {
-            var numberOfSheets = GetNumberOfSheets(data.TotalRows, SheetSize);
-            for (int sheetIndex = 0; sheetIndex < numberOfSheets; sheetIndex++)
+            var numberOfSheets = GetNumberOfSheets(totalRows, metaModel.PageSize);
+
+            for (int sheetIndex = 1; sheetIndex <= numberOfSheets; sheetIndex++)
             {
-                var sheet = _builder.CloneSheet(workBook, TemplateSheetName, $"{SheetName}-{sheetIndex + 1}");
-                var sheetData = data.DataList.Skip(sheetIndex * SheetSize).Take(SheetSize);
+                metaModel.PageIndex = sheetIndex;
+                var sheetData = await _betlistService.GetPlayerBetList(metaModel);
+                if (!sheetData.DataList.Any())
+                {
+                    return;
+                }
+
+                var sheet = _builder.CloneSheet(workBook, TemplateSheetName, $"{SheetName}-{sheetIndex}");
 
                 AssignTitle(sheet, templateSheet, metaModel);
                 AssignHeader(sheet, templateSheet);
-                AssignData(sheet, templateSheet, sheetData);
-                AssignTotalData(sheet, templateSheet, data.TotalData);
+                AssignData(sheet, templateSheet, sheetData.DataList);
+                AssignTotalData(sheet, templateSheet, sheetData.TotalData);
+
+                (sheetData.DataList as List<WinLossPlayerBetListViewModel>)?.Clear();
             }
         }
 

@@ -1,12 +1,11 @@
-﻿using Fanex.Athena.Report.Common.Model.ViewModel;
-using Fanex.Athena.Report.WinLossAnalysis.MetaModels;
-using Fanex.Athena.Report.WinLossAnalysis.ViewModels;
+﻿using Fanex.Athena.Report.WinLossAnalysis.MetaModels;
 using NPOI.SS.UserModel;
+using System.Threading.Tasks;
 
 namespace Fanex.Athena.Report.WinLossAnalysis.Excels
 {
     public interface IWinLossPlayerBetListExcel
     {
-        IWorkbook Export(ResultModel<WinLossPlayerBetListViewModel> data, ExportWinLossPlayerBetListMetaModel metaModel);
+        Task<IWorkbook> Export(ExportWinLossPlayerBetListMetaModel metaModel);
     }
 }
