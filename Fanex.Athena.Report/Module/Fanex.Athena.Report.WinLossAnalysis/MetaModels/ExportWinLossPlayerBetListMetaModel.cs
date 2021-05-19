@@ -4,7 +4,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
 {
     public class ExportWinLossPlayerBetListMetaModel : WinLossPlayerBetListMetaModel
     {
-        private const int MaxRowExport = 50000;
+        private const int MaxRowExport = 150000;
 
         public ExportWinLossPlayerBetListMetaModel()
         {

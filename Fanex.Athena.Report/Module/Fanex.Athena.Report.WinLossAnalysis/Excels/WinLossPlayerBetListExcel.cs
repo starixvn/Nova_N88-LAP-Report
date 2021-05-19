@@ -6,6 +6,7 @@ using Fanex.Athena.Report.WinLossAnalysis.MetaModels;
 using Fanex.Athena.Report.WinLossAnalysis.ViewModels;
 using Microsoft.Extensions.FileProviders;
 using NPOI.SS.UserModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,6 +35,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
 
         private const string TemplatePath = "/ExcelTemplate/WinLossAnalysis/WinLossPlayerBetList.xlsx";
         private const string TitleFormat = "{0} {1} → {2} - {3} - {4}{5} - {6}, {7}";
+        private const int SheetSize = 50000;
 
         protected readonly IExcelBuilder _builder;
         private readonly IFileProvider _fileProvider;
@@ -44,29 +46,44 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
             _fileProvider = fileProvider;
         }
 
+        private static int GetNumberOfSheets(int numberOfItems, int pageSize) => (int)Math.Ceiling(numberOfItems * 1.0 / pageSize);
+
         public IWorkbook Export(ResultModel<WinLossPlayerBetListViewModel> data, ExportWinLossPlayerBetListMetaModel metaModel)
         {
             var template = _fileProvider.GetFileInfo(TemplatePath).PhysicalPath;
             var workBook = _builder.LoadTemplate(template);
             var templateSheet = workBook.GetSheet(TemplateSheetName);
-            var sheet = _builder.CloneSheet(workBook, TemplateSheetName, SheetName);
-
-            AssignTitle(sheet, templateSheet, metaModel);
-            AssignHeader(sheet, templateSheet);
 
             if (data.TotalRows == 0 || !data.DataList.Any())
             {
+                var sheet = _builder.CloneSheet(workBook, TemplateSheetName, SheetName);
+                AssignTitle(sheet, templateSheet, metaModel);
+                AssignHeader(sheet, templateSheet);
                 AssignNoInfoRow(sheet, templateSheet);
             }
             else
             {
-                AssignData(sheet, templateSheet, data.DataList);
-                AssignTotalData(sheet, templateSheet, data.TotalData);
+                AssignMultiSheet(workBook, templateSheet, data, metaModel);
             }
 
             _builder.RemoveSheet(workBook, TemplateSheetName);
 
             return workBook;
+        }
+
+        private void AssignMultiSheet(IWorkbook workBook, ISheet templateSheet, ResultModel<WinLossPlayerBetListViewModel> data, ExportWinLossPlayerBetListMetaModel metaModel)
+        {
+            var numberOfSheets = GetNumberOfSheets(data.TotalRows, SheetSize);
+            for (int sheetIndex = 0; sheetIndex < numberOfSheets; sheetIndex++)
+            {
+                var sheet = _builder.CloneSheet(workBook, TemplateSheetName, $"{SheetName}-{sheetIndex + 1}");
+                var sheetData = data.DataList.Skip(sheetIndex * SheetSize).Take(SheetSize);
+
+                AssignTitle(sheet, templateSheet, metaModel);
+                AssignHeader(sheet, templateSheet);
+                AssignData(sheet, templateSheet, sheetData);
+                AssignTotalData(sheet, templateSheet, data.TotalData);
+            }
         }
 
         private void AssignNoInfoRow(ISheet sheet, ISheet templateSheet)
