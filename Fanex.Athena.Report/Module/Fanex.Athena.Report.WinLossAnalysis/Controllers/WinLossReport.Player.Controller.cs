@@ -1,12 +1,11 @@
-﻿using Fanex.Athena.Report.Common.Services.Interfaces;
+﻿using Fanex.Athena.Report.Common.Helpers;
+using Fanex.Athena.Report.Common.Services.Interfaces;
 using Fanex.Athena.Report.Core.Attributes;
 using Fanex.Athena.Report.WinLossAnalysis.Consts;
 using Fanex.Athena.Report.WinLossAnalysis.Excels;
 using Fanex.Athena.Report.WinLossAnalysis.MetaModels;
 using Fanex.Athena.Report.WinLossAnalysis.Services;
-using Fanex.Athena.Report.WinLossAnalysis.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -14,6 +13,9 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Controllers
 {
     public partial class WinLossReportController : ControllerBase
     {
+        private const string ConcurrentExportBetListKey = "WinLossReport_ExportPlayerBetList";
+        private const int ConcurrentExportBetListRequest = 2;
+
         [HttpPost]
         [RequestValidation]
         public async Task<JsonResult> GetPlayerDetail([FromServices] IWinLossPlayerService service, WinLossPlayerDetailMetaModel metaModel)
@@ -43,7 +45,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Controllers
             try
             {
                 await BindProductName(metaModel, productService, dataMapper);
-                var workBook = await excel.Export(metaModel);
+                var workBook = await LockHelper.LockAsync(ConcurrentExportBetListKey, () => excel.Export(metaModel), ConcurrentExportBetListRequest);
                 workBook.Write(stream);
                 return new FileContentResult(stream.ToArray(), ExcelConsts.OctetStreamContentType);
             }

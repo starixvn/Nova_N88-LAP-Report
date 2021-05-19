@@ -96,8 +96,6 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
                 AssignHeader(sheet, templateSheet);
                 AssignData(sheet, templateSheet, sheetData.DataList);
                 AssignTotalData(sheet, templateSheet, sheetData.TotalData);
-
-                (sheetData.DataList as List<WinLossPlayerBetListViewModel>)?.Clear();
             }
         }
 
