@@ -722,4 +722,13 @@
   <data name="Stake" xml:space="preserve">
     <value>Stake</value>
   </data>
+  <data name="VGA" xml:space="preserve">
+     <value>Vgaming</value>
+  </data>
+  <data name="VGAC" xml:space="preserve">
+    <value>Vgaming Jackpot Contribution</value>
+  </data>
+  <data name="VGAFB" xml:space="preserve">
+    <value>gaming Free Bets</value>
+  </data>
 </root>

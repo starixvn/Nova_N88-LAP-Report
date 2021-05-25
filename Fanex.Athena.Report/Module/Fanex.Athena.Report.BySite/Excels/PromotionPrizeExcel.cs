@@ -51,7 +51,10 @@
                 {Product.CCB, new Tuple<string, string>("", DefaultTemplateSheetName) },
                 {Product.SBCFB, new Tuple<string, string>("", DefaultTemplateSheetName) },
                 {Product.SBC, new Tuple<string, string>("", DefaultTemplateSheetName) },
-                {Product.SBCC, new Tuple<string, string>("", ContributionTemplate) }
+                {Product.SBCC, new Tuple<string, string>("", ContributionTemplate) },
+                {Product.VGAFB, new Tuple<string, string>("", DefaultTemplateSheetName) },
+                {Product.VGA, new Tuple<string, string>("", DefaultTemplateSheetName) },
+                {Product.VGAC, new Tuple<string, string>("", ContributionTemplate) }
         };
 
         public PromotionPrizeExcel(IExcelBuilder builder)
@@ -126,7 +129,9 @@
             string currencyName,
             string productKey)
         {
-            var notShowSummaryTotal = IsContribution(productKey) || productKey == Product.CCB || productKey == Product.SBCFB;
+            var productsNotShowSummaryTotal = new List<string> { Product.CCB, Product.SBCFB, Product.SBC, Product.SAG, Product.VGAFB, Product.VGA };
+
+            var notShowSummaryTotal = IsContribution(productKey) || productsNotShowSummaryTotal.Contains(productKey);
             var sheet = _builder.CloneSheet(workbook, templateSheet.SheetName, sheetName);
 
             AssignHeader(sheet, templateSheet, productKey);
@@ -288,12 +293,14 @@
 
         private static string GetPromotionPrizesHeader(string productKey)
         {
-            return productKey == Product.CCB || productKey == Product.SBCFB || productKey == Product.SBCC ? ViewResources.GameType : ViewResources.PromotionType;
+            var productsShowGameType = new List<string> { Product.CCB, Product.SBCFB, Product.SBCC, Product.SBC, Product.VGAFB, Product.VGA };
+
+            return productsShowGameType.Contains(productKey) ? ViewResources.GameType : ViewResources.PromotionType;
         }
 
         private static bool IsContribution(string productKey)
         {
-            return productKey == Product.PPC || productKey == Product.SBCC;
+            return productKey == Product.PPC || productKey == Product.SBCC || productKey == Product.VGAC;
         }
 
         private void AssignCurrencyTotal(ISheet sheet, ISheet templateSheet, PromotionPrizeResultModel data, int rowIndex, string productKey = "")

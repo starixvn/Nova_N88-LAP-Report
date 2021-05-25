@@ -1591,6 +1591,33 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string VGA {
+            get {
+                return ResourceManager.GetString("VGA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vgaming Jackpot Contribution.
+        /// </summary>
+        public static string VGAC {
+            get {
+                return ResourceManager.GetString("VGAC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to gaming Free Bets.
+        /// </summary>
+        public static string VGAFB {
+            get {
+                return ResourceManager.GetString("VGAFB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View in {0}.
         /// </summary>
         public static string Viewin {

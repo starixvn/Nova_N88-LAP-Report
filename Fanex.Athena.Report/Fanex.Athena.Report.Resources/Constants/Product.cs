@@ -17,7 +17,13 @@
         public const string SBCC = "SBCC";
 
         public const string SBC = "SBC";
-        
+
         public const string SBCFB = "SBCFB";
+
+        public const string VGAFB = "VGAFB";
+
+        public const string VGAC = "VGAC";
+
+        public const string VGA = "VGA";
     }
 }
