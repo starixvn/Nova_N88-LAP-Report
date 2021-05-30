@@ -80,7 +80,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 BetCount = _.BetCount,
                 AvgBetAmount = drilldownInOriginalCurrency ? _.AvgBetAmount : _.BasedAvgBetAmount,
                 UniquePlayers = _.UniquePlayers,
-                Margin = NumberHepler.Margin(_.BasedGGRForMargin, _.BasedNetTurnoverForMargin),
+                Margin = NumberHepler.Margin(_.BasedGGRForMargin, _.BasedNetTurnoverForMargin)
             });
     }
 }

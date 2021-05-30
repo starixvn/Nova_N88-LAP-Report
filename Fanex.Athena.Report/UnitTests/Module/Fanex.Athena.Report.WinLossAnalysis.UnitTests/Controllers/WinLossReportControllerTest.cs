@@ -1,11 +1,10 @@
 ﻿using AutoFixture;
+using Fanex.Athena.Report.Common.Model.ViewModel;
 using Fanex.Athena.Report.WinLossAnalysis.Controllers;
 using Fanex.Athena.Report.WinLossAnalysis.Excels;
 using Fanex.Athena.Report.WinLossAnalysis.MetaModels;
 using Fanex.Athena.Report.WinLossAnalysis.Services;
 using Fanex.Athena.Report.WinLossAnalysis.ViewModels;
-using Fanex.Athena.Report.Common.Extensions;
-using Fanex.Athena.Report.Common.Model.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NPOI.SS.UserModel;
