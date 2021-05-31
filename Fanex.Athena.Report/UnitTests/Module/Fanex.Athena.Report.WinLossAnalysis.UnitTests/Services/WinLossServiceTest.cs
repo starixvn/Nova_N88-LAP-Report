@@ -29,7 +29,6 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Services
             _mockRepository = new Mock<IWinLossRepository>();
             _mockDataMapper = new Mock<IDataMapper>();
             _mockCurrencyService = new Mock<ICurrencyService>();
-
             _target = new WinLossService(_mockRepository.Object, _mockCurrencyService.Object, _mockDataMapper.Object);
         }
 

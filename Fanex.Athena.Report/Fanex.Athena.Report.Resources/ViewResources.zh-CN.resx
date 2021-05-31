@@ -617,4 +617,16 @@
     <value>Number Of Players</value>
     <comment>150876</comment>
   </data>
+  <data name="GrandTotal" xml:space="preserve">
+    <value>Grand Total</value>
+  </data>
+  <data name="OriginalCurrency" xml:space="preserve">
+    <value>Original Currency</value>
+  </data>
+  <data name="PlayerBetList" xml:space="preserve">
+    <value>Player Bet List</value>
+  </data>
+  <data name="Stake" xml:space="preserve">
+    <value>Stake</value>
+  </data>
 </root>

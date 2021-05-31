@@ -4,7 +4,6 @@ using Fanex.Athena.Report.BonusInfo.DTO;
 using Fanex.Athena.Report.BonusInfo.Excels;
 using Fanex.Athena.Report.BonusInfo.MetaModels;
 using Fanex.Athena.Report.BonusInfo.Services;
-using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Newtonsoft.Json;
 using NPOI.SS.UserModel;

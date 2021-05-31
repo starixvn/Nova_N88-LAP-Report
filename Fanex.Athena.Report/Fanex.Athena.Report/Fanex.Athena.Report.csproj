@@ -28,6 +28,7 @@
     <None Remove="ExcelTemplate\Marketing\PerformanceHighlight.xls" />
     <None Remove="ExcelTemplate\Marketing\WithdrawalAmount.xls" />
     <None Remove="ExcelTemplate\PromotionPrize.xls" />
+    <None Remove="ExcelTemplate\WinLossAnalysis\WinLossPlayerBetList.xlsx" />
     <None Remove="ExcelTemplate\WinLossAnalysis\WinLossReport.xlsx" />
     <None Remove="ExcelTemplate\WinLossAnalysis\WinLossDetailReport.xlsx" />
     <None Remove="ExcelTemplate\BonusInfo\BonusInfo_Detail.xls" />
@@ -54,6 +55,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ExcelTemplate\PromotionPrize.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ExcelTemplate\WinLossAnalysis\WinLossPlayerBetList.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ExcelTemplate\WinLossAnalysis\WinLossReport.xlsx">

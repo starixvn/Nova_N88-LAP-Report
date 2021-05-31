@@ -1,11 +1,10 @@
 ﻿using AutoFixture;
+using Fanex.Athena.Report.Common.Model.ViewModel;
 using Fanex.Athena.Report.WinLossAnalysis.Controllers;
 using Fanex.Athena.Report.WinLossAnalysis.Excels;
 using Fanex.Athena.Report.WinLossAnalysis.MetaModels;
 using Fanex.Athena.Report.WinLossAnalysis.Services;
 using Fanex.Athena.Report.WinLossAnalysis.ViewModels;
-using Fanex.Athena.Report.Common.Extensions;
-using Fanex.Athena.Report.Common.Model.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NPOI.SS.UserModel;
@@ -19,41 +18,41 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Controllers
     public class WinLossReportControllerTest
     {
         private readonly WinLossReportController _target;
-        private readonly Mock<IWinLossService> _winLossService;
         private readonly IFixture _fixture = new Fixture();
 
         public WinLossReportControllerTest()
         {
-            _winLossService = new Mock<IWinLossService>();
-            _target = new WinLossReportController(_winLossService.Object);
+            _target = new WinLossReportController();
         }
 
         [Fact]
         public async Task GetData_WhenCall_ReturnResultCorrectly()
         {
             //Arrange
+            var winLossService = new Mock<IWinLossService>();
             var metaModel = _fixture.Create<WinLossMetaModel>();
             var expectedResult = new ResultModel<WinLossRecordViewModel>();
-            _winLossService.Setup(_ => _.GetData(metaModel)).Returns(Task.FromResult(expectedResult));
+            winLossService.Setup(_ => _.GetData(metaModel)).Returns(Task.FromResult(expectedResult));
 
             //Act
-            var actualResult = await _target.GetData(metaModel);
+            var actualResult = await _target.GetData(winLossService.Object, metaModel);
 
             //Assert
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedResult, actualResult.Value as ResultModel<WinLossRecordViewModel>);
         }
 
         [Fact]
         public async Task ExportData_WhenCall_ReturnFileResultCorrectly()
         {
             //Arrange
+            var winLossService = new Mock<IWinLossService>();
             var metaModel = _fixture.Create<ExportWinLossMetaModel>();
             var expectedResult = new ResultModel<WinLossRecordViewModel>
             {
                 DataList = new List<WinLossRecordViewModel>()
             };
 
-            _winLossService.Setup(_ => _.GetData(metaModel)).Returns(Task.FromResult(expectedResult));
+            winLossService.Setup(_ => _.GetData(metaModel)).Returns(Task.FromResult(expectedResult));
 
             var mockExcel = new Mock<IWinLossExcel>();
             var workBook = new Mock<IWorkbook>();
@@ -65,7 +64,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Controllers
                 .Returns(workBook.Object);
 
             //Act
-            var result = await _target.ExportData(mockExcel.Object, metaModel);
+            var result = await _target.ExportData(mockExcel.Object, winLossService.Object, metaModel);
 
             //Assert
             var fileContentResult = result as FileContentResult;

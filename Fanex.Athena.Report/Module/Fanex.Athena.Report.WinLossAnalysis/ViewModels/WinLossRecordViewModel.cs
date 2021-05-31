@@ -8,7 +8,10 @@ namespace Fanex.Athena.Report.WinLossAnalysis.ViewModels
         public string Group { get; set; }
         public string Parent { get; set; }
         public string ParentName { get; set; }
+        public string OriginalCurrency { get; set; }
         public IEnumerable<WinLossRecordViewModel> DrillDownData { get; set; }
+        public int? CustId { get; set; }
+        public int? ProductId { get; set; }
         public string SabaId { get; set; }
         public string SabaSystemId { get; set; }
         public decimal Turnover { get; set; }

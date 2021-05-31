@@ -12,7 +12,7 @@ namespace Fanex.Athena.Report.UnitTestUtils.Excels
     public class ExcelTest<T>
         where T : class
     {
-        protected readonly T _target;
+        protected T _target;
         protected readonly Mock<IExcelBuilder> _mockExcelBuilder;
         protected readonly Mock<IFileProvider> _mockFileProvider;
         protected readonly Mock<IWorkbook> _mockWorkbook;
@@ -25,6 +25,12 @@ namespace Fanex.Athena.Report.UnitTestUtils.Excels
             _mockFileProvider = new Mock<IFileProvider>();
             _mockWorkbook = new Mock<IWorkbook>();
             _mockFileInfo = new Mock<IFileInfo>();
+
+            Create();
+        }      
+        
+        protected virtual void Create()
+        {
             _target = (T)Activator.CreateInstance(typeof(T), _mockExcelBuilder.Object, _mockFileProvider.Object);
         }
 
@@ -39,6 +45,12 @@ namespace Fanex.Athena.Report.UnitTestUtils.Excels
         {
             mockRow.Setup(_ => _.Cells).Returns(MockListCell(countCell).ToList());
             _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int[]>())).Returns(mockRow.Object);
+        }
+
+        protected void SetupRows(Mock<IRow> mockRow, int countCell)
+        {
+            mockRow.Setup(_ => _.Cells).Returns(MockListCell(countCell).ToList());
+            _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>())).Returns(mockRow.Object);
         }
 
         protected static IEnumerable<ICell> MockListCell(int count)

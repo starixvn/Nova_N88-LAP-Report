@@ -121,6 +121,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
             {
                 Key = parentKey,
                 Group = isGroupByPlayer ? firstChild?.Group : parentKey,
+                CustId = firstChild?.CustId,
                 SabaId = firstChild?.SabaId,
                 SabaSystemId = firstChild?.SabaSystemId,
                 Turnover = turnover,
@@ -150,6 +151,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 Parent = parentKey,
                 ParentName = isGroupByPlayer ? _.Group : parentKey,
                 Group = _.CurrencyCode,
+                CustId = _.CustId,
                 SabaId = _.SabaId,
                 SabaSystemId = _.SabaSystemId,
                 Turnover = drilldownInOriginalCurrency ? _.Turnover : _.BasedTurnover,
