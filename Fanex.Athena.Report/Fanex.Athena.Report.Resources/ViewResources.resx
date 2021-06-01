@@ -731,4 +731,12 @@
   <data name="VGAFB" xml:space="preserve">
     <value>gaming Free Bets</value>
   </data>
+  <data name="Note" xml:space="preserve">
+    <value>Note</value>
+    <comment>155334</comment>
+  </data>
+  <data name="NoteSupportClosingBalance" xml:space="preserve">
+    <value>Player Closing Balance can be displayed in GMT +7 and GMT +8 only, and support data from {0} GMT+00</value>
+    <comment>155334</comment>
+  </data>
 </root>

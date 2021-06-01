@@ -16,5 +16,6 @@
         public decimal TotalBasedDepositAmount { get; set; }
         public int TotalNumberOfWithdrawal { get; set; }
         public decimal TotalBasedWithdrawalAmount { get; set; }
+        public decimal TotalBasedClosingBalance { get; set; }
     }
 }

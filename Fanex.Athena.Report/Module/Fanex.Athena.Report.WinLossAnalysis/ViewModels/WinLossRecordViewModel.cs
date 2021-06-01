@@ -26,5 +26,6 @@ namespace Fanex.Athena.Report.WinLossAnalysis.ViewModels
         public decimal DepositAmount { get; set; }
         public int NumberOfWithdrawal { get; set; }
         public decimal WithdrawalAmount { get; set; }
+        public decimal ClosingBalance { get; set; }
     }
 }

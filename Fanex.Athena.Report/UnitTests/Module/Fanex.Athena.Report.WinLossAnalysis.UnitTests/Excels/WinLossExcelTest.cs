@@ -71,8 +71,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Excels
                 metaModel);
 
             //Assert
-            _mockExcelBuilder.Verify(_ => _.SetRowValue(sheet, templateSheet, 0, 0, 15, expectedTitle), Times.Once);
-            _mockExcelBuilder.Verify(_ => _.ClearTemplate(sheet, 3), Times.Once);
+            _mockExcelBuilder.Verify(_ => _.SetRowValue(sheet, templateSheet, 0, 0, 16, expectedTitle), Times.Once);
+            _mockExcelBuilder.Verify(_ => _.ClearTemplate(sheet, 4), Times.Once);
         }
 
         [Fact]
@@ -102,7 +102,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Excels
             mockRow.Setup(_ => _.Cells).Returns(MockListCell(3).ToList());
             mockRowDataItem.Setup(_ => _.Cells).Returns(listCell);
             _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int[]>())).Returns(mockRow.Object);
-            _mockExcelBuilder.Setup(_ => _.CopyRow(sheet, templateSheet, 3, 3, It.IsAny<int[]>())).Returns(mockRowDataItem.Object);
+            _mockExcelBuilder.Setup(_ => _.CopyRow(sheet, templateSheet, 4, 4, It.IsAny<int[]>())).Returns(mockRowDataItem.Object);
 
             var fakeRowData = new WinLossRecordViewModel
             {

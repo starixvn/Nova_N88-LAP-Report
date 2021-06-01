@@ -155,6 +155,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
             var expectedSummaryMetaModel = new NewlyRegisterUsersSummaryMetaModel
             {
                 BrandId = metaModel.BrandId,
+                CurrencyIdList = metaModel.CurrencyIdList,
                 FromDate = metaModel.FromDate,
                 ToDate = metaModel.ToDate,
                 CompareFromDate = metaModel.CompareFromDate,
@@ -165,6 +166,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
             var expectedDetailMetaModel = new NewlyRegisterUsersDetailMetaModel
             {
                 BrandId = metaModel.BrandId,
+                CurrencyIdList = metaModel.CurrencyIdList,
                 FromDate = metaModel.FromDate,
                 ToDate = metaModel.ToDate,
                 BaseCurrency = metaModel.BaseCurrency,

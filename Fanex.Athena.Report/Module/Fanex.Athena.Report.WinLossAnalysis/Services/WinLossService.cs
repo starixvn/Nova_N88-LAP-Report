@@ -89,6 +89,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 AvgBetAmount = dataTotal.TotalBasedAvgBetAmount,
                 UniquePlayers = dataTotal.TotalUniquePlayers,
                 Margin = NumberHepler.Margin(dataTotal.TotalBasedGGRForMargin, dataTotal.TotalBasedNetTurnoverForMargin),
+                ClosingBalance = dataTotal.TotalBasedClosingBalance,
                 NumberOfDeposit = dataTotal.TotalNumberOfDeposit,
                 DepositAmount = dataTotal.TotalBasedDepositAmount,
                 NumberOfWithdrawal = dataTotal.TotalNumberOfWithdrawal,
@@ -114,7 +115,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
         private static Func<bool, bool, Func<string, IEnumerable<WinLossDataItemDTO>, WinLossRecordViewModel>> Mapper = (drilldownInOriginalCurrency, isGroupByPlayer) => (parentKey, childData) =>
         {
             var (turnover, netTurnover, netTurnoverForMargin, ggr, ggrForMargin, playerWinloss, betCount, uniquePlayers,
-                numberOfDeposit, depositAmount, numberOfWithdrawal, withdrawalAmount) = SumChildData(childData);
+                numberOfDeposit, depositAmount, numberOfWithdrawal, withdrawalAmount, closingBalance) = SumChildData(childData);
 
             var firstChild = childData?.FirstOrDefault();
             var parent = new WinLossRecordViewModel
@@ -136,6 +137,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 DepositAmount = depositAmount,
                 NumberOfWithdrawal = numberOfWithdrawal,
                 WithdrawalAmount = withdrawalAmount,
+                ClosingBalance = closingBalance,
                 DrillDownData = SelectDrillDownData(parentKey, childData, drilldownInOriginalCurrency, isGroupByPlayer)
             };
 
@@ -165,12 +167,13 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 NumberOfDeposit = _.NumberOfDeposit,
                 DepositAmount = drilldownInOriginalCurrency ? _.DepositAmount : _.BasedDepositAmount,
                 NumberOfWithdrawal = _.NumberOfWithdrawal,
+                ClosingBalance = drilldownInOriginalCurrency ? _.ClosingBalance : _.BasedClosingBalance,
                 WithdrawalAmount = drilldownInOriginalCurrency ? _.WithdrawalAmount : _.BasedWithdrawalAmount
             });
         }
 
         private static (decimal, decimal, decimal, decimal, decimal, decimal, int, int,
-            int, decimal, int, decimal) SumChildData(IEnumerable<WinLossDataItemDTO> childData)
+            int, decimal, int, decimal, decimal) SumChildData(IEnumerable<WinLossDataItemDTO> childData)
         {
             var turnover = 0.0m;
             var netTurnover = 0.0m;
@@ -184,6 +187,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
             var depositAmount = 0.0m;
             var numberOfWithdrawal = 0;
             var withdrawalAmount = 0.0m;
+            var closingBalance = 0.0m;
 
             foreach (var childItem in childData)
             {
@@ -199,10 +203,11 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 depositAmount += childItem.BasedDepositAmount;
                 numberOfWithdrawal += childItem.NumberOfWithdrawal;
                 withdrawalAmount += childItem.BasedWithdrawalAmount;
+                closingBalance += childItem.BasedClosingBalance;
             }
 
             return (turnover, netTurnover, netTurnoverForMargin, ggr, ggrForMargin, playerWinloss, betCount, uniquePlayers,
-                numberOfDeposit, depositAmount, numberOfWithdrawal, withdrawalAmount);
+                numberOfDeposit, depositAmount, numberOfWithdrawal, withdrawalAmount, closingBalance);
         }
     }
 }

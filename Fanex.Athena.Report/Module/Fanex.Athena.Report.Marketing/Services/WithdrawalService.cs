@@ -41,6 +41,7 @@ namespace Fanex.Athena.Report.Marketing.Services
             var summaryMetaModel = new WithdrawalSummaryMetaModel
             {
                 BrandId = metaModel.BrandId,
+                CurrencyIdList = metaModel.CurrencyIdList,
                 FromDate = metaModel.FromDate,
                 ToDate = metaModel.ToDate,
                 CompareFromDate = metaModel.CompareFromDate,
@@ -51,6 +52,7 @@ namespace Fanex.Athena.Report.Marketing.Services
             var detailMetaModel = new WithdrawalDetailMetaModel
             {
                 BrandId = metaModel.BrandId,
+                CurrencyIdList = metaModel.CurrencyIdList,
                 FromDate = metaModel.FromDate,
                 ToDate = metaModel.ToDate,
                 BaseCurrency = metaModel.BaseCurrency,

@@ -1006,6 +1006,24 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Note.
+        /// </summary>
+        public static string Note {
+            get {
+                return ResourceManager.GetString("Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Player Closing Balance can be displayed in GMT +7 and GMT +8 only, and support data from {0} GMT+00.
+        /// </summary>
+        public static string NoteSupportClosingBalance {
+            get {
+                return ResourceManager.GetString("NoteSupportClosingBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number of Deposits.
         /// </summary>
         public static string NumberOfDeposits {
