@@ -17,18 +17,20 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
         protected const string TemplateSheetName = "Template";
         protected const string SheetName = "Data";
         protected const string DateFormat = "MM/dd/yyyy";
+        private const string ClosingBalanceSupportFromDate = "03/05/2021";
 
         protected const int RowTitleTemplate = 0;
-        protected const int RowHeaderTemplate = 1;
+        protected const int RowNoteTemplate = 1;
+        protected const int RowHeaderTemplate = 2;
 
         protected const int ColumnGroup = 0;
         protected const int ColumnCurrency = 1;
 
-        private const int RowParentContentTemplate = 3;
-        private const int RowChildContentTemplate = 4;
-        private const int RowTotalDataTemplate = 5;
-        private const int RowNoInfoTemplate = 6;
-        private const int ColumnTemplateCount = 15;
+        private const int RowParentContentTemplate = 4;
+        private const int RowChildContentTemplate = 5;
+        private const int RowTotalDataTemplate = 6;
+        private const int RowNoInfoTemplate = 7;
+        private const int ColumnTemplateCount = 16;
 
         private const string TemplatePath = "/ExcelTemplate/WinLossAnalysis/WinLossReport.xlsx";
 
@@ -55,6 +57,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
             OrderColumns = GetOrderColumns(metaModel);
 
             AssignTitle(sheet, templateSheet, metaModel);
+            AssignNote(sheet, templateSheet, metaModel);
             AssignHeader(sheet, templateSheet, metaModel.OrderCols);
 
             if (data.TotalRows == 0 || !data.DataList.Any())
@@ -97,6 +100,19 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
             _builder.SetRowValue(sheet, templateSheet, sourceRowIndex: RowTitleTemplate, destRowIndex: RowTitleTemplate, columnCount: ColumnTemplateCount, value: title);
 
             _builder.ClearTemplate(sheet, RowParentContentTemplate);
+        }
+
+        private void AssignNote(ISheet sheet, ISheet templateSheet, ExportWinLossMetaModel metaModel)
+        {
+            if(metaModel.IsGroupByPlayer)
+            {
+                var note = ViewResources.Note + ": " + string.Format(ViewResources.NoteSupportClosingBalance, ClosingBalanceSupportFromDate);
+                _builder.SetRowValue(sheet, templateSheet, sourceRowIndex: RowNoteTemplate, destRowIndex: RowNoteTemplate, columnCount: ColumnTemplateCount, value: note);
+            }
+            else
+            {
+                _builder.HideRow(sheet, RowNoteTemplate);
+            }
         }
 
         private void AssignHeader(ISheet sheet, ISheet templateSheet, IEnumerable<string> orderCols)

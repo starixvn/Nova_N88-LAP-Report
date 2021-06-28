@@ -33,5 +33,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.DTO
         public int NumberOfWithdrawal { get; set; }
         public decimal WithdrawalAmount { get; set; }
         public decimal BasedWithdrawalAmount { get; set; }
+        public decimal ClosingBalance { get; set; }
+        public decimal BasedClosingBalance { get; set; }
     }
 }

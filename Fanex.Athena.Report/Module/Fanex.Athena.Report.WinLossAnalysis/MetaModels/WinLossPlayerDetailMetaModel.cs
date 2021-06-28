@@ -20,6 +20,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         public int CustId { get; set; }
 
         public bool IsNoDrawTicket { get; set; }
+        public bool IsIncludedFreeSpin { get; set; }
 
         [SpParam(SqlParamName = "DisplayCurrency")]
         public string BaseCurrency { get; set; }

@@ -65,6 +65,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
 
             var expectedTitle = $"{ViewResources.Marketing} - {ViewResources.BusinessPerformanceHighlight}, " +
                 $"{metaModel.FromDate.ToString(DateTimeFormat.Date)} - {metaModel.ToDate.ToString(DateTimeFormat.Date)}, " +
+                (string.IsNullOrEmpty(metaModel.CurrencyNameList) ? ViewResources.AllCurrencies : metaModel.CurrencyNameList) + ", " +
                 $"{ViewResources.Viewin.Replace("{0}", metaModel.BaseCurrency.ToUpperInvariant())}";
 
             //Act

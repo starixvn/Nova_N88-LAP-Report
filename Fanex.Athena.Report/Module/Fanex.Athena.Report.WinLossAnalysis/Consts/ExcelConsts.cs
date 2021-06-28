@@ -22,10 +22,11 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Consts
             { "avgBetAmount", ("AvgBetAmount", ViewResources.AvgBetAmount, 9, true) },
             { "uniquePlayers", ("UniquePlayers", ViewResources.UniquePlayers, 10, true) },
             { "margin", ("Margin", ViewResources.Margin, 11, true) },
-            { "numberOfDeposit", ("NumberOfDeposit", ViewResources.NoOfDeposit, 12, true) },
-            { "depositAmount", ("DepositAmount", ViewResources.TotalDepositAmount, 13, true) },
-            { "numberOfWithdrawal", ("NumberOfWithdrawal", ViewResources.NoOfWithdrawal, 14, true) },
-            { "withdrawalAmount", ("WithdrawalAmount", ViewResources.TotalWithdrawalAmount, 15, true) },
+            { "closingBalance", ("ClosingBalance", ViewResources.ClosingBalance, 12, true) },
+            { "numberOfDeposit", ("NumberOfDeposit", ViewResources.NoOfDeposit, 13, true) },
+            { "depositAmount", ("DepositAmount", ViewResources.TotalDepositAmount, 14, true) },
+            { "numberOfWithdrawal", ("NumberOfWithdrawal", ViewResources.NoOfWithdrawal, 15, true) },
+            { "withdrawalAmount", ("WithdrawalAmount", ViewResources.TotalWithdrawalAmount, 16, true) },
        };
 
         public static readonly IReadOnlyDictionary<

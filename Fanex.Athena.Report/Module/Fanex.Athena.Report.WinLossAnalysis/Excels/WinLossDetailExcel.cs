@@ -89,12 +89,12 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
 
         private void HideColumnBasedGroupBy(ISheet sheet, byte groupBy)
         {
-            var hideColumn = ColumnMonth;
+            var hiddenColumn = ColumnMonth;
             if (groupBy == GroupByConsts.Month)
             {
-                hideColumn = ColumnDate;
+                hiddenColumn = ColumnDate;
             }
-            _builder.HideColumn(sheet, hideColumn);
+            _builder.HideColumn(sheet, hiddenColumn);
         }
 
         private void AssignNoInfoRow(ISheet sheet, ISheet templateSheet)
@@ -109,7 +109,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
                 $" {currency}," +
                 $" {DataHelper.GetTimezoneName(metaModel.Timezone)}";
 
-            _builder.SetRowValue(sheet, templateSheet, sourceRowIndex: RowTitleTemplate, destRowIndex: RowTitleTemplate, columnCount: ColumnTemplateCount, value: title);
+            _builder.SetRowValueBeginCell(sheet, templateSheet, sourceRowIndex: RowTitleTemplate, destRowIndex: RowTitleTemplate,
+                 columnCount: ColumnTemplateCount, GetCellTitleIndex(metaModel), value: title);
 
             _builder.ClearTemplate(sheet, RowContentTemplate);
         }
@@ -169,5 +170,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
             orderCell.AddRange(metaModel.OrderCols.Select(orderCol => ExcelConsts.WinLossDetailInfoColumns[orderCol].colTemplate));
             return orderCell.ToArray();
         }
+
+        private static int GetCellTitleIndex(WinLossDetailMetaModel metaModel)
+            => metaModel.GroupBy == GroupByConsts.Month ? ColumnMonth : ColumnDate;
     }
 }

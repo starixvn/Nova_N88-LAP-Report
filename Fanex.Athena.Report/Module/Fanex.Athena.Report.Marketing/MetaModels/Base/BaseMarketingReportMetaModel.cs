@@ -14,10 +14,14 @@ namespace Fanex.Athena.Report.Marketing.MetaModels
 
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
+
+        [SpParam(SqlParamName = "CurrencyIds")]
+        public string CurrencyIdList { get; set; }
+
         public int Timezone { get; set; } = FilterConsts.DefaultTimezone;
 
         [SpParam(Ignored = true)]
-        public virtual bool IsValid => BrandId > 0 && FromDate <= ToDate &&
+        public virtual bool IsValid => BrandId > 0 && !string.IsNullOrWhiteSpace(CurrencyIdList) && FromDate <= ToDate &&
             ToDate.Subtract(FromDate).TotalDays <= FilterConsts.MaxRange;
     }
 }

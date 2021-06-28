@@ -37,6 +37,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         public byte UserNameFilterId { get; set; }
         public string UserName { get; set; }
         public bool IsIncludedTestData { get; set; }
+        public bool IsIncludedFreeSpin { get; set; }
 
         [SpParam(SqlParamName = "CurrencyIds")]
         public string CurrencyIdList { get; set; }
