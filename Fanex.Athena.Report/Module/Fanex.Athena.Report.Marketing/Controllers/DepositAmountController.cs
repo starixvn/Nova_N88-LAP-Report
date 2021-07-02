@@ -23,7 +23,7 @@ namespace Fanex.Athena.Report.Marketing.Controllers
         }
 
         [HttpPost]
-        [RequestValidation(validateBrand: true)]
+        [RequestValidation(validateBrand: true, validateCurrencyList: true)]
         public async Task<JsonResult> GetSummaryData([FromBody] DepositAmountSummaryMetaModel metaModel)
         {
             var result = await _service.GetSummaryData(metaModel);
@@ -31,7 +31,7 @@ namespace Fanex.Athena.Report.Marketing.Controllers
         }
 
         [HttpPost]
-        [RequestValidation(validateBrand: true)]
+        [RequestValidation(validateBrand: true, validateCurrencyList: true)]
         public async Task<JsonResult> GetDetailsData([FromBody] DepositAmountDetailMetaModel metaModel)
         {
             var result = await _service.GetDetailsData(metaModel);
@@ -39,7 +39,7 @@ namespace Fanex.Athena.Report.Marketing.Controllers
         }
 
         [HttpPost]
-        [RequestValidation(validateBrand: true)]
+        [RequestValidation(validateBrand: true, validateCurrencyList: true)]
         public async Task<FileResult> ExportData(
            [FromServices] IDepositAmountExcel excel,
            DepositAmountExportMetaModel metaModel)

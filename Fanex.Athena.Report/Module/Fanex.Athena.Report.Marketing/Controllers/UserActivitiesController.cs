@@ -21,7 +21,7 @@ namespace Fanex.Athena.Report.Marketing.Controllers
         }
 
         [HttpPost]
-        [RequestValidation(validateBrand: true)]
+        [RequestValidation(validateBrand: true, validateCurrencyList: true)]
         public async Task<JsonResult> GetData([FromBody]UserActivitiesMetaModel metaModel)
         {
             var result = await _service.GetData(metaModel);

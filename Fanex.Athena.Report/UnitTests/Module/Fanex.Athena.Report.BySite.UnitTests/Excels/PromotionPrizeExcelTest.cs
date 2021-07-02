@@ -146,43 +146,6 @@ namespace Fanex.Athena.Report.BySite.UnitTests.Excels
         }
 
         [Fact]
-        public void AssignSummaryTotal_WhenCall_CallSetValueCorrectly()
-        {
-            // Arrange
-            var excel = CreateExcel();
-            var rows = CreateRows();
-
-            var totalData = _fixture.Create<PromotionPrize>();
-            var bodyData = _fixture.Build<PromotionPrizeResultModel>()
-                .With(x => x.Data, new List<PromotionPrize> { _fixture.Create<PromotionPrize>() })
-                .With(x => x.CurrencyTotal, new List<CurrencyTotal> { _fixture.Create<CurrencyTotal>() })
-                .With(x => x.SummaryTotal, new List<PromotionPrize> { totalData })
-                .Create();
-            var data = new Dictionary<string, PromotionPrizeResultModel>
-            {
-                { ProductCode, bodyData }
-            };
-            var metaModel = _fixture.Create<PromotionPrizeMetaModel>();
-
-            var totalRow = rows[2];
-            _sheet.Setup(s => s.GetRow(RowContentTemplate + 1)).Returns(totalRow.Object);
-            var currencyTotalRow = bodyData.CurrencyTotal.Count;
-            var rowTotal = RowContentTemplate + 1 + currencyTotalRow;
-
-            // Action
-            excel.Export(TemplatePath, data, metaModel);
-
-            // Assert
-            Mock.Get(totalRow.Object.Cells[ColumnAmount]).Verify(c => c.SetCellValue(Convert.ToDouble(totalData.Amount)), Times.Once);
-            Mock.Get(totalRow.Object.Cells[ColumnPromotionType]).Verify(c => c.SetCellValue(totalData.PromotionType), Times.Once);
-
-            _excelBuilder.Verify(x => x.MergeCells(_sheet.Object, rowTotal, rowTotal, ColumnPromotionType, ColumnSystemId), Times.Once);
-
-            Mock.Get(totalRow.Object.Cells[ColumnIndex]).Verify(c => c.SetCellValue(string.Format(ViewResources.Totalin, metaModel.DefaultBaseCurrency)), Times.Once);
-            _excelBuilder.Verify(x => x.MergeCells(_sheet.Object, rowTotal, rowTotal, ColumnIndex, ColumnDate), Times.Once);
-        }
-
-        [Fact]
         public void AssignCurrencyTotal_WhenCall_CallSetValueCorrectly()
         {
             // Arrange
