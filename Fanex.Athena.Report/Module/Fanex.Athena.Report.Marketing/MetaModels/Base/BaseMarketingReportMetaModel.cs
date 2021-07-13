@@ -7,7 +7,7 @@ using System;
 
 namespace Fanex.Athena.Report.Marketing.MetaModels
 {
-    public class BaseMarketingReportMetaModel : ITimezoneMetaModel, IBrandIdMetaModel, IValidationMetaModel
+    public class BaseMarketingReportMetaModel : ITimezoneMetaModel, IBrandIdMetaModel, IValidationMetaModel, ICurrencyIdListMetaModel
     {
         [SpParam(SqlParamName = "LicenseeId")]
         public int BrandId { get; set; }

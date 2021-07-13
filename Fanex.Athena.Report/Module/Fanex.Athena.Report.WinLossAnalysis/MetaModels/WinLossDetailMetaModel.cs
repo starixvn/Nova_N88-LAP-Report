@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
 {
-    public class WinLossDetailMetaModel : ITimezoneMetaModel, IValidationMetaModel, IBrandIdListMetaModel
+    public class WinLossDetailMetaModel : ITimezoneMetaModel, IValidationMetaModel, IBrandIdListMetaModel, ICurrencyIdListMetaModel
     {
         [SpParam(SqlParamName = "FilterBy")]
         public byte DateType { get; set; }

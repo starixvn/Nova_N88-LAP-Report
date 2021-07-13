@@ -1,9 +1,12 @@
-﻿using Fanex.Core.Utils;
+﻿using Fanex.Athena.Report.Core.Helpers;
+using Fanex.Core.Utils;
 using Fanex.NVC.Authentication;
 using Fanex.NVC.Authentication.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace Fanex.Athena.Report.Core.Attributes
@@ -64,17 +67,20 @@ namespace Fanex.Athena.Report.Core.Attributes
         {
             var result = MetaModelHelper.IsMetaModel(filterContext.ActionArguments, out IValidationMetaModel validationMetaModel) && validationMetaModel.IsValid;
 
-            result &= !_validateCurrency || (MetaModelHelper.IsMetaModel(filterContext.ActionArguments, out ICurrencyIdMetaModel currencyIdMetaModel)
-                && _currencyValidation.IsValidCurrency(currencyIdMetaModel.CurrencyId, _authInfoService.CurrencyList));
+            IBrandIdMetaModel brandIdMetaModel = null;
+            IBrandIdListMetaModel brandIdListMetaModel = null;
 
-            result &= !_validateCurrencyList || (MetaModelHelper.IsMetaModel(filterContext.ActionArguments, out ICurrencyIdListMetaModel currencyIdListMetaModel)
-                && _currencyValidation.IsValidCurrencyList(currencyIdListMetaModel.CurrencyIdList, _authInfoService.CurrencyList));
-
-            result &= !_validateBrand || (MetaModelHelper.IsMetaModel(filterContext.ActionArguments, out IBrandIdMetaModel brandIdMetaModel)
+            result &= !_validateBrand || (MetaModelHelper.IsMetaModel(filterContext.ActionArguments, out brandIdMetaModel)
                 && _brandValidation.IsValidBrandId(brandIdMetaModel, _authInfoService.BrandList));
 
-            result &= !_validateBrandList || (MetaModelHelper.IsMetaModel(filterContext.ActionArguments, out IBrandIdListMetaModel brandIdListMetaModel)
+            result &= !_validateBrandList || (MetaModelHelper.IsMetaModel(filterContext.ActionArguments, out brandIdListMetaModel)
                 && _brandValidation.IsValidBrandIdList(brandIdListMetaModel, _authInfoService.BrandList));
+
+            result &= !_validateCurrency || (MetaModelHelper.IsMetaModel(filterContext.ActionArguments, out ICurrencyIdMetaModel currencyIdMetaModel)
+               && _currencyValidation.IsValidCurrency(currencyIdMetaModel.CurrencyId, AuthHelper.GetCurrencyList(_authInfoService.BrandList, brandIdMetaModel, brandIdListMetaModel)));
+
+            result &= !_validateCurrencyList || (MetaModelHelper.IsMetaModel(filterContext.ActionArguments, out ICurrencyIdListMetaModel currencyIdListMetaModel)
+                && _currencyValidation.IsValidCurrencyList(currencyIdListMetaModel.CurrencyIdList, AuthHelper.GetCurrencyList(_authInfoService.BrandList, brandIdMetaModel, brandIdListMetaModel)));
 
             return result;
         }

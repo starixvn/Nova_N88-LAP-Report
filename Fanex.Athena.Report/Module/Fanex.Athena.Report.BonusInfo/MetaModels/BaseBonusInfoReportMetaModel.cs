@@ -7,10 +7,13 @@ using System;
 
 namespace Fanex.Athena.Report.BonusInfo.MetaModels
 {
-    public class BaseBonusInfoReportMetaModel : ITimezoneMetaModel, IBrandIdMetaModel, IValidationMetaModel
+    public class BaseBonusInfoReportMetaModel : ITimezoneMetaModel, IBrandIdMetaModel, IValidationMetaModel, ICurrencyIdListMetaModel
     {
         [SpParam(SqlParamName = "LicenseeId")]
         public int BrandId { get; set; }
+
+        [SpParam(SqlParamName = "CurrencyIds")]
+        public string CurrencyIdList { get; set; }
 
         public DateTime FromDate { get; set; }
 
