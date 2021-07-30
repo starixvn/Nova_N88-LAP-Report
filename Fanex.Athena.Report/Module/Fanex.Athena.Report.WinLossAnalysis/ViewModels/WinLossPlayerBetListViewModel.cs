@@ -9,5 +9,7 @@
         public decimal PlayerWinLoss { get; set; }
         public decimal GGR { get; set; }
         public string TicketStatus { get; set; }
+        public decimal ProgressiveBet { get; set; }
+        public decimal ProgressiveWin { get; set; }
     }
 }

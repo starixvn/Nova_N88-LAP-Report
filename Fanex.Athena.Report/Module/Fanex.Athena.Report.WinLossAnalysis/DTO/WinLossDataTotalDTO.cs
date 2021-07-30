@@ -17,5 +17,7 @@
         public int TotalNumberOfWithdrawal { get; set; }
         public decimal TotalBasedWithdrawalAmount { get; set; }
         public decimal TotalBasedClosingBalance { get; set; }
+        public decimal TotalBasedProgressiveWin { get; set; }
+        public decimal TotalBasedProgressiveBet { get; set; }
     }
 }
