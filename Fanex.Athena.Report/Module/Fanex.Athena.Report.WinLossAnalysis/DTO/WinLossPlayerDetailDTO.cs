@@ -16,7 +16,11 @@
         public decimal BasedGGR { get; set; }
         public decimal BasedGGRForMargin { get; set; }
         public decimal PlayerWinloss { get; set; }
+        public decimal ProgressiveBet { get; set; }
+        public decimal ProgressiveWin { get; set; }
         public decimal BasedPlayerWinloss { get; set; }
+        public decimal BasedProgressiveBet { get; set; }
+        public decimal BasedProgressiveWin { get; set; }
         public int BetCount { get; set; }
         public decimal AvgBetAmount { get; set; }
         public decimal BasedAvgBetAmount { get; set; }

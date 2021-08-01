@@ -35,5 +35,9 @@ namespace Fanex.Athena.Report.WinLossAnalysis.DTO
         public decimal BasedWithdrawalAmount { get; set; }
         public decimal ClosingBalance { get; set; }
         public decimal BasedClosingBalance { get; set; }
+        public decimal ProgressiveWin { get; set; }
+        public decimal ProgressiveBet { get; set; }
+        public decimal BasedProgressiveWin { get; set; }
+        public decimal BasedProgressiveBet { get; set; }
     }
 }

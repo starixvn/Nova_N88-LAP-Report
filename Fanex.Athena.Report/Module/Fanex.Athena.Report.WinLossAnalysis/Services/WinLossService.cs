@@ -93,7 +93,9 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 NumberOfDeposit = dataTotal.TotalNumberOfDeposit,
                 DepositAmount = dataTotal.TotalBasedDepositAmount,
                 NumberOfWithdrawal = dataTotal.TotalNumberOfWithdrawal,
-                WithdrawalAmount = dataTotal.TotalBasedWithdrawalAmount
+                WithdrawalAmount = dataTotal.TotalBasedWithdrawalAmount,
+                ProgressiveBet = dataTotal.TotalBasedProgressiveBet,
+                ProgressiveWin = dataTotal.TotalBasedProgressiveWin
             };
         }
 
@@ -115,7 +117,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
         private static Func<bool, bool, Func<string, IEnumerable<WinLossDataItemDTO>, WinLossRecordViewModel>> Mapper = (drilldownInOriginalCurrency, isGroupByPlayer) => (parentKey, childData) =>
         {
             var (turnover, netTurnover, netTurnoverForMargin, ggr, ggrForMargin, playerWinloss, betCount, uniquePlayers,
-                numberOfDeposit, depositAmount, numberOfWithdrawal, withdrawalAmount, closingBalance) = SumChildData(childData);
+                numberOfDeposit, depositAmount, numberOfWithdrawal, withdrawalAmount, closingBalance, progressiveBet, progressiveWin) = SumChildData(childData);
 
             var firstChild = childData?.FirstOrDefault();
             var parent = new WinLossRecordViewModel
@@ -138,6 +140,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 NumberOfWithdrawal = numberOfWithdrawal,
                 WithdrawalAmount = withdrawalAmount,
                 ClosingBalance = closingBalance,
+                ProgressiveBet = progressiveBet,
+                ProgressiveWin = progressiveWin,
                 DrillDownData = SelectDrillDownData(parentKey, childData, drilldownInOriginalCurrency, isGroupByPlayer)
             };
 
@@ -160,6 +164,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 NetTurnover = drilldownInOriginalCurrency ? _.NetTurnover : _.BasedNetTurnover,
                 Ggr = drilldownInOriginalCurrency ? _.GGR : _.BasedGGR,
                 PlayerWinloss = drilldownInOriginalCurrency ? _.PlayerWinloss : _.BasedPlayerWinloss,
+                ProgressiveBet = drilldownInOriginalCurrency ? _.ProgressiveBet : _.BasedProgressiveBet,
+                ProgressiveWin = drilldownInOriginalCurrency ? _.ProgressiveWin : _.BasedProgressiveWin,
                 BetCount = _.BetCount,
                 AvgBetAmount = drilldownInOriginalCurrency ? _.AvgBetAmount : _.BasedAvgBetAmount,
                 UniquePlayers = _.UniquePlayers,
@@ -173,7 +179,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
         }
 
         private static (decimal, decimal, decimal, decimal, decimal, decimal, int, int,
-            int, decimal, int, decimal, decimal) SumChildData(IEnumerable<WinLossDataItemDTO> childData)
+            int, decimal, int, decimal, decimal, decimal, decimal) SumChildData(IEnumerable<WinLossDataItemDTO> childData)
         {
             var turnover = 0.0m;
             var netTurnover = 0.0m;
@@ -188,6 +194,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
             var numberOfWithdrawal = 0;
             var withdrawalAmount = 0.0m;
             var closingBalance = 0.0m;
+            var progressiveBet = 0.0m;
+            var progressiveWin = 0.0m;
 
             foreach (var childItem in childData)
             {
@@ -204,10 +212,12 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 numberOfWithdrawal += childItem.NumberOfWithdrawal;
                 withdrawalAmount += childItem.BasedWithdrawalAmount;
                 closingBalance += childItem.BasedClosingBalance;
+                progressiveBet += childItem.BasedProgressiveBet;
+                progressiveWin += childItem.BasedProgressiveWin;
             }
 
             return (turnover, netTurnover, netTurnoverForMargin, ggr, ggrForMargin, playerWinloss, betCount, uniquePlayers,
-                numberOfDeposit, depositAmount, numberOfWithdrawal, withdrawalAmount, closingBalance);
+                numberOfDeposit, depositAmount, numberOfWithdrawal, withdrawalAmount, closingBalance, progressiveBet, progressiveWin);
         }
     }
 }

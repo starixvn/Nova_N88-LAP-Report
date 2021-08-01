@@ -29,10 +29,12 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
         protected const int ColumnTransTime = 2;
         protected const int ColumnStake = 3;
         protected const int ColumnPlayerWinLoss = 4;
-        protected const int ColumnGGR = 5;
-        protected const int ColumnStatus = 6;
+        protected const int ColumnProgressiveWin = 5;
+        protected const int ColumnProgressiveBet = 6;
+        protected const int ColumnGGR = 7;
+        protected const int ColumnStatus = 8;
 
-        private const int ColumnTemplateCount = 7;
+        private const int ColumnTemplateCount = 9;
 
         private const int MaxRows = 400000;
 
@@ -125,6 +127,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
             row.Cells[ColumnTransTime].SetCellValue(ViewResources.TransTime);
             row.Cells[ColumnStake].SetCellValue(ViewResources.Stake);
             row.Cells[ColumnPlayerWinLoss].SetCellValue(ViewResources.PlayerWinloss);
+            row.Cells[ColumnProgressiveWin].SetCellValue(ViewResources.ProgressiveWin);
+            row.Cells[ColumnProgressiveBet].SetCellValue(ViewResources.ProgressiveBet);
             row.Cells[ColumnGGR].SetCellValue(ViewResources.GGR);
             row.Cells[ColumnStatus].SetCellValue(ViewResources.Status);
         }
@@ -143,6 +147,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
             var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: RowTotalDataTemplate, destRowIndex: sheet.LastRowNum + 1);
             row.Cells[ColumnStake].SetCellValue(ViewResources.GrandTotal);
             row.Cells[ColumnPlayerWinLoss].SetCellValue(dataTotal.PlayerWinLoss);
+            row.Cells[ColumnProgressiveWin].SetCellValue(dataTotal.ProgressiveWin);
+            row.Cells[ColumnProgressiveBet].SetCellValue(dataTotal.ProgressiveBet);
             row.Cells[ColumnGGR].SetCellValue(dataTotal.GGR);
         }
 
@@ -154,6 +160,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
             row.Cells[ColumnTransTime].SetCellValue(rowData.TransTime);
             row.Cells[ColumnStake].SetCellValue(rowData.Stake);
             row.Cells[ColumnPlayerWinLoss].SetCellValue(rowData.PlayerWinLoss);
+            row.Cells[ColumnProgressiveWin].SetCellValue(rowData.ProgressiveWin);
+            row.Cells[ColumnProgressiveBet].SetCellValue(rowData.ProgressiveBet);
             row.Cells[ColumnGGR].SetCellValue(rowData.GGR);
             row.Cells[ColumnStatus].SetCellValue(rowData.TicketStatus);
         }

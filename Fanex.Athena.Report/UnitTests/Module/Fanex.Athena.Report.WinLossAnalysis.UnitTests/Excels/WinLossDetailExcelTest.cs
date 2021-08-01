@@ -132,8 +132,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Excels
         }
 
         [Theory]
-        [InlineData(8, 12)]
-        [InlineData(10, 10, "turnover", "withdrawalAmount")]
+        [InlineData(8, 14)]
+        [InlineData(10, 12, "turnover", "withdrawalAmount")]
         public void Export_HideColumns_Correctly(int startHideRange, int countHideRange, params string[] orderCols)
         {
             //Arrange
