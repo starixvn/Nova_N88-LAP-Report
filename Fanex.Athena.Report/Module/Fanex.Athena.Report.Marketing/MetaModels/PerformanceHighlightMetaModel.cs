@@ -7,6 +7,7 @@ namespace Fanex.Athena.Report.Marketing.MetaModels
     {
         public DateTime CompareFromDate { get; set; }
         public DateTime CompareToDate { get; set; }
+        public DateTime? FromLastXDays { get; set; }
 
         [SpParam(SqlParamName = "DisplayCurrency")]
         public string BaseCurrency { get; set; }

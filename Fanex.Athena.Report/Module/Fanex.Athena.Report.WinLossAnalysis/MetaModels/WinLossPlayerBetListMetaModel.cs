@@ -1,11 +1,12 @@
 ﻿using Fanex.Athena.Report.Common.Model.MetaModels;
+using Fanex.Athena.Report.Common.Model.MetaModels.Interfaces;
 using Fanex.Core.Utils;
 using Fanex.Data;
 using System;
 
 namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
 {
-    public class WinLossPlayerBetListMetaModel : ITimezoneMetaModel, IValidationMetaModel
+    public class WinLossPlayerBetListMetaModel : ITimezoneMetaModel, IValidationMetaModel, IDataRangeMetaModel
     {
         private const int DefaultPageSize = 50;
 
@@ -47,6 +48,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         [SpParam(Ignored = true)]
         public bool IsValid => ProductId > 0 && !string.IsNullOrWhiteSpace(BaseCurrency) &&
             FromDate <= ToDate;
+
 #pragma warning restore S1067
     }
 }

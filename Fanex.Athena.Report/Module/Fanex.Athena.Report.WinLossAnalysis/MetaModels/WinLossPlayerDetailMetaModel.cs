@@ -1,11 +1,12 @@
 ﻿using Fanex.Athena.Report.Common.Model.MetaModels;
+using Fanex.Athena.Report.Common.Model.MetaModels.Interfaces;
 using Fanex.Core.Utils;
 using Fanex.Data;
 using System;
 
 namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
 {
-    public class WinLossPlayerDetailMetaModel : ITimezoneMetaModel, IValidationMetaModel
+    public class WinLossPlayerDetailMetaModel : ITimezoneMetaModel, IValidationMetaModel, IDataRangeMetaModel
     {
         [SpParam(SqlParamName = "FilterBy")]
         public byte DateType { get; set; }
@@ -39,6 +40,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         [SpParam(Ignored = true)]
         public bool IsValid => !string.IsNullOrWhiteSpace(ProductIds) && !string.IsNullOrWhiteSpace(BaseCurrency) &&
             FromDate <= ToDate;
+
 #pragma warning restore S1067
     }
 }

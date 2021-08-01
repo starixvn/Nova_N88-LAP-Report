@@ -1,12 +1,11 @@
-﻿using Fanex.Athena.Report.Core.Helpers;
+﻿using Fanex.Athena.Report.Common.Model.MetaModels.Interfaces;
+using Fanex.Athena.Report.Core.Helpers;
 using Fanex.Core.Utils;
 using Fanex.NVC.Authentication;
 using Fanex.NVC.Authentication.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 
 namespace Fanex.Athena.Report.Core.Attributes
@@ -14,10 +13,15 @@ namespace Fanex.Athena.Report.Core.Attributes
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false)]
     public class RequestValidationAttribute : TypeFilterAttribute
     {
-        public RequestValidationAttribute(bool validateCurrency = false, bool validateCurrencyList = false, bool validateBrand = false, bool validateBrandList = false)
+        public RequestValidationAttribute(
+            bool validateCurrency = false,
+            bool validateCurrencyList = false,
+            bool validateBrand = false,
+            bool validateBrandList = false,
+            bool valiDataRangeLimitation = false)
             : base(typeof(RequestValidationImplAttribute))
         {
-            Arguments = new[] { validateCurrency as object, validateCurrencyList as object, validateBrand as object, validateBrandList as object };
+            Arguments = new[] { validateCurrency as object, validateCurrencyList as object, validateBrand as object, validateBrandList as object, valiDataRangeLimitation as object };
         }
     }
 
@@ -34,13 +38,18 @@ namespace Fanex.Athena.Report.Core.Attributes
         private readonly bool _validateCurrencyList;
         private readonly bool _validateBrand;
         private readonly bool _validateBrandList;
+        private readonly bool _valiDataRangeLimitation;
+
+#pragma warning disable S107 // Methods should not have too many parameters
 
         public RequestValidationImplAttribute(ICurrencyValidation currencyValidation, IBrandValidation brandValidation, INVCAuthInfoService authInfoService,
             bool validateCurrency,
             bool validateCurrencyList,
             bool validateBrand,
-            bool validateBrandList
+            bool validateBrandList,
+            bool valiDataRangeLimitation
             )
+#pragma warning restore S107 // Methods should not have too many parameters
         {
             _currencyValidation = currencyValidation;
             _brandValidation = brandValidation;
@@ -50,6 +59,7 @@ namespace Fanex.Athena.Report.Core.Attributes
             _validateCurrencyList = validateCurrencyList;
             _validateBrand = validateBrand;
             _validateBrandList = validateBrandList;
+            _valiDataRangeLimitation = valiDataRangeLimitation;
         }
 
         public override void OnActionExecuting(ActionExecutingContext context)
@@ -63,7 +73,10 @@ namespace Fanex.Athena.Report.Core.Attributes
             }
         }
 
+#pragma warning disable S1541 // Methods and properties should not be too complex
+
         private bool IsValid(ActionExecutingContext filterContext)
+#pragma warning restore S1541 // Methods and properties should not be too complex
         {
             var result = MetaModelHelper.IsMetaModel(filterContext.ActionArguments, out IValidationMetaModel validationMetaModel) && validationMetaModel.IsValid;
 
@@ -81,6 +94,9 @@ namespace Fanex.Athena.Report.Core.Attributes
 
             result &= !_validateCurrencyList || (MetaModelHelper.IsMetaModel(filterContext.ActionArguments, out ICurrencyIdListMetaModel currencyIdListMetaModel)
                 && _currencyValidation.IsValidCurrencyList(currencyIdListMetaModel.CurrencyIdList, AuthHelper.GetCurrencyList(_authInfoService.BrandList, brandIdMetaModel, brandIdListMetaModel)));
+
+            result &= !_valiDataRangeLimitation || (MetaModelHelper.IsMetaModel(filterContext.ActionArguments, out IDataRangeMetaModel daterange)
+                && AuthHelper.IsValidDataRangeLimitation(daterange, _authInfoService.DataRangeLimitation));
 
             return result;
         }

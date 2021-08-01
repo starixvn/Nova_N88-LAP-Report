@@ -1,4 +1,5 @@
-﻿using Fanex.NVC.Authentication.Infrastructure;
+﻿using Fanex.Athena.Report.Common.Model.MetaModels.Interfaces;
+using Fanex.NVC.Authentication.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,9 @@ namespace Fanex.Athena.Report.Core.Helpers
             var result = GetCurrencyList(brands, brandIds);
             return result;
         }
+
+        public static bool IsValidDataRangeLimitation(IDataRangeMetaModel dataRange, int DataRangeLimitation)
+            => (DataRangeLimitation <= 0) || (dataRange.ToDate - dataRange.FromDate).Days + 1 <= DataRangeLimitation;
 
         private static IDictionary<int, string> GetCurrencyList(IEnumerable<Brand> brands, int[] brandIds)
              => brands

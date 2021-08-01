@@ -1,4 +1,5 @@
 ﻿using Fanex.Athena.Report.Common.Model.MetaModels;
+using Fanex.Athena.Report.Common.Model.MetaModels.Interfaces;
 using Fanex.Athena.Report.WinLossAnalysis.Consts;
 using Fanex.Core.Utils;
 using Fanex.Data;
@@ -7,7 +8,7 @@ using System;
 
 namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
 {
-    public class WinLossMetaModel : ITimezoneMetaModel, IValidationMetaModel, IBrandIdListMetaModel, ICurrencyIdListMetaModel
+    public class WinLossMetaModel : ITimezoneMetaModel, IValidationMetaModel, IBrandIdListMetaModel, ICurrencyIdListMetaModel, IDataRangeMetaModel
     {
         private const int DefaultPageSize = 500;
         private const int MaxPageSize = 2000;
@@ -63,6 +64,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         public bool IsSortAsc { get; set; }
 
 #pragma warning disable S1067, S109, S1541
+
         [SpParam(Ignored = true)]
         public bool IsValid => !string.IsNullOrWhiteSpace(ProductIds) && !string.IsNullOrWhiteSpace(BrandIds) && !string.IsNullOrWhiteSpace(BaseCurrency) &&
             GroupBy >= 1 && GroupBy <= 5 &&
@@ -70,6 +72,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
             UserNameFilterId >= 1 && UserNameFilterId <= 3 &&
             FromDate <= ToDate &&
             PageSize <= MaxPageSize;
+
 #pragma warning restore S1067, S109, S1541
     }
 }

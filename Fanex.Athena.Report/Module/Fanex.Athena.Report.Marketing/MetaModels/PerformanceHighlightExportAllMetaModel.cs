@@ -1,9 +1,12 @@
 ﻿using Fanex.Data;
+using System;
 
 namespace Fanex.Athena.Report.Marketing.MetaModels
 {
     public class PerformanceHighlightExportAllMetaModel : BaseMarketingReportMetaModel
     {
+        public DateTime? FromLastXDays { get; set; }
+
         [SpParam(SqlParamName = "DisplayCurrency")]
         public string BaseCurrency { get; set; }
 

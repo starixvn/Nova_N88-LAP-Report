@@ -17,7 +17,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Controllers
         private const int ConcurrentExportBetListRequest = 2;
 
         [HttpPost]
-        [RequestValidation]
+        [RequestValidation(valiDataRangeLimitation: true)]
         public async Task<JsonResult> GetPlayerDetail([FromServices] IWinLossPlayerService service, WinLossPlayerDetailMetaModel metaModel)
         {
             var data = await service.GetPlayerDetail(metaModel);
@@ -25,7 +25,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Controllers
         }
 
         [HttpPost]
-        [RequestValidation]
+        [RequestValidation(valiDataRangeLimitation: true)]
         public async Task<JsonResult> GetPlayerBetList([FromServices] IWinLossPlayerService service, WinLossPlayerBetListMetaModel metaModel)
         {
             var data = await service.GetPlayerBetList(metaModel);
@@ -33,7 +33,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Controllers
         }
 
         [HttpPost]
-        [RequestValidation]
+        [RequestValidation(valiDataRangeLimitation: true)]
         public async Task<FileResult> ExportPlayerBetList(
            [FromServices] IWinLossPlayerBetListExcel excel,
            [FromServices] IProductService productService,
