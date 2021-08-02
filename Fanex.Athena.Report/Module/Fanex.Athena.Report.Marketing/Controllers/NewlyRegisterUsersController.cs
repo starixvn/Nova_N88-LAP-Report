@@ -23,7 +23,7 @@ namespace Fanex.Athena.Report.Marketing.Controllers
         }
 
         [HttpPost]
-        [RequestValidation(validateBrand: true, validateCurrencyList: true)]
+        [RequestValidation(validateBrand: true, validateCurrencyList: true, valiDataRangeLimitation: true)]
         public async Task<JsonResult> GetSummaryData([FromBody]NewlyRegisterUsersSummaryMetaModel metaModel)
         {
             var result = await _service.GetSummaryData(metaModel);
@@ -31,7 +31,7 @@ namespace Fanex.Athena.Report.Marketing.Controllers
         }
 
         [HttpPost]
-        [RequestValidation(validateBrand: true, validateCurrencyList: true)]
+        [RequestValidation(validateBrand: true, validateCurrencyList: true, valiDataRangeLimitation: true)]
         public async Task<JsonResult> GetDetailsData([FromBody]NewlyRegisterUsersDetailMetaModel metaModel)
         {
             var result = await _service.GetDetailsData(metaModel);
@@ -39,7 +39,7 @@ namespace Fanex.Athena.Report.Marketing.Controllers
         }
 
         [HttpPost]
-        [RequestValidation(validateBrand: true, validateCurrencyList: true)]
+        [RequestValidation(validateBrand: true, validateCurrencyList: true, valiDataRangeLimitation: true)]
         public async Task<FileResult> ExportData([FromServices]INewlyRegisterUsersExcel excel, NewlyRegisterUsersExportMetaModel metaModel)
         {
             var (summaryData, detailData) = await _service.GetExportData(metaModel);

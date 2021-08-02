@@ -21,7 +21,7 @@ namespace Fanex.Athena.Report.Marketing.Controllers
         }
 
         [HttpPost]
-        [RequestValidation(validateBrand: true, validateCurrencyList: true)]
+        [RequestValidation(validateBrand: true, validateCurrencyList: true, valiDataRangeLimitation: true)]
         public async Task<JsonResult> GetAvgData([FromBody]AvgRevenueMetaModel metaModel)
         {
             var result = await _service.GetAvgData(metaModel);

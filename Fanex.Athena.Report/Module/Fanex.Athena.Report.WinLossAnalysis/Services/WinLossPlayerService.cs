@@ -43,6 +43,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 {
                     PlayerWinLoss = metaModel.DrilldownInOriginalCurrency ? dataTotal.TotalPlayerWinLoss : dataTotal.TotalBasedPlayerWinLoss,
                     GGR = metaModel.DrilldownInOriginalCurrency ? dataTotal.TotalGGR : dataTotal.TotalBasedGGR,
+                    ProgressiveBet = metaModel.DrilldownInOriginalCurrency ? dataTotal.TotalProgressiveBet : dataTotal.TotalBasedProgressiveBet,
+                    ProgressiveWin = metaModel.DrilldownInOriginalCurrency ? dataTotal.TotalProgressiveWin : dataTotal.TotalBasedProgressiveWin
                 }
             };
 
@@ -58,7 +60,9 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 Stake = drilldownInOriginalCurrency ? _.Stake : _.BasedStake,
                 PlayerWinLoss = drilldownInOriginalCurrency ? _.PlayerWinLoss : _.BasedPlayerWinLoss,
                 GGR = drilldownInOriginalCurrency ? _.GGR : _.BasedGGR,
-                TicketStatus = _.TicketStatus
+                TicketStatus = _.TicketStatus,
+                ProgressiveBet = drilldownInOriginalCurrency ? _.ProgressiveBet : _.BasedProgressiveBet,
+                ProgressiveWin = drilldownInOriginalCurrency ? _.ProgressiveWin : _.BasedProgressiveWin
             });
 
         private IEnumerable<WinLossRecordViewModel> ToPlayerDetailViewModel(IEnumerable<WinLossPlayerDetailDTO> dataItems, bool drilldownInOriginalCurrency,
@@ -77,6 +81,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 NetTurnover = drilldownInOriginalCurrency ? _.NetTurnover : _.BasedNetTurnover,
                 Ggr = drilldownInOriginalCurrency ? _.GGR : _.BasedGGR,
                 PlayerWinloss = drilldownInOriginalCurrency ? _.PlayerWinloss : _.BasedPlayerWinloss,
+                ProgressiveWin = drilldownInOriginalCurrency ? _.ProgressiveWin : _.BasedProgressiveWin,
+                ProgressiveBet = drilldownInOriginalCurrency ? _.ProgressiveBet : _.BasedProgressiveBet,
                 BetCount = _.BetCount,
                 AvgBetAmount = drilldownInOriginalCurrency ? _.AvgBetAmount : _.BasedAvgBetAmount,
                 UniquePlayers = _.UniquePlayers,

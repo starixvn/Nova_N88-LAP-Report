@@ -1,4 +1,5 @@
 ﻿using Fanex.Athena.Report.Common.Model.MetaModels;
+using Fanex.Athena.Report.Common.Model.MetaModels.Interfaces;
 using Fanex.Core.Utils;
 using Fanex.Data;
 using Fanex.NVC.Authentication.Infrastructure;
@@ -7,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
 {
-    public class WinLossDetailMetaModel : ITimezoneMetaModel, IValidationMetaModel, IBrandIdListMetaModel, ICurrencyIdListMetaModel
+    public class WinLossDetailMetaModel : ITimezoneMetaModel, IValidationMetaModel, IBrandIdListMetaModel, ICurrencyIdListMetaModel, IDataRangeMetaModel
     {
         [SpParam(SqlParamName = "FilterBy")]
         public byte DateType { get; set; }
@@ -44,12 +45,12 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         public IEnumerable<string> OrderCols { get; set; }
 
         [SpParam(Ignored = true)]
-#pragma warning disable S1067, S109
         public bool IsValid => !string.IsNullOrWhiteSpace(ProductIds) && !string.IsNullOrWhiteSpace(BrandIds) && !string.IsNullOrWhiteSpace(BaseCurrency) &&
             GroupBy >= 1 && GroupBy <= 2 &&
             DateType >= 1 && DateType <= 2 &&
             UserNameFilterId >= 1 && UserNameFilterId <= 3 &&
             FromDate <= ToDate;
+
 #pragma warning restore S1067, S109
     }
 }

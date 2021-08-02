@@ -30,7 +30,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
         private const int RowChildContentTemplate = 5;
         private const int RowTotalDataTemplate = 6;
         private const int RowNoInfoTemplate = 7;
-        private const int ColumnTemplateCount = 16;
+        private const int ColumnTemplateCount = 18;
 
         private const string TemplatePath = "/ExcelTemplate/WinLossAnalysis/WinLossReport.xlsx";
 
@@ -104,7 +104,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
 
         private void AssignNote(ISheet sheet, ISheet templateSheet, ExportWinLossMetaModel metaModel)
         {
-            if(metaModel.IsGroupByPlayer)
+            if (metaModel.IsGroupByPlayer)
             {
                 var note = ViewResources.Note + ": " + string.Format(ViewResources.NoteSupportClosingBalance, ClosingBalanceSupportFromDate);
                 _builder.SetRowValue(sheet, templateSheet, sourceRowIndex: RowNoteTemplate, destRowIndex: RowNoteTemplate, columnCount: ColumnTemplateCount, value: note);

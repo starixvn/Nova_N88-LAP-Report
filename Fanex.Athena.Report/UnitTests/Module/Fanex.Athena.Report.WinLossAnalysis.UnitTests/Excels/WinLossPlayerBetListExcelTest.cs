@@ -31,7 +31,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Excels
         {
             //Arrange
             const string templatePath = "/templatePath/physicalpath";
-            SetupRows(new Mock<IRow>(), 7);
+            SetupRows(new Mock<IRow>(), 9);
             _mockWorkbook.Setup(_ => _.GetSheet(It.IsAny<string>())).Returns(Mock.Of<ISheet>());
             _mockFileInfo.Setup(_ => _.PhysicalPath).Returns(templatePath);
             _mockFileProvider.Setup(_ => _.GetFileInfo("/ExcelTemplate/WinLossAnalysis/WinLossPlayerBetList.xlsx")).Returns(_mockFileInfo.Object);
@@ -63,6 +63,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Excels
                 ViewResources.TransTime,
                 ViewResources.Stake,
                 ViewResources.PlayerWinloss,
+                ViewResources.ProgressiveWin,
+                ViewResources.ProgressiveBet,
                 ViewResources.GGR,
                 ViewResources.Status
             };
@@ -75,8 +77,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Excels
 
             SetupRows(new Mock<IRow>(), 7);
 
-
-            var mockHeaderRow = ExcelTestHelper.MockGetRow(sheet, 7, 1);
+            var mockHeaderRow = ExcelTestHelper.MockGetRow(sheet, 9, 1);
             _mockExcelBuilder.Setup(ex => ex.CopyRow(sheet.Object, templateSheet.Object, 1, 1))
                     .Returns(mockHeaderRow.Object);
 
@@ -102,13 +103,13 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Excels
             _mockExcelBuilder.Setup(_ => _.CloneSheet(_mockWorkbook.Object, "Template", "Data-1")).Returns(sheet.Object);
             _mockWorkbook.Setup(_ => _.GetSheet("Template")).Returns(templateSheet.Object);
 
-            SetupRows(new Mock<IRow>(), 7);
+            SetupRows(new Mock<IRow>(), 9);
 
-            var mockDataRow = ExcelTestHelper.MockGetRow(sheet, 7, 3);
+            var mockDataRow = ExcelTestHelper.MockGetRow(sheet, 9, 3);
             _mockExcelBuilder.Setup(ex => ex.CopyRow(sheet.Object, templateSheet.Object, 3, 3))
                     .Returns(mockDataRow.Object);
 
-            var mockDataTotal = ExcelTestHelper.MockGetRow(sheet, 7, 4);
+            var mockDataTotal = ExcelTestHelper.MockGetRow(sheet, 9, 4);
             _mockExcelBuilder.Setup(ex => ex.CopyRow(sheet.Object, templateSheet.Object, 4, 4))
                     .Returns(mockDataTotal.Object);
             sheet.Setup(_ => _.LastRowNum).Returns(3);
@@ -138,8 +139,10 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Excels
             Mock.Get(cells[2]).Verify(c => c.SetCellValue(fakeRowData.TransTime), Times.Once);
             Mock.Get(cells[3]).Verify(c => c.SetCellValue((double)fakeRowData.Stake), Times.Once);
             Mock.Get(cells[4]).Verify(c => c.SetCellValue((double)fakeRowData.PlayerWinLoss), Times.Once);
-            Mock.Get(cells[5]).Verify(c => c.SetCellValue((double)fakeRowData.GGR), Times.Once);
-            Mock.Get(cells[6]).Verify(c => c.SetCellValue(fakeRowData.TicketStatus), Times.Once);
+            Mock.Get(cells[5]).Verify(c => c.SetCellValue((double)fakeRowData.ProgressiveWin), Times.Once);
+            Mock.Get(cells[6]).Verify(c => c.SetCellValue((double)fakeRowData.ProgressiveBet), Times.Once);
+            Mock.Get(cells[7]).Verify(c => c.SetCellValue((double)fakeRowData.GGR), Times.Once);
+            Mock.Get(cells[8]).Verify(c => c.SetCellValue(fakeRowData.TicketStatus), Times.Once);
         }
 
         private void AssertTotalData(Mock<IRow> mockRowData, WinLossPlayerBetListViewModel fakeTotalData)
@@ -147,7 +150,9 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Excels
             var cells = mockRowData.Object.Cells;
             Mock.Get(cells[3]).Verify(c => c.SetCellValue(ViewResources.GrandTotal), Times.Once);
             Mock.Get(cells[4]).Verify(c => c.SetCellValue((double)fakeTotalData.PlayerWinLoss), Times.Once);
-            Mock.Get(cells[5]).Verify(c => c.SetCellValue((double)fakeTotalData.GGR), Times.Once);
+            Mock.Get(cells[5]).Verify(c => c.SetCellValue((double)fakeTotalData.ProgressiveWin), Times.Once);
+            Mock.Get(cells[6]).Verify(c => c.SetCellValue((double)fakeTotalData.ProgressiveBet), Times.Once);
+            Mock.Get(cells[7]).Verify(c => c.SetCellValue((double)fakeTotalData.GGR), Times.Once);
         }
     }
 }

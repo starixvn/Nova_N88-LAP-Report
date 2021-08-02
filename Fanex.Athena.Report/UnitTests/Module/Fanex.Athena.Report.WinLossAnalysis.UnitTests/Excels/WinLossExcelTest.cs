@@ -59,7 +59,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Excels
 
             SetupSheet(sheet, templateSheet);
 
-            mockRow.Setup(_ => _.Cells).Returns(MockListCell(7).ToList());
+            mockRow.Setup(_ => _.Cells).Returns(MockListCell(9).ToList());
             _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int[]>())).Returns(mockRow.Object);
 
             var expectedTitle = $"{ViewResources.WinLossAnalysis}, {metaModel.FromDate.ToString("MM/dd/yyyy")} - {metaModel.ToDate.ToString("MM/dd/yyyy")}," +
@@ -71,7 +71,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Excels
                 metaModel);
 
             //Assert
-            _mockExcelBuilder.Verify(_ => _.SetRowValue(sheet, templateSheet, 0, 0, 16, expectedTitle), Times.Once);
+            _mockExcelBuilder.Verify(_ => _.SetRowValue(sheet, templateSheet, 0, 0, 18, expectedTitle), Times.Once);
             _mockExcelBuilder.Verify(_ => _.ClearTemplate(sheet, 4), Times.Once);
         }
 

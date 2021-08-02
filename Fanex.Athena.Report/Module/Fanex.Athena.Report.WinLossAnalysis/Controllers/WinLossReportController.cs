@@ -33,7 +33,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Controllers
         }
 
         [HttpPost]
-        [RequestValidation(validateBrandList: true, validateCurrencyList: true)]
+        [RequestValidation(validateBrandList: true, validateCurrencyList: true, valiDataRangeLimitation: true)]
         public async Task<JsonResult> GetData([FromServices] IWinLossService service, WinLossMetaModel metaModel)
         {
             var data = await service.GetData(metaModel);
@@ -41,7 +41,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Controllers
         }
 
         [HttpPost]
-        [RequestValidation(validateBrandList: true, validateCurrencyList: true)]
+        [RequestValidation(validateBrandList: true, validateCurrencyList: true, valiDataRangeLimitation: true)]
         public async Task<FileResult> ExportData(
             [FromServices] IWinLossExcel excel,
             [FromServices] IWinLossService service,
@@ -66,7 +66,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Controllers
         }
 
         [HttpPost]
-        [RequestValidation(validateBrandList: true, validateCurrencyList: true)]
+        [RequestValidation(validateBrandList: true, validateCurrencyList: true, valiDataRangeLimitation: true)]
         public async Task<FileResult> ExportDetailData(
             [FromServices] IWinLossDetailExcel excel,
             [FromServices] IWinLossService service,
