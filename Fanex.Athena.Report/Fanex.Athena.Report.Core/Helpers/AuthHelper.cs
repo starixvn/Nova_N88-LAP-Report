@@ -31,7 +31,7 @@ namespace Fanex.Athena.Report.Core.Helpers
         }
 
         public static bool IsValidDataRangeLimitation(IDataRangeMetaModel dataRange, int DataRangeLimitation)
-            => (DataRangeLimitation <= 0) || (dataRange.ToDate - dataRange.FromDate).Days + 1 <= DataRangeLimitation;
+            => (DataRangeLimitation <= 0) || (dataRange.ToDate - dataRange.FromDate).Days <= DataRangeLimitation;
 
         private static IDictionary<int, string> GetCurrencyList(IEnumerable<Brand> brands, int[] brandIds)
              => brands
