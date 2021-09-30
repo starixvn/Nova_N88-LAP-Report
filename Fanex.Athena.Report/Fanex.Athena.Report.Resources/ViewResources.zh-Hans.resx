@@ -426,4 +426,7 @@
   <data name="SLT" xml:space="preserve">
     <value>体育时时彩</value>
   </data>
+  <data name="BTC" xml:space="preserve">
+    <value>比特币</value>
+  </data>
 </root>

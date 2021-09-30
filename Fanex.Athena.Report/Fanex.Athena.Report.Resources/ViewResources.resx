@@ -763,4 +763,7 @@
   <data name="TransactionType" xml:space="preserve">
     <value>Transaction Type</value>
   </data>
+  <data name="BTC" xml:space="preserve">
+    <value>Bitcoin</value>
+  </data>
 </root>
