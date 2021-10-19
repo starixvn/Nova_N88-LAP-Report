@@ -23,9 +23,6 @@ namespace Fanex.Athena.Report.Marketing.DTO
         [SqlColumn(ColumnName = "MTD_SignupUsers")]
         public int MonthToDateSignupUsers { get; set; }
 
-        [SqlColumn(ColumnName = "Total_SignupUsers")]
-        public int TotalSignupUsers { get; set; }
-
         public byte? DataType { get; set; }
     }
 
