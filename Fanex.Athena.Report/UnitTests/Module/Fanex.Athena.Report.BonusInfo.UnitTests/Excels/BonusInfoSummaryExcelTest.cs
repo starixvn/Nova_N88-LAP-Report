@@ -224,7 +224,7 @@ namespace Fanex.Athena.Report.BonusInfo.UnitTests.Excels
         {
             Mock.Get(row.Object.Cells[ColumnBonusName]).Verify(c => c.SetCellValue(item.BonusName), Times.Once);
             Mock.Get(row.Object.Cells[ColumnBonusCode]).Verify(c => c.SetCellValue(item.BonusCode), Times.Once);
-            Mock.Get(row.Object.Cells[ColumnBonusType]).Verify(c => c.SetCellValue(item.BonusTypeText), Times.Once);
+            Mock.Get(row.Object.Cells[ColumnBonusType]).Verify(c => c.SetCellValue(item.BonusTypeName), Times.Once);
             Mock.Get(row.Object.Cells[ColumnStartDate]).Verify(c => c.SetCellValue(item.StartDate.ToString(DateCellFormat)), Times.Once);
             Mock.Get(row.Object.Cells[ColumnEndDate]).Verify(c => c.SetCellValue(item.EndDate.ToString(DateCellFormat)), Times.Once);
             Mock.Get(row.Object.Cells[ColumnBonusStatus]).Verify(c => c.SetCellValue(item.BonusStatusText), Times.Once);

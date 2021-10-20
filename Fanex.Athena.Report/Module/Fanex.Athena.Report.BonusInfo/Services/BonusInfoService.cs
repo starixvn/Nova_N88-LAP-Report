@@ -2,7 +2,9 @@
 using Fanex.Athena.Report.BonusInfo.MetaModels;
 using Fanex.Athena.Report.BonusInfo.Repositories;
 using Fanex.Athena.Report.Common.Extensions;
+using Fanex.Athena.Report.Common.Model.ViewModel;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Fanex.Athena.Report.BonusInfo.Services
@@ -32,6 +34,12 @@ namespace Fanex.Athena.Report.BonusInfo.Services
         {
             var data = await _repository.GetDetailsData(metaModel);
             return data;
+        }
+
+        public async Task<IEnumerable<MultipleSelectOption>> GetBonusTypes()
+        {
+            var bonusTypes = await _repository.GetBonusTypes();
+            return bonusTypes.Select(_ => new MultipleSelectOption { Key = _.BonusTypeId, Value = _.BonusTypeName, Status = true });
         }
     }
 }

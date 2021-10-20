@@ -13,7 +13,8 @@ namespace Fanex.Athena.Report.BonusInfo.DTO
 
         public string BonusCode { get; set; }
 
-        public int BonusType { get; set; }
+        public int BonusTypeId { get; set; }
+        public string BonusTypeName { get; set; }
 
         public DateTime StartDate { get; set; }
 
@@ -34,19 +35,16 @@ namespace Fanex.Athena.Report.BonusInfo.DTO
         public DateTime Date { get; set; }
 
         [SqlColumn(Ignored = true)]
-        public string StartDateString => StartDate == DateTime.MinValue ? "" : StartDate.ToString(DateTimeFormat.MonthAbbreviationsDate);
+        public string StartDateString => StartDate == DateTime.MinValue ? string.Empty : StartDate.ToString(DateTimeFormat.MonthAbbreviationsDate);
 
         [SqlColumn(Ignored = true)]
-        public string EndDateString => EndDate == DateTime.MinValue ? "" : EndDate.ToString(DateTimeFormat.MonthAbbreviationsDate);
+        public string EndDateString => EndDate == DateTime.MinValue ? string.Empty : EndDate.ToString(DateTimeFormat.MonthAbbreviationsDate);
 
         [SqlColumn(Ignored = true)]
         public string DateString => Date.ToString(DateTimeFormat.MonthAbbreviationsDate);
 
         [SqlColumn(Ignored = true)]
         public string BonusStatusText => BonusInfoDropdownOptions.BonusStatusList.FirstOrDefault(_ => _.Key == BonusStatus)?.Value;
-
-        [SqlColumn(Ignored = true)]
-        public string BonusTypeText => BonusInfoDropdownOptions.BonusTypeList.FirstOrDefault(_ => _.Key == BonusType)?.Value;
     }
 
     public class BonusInfoSummaryTotalDTO : ClaimStatusDTO

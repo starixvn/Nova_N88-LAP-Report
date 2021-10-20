@@ -193,7 +193,7 @@ namespace Fanex.Athena.Report.BonusInfo.Excels
             row.Cells[ColumnDate].SetCellValue(rowData.Date.ToString(DateCellFormat));
             row.Cells[ColumnBonusName].SetCellValue(rowData.BonusName);
             row.Cells[ColumnBonusCode].SetCellValue(rowData.BonusCode);
-            row.Cells[ColumnBonusType].SetCellValue(rowData.BonusTypeText);
+            row.Cells[ColumnBonusType].SetCellValue(rowData.BonusTypeName);
             row.Cells[ColumnStartDate].SetCellValue(rowData.StartDate.ToString(DateCellFormat));
             row.Cells[ColumnEndDate].SetCellValue(rowData.EndDate.ToString(DateCellFormat));
             row.Cells[ColumnBonusStatus].SetCellValue(rowData.BonusStatusText);

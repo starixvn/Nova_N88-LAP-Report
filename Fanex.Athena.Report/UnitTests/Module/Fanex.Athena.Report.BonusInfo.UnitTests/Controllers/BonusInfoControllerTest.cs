@@ -4,6 +4,7 @@ using Fanex.Athena.Report.BonusInfo.DTO;
 using Fanex.Athena.Report.BonusInfo.Excels;
 using Fanex.Athena.Report.BonusInfo.MetaModels;
 using Fanex.Athena.Report.BonusInfo.Services;
+using Fanex.Athena.Report.Common.Model.ViewModel;
 using Moq;
 using Newtonsoft.Json;
 using NPOI.SS.UserModel;
@@ -26,13 +27,16 @@ namespace Fanex.Athena.Report.BonusInfo.UnitTests.Controllers
         }
 
         [Fact]
-        public void GetSetting_WhenCall_ReturnDataCorrectly()
+        public async Task GetSetting_WhenCall_ReturnDataCorrectly()
         {
             //Arrange
-            var expectedResult = new BonusInfoDropdownOptionsDTO();
+            var bonusTypes = _fixture.CreateMany<MultipleSelectOption>(5);
+            var expectedResult = new BonusInfoDropdownOptionsDTO(bonusTypes);
+
+            _mockService.Setup(_ => _.GetBonusTypes()).Returns(Task.FromResult(bonusTypes));
 
             //Act
-            var actualResult = _targetController.GetSetting();
+            var actualResult = await _targetController.GetSetting();
 
             var actualResultJson = JsonConvert.SerializeObject(actualResult.Value);
             var expectedResultJson = JsonConvert.SerializeObject(expectedResult);

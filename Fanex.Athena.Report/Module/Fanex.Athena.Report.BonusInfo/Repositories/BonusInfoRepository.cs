@@ -79,5 +79,16 @@ namespace Fanex.Athena.Report.BonusInfo.Repositories
                 };
             }
         }
+
+        public async Task<IEnumerable<BonusTypeDTO>> GetBonusTypes()
+        {
+            using (var db = GetObjectDb(SpConsts.BonusType))
+            {
+                using (var reader = await db.ExecuteReaderAsync())
+                {
+                    return GetDataItems<BonusTypeDTO>(reader);
+                }
+            }
+        }
     }
 }
