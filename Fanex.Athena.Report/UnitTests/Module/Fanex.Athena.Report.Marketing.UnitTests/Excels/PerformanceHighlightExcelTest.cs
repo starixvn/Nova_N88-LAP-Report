@@ -113,6 +113,8 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             _mockExcelBuilder.Setup(_ => _.CopyRow(sheet, templateSheet, It.IsAny<int>(), It.IsAny<int>())).Returns(mockRow.Object);
             _mockExcelBuilder.Setup(_ => _.CopyRow(sheet, templateSheet, 1, 1)).Returns(mockRowHeader.Object);
             _mockExcelBuilder.Setup(_ => _.CopyRow(sheet, templateSheet, 1, 2)).Returns(mockRowHeader.Object);
+            _mockExcelBuilder.Setup(_ => _.CopyRow(sheet, templateSheet, 5, 1)).Returns(mockRowHeader.Object);
+            _mockExcelBuilder.Setup(_ => _.CopyRow(sheet, templateSheet, 5, 2)).Returns(mockRowHeader.Object);
             _mockExcelBuilder.Setup(_ => _.CloneSheet(_mockWorkbook.Object, It.IsAny<string>(), It.IsAny<string>())).Returns(sheet);
             _mockWorkbook.Setup(_ => _.GetSheet(It.IsAny<string>())).Returns(templateSheet);
 
@@ -124,8 +126,8 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             mockCelllRange.Verify(_ => _.SetCellValue($"{metaModel.FromDate.ToString(DateTimeFormat.Date)} - {metaModel.ToDate.ToString(DateTimeFormat.Date)}"), Times.Exactly(4));
             mockCellMonthToDate.Verify(_ => _.SetCellValue("MTD"), Times.Exactly(2));
             mockCellMonthToDate.Verify(_ => _.SetCellValue("Từ đầu tháng"), Times.Exactly(2));
-            mockCellAllTime.Verify(_ => _.SetCellValue(launchDateHeaderExpected), Times.Exactly(2));
-            mockCellAllTime.Verify(_ => _.SetCellValue(launchDateHeaderVNExpected), Times.Exactly(2));
+            mockCellAllTime.Verify(_ => _.SetCellValue(launchDateHeaderExpected), Times.Exactly(1));
+            mockCellAllTime.Verify(_ => _.SetCellValue(launchDateHeaderVNExpected), Times.Exactly(1));
         }
 
         [Theory]
