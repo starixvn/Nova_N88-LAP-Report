@@ -159,7 +159,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             mockCellBonusCode.Verify(_ => _.SetCellValue(ViewResources.BonusCode), Times.Once);
             mockCellCurrency.Verify(_ => _.SetCellValue(ViewResources.Currency), Times.Once);
             mockCellBonusName.Verify(_ => _.SetCellValue(ViewResources.BonusName), Times.Once);
-            mockCellNumberOfBonusClaimed.Verify(_ => _.SetCellValue(ViewResources.NoOfBonusClaimed), Times.Once);
+            mockCellNumberOfBonusClaimed.Verify(_ => _.SetCellValue(ViewResources.NoOfUserClaimingBonus), Times.Once);
             mockCellTotalBonusAmountClaimed.Verify(_ => _.SetCellValue(ViewResources.TotalBonusAmountClaimed), Times.Once);
         }
 

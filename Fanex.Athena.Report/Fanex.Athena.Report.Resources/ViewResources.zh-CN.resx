@@ -448,8 +448,8 @@
   <data name="PPC" xml:space="preserve">
     <value>PP Jackpot Contribution</value>
   </data>
-  <data name="NoOfBonusClaimed" xml:space="preserve">
-    <value>No. Of Bonus Claimed</value>
+  <data name="NoOfUserClaimingBonus" xml:space="preserve">
+    <value>No. of Users Claiming Bonus</value>
     <comment>141575</comment>
   </data>
   <data name="NumberOfWithdrawals" xml:space="preserve">
@@ -636,5 +636,8 @@
   <data name="NoteSupportClosingBalance" xml:space="preserve">
     <value>Player Closing Balance can be displayed in GMT +7 and GMT +8 only, and support data from {0} GMT+00</value>
     <comment>155334</comment>
+  </data>
+  <data name="TotalBonus" xml:space="preserve">
+    <value>Total Bonus</value>
   </data>
 </root>

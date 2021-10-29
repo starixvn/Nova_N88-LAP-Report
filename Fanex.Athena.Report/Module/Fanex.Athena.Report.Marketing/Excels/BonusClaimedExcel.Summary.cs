@@ -115,7 +115,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
             row.Cells[SummarySheetBonusCodeCol].SetCellValue(ViewResources.BonusCode);
             row.Cells[SummarySheetCurrencyCol].SetCellValue(ViewResources.Currency);
             row.Cells[SummarySheetBonusNameCol].SetCellValue(ViewResources.BonusName);
-            row.Cells[SummarySheetNoOfBonusClaimedCol].SetCellValue(ViewResources.NoOfBonusClaimed);
+            row.Cells[SummarySheetNoOfBonusClaimedCol].SetCellValue(ViewResources.NoOfUserClaimingBonus);
             row.Cells[SummarySheetBonusAmountCol].SetCellValue(ViewResources.TotalBonusAmountClaimed);
         }
 
@@ -142,7 +142,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
             row.Cells[SummarySheetBonusCodeCol].SetCellValue(string.IsNullOrEmpty(rowData.BonusCode) ? ViewResources.None : rowData.BonusCode);
             row.Cells[SummarySheetCurrencyCol].SetCellValue(isParent ? ViewResources.All : rowData.CurrencyCode);
             row.Cells[SummarySheetBonusNameCol].SetCellValue(string.IsNullOrEmpty(rowData.BonusName) ? ViewResources.None : rowData.BonusName);
-            row.Cells[SummarySheetNoOfBonusClaimedCol].SetCellValue(rowData.NumberOfBonusClaimed);
+            row.Cells[SummarySheetNoOfBonusClaimedCol].SetCellValue(rowData.NumberOfBonusUser);
             row.Cells[SummarySheetBonusAmountCol].SetCellValue(rowData.BonusAmount);
         }
 
@@ -151,7 +151,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
             var row = _builder.CopyRow(sheet, templateSheet, SummarySheetTemplateCampaignTotalContent, ++SummaryCurrentRowIndex);
 
             row.Cells[SummarySheetBonusCodeCol].SetCellValue(ViewResources.Total);
-            row.Cells[SummarySheetNoOfBonusClaimedCol].SetCellValue(rowData.TotalBonusClaimeds);
+            row.Cells[SummarySheetNoOfBonusClaimedCol].SetCellValue(rowData.TotalBonusUsers);
             row.Cells[SummarySheetBonusAmountCol].SetCellValue((double)rowData.TotalBonusAmount);
         }
 

@@ -478,8 +478,8 @@
   <data name="PPC" xml:space="preserve">
     <value>PP Jackpot Contribution</value>
   </data>
-  <data name="NoOfBonusClaimed" xml:space="preserve">
-    <value>No. Of Bonus Claimed</value>
+  <data name="NoOfUserClaimingBonus" xml:space="preserve">
+    <value>No. of Users Claiming Bonus</value>
     <comment>141575</comment>
   </data>
   <data name="NumberOfWithdrawals" xml:space="preserve">
@@ -744,5 +744,8 @@
   </data>
   <data name="ProgressiveWin" xml:space="preserve">
     <value>Progressive Win</value>
+  </data>
+  <data name="TotalBonus" xml:space="preserve">
+    <value>Total Bonus</value>
   </data>
 </root>

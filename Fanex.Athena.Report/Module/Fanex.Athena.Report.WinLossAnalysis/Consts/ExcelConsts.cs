@@ -29,6 +29,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Consts
             { "depositAmount", ("DepositAmount", ViewResources.TotalDepositAmount, 16, true) },
             { "numberOfWithdrawal", ("NumberOfWithdrawal", ViewResources.NoOfWithdrawal, 17, true) },
             { "withdrawalAmount", ("WithdrawalAmount", ViewResources.TotalWithdrawalAmount, 18, true) },
+            { "bonusAmount", ("BonusAmount", ViewResources.TotalBonus, 19, true) },
        };
 
         public static readonly IReadOnlyDictionary<
@@ -44,11 +45,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Consts
             { "betCount", ("BetCount", ViewResources.BetCount, 14, true) },
             { "avgBetAmount", ("AvgBetAmount", ViewResources.AvgBetAmount, 15, true) },
             { "uniquePlayers", ("UniquePlayers", ViewResources.UniquePlayers, 16, true) },
-            { "margin", ("Margin", ViewResources.Margin, 17, true) },
-            { "numberOfDeposit", ("NumberOfDeposit", ViewResources.NoOfDeposit, 18, true) },
-            { "depositAmount", ("DepositAmount", ViewResources.TotalDepositAmount, 19, true) },
-            { "numberOfWithdrawal", ("NumberOfWithdrawal", ViewResources.NoOfWithdrawal, 20, true) },
-            { "withdrawalAmount", ("WithdrawalAmount", ViewResources.TotalWithdrawalAmount, 21, true) },
+            { "margin", ("Margin", ViewResources.Margin, 17, true) }
        };
     }
 }

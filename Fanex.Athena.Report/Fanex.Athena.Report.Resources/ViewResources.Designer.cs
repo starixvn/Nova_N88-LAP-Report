@@ -979,20 +979,20 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No. Of Bonus Claimed.
-        /// </summary>
-        public static string NoOfBonusClaimed {
-            get {
-                return ResourceManager.GetString("NoOfBonusClaimed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to No. Deposit.
         /// </summary>
         public static string NoOfDeposit {
             get {
                 return ResourceManager.GetString("NoOfDeposit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No. of Users Claiming Bonus.
+        /// </summary>
+        public static string NoOfUserClaimingBonus {
+            get {
+                return ResourceManager.GetString("NoOfUserClaimingBonus", resourceCulture);
             }
         }
         
@@ -1470,6 +1470,15 @@ namespace Fanex.Athena.Report.Resources {
         public static string Total {
             get {
                 return ResourceManager.GetString("Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Bonus.
+        /// </summary>
+        public static string TotalBonus {
+            get {
+                return ResourceManager.GetString("TotalBonus", resourceCulture);
             }
         }
         

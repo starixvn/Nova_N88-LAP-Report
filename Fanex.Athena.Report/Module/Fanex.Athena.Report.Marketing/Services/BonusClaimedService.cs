@@ -104,7 +104,7 @@ namespace Fanex.Athena.Report.Marketing.Services
 
         private void HandleSummaryDetailRawData(BonusClaimedSummaryDTO rawData, IDictionary<int, Currency> currencies)
         {
-            rawData.TotalDetailData.TotalBonusClaimeds = rawData.DetailData.Sum(_ => _.NumberOfBonusClaimed);
+            rawData.TotalDetailData.TotalBonusUsers = rawData.DetailData.Sum(_ => _.NumberOfBonusUser);
             rawData.TotalDetailData.TotalBonusAmount = rawData.DetailData.Sum(_ => _.BasedBonusAmount);
             rawData.DetailData = rawData.DetailData.GroupBy(_ => _.BonusCode,
                 _ =>
@@ -119,7 +119,7 @@ namespace Fanex.Athena.Report.Marketing.Services
                     {
                         BonusCode = bonusCode,
                         BonusName = childs.First().BonusName,
-                        NumberOfBonusClaimed = childs.Sum(_ => _.NumberOfBonusClaimed),
+                        NumberOfBonusUser = childs.Sum(_ => _.NumberOfBonusUser),
                         BonusAmount = childs.Sum(_ => _.BasedBonusAmount),
                         Childs = childs
                     };
