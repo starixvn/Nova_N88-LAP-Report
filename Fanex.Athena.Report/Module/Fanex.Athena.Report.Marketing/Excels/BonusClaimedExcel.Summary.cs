@@ -141,7 +141,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
             var row = _builder.CopyRow(sheet, templateSheet, SummarySheetTemplateCampaignContent, rowIndex);
             row.Cells[SummarySheetBonusCodeCol].SetCellValue(string.IsNullOrEmpty(rowData.BonusCode) ? ViewResources.None : rowData.BonusCode);
             row.Cells[SummarySheetCurrencyCol].SetCellValue(isParent ? ViewResources.All : rowData.CurrencyCode);
-            row.Cells[SummarySheetBonusNameCol].SetCellValue(string.IsNullOrEmpty(rowData.BonusName) ? ViewResources.None : rowData.BonusName);
+            row.Cells[SummarySheetBonusNameCol].SetCellValue(rowData.BonusName);
             row.Cells[SummarySheetNoOfBonusClaimedCol].SetCellValue(rowData.NumberOfBonusUser);
             row.Cells[SummarySheetBonusAmountCol].SetCellValue(rowData.BonusAmount);
         }
