@@ -70,7 +70,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Excels
             SetupTemplate();
 
             var metaModel = _fixture.Create<WinLossDetailMetaModel>();
-            metaModel.OrderCols = new[] { "turnover", "withdrawalAmount" };
+            metaModel.OrderCols = new[] { "turnover", "playerWinloss" };
 
             var headerTextList = new List<string>
             {
@@ -83,7 +83,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Excels
                 ViewResources.SabaId,
                 ViewResources.SabaSystemId,
                 ViewResources.Turnover,
-                ViewResources.TotalWithdrawalAmount
+                ViewResources.PlayerWinloss
             };
 
             var sheet = new Mock<ISheet>();
@@ -110,7 +110,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Excels
             SetupTemplate();
 
             var metaModel = _fixture.Create<WinLossDetailMetaModel>();
-            metaModel.OrderCols = new[] { "turnover", "withdrawalAmount" };
+            metaModel.OrderCols = new[] { "turnover", "playerWinloss" };
 
             var sheet = new Mock<ISheet>();
             var templateSheet = new Mock<ISheet>();
@@ -132,8 +132,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Excels
         }
 
         [Theory]
-        [InlineData(8, 14)]
-        [InlineData(10, 12, "turnover", "withdrawalAmount")]
+        [InlineData(8, 10)]
+        [InlineData(10, 8, "turnover", "playerWinloss")]
         public void Export_HideColumns_Correctly(int startHideRange, int countHideRange, params string[] orderCols)
         {
             //Arrange
@@ -171,7 +171,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Excels
             Mock.Get(cells[6]).Verify(c => c.SetCellValue(fakeRowData.SabaId), Times.Once);
             Mock.Get(cells[7]).Verify(c => c.SetCellValue(fakeRowData.SabaSystemId), Times.Once);
             Mock.Get(cells[8]).Verify(c => c.SetCellValue((double)fakeRowData.Turnover), Times.Once);
-            Mock.Get(cells[9]).Verify(c => c.SetCellValue((double)fakeRowData.WithdrawalAmount), Times.Once);
+            Mock.Get(cells[9]).Verify(c => c.SetCellValue((double)fakeRowData.PlayerWinloss), Times.Once);
         }
 
         private void SetupSheet(ISheet sheet, ISheet templateSheet)
