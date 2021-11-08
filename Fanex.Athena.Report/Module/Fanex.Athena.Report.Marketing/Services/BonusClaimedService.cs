@@ -104,12 +104,9 @@ namespace Fanex.Athena.Report.Marketing.Services
 
         private void HandleSummaryDetailRawData(BonusClaimedSummaryDTO rawData, IDictionary<int, Currency> currencies)
         {
-            rawData.TotalDetailData.TotalBonusUsers = rawData.DetailData.Sum(_ => _.NumberOfBonusUser);
-            rawData.TotalDetailData.TotalBonusAmount = rawData.DetailData.Sum(_ => _.BasedBonusAmount);
             rawData.DetailData = rawData.DetailData.GroupBy(_ => _.BonusCode,
                 _ =>
                 {
-
                     _.CurrencyCode = _dataMapper.ToCurrencyCode(currencies, _.CurrencyId);
                     return _;
                 },
