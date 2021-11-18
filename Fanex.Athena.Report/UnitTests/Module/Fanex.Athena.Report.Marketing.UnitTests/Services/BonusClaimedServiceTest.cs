@@ -75,8 +75,6 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
             //Assert
             Assert.Equal(fakeRawData, actualResult);
             Assert.Equal(fakeRawData.TotalData.FirstOrDefault().ChangeRate, fakeTotalDataChangeRate);
-            Assert.Equal(11.00, (double)fakeRawData.TotalDetailData.TotalBonusAmount);
-            Assert.Equal(25, fakeRawData.TotalDetailData.TotalBonusUsers);
         }
     }
 }
