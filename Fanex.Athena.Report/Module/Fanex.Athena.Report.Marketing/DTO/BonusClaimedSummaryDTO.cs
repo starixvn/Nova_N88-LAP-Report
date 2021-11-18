@@ -35,8 +35,8 @@ namespace Fanex.Athena.Report.Marketing.DTO
 
         public string BonusName { get; set; }
 
-        [SqlColumn(ColumnName = "BonusClaimeds")]
-        public int NumberOfBonusClaimed { get; set; }
+        [SqlColumn(ColumnName = "BonusUsers")]
+        public int NumberOfBonusUser { get; set; }
 
         public decimal BonusAmount { get; set; }
         public decimal BasedBonusAmount { get; set; }
@@ -54,7 +54,7 @@ namespace Fanex.Athena.Report.Marketing.DTO
 
     public class TotalDetailBonusClaimedDTO
     {
-        public int TotalBonusClaimeds { get; set; }
+        public int TotalBonusUsers { get; set; }
         public decimal TotalBonusAmount { get; set; }
     }
 

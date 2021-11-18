@@ -2,6 +2,7 @@
 using Fanex.Athena.Report.Marketing.Consts;
 using Fanex.Athena.Report.Marketing.DTO;
 using Fanex.Athena.Report.Marketing.MetaModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,19 +15,25 @@ namespace Fanex.Athena.Report.Marketing.Repositories
 
         public async Task<BonusClaimedSummaryDTO> GetSummaryData(BonusClaimedSummaryMetaModel metaModel)
         {
+            const string TotalBonusUsersParamName = "TotalBonusUsers";
+            const string TotalBonusAmountParamName = "TotalBasedBonusAmount";
+            var data = new BonusClaimedSummaryDTO();
+
             using (var db = GetObjectDb(SpConsts.BonusClaimedSummary))
             {
                 using (var reader = await db.ExecuteReaderAsync(metaModel))
                 {
-                    var totalData = GetDataItems<TotalBonusClaimedDTO>(reader);
-                    var detailData = GetDataItems<DetailBonusClaimedDTO>(reader, true);
-
-                    return new BonusClaimedSummaryDTO
-                    {
-                        TotalData = totalData,
-                        DetailData = detailData,
-                    };
+                    data.TotalData = GetDataItems<TotalBonusClaimedDTO>(reader);
+                    data.DetailData = GetDataItems<DetailBonusClaimedDTO>(reader, true);
                 }
+
+                data.TotalDetailData = new TotalDetailBonusClaimedDTO
+                {
+                    TotalBonusUsers = Convert.ToInt32(db.GetParameterValue(TotalBonusUsersParamName)),
+                    TotalBonusAmount = Convert.ToDecimal(db.GetParameterValue(TotalBonusAmountParamName))
+                };
+
+                return data;
             }
         }
 

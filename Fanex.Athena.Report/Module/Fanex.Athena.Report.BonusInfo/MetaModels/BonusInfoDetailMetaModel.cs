@@ -15,6 +15,8 @@ namespace Fanex.Athena.Report.BonusInfo.MetaModels
 
         public string BonusCode { get; set; }
 
+        public byte BonusTypeId { get; set; }
+
         public byte SortbyId { get; set; }
 
         public bool IsSortAsc { get; set; }

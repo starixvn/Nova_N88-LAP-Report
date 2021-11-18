@@ -46,19 +46,19 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
                     {
                         BonusAmount = 10.2m,
                         BasedBonusAmount = 5.5m,
-                        NumberOfBonusClaimed = 5
+                        NumberOfBonusUser = 5
                     },
                     new DetailBonusClaimedDTO
                     {
                         BonusAmount = 5.8m,
                         BasedBonusAmount = 4.5m,
-                        NumberOfBonusClaimed = 15
+                        NumberOfBonusUser = 15
                     },
                     new DetailBonusClaimedDTO
                     {
                         BonusAmount = 4,
                         BasedBonusAmount = 1.0m,
-                        NumberOfBonusClaimed = 5
+                        NumberOfBonusUser = 5
                     }
                 }
             };
@@ -75,8 +75,6 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Services
             //Assert
             Assert.Equal(fakeRawData, actualResult);
             Assert.Equal(fakeRawData.TotalData.FirstOrDefault().ChangeRate, fakeTotalDataChangeRate);
-            Assert.Equal(11.00, (double)fakeRawData.TotalDetailData.TotalBonusAmount);
-            Assert.Equal(25, fakeRawData.TotalDetailData.TotalBonusClaimeds);
         }
     }
 }

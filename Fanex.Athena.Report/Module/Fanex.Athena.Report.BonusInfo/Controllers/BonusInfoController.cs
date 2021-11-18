@@ -17,6 +17,8 @@ namespace Fanex.Athena.Report.BonusInfo.Controllers
     public class BonusInfoController : ControllerBase
     {
         private const int MaxRowExport = 50000;
+        private const int OneDayInSecond = 24 * 60 * 60;
+
         private readonly IBonusInfoService _service;
 
         public BonusInfoController(IBonusInfoService service)
@@ -25,15 +27,16 @@ namespace Fanex.Athena.Report.BonusInfo.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetSetting()
+        [ResponseCache(Duration = OneDayInSecond, Location = ResponseCacheLocation.Client)]
+        public async Task<JsonResult> GetSetting()
         {
-            var result = new BonusInfoDropdownOptionsDTO();
+            var bonusTypes = await _service.GetBonusTypes();
+            var result = new BonusInfoDropdownOptionsDTO(bonusTypes);
             return new JsonResult(result);
         }
 
         [HttpPost]
-        [RequestValidation(validateBrand: true)]
-        [AutoBindingMetaModel(bindCurrencyIdList: true)]
+        [RequestValidation(validateBrand: true, validateCurrencyList: true)]
         public async Task<JsonResult> GetSummaryData([FromBody]BonusInfoSummaryMetaModel metaModel)
         {
             var result = await _service.GetSummaryData(metaModel);
@@ -41,8 +44,7 @@ namespace Fanex.Athena.Report.BonusInfo.Controllers
         }
 
         [HttpPost]
-        [RequestValidation(validateBrand: true)]
-        [AutoBindingMetaModel(bindCurrencyIdList: true)]
+        [RequestValidation(validateBrand: true, validateCurrencyList: true)]
         public async Task<JsonResult> GetDetailsData([FromBody]BonusInfoDetailMetaModel metaModel)
         {
             var result = await _service.GetDetailsData(metaModel);
@@ -50,8 +52,7 @@ namespace Fanex.Athena.Report.BonusInfo.Controllers
         }
 
         [HttpPost]
-        [RequestValidation(validateBrand: true)]
-        [AutoBindingMetaModel(bindCurrencyIdList: true)]
+        [RequestValidation(validateBrand: true, validateCurrencyList: true)]
         public async Task<FileContentResult> ExportSummaryData(
             [FromServices]IBonusInfoSummaryExcel excel,
             BonusInfoSummaryMetaModel metaModel)
@@ -66,7 +67,6 @@ namespace Fanex.Athena.Report.BonusInfo.Controllers
 
         [HttpPost]
         [RequestValidation(validateBrand: true)]
-        [AutoBindingMetaModel(bindCurrencyIdList: true)]
         public async Task<FileContentResult> ExportDetailData(
         [FromServices]IBonusInfoDetailExcel excel,
         BonusInfoDetailMetaModel metaModel)

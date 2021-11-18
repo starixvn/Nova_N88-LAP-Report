@@ -1,8 +1,7 @@
 ﻿using Fanex.Athena.Report.BonusInfo.Consts;
 using Fanex.Athena.Report.Common.Model.ViewModel;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace Fanex.Athena.Report.BonusInfo.DTO
 {
@@ -14,9 +13,9 @@ namespace Fanex.Athena.Report.BonusInfo.DTO
 
         public IEnumerable<MultipleSelectOption> ClaimStatusList { get; set; }
 
-        public BonusInfoDropdownOptionsDTO()
+        public BonusInfoDropdownOptionsDTO(IEnumerable<MultipleSelectOption> bonusTypeList = null)
         {
-            BonusTypeList = BonusInfoDropdownOptions.BonusTypeList;
+            BonusTypeList = bonusTypeList ?? Enumerable.Empty<MultipleSelectOption>();
             BonusStatusList = BonusInfoDropdownOptions.BonusStatusList;
             ClaimStatusList = BonusInfoDropdownOptions.ClaimStatusList;
         }

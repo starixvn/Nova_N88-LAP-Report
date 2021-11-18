@@ -10,5 +10,7 @@ namespace Fanex.Athena.Report.BonusInfo.Repositories
         Task<BonusInfoSummaryDTO> GetSummaryData(BonusInfoSummaryMetaModel metaModel);
 
         Task<BonusInfoDetailDTO> GetDetailsData(BonusInfoDetailMetaModel metaModel);
+
+        Task<IEnumerable<BonusTypeDTO>> GetBonusTypes();
     }
 }
