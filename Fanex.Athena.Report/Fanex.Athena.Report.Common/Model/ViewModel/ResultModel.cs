@@ -8,6 +8,8 @@
 
         public T TotalData { get; set; }
 
+        public IEnumerable<T> TotalDataList { get; set; }
+
         public int TotalRows { get; set; }
 
         public string AdditionalInfo { get; set; }

@@ -33,8 +33,13 @@
     <Setting Key="N88_Rpt_Marketing_Deposit_Detail" SpName="N88_Rpt_Marketing_Deposit_Detail" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
   </Function>
   <Funtion Name="ReportBonusInfo">
-    <Setting Key="N88_BonusType_Sel" SpName="N88_BonusType_Sel_xtest" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
+    <Setting Key="N88_BonusType_Sel" SpName="N88_BonusType_Sel" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
     <Setting Key="N88_Rpt_BonusInfo" SpName="N88_Rpt_BonusInfo" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
     <Setting Key="N88_Rpt_BonusInfo_Detail" SpName="N88_Rpt_BonusInfo_Detail" DbName="DBN88.bodb_N88.bodbLicenseeNet" />
+  </Funtion>
+  <Funtion Name="ReportExtraPayout">
+    <Setting Key="Lrf_Rpt_ExtraPayout" SpName="Lrf_Rpt_ExtraPayout" DbName="DBEXT.bodb02.bodbLicenseeNet" />
+    <Setting Key="Lrf_Rpt_ExtraPayout_Mem" SpName="Lrf_Rpt_ExtraPayout_Mem" DbName="DBEXT.bodb02.bodbLicenseeNet" />
+    <Setting Key="Lrf_Rpt_ExtraPayout_Mem_Detail" SpName="Lrf_Rpt_ExtraPayout_Mem_Detail" DbName="DBACC.bodb02.bodbLicenseeNet" />
   </Funtion>
 </Functions>

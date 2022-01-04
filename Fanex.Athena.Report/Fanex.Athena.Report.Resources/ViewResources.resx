@@ -748,4 +748,13 @@
   <data name="TotalBonus" xml:space="preserve">
     <value>Total Bonus</value>
   </data>
+  <data name="CustomerAmount" xml:space="preserve">
+    <value>Customer Amount</value>
+  </data>
+  <data name="LicSharingAmount" xml:space="preserve">
+    <value>Licensee Sharing Amount</value>
+  </data>
+  <data name="PromotionDetails" xml:space="preserve">
+    <value>Promotion Details</value>
+  </data>
 </root>
