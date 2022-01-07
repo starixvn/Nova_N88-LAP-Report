@@ -4,6 +4,14 @@ namespace Fanex.Athena.Report.ExtraPayout.DTO
 {
     public class BaseExtraPayoutDTO
     {
+        public int Index { get; set; }
+
+        public int IndexRowSpan { get; set; }
+
+        public int CurencyRowSpan { get; set; }
+
+        public int ProductRowSpan { get; set; }
+
         public DateTime Date { get; set; }
 
         public string DateString { get; set; }

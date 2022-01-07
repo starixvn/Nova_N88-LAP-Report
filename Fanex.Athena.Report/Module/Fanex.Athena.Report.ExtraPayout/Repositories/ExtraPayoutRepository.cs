@@ -94,7 +94,7 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
             data.CurrencyName = currencyList.FirstOrDefault(x => x.ID == currency)?.Name;
         }
 
-        private static List<ExtraPayoutDTO> GetSumDataList(List<ExtraPayoutDTO> dataList)
+        private static IEnumerable<ExtraPayoutDTO> GetSumDataList(IEnumerable<ExtraPayoutDTO> dataList)
         {
             if (dataList == null || !dataList.Any())
             {
@@ -112,7 +112,7 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
             }).ToList();
         }
 
-        private static ExtraPayoutDTO GetSumTotalData(List<ExtraPayoutDTO> dataList, string baseCurrency)
+        private static ExtraPayoutDTO GetSumTotalData(IEnumerable<ExtraPayoutDTO> dataList, string baseCurrency)
         {
             if (dataList == null || !dataList.Any())
             {
@@ -172,13 +172,74 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
                 dataList.Add(item);
             }
 
+            var groupData = DoRestructureData(dataList.GroupBy(i => new { i.Date }));
+
             return new SortableResultModel<ExtraPayoutDTO>
             {
-                DataList = dataList,
-                TotalDataList = GetSumDataList(dataList),
-                TotalData = GetSumTotalData(dataList, metaModel.BaseCurrency.ToUpperInvariant()),
-                TotalRows = dataList.Count()
+                DataList = groupData,
+                TotalDataList = GetSumDataList(groupData),
+                TotalData = GetSumTotalData(groupData, metaModel.BaseCurrency.ToUpperInvariant()),
+                TotalRows = groupData.Count()
             };
+        }
+
+        private static IList<ExtraPayoutDTO> DoRestructureData(dynamic groupData, int index = 0)
+        {
+            var newDataList = new List<ExtraPayoutDTO>();
+
+            foreach (var item in groupData)
+            {
+                var rowSpanFlag = true;
+                var temps = (IList<ExtraPayoutDTO>)item;
+                var numOfItem = temps.Count();
+
+                var curencyRowSpanFlag = true;
+                var currency = temps[0].Currency;
+
+                var productRowSpanFlag = true;
+                var product = temps[0].ProductCode;
+
+                foreach (var col in temps)
+                {
+                    if (rowSpanFlag && numOfItem >= 1)
+                    {
+                        index++;
+                        col.IndexRowSpan = numOfItem;
+                        rowSpanFlag = false;
+                    }
+                    else
+                    {
+                        col.IndexRowSpan = -1;
+                    }
+
+                    if (productRowSpanFlag || col.Currency != currency || col.ProductCode != product)
+                    {
+                        col.ProductRowSpan = temps.Count(_ => _.Currency == col.Currency && _.ProductCode == col.ProductCode);
+                        product = col.ProductCode;
+                        productRowSpanFlag = false;
+                    }
+                    else
+                    {
+                        col.ProductRowSpan = -1;
+                    }
+
+                    if (curencyRowSpanFlag || col.Currency != currency)
+                    {
+                        col.CurencyRowSpan = temps.Count(_ => _.Currency == col.Currency);
+                        currency = col.Currency;
+                        curencyRowSpanFlag = false;
+                    }
+                    else
+                    {
+                        col.CurencyRowSpan = -1;
+                    }
+
+                    col.Index = index;
+                    newDataList.Add(col);
+                }
+            }
+
+            return newDataList;
         }
 
         public async Task<SortableResultModel<ExtraPayoutDTO>> GetExtraPayoutMemberData(
@@ -230,14 +291,28 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
                 dataList.Add(item);
             }
 
-            var pagedList = dataList.Skip((metaModel.PageIndex - 1) * metaModel.PageSize).Take(metaModel.PageSize).ToList();
+            if (metaModel.IsExportExcel)
+            {
+                return new SortableResultModel<ExtraPayoutDTO>
+                {
+                    DataList = dataList,
+                    TotalDataList = GetSumDataList(dataList),
+                    TotalData = GetSumTotalData(dataList, metaModel.BaseCurrency.ToUpperInvariant()),
+                    TotalRows = dataList.Count()
+                };
+            }
+
+            var beginIndex = (metaModel.PageIndex - 1) * metaModel.PageSize;
+            var rawGroupPagingData = dataList.GroupBy(i => new { i.CustId });
+
+            var groupData = DoRestructureData(rawGroupPagingData.Skip(beginIndex).Take(metaModel.PageSize), beginIndex);
 
             return new SortableResultModel<ExtraPayoutDTO>
             {
-                DataList = pagedList,
-                TotalDataList = GetSumDataList(pagedList),
-                TotalData = GetSumTotalData(pagedList, metaModel.BaseCurrency.ToUpperInvariant()),
-                TotalRows = dataList.Count()
+                DataList = groupData,
+                TotalDataList = GetSumDataList(groupData),
+                TotalData = GetSumTotalData(groupData, metaModel.BaseCurrency.ToUpperInvariant()),
+                TotalRows = rawGroupPagingData.Count()
             };
         }
 
