@@ -4,5 +4,7 @@
     {
         /*NAP Menu Permission*/
         public const string ReportBonusInfo = "BonusInfoReport";
+
+        public const string ExtraPayout = "ExtraPayoutReport";
     }
 }

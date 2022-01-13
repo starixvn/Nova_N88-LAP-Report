@@ -33,6 +33,8 @@
     <None Remove="ExcelTemplate\WinLossAnalysis\WinLossDetailReport.xlsx" />
     <None Remove="ExcelTemplate\BonusInfo\BonusInfo_Detail.xls" />
     <None Remove="ExcelTemplate\BonusInfo\BonusInfo_Summary.xls" />
+	<None Remove="ExcelTemplate\ExtraPayout\ExtraPayout.xls" />
+    <None Remove="ExcelTemplate\ExtraPayout\ExtraPayoutDetail.xls" />
     <None Remove="SpConfig\FanexSpName.PROD.xml" />
     <None Remove="SpConfig\FanexSpName.xml" />
   </ItemGroup>
@@ -72,6 +74,12 @@
     <Content Include="ExcelTemplate\BonusInfo\BonusInfo_Summary.xls">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+	 <Content Include="ExcelTemplate\ExtraPayout\ExtraPayout.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ExcelTemplate\ExtraPayout\ExtraPayoutDetail.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="SpConfig\FanexSpName.PROD.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -83,7 +91,7 @@
   <ItemGroup>
     <PackageReference Include="Fanex.Data" Version="4.2.0" />
     <PackageReference Include="Fanex.Data.SqlServer" Version="4.2.0" />
-    <PackageReference Include="Fanex.RemotingRef" Version="1.4.0" />
+    <PackageReference Include="Fanex.RemotingRef" Version="1.5.0" />
     <PackageReference Include="MessagePack" Version="1.7.3.7" />
     <PackageReference Include="MessagePack.AspNetCoreMvcFormatter" Version="1.7.3.7" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
@@ -107,6 +115,7 @@
     <ProjectReference Include="..\Fanex.Athena.Report.Core\Fanex.Athena.Report.Core.csproj" />
     <ProjectReference Include="..\Fanex.Athena.Report.Resources\Fanex.Athena.Report.Resources.csproj" />
     <ProjectReference Include="..\Module\Fanex.Athena.Report.BySite\Fanex.Athena.Report.BySite.csproj" />
+    <ProjectReference Include="..\Module\Fanex.Athena.Report.ExtraPayout\Fanex.Athena.Report.ExtraPayout.csproj" />
     <ProjectReference Include="..\Module\Fanex.Athena.Report.Marketing\Fanex.Athena.Report.Marketing.csproj" />
     <ProjectReference Include="..\Module\Fanex.Athena.Report.WinLossAnalysis\Fanex.Athena.Report.WinLossAnalysis.csproj" />
   </ItemGroup>

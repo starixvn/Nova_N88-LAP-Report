@@ -65,6 +65,7 @@
             WinLossAnalysis.ReportByGroupDIConfig.Setup(services);
             Marketing.ReportMarketingDIConfig.Setup(services);
             BonusInfo.ReportBonusInfoDIConfig.Setup(services);
+            ExtraPayout.ReportExtraPayoutDIConfig.Setup(services);
 
             var authConfig = Configuration.GetSection("MPAAuth").Get<AuthSharedSessionOption>();
             NVCSharedAuthManager
@@ -105,7 +106,6 @@
                 options.Filters.Add(new AuthorizeFilter(policy));
                 options.OutputFormatters.Add(new MessagePackOutputFormatter());
                 options.InputFormatters.Add(new MessagePackInputFormatter());
-
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
