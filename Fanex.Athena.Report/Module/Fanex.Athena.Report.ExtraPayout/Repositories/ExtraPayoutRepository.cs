@@ -201,38 +201,11 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
 
                 foreach (var col in temps)
                 {
-                    if (rowSpanFlag && numOfItem >= 1)
-                    {
-                        index++;
-                        col.IndexRowSpan = numOfItem;
-                        rowSpanFlag = false;
-                    }
-                    else
-                    {
-                        col.IndexRowSpan = -1;
-                    }
+                    CalculateIndexRowSpan(col, numOfItem, ref rowSpanFlag, ref index);
 
-                    if (productRowSpanFlag || col.Currency != currency || col.ProductCode != product)
-                    {
-                        col.ProductRowSpan = temps.Count(_ => _.Currency == col.Currency && _.ProductCode == col.ProductCode);
-                        product = col.ProductCode;
-                        productRowSpanFlag = false;
-                    }
-                    else
-                    {
-                        col.ProductRowSpan = -1;
-                    }
+                    CalculateProductRowSpan(temps, col, ref productRowSpanFlag, currency, ref product);
 
-                    if (curencyRowSpanFlag || col.Currency != currency)
-                    {
-                        col.CurencyRowSpan = temps.Count(_ => _.Currency == col.Currency);
-                        currency = col.Currency;
-                        curencyRowSpanFlag = false;
-                    }
-                    else
-                    {
-                        col.CurencyRowSpan = -1;
-                    }
+                    CalculateCurrencyRowSpan(temps, col, ref curencyRowSpanFlag, ref currency);
 
                     col.Index = index;
                     newDataList.Add(col);
@@ -240,6 +213,48 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
             }
 
             return newDataList;
+        }
+
+        private static void CalculateIndexRowSpan(ExtraPayoutDTO col, int numOfItem, ref bool rowSpanFlag, ref int index)
+        {
+            if (rowSpanFlag && numOfItem >= 1)
+            {
+                index++;
+                col.IndexRowSpan = numOfItem;
+                rowSpanFlag = false;
+            }
+            else
+            {
+                col.IndexRowSpan = -1;
+            }
+        }
+
+        private static void CalculateProductRowSpan(IList<ExtraPayoutDTO> temps, ExtraPayoutDTO col, ref bool productRowSpanFlag, int currency, ref string product)
+        {
+            if (productRowSpanFlag || col.Currency != currency || col.ProductCode != product)
+            {
+                col.ProductRowSpan = temps.Count(_ => _.Currency == col.Currency && _.ProductCode == col.ProductCode);
+                product = col.ProductCode;
+                productRowSpanFlag = false;
+            }
+            else
+            {
+                col.ProductRowSpan = -1;
+            }
+        }
+
+        private static void CalculateCurrencyRowSpan(IList<ExtraPayoutDTO> temps, ExtraPayoutDTO col, ref bool curencyRowSpanFlag, ref int currency)
+        {
+            if (curencyRowSpanFlag || col.Currency != currency)
+            {
+                col.CurencyRowSpan = temps.Count(_ => _.Currency == col.Currency);
+                currency = col.Currency;
+                curencyRowSpanFlag = false;
+            }
+            else
+            {
+                col.CurencyRowSpan = -1;
+            }
         }
 
         public async Task<SortableResultModel<ExtraPayoutDTO>> GetExtraPayoutMemberData(
