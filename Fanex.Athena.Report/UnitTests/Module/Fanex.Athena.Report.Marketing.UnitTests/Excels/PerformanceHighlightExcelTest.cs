@@ -57,7 +57,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             _mockFileProvider.Setup(_ => _.GetFileInfo(It.IsAny<string>())).Returns(_mockFileInfo.Object);
             _mockExcelBuilder.Setup(_ => _.LoadTemplate(It.IsAny<string>())).Returns(_mockWorkbook.Object);
 
-            mockRow.Setup(_ => _.Cells).Returns(MockListCell(4).ToList());
+            mockRow.Setup(_ => _.Cells).Returns(MockListCell(3).ToList());
             _mockExcelBuilder.Setup(_ => _.CopyRow(It.IsAny<ISheet>(), It.IsAny<ISheet>(), It.IsAny<int>(), It.IsAny<int>())).Returns(mockRow.Object);
 
             _mockExcelBuilder.Setup(_ => _.CloneSheet(_mockWorkbook.Object, It.IsAny<string>(), It.IsAny<string>())).Returns(sheet);
@@ -72,11 +72,10 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             _ = _target.Export(FakeRawData(), metaModel);
 
             //Assert
-            _mockExcelBuilder.Verify(_ => _.SetRowValue(sheet, templateSheet, 0, 0, 4, expectedTitle), Times.Exactly(2));
+            _mockExcelBuilder.Verify(_ => _.SetRowValue(sheet, templateSheet, 0, 0, 3, expectedTitle), Times.Exactly(2));
         }
 
         [Theory]
-        [InlineData(402, "All time", "Toàn bộ dữ liệu")]
         [InlineData(436, "From 09/12/2020", "Từ 09/12/2020")]
         [InlineData(437, "From 08/14/2020", "Từ 08/14/2020")]
         public void Export_AssignHeader_CorrectHeader(int brandId, string launchDateHeaderExpected, string launchDateHeaderVNExpected)
@@ -97,17 +96,15 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             var mockCellName = new Mock<ICell>();
             var mockCelllRange = new Mock<ICell>();
             var mockCellMonthToDate = new Mock<ICell>();
-            var mockCellAllTime = new Mock<ICell>();
 
             var listCell = new List<ICell>
             {
                mockCellName.Object,
                mockCelllRange.Object,
                mockCellMonthToDate.Object,
-               mockCellAllTime.Object
             };
 
-            mockRow.Setup(_ => _.Cells).Returns(MockListCell(4).ToList());
+            mockRow.Setup(_ => _.Cells).Returns(MockListCell(3).ToList());
             mockRowHeader.Setup(_ => _.Cells).Returns(listCell);
 
             _mockExcelBuilder.Setup(_ => _.CopyRow(sheet, templateSheet, It.IsAny<int>(), It.IsAny<int>())).Returns(mockRow.Object);
@@ -126,8 +123,6 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             mockCelllRange.Verify(_ => _.SetCellValue($"{metaModel.FromDate.ToString(DateTimeFormat.Date)} - {metaModel.ToDate.ToString(DateTimeFormat.Date)}"), Times.Exactly(4));
             mockCellMonthToDate.Verify(_ => _.SetCellValue("MTD"), Times.Exactly(2));
             mockCellMonthToDate.Verify(_ => _.SetCellValue("Từ đầu tháng"), Times.Exactly(2));
-            mockCellAllTime.Verify(_ => _.SetCellValue(launchDateHeaderExpected), Times.Exactly(1));
-            mockCellAllTime.Verify(_ => _.SetCellValue(launchDateHeaderVNExpected), Times.Exactly(1));
         }
 
         [Theory]
@@ -143,7 +138,6 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
                 NameVN = _fixture.Create<string>(),
                 DateRange = (decimal?)dateRange,
                 MonthToDate = (decimal?)monthToDate,
-                AllRange = (decimal?)allRange,
                 DataType = DbColumnDataType.Integer
             };
 
@@ -202,7 +196,6 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
                 NameVN = _fixture.Create<string>(),
                 DateRange = (decimal?)dateRange,
                 MonthToDate = (decimal?)monthToDate,
-                AllRange = (decimal?)allRange,
                 DataType = DbColumnDataType.Money
             };
 
@@ -261,7 +254,6 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
                 NameVN = _fixture.Create<string>(),
                 DateRange = (decimal?)dateRange,
                 MonthToDate = (decimal?)monthToDate,
-                AllRange = (decimal?)allRange,
                 DataType = DbColumnDataType.Percent
             };
 
@@ -313,7 +305,6 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             mockCellName.Verify(_ => _.SetCellValue(fakeRowData.NameVN), Times.Once);
             VerifyDecimalCell(mockCellRange, fakeRowData.DateRange, Times.Exactly(2));
             VerifyDecimalCell(mockMonthToDate, fakeRowData.MonthToDate, Times.Exactly(2));
-            VerifyDecimalCell(mockCellAllTime, fakeRowData.AllRange, Times.Exactly(2));
         }
 
         private void VerifyDecimalCell(Mock<ICell> mockCell, decimal? value, Times times)

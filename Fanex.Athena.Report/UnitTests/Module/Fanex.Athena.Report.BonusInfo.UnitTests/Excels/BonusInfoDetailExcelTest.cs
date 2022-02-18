@@ -30,12 +30,13 @@ namespace Fanex.Athena.Report.BonusInfo.UnitTests.Excels
         private const int ColumnBonusCode = 1;
         private const int ColumnClaimDate = 2;
         private const int ColumnBonusAmountClaimed = 3;
-        private const int ColumnTotalDeposit = 4;
-        private const int ColumnTotalWithdrawal = 5;
-        private const int ColumnStatus = 6;
-        private const int ColumnCompletion = 7;
+        private const int ColumnTransactionType = 4;
+        private const int ColumnTotalDeposit = 5;
+        private const int ColumnTotalWithdrawal = 6;
+        private const int ColumnStatus = 7;
+        private const int ColumnCompletion = 8;
 
-        private const int ColumnTemplateCount = 8;
+        private const int ColumnTemplateCount = 9;
 
         private const int RowTitleTemplate = 0;
         private const int RowHeaderTemplate = 1;
@@ -82,6 +83,7 @@ namespace Fanex.Athena.Report.BonusInfo.UnitTests.Excels
                 ViewResources.BonusCode,
                 ViewResources.ClaimDate,
                 ViewResources.BonusAmountClaimed,
+                ViewResources.TransactionType,
                 ViewResources.TotalDeposit,
                 ViewResources.TotalWithdrawal,
                 ViewResources.Status,
@@ -191,6 +193,7 @@ namespace Fanex.Athena.Report.BonusInfo.UnitTests.Excels
             Mock.Get(row.Object.Cells[ColumnBonusCode]).Verify(c => c.SetCellValue(item.BonusCode), Times.Once);
             Mock.Get(row.Object.Cells[ColumnClaimDate]).Verify(c => c.SetCellValue(item.ClaimedDate.ToString(DateCellFormat)), Times.Once);
             Mock.Get(row.Object.Cells[ColumnBonusAmountClaimed]).Verify(c => c.SetCellValue(Convert.ToDouble(item.ClaimedAmount)), Times.Once);
+            Mock.Get(row.Object.Cells[ColumnTransactionType]).Verify(c => c.SetCellValue(item.TransactionType), Times.Once);
             Mock.Get(row.Object.Cells[ColumnTotalDeposit]).Verify(c => c.SetCellValue(Convert.ToDouble(item.TotalDeposit)), Times.Once);
             Mock.Get(row.Object.Cells[ColumnTotalWithdrawal]).Verify(c => c.SetCellValue(Convert.ToDouble(item.TotalWithdrawal)), Times.Once);
             Mock.Get(row.Object.Cells[ColumnStatus]).Verify(c => c.SetCellValue(item.StatusText), Times.Once);

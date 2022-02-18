@@ -23,12 +23,13 @@ namespace Fanex.Athena.Report.BonusInfo.Excels
         private const int ColumnBonusCode = 1;
         private const int ColumnClaimDate = 2;
         private const int ColumnBonusAmountClaimed = 3;
-        private const int ColumnTotalDeposit = 4;
-        private const int ColumnTotalWithdrawal = 5;
-        private const int ColumnStatus = 6;
-        private const int ColumnCompletion = 7;
+        private const int ColumnTransactionType = 4;
+        private const int ColumnTotalDeposit = 5;
+        private const int ColumnTotalWithdrawal = 6;
+        private const int ColumnStatus = 7;
+        private const int ColumnCompletion = 8;
 
-        private const int ColumnTemplateCount = 8;
+        private const int ColumnTemplateCount = 9;
 
         private const int RowTitleTemplate = 0;
         private const int RowHeaderTemplate = 1;
@@ -94,6 +95,7 @@ namespace Fanex.Athena.Report.BonusInfo.Excels
             row.Cells[ColumnBonusCode].SetCellValue(ViewResources.BonusCode);
             row.Cells[ColumnClaimDate].SetCellValue(ViewResources.ClaimDate);
             row.Cells[ColumnBonusAmountClaimed].SetCellValue(ViewResources.BonusAmountClaimed);
+            row.Cells[ColumnTransactionType].SetCellValue(ViewResources.TransactionType);
             row.Cells[ColumnTotalDeposit].SetCellValue(ViewResources.TotalDeposit);
             row.Cells[ColumnTotalWithdrawal].SetCellValue(ViewResources.TotalWithdrawal);
             row.Cells[ColumnStatus].SetCellValue(ViewResources.Status);
@@ -116,6 +118,7 @@ namespace Fanex.Athena.Report.BonusInfo.Excels
             row.Cells[ColumnBonusCode].SetCellValue(rowData.BonusCode);
             row.Cells[ColumnClaimDate].SetCellValue(rowData.ClaimedDate.ToString(DateCellFormat));
             row.Cells[ColumnBonusAmountClaimed].SetCellValue((double)rowData.ClaimedAmount);
+            row.Cells[ColumnTransactionType].SetCellValue(rowData.TransactionType);
             row.Cells[ColumnTotalDeposit].SetCellValue((double)rowData.TotalDeposit);
             row.Cells[ColumnTotalWithdrawal].SetCellValue((double)rowData.TotalWithdrawal);
             row.Cells[ColumnStatus].SetCellValue(rowData.StatusText);

@@ -1,5 +1,4 @@
-﻿using Fanex.Athena.Report.Common.Consts;
-using Fanex.Athena.Report.Common.Excel;
+﻿using Fanex.Athena.Report.Common.Excel;
 using Fanex.Athena.Report.Marketing.Consts;
 using Fanex.Athena.Report.Marketing.DTO;
 using Fanex.Athena.Report.Marketing.MetaModels;
@@ -24,11 +23,10 @@ namespace Fanex.Athena.Report.Marketing.Excels
         private const int RowContentPercentTemplate = 4;
         private const int RowRegistrationHeaderTemplate = 5;
 
-        private const int TotalColumn = 4;
+        private const int TotalColumn = 3;
         private const int ColumnName = 0;
         private const int ColumnRange = 1;
         private const int ColumnMonthToDate = 2;
-        private const int ColumnAllTime = 3;
 
         private static IReadOnlyDictionary<int, int> TemplateRows = new Dictionary<int, int>
         {
@@ -119,12 +117,10 @@ namespace Fanex.Athena.Report.Marketing.Excels
             var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: RowHeaderTemplate, destRowIndex: _currentRowIndex++);
 
             var rangeHeaer = $"{metaModel.FromDate.ToString(DateTimeFormat.Date)} - {metaModel.ToDate.ToString(DateTimeFormat.Date)}";
-            var launchDateHeader = BuildLaunchDateHeader(metaModel.BrandId);
 
             row.Cells[ColumnName].SetCellValue(string.Empty);
             row.Cells[ColumnRange].SetCellValue(rangeHeaer);
             row.Cells[ColumnMonthToDate].SetCellValue(_isModeVN ? ViewResources.MonthToDateVN : ViewResources.MonthToDate);
-            row.Cells[ColumnAllTime].SetCellValue(launchDateHeader);
         }
 
         private void AssignRegistrationHeader(ISheet sheet, ISheet templateSheet, PerformanceHighlightExportAllMetaModel metaModel)
@@ -162,7 +158,6 @@ namespace Fanex.Athena.Report.Marketing.Excels
             row.Cells[ColumnName].SetCellValue(_isModeVN ? rowData.NameVN : rowData.Name);
             ExcelHelper.SetValueCellDecimal(row.Cells[ColumnRange], rowData.DateRange);
             ExcelHelper.SetValueCellDecimal(row.Cells[ColumnMonthToDate], rowData.MonthToDate);
-            ExcelHelper.SetValueCellDecimal(row.Cells[ColumnAllTime], rowData.AllRange);
         }
 
         private void AssignRegistrationData(ISheet sheet, ISheet templateSheet, int currentRowIndex, PerformanceHighlightRegistrationExportDTO rowData)
@@ -173,7 +168,6 @@ namespace Fanex.Athena.Report.Marketing.Excels
             row.Cells[ColumnName].SetCellValue(_isModeVN ? rowData.SignupUrlVN : rowData.SignupUrl);
             ExcelHelper.SetValueCellDecimal(row.Cells[ColumnRange], rowData.SignupUsers);
             ExcelHelper.SetValueCellDecimal(row.Cells[ColumnMonthToDate], rowData.MonthToDateSignupUsers);
-            row.Cells[ColumnAllTime].SetCellValue(string.Empty);
         }
 
         private void ResetState()
@@ -185,15 +179,6 @@ namespace Fanex.Athena.Report.Marketing.Excels
         private void SwitchToModeVN()
         {
             _isModeVN = true;
-        }
-
-        private string BuildLaunchDateHeader(int brandId)
-        {
-            if (brandId == Sites.N88SiteId)
-            {
-                return _isModeVN ? ViewResources.AllTimeVN : ViewResources.AllTime;
-            }
-            return string.Format(_isModeVN ? ViewResources.FromLaunchDateVN : ViewResources.FromLaunchDate, Sites.LaunchDate[brandId]);
         }
 
         private static int GetRowTemplateIndex(byte? dataType)
