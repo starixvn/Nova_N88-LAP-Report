@@ -21,7 +21,7 @@ namespace Fanex.Athena.Report.Core.Attributes
             bool valiDataRangeLimitation = false)
             : base(typeof(RequestValidationImplAttribute))
         {
-            Arguments = new[] { validateCurrency as object, validateCurrencyList as object, validateBrand as object, validateBrandList as object, valiDataRangeLimitation as object };
+            Arguments = new object[] { validateCurrency, validateCurrencyList, validateBrand, validateBrandList, valiDataRangeLimitation };
         }
     }
 

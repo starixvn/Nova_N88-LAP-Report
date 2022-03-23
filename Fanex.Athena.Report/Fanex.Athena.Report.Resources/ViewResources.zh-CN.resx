@@ -640,4 +640,7 @@
   <data name="TotalBonus" xml:space="preserve">
     <value>Total Bonus</value>
   </data>
+  <data name="TransactionType" xml:space="preserve">
+    <value>Transaction Type</value>
+  </data>
 </root>

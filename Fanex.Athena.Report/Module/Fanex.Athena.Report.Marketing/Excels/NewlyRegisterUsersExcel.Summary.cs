@@ -24,8 +24,8 @@ namespace Fanex.Athena.Report.Marketing.Excels
         private const int SummarySheetTotalCompareDateCol = 2;
         private const int SummarySheetTotalChangePercentCol = 3;
 
-        private const int SummarySheetTemplateBonusHeader = 4;
-        private const int SummarySheetTemplateBonusContent = 5;
+        private const int SummarySheetTemplateBonusHeader = 7;
+        private const int SummarySheetTemplateBonusContent = 8;
         private const int SummarySheetBonusCodeCol = 0;
         private const int SummarySheetBonusNameCol = 1;
         private const int SummarySheetBonusNRUCol = 2;
@@ -33,15 +33,15 @@ namespace Fanex.Athena.Report.Marketing.Excels
         private const int SummarySheetBonusFirstDepositAmountCol = 4;
         private const int SummarySheetBonusTotalDepositAmountCol = 5;
 
-        private const int SummarySheetTemplateSingupHeader = 6;
-        private const int SummarySheetTemplateSingupContent = 7;
+        private const int SummarySheetTemplateSingupHeader = 4;
+        private const int SummarySheetTemplateSingupContent = 5;
         private const int SummarySheetSingupNameCol = 0;
         private const int SummarySheetSingupNRUCol = 1;
         private const int SummarySheetSingupDepositCol = 2;
         private const int SummarySheetSingupFirstDepositAmountCol = 3;
         private const int SummarySheetSingupTotalDepositAmountCol = 4;
 
-        private const int SummarySheetTemplateSingupTotalContent = 8;
+        private const int SummarySheetTemplateSingupTotalContent = 6;
 
         private int SummaryCurrentRowIndex = -1; 
 
@@ -57,15 +57,15 @@ namespace Fanex.Athena.Report.Marketing.Excels
 
             CreateSpaceRow(sheet, templateSheet);
 
-            AssignSummarySheetBonusHeader(sheet, templateSheet);
-            AssignSummarySheetBonusData(sheet, templateSheet, summaryData.CampaignData);
+            AssignSummarySheetSignupHeader(sheet, templateSheet);
+            AssignSummarySheetSignupData(sheet, templateSheet, summaryData.SignupData);
+            AssignSummarySheetSignupTotalData(sheet, templateSheet, summaryData.TotalSignupData);
 
             CreateSpaceRow(sheet, templateSheet);
 
-            AssignSummarySheetSignupHeader(sheet, templateSheet);
-            AssignSummarySheetSignupData(sheet, templateSheet, summaryData.SignupData);
-            AssignSummarySheetSignupTotalData(sheet, templateSheet, SummaryCurrentRowIndex, summaryData.TotalSignupData);
-
+            AssignSummarySheetBonusHeader(sheet, templateSheet);
+            AssignSummarySheetBonusData(sheet, templateSheet, summaryData.CampaignData);
+         
             _builder.RemoveSheet(workBook, SummaryTemplateSheetName);
         }
 
@@ -183,9 +183,9 @@ namespace Fanex.Athena.Report.Marketing.Excels
             row.Cells[SummarySheetSingupTotalDepositAmountCol].SetCellValue(rowData.TotalDepositAmount);
         }
 
-        private void AssignSummarySheetSignupTotalData(ISheet sheet, ISheet templateSheet, int lastRowIndex, TotalSignupUrlNewlyRegisterUsersDTO rowData)
+        private void AssignSummarySheetSignupTotalData(ISheet sheet, ISheet templateSheet, TotalSignupUrlNewlyRegisterUsersDTO rowData)
         {
-            var row = _builder.CopyRow(sheet, templateSheet, SummarySheetTemplateSingupTotalContent, lastRowIndex + 1);
+            var row = _builder.CopyRow(sheet, templateSheet, SummarySheetTemplateSingupTotalContent, ++SummaryCurrentRowIndex);
 
             row.Cells[SummarySheetSingupNameCol].SetCellValue(ViewResources.Total);
             row.Cells[SummarySheetSingupNRUCol].SetCellValue(rowData.TotalNewlyRegisterUsers);

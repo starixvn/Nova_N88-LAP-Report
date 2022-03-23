@@ -760,4 +760,7 @@
   <data name="VS3" xml:space="preserve">
     <value>Virtual Sports 3</value>
   </data>
+  <data name="TransactionType" xml:space="preserve">
+    <value>Transaction Type</value>
+  </data>
 </root>

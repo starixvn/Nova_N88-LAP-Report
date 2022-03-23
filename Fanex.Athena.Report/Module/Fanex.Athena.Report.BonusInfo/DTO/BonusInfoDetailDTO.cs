@@ -16,6 +16,8 @@ namespace Fanex.Athena.Report.BonusInfo.DTO
 
         public decimal ClaimedAmount { get; set; }
 
+        public string TransactionType { get; set; }
+
         public decimal TotalDeposit { get; set; }
 
         public decimal TotalWithdrawal { get; set; }
