@@ -41,5 +41,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.DTO
         public decimal ProgressiveBet { get; set; }
         public decimal BasedProgressiveWin { get; set; }
         public decimal BasedProgressiveBet { get; set; }
+        public decimal Commission { get; set; }
+        public decimal BasedCommission { get; set; }
     }
 }

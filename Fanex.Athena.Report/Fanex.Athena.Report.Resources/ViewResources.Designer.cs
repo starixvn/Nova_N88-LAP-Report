@@ -493,6 +493,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Commission.
+        /// </summary>
+        public static string Commission {
+            get {
+                return ResourceManager.GetString("Commission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Compare Date.
         /// </summary>
         public static string CompareDate {

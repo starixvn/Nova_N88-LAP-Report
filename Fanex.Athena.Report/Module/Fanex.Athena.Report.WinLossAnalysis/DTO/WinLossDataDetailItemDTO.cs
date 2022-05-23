@@ -30,6 +30,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.DTO
         public decimal GGR { get; set; }
         public decimal PlayerWinloss { get; set; }
         public decimal ProgressiveBet { get; set; }
+        public decimal Commission { get; set; }
         public decimal ProgressiveWin { get; set; }
         public int BetCount { get; set; }
         public decimal AvgBetAmount { get; set; }

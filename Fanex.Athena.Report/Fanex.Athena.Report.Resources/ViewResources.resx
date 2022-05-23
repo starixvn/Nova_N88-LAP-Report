@@ -766,4 +766,7 @@
   <data name="BTC" xml:space="preserve">
     <value>Bitcoin</value>
   </data>
+  <data name="Commission" xml:space="preserve">
+    <value>Commission</value>
+  </data>
 </root>

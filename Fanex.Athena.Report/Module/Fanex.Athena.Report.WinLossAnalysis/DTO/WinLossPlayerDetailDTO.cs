@@ -14,6 +14,8 @@
         public decimal BasedNetTurnoverForMargin { get; set; }
         public decimal GGR { get; set; }
         public decimal BasedGGR { get; set; }
+        public decimal Commission { get; set; }
+        public decimal BasedCommission { get; set; }
         public decimal BasedGGRForMargin { get; set; }
         public decimal PlayerWinloss { get; set; }
         public decimal ProgressiveBet { get; set; }

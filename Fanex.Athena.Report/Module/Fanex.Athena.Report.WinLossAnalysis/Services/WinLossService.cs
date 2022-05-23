@@ -96,7 +96,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 WithdrawalAmount = dataTotal.TotalBasedWithdrawalAmount,
                 BonusAmount = dataTotal.TotalBasedBonusAmount,
                 ProgressiveBet = dataTotal.TotalBasedProgressiveBet,
-                ProgressiveWin = dataTotal.TotalBasedProgressiveWin
+                ProgressiveWin = dataTotal.TotalBasedProgressiveWin,
+                Commission = dataTotal.TotalBasedCommission
             };
         }
 
@@ -115,10 +116,11 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
             return data.Group;
         }
 
-        private static Func<bool, bool, Func<string, IEnumerable<WinLossDataItemDTO>, WinLossRecordViewModel>> Mapper = (drilldownInOriginalCurrency, isGroupByPlayer) => (parentKey, childData) =>
+        private static readonly Func<bool, bool, Func<string, IEnumerable<WinLossDataItemDTO>, WinLossRecordViewModel>> Mapper =
+            (drilldownInOriginalCurrency, isGroupByPlayer) => (parentKey, childData) =>
         {
             var (turnover, netTurnover, netTurnoverForMargin, ggr, ggrForMargin, playerWinloss, betCount, uniquePlayers,
-                numberOfDeposit, depositAmount, numberOfWithdrawal, withdrawalAmount, bonusAmount, closingBalance, progressiveBet, progressiveWin) = SumChildData(childData);
+                numberOfDeposit, depositAmount, numberOfWithdrawal, withdrawalAmount, bonusAmount, closingBalance, progressiveBet, progressiveWin, commission) = SumChildData(childData);
 
             var firstChild = childData?.FirstOrDefault();
             var parent = new WinLossRecordViewModel
@@ -144,6 +146,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 ClosingBalance = closingBalance,
                 ProgressiveBet = progressiveBet,
                 ProgressiveWin = progressiveWin,
+                Commission = commission,
                 DrillDownData = SelectDrillDownData(parentKey, childData, drilldownInOriginalCurrency, isGroupByPlayer)
             };
 
@@ -151,6 +154,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
         };
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S3776:Cognitive Complexity of methods should not be too high", Justification = "Howard")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S1541:Methods and properties should not be too complex", Justification = "Howard")]
         private static IEnumerable<WinLossRecordViewModel> SelectDrillDownData(string parentKey, IEnumerable<WinLossDataItemDTO> childData, bool drilldownInOriginalCurrency, bool isGroupByPlayer)
         {
             return childData.Select(_ => new WinLossRecordViewModel
@@ -168,6 +172,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 PlayerWinloss = drilldownInOriginalCurrency ? _.PlayerWinloss : _.BasedPlayerWinloss,
                 ProgressiveBet = drilldownInOriginalCurrency ? _.ProgressiveBet : _.BasedProgressiveBet,
                 ProgressiveWin = drilldownInOriginalCurrency ? _.ProgressiveWin : _.BasedProgressiveWin,
+                Commission = drilldownInOriginalCurrency ? _.Commission : _.BasedCommission,
                 BetCount = _.BetCount,
                 AvgBetAmount = drilldownInOriginalCurrency ? _.AvgBetAmount : _.BasedAvgBetAmount,
                 UniquePlayers = _.UniquePlayers,
@@ -182,7 +187,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
         }
 
         private static (decimal, decimal, decimal, decimal, decimal, decimal, int, int,
-            int, decimal, int, decimal, decimal, decimal, decimal, decimal) SumChildData(IEnumerable<WinLossDataItemDTO> childData)
+            int, decimal, int, decimal, decimal, decimal, decimal, decimal, decimal) SumChildData(IEnumerable<WinLossDataItemDTO> childData)
         {
             var turnover = 0.0m;
             var netTurnover = 0.0m;
@@ -200,6 +205,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
             var closingBalance = 0.0m;
             var progressiveBet = 0.0m;
             var progressiveWin = 0.0m;
+            var commission = 0.0m;
 
             foreach (var childItem in childData)
             {
@@ -219,10 +225,11 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 closingBalance += childItem.BasedClosingBalance;
                 progressiveBet += childItem.BasedProgressiveBet;
                 progressiveWin += childItem.BasedProgressiveWin;
+                commission += childItem.BasedCommission;
             }
 
             return (turnover, netTurnover, netTurnoverForMargin, ggr, ggrForMargin, playerWinloss, betCount, uniquePlayers,
-                numberOfDeposit, depositAmount, numberOfWithdrawal, withdrawalAmount, bonusAmount, closingBalance, progressiveBet, progressiveWin);
+                numberOfDeposit, depositAmount, numberOfWithdrawal, withdrawalAmount, bonusAmount, closingBalance, progressiveBet, progressiveWin, commission);
         }
     }
 }
