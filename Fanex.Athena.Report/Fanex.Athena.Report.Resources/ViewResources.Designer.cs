@@ -349,6 +349,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bitcoin.
+        /// </summary>
+        public static string BTC {
+            get {
+                return ResourceManager.GetString("BTC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Business Performance Highlight.
         /// </summary>
         public static string BusinessPerformanceHighlight {
