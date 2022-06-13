@@ -71,7 +71,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Excels
                 metaModel);
 
             //Assert
-            _mockExcelBuilder.Verify(_ => _.SetRowValue(sheet, templateSheet, 0, 0, 18, expectedTitle), Times.Once);
+            _mockExcelBuilder.Verify(_ => _.SetRowValue(sheet, templateSheet, 0, 0, 21, expectedTitle), Times.Once);
             _mockExcelBuilder.Verify(_ => _.ClearTemplate(sheet, 4), Times.Once);
         }
 

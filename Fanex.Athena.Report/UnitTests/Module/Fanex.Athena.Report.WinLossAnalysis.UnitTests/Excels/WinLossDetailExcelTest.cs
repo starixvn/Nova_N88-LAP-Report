@@ -59,7 +59,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Excels
             _ = _target.Export(Enumerable.Empty<WinLossDataDetailItemDTO>(), metaModel);
 
             //Assert
-            _mockExcelBuilder.Verify(_ => _.SetRowValueBeginCell(sheet, templateSheet, 0, 0, 20, metaModel.GroupBy == 2 ? 1 : 0, expectedTitle), Times.Once);
+            _mockExcelBuilder.Verify(_ => _.SetRowValueBeginCell(sheet, templateSheet, 0, 0, 19, metaModel.GroupBy == 2 ? 1 : 0, expectedTitle), Times.Once);
             _mockExcelBuilder.Verify(_ => _.ClearTemplate(sheet, 3), Times.Once);
         }
 
@@ -132,8 +132,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Excels
         }
 
         [Theory]
-        [InlineData(8, 10)]
-        [InlineData(10, 8, "turnover", "playerWinloss")]
+        [InlineData(8, 11)]
+        [InlineData(10, 9, "turnover", "playerWinloss")]
         public void Export_HideColumns_Correctly(int startHideRange, int countHideRange, params string[] orderCols)
         {
             //Arrange
