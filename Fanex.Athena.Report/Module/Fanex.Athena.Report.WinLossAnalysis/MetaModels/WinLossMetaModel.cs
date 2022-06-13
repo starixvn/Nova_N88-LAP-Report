@@ -67,7 +67,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
 
         [SpParam(Ignored = true)]
         public bool IsValid => !string.IsNullOrWhiteSpace(ProductIds) && !string.IsNullOrWhiteSpace(BrandIds) && !string.IsNullOrWhiteSpace(BaseCurrency) &&
-            GroupBy >= 1 && GroupBy <= 5 &&
+            GroupBy >= 1 && GroupBy <= 6 &&
             DateType >= 1 && DateType <= 2 &&
             UserNameFilterId >= 1 && UserNameFilterId <= 3 &&
             FromDate <= ToDate &&
