@@ -83,6 +83,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 PlayerWinloss = drilldownInOriginalCurrency ? _.PlayerWinloss : _.BasedPlayerWinloss,
                 ProgressiveWin = drilldownInOriginalCurrency ? _.ProgressiveWin : _.BasedProgressiveWin,
                 ProgressiveBet = drilldownInOriginalCurrency ? _.ProgressiveBet : _.BasedProgressiveBet,
+                Commission = drilldownInOriginalCurrency ? _.Commission : _.BasedCommission,
                 BetCount = _.BetCount,
                 AvgBetAmount = drilldownInOriginalCurrency ? _.AvgBetAmount : _.BasedAvgBetAmount,
                 UniquePlayers = _.UniquePlayers,

@@ -31,7 +31,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
 
         private const int RowContentTemplate = 3;
         private const int RowNoInfoTemplate = 4;
-        private const int ColumnTemplateCount = 20;
+        private const int ColumnTemplateCount = 19;
 
         private const string TemplatePath = "/ExcelTemplate/WinLossAnalysis/WinLossDetailReport.xlsx";
 
@@ -68,9 +68,10 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
             else
             {
                 AssignData(sheet, templateSheet, data, metaModel.OrderCols);
-                HideColumns(sheet, metaModel.OrderCols);
-                HideColumnBasedGroupBy(sheet, metaModel.GroupBy);
             }
+
+            HideColumns(sheet, metaModel.OrderCols);
+            HideColumnBasedGroupBy(sheet, metaModel.GroupBy);
 
             _builder.RemoveSheet(workBook, TemplateSheetName);
 

@@ -20,5 +20,6 @@
         public decimal TotalBasedClosingBalance { get; set; }
         public decimal TotalBasedProgressiveWin { get; set; }
         public decimal TotalBasedProgressiveBet { get; set; }
+        public decimal TotalBasedCommission { get; set; }
     }
 }

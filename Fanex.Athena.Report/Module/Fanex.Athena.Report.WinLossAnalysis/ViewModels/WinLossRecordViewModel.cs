@@ -17,6 +17,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.ViewModels
         public decimal Turnover { get; set; }
         public decimal NetTurnover { get; set; }
         public decimal Ggr { get; set; }
+        public decimal Commission { get; set; }
         public decimal PlayerWinloss { get; set; }
         public int BetCount { get; set; }
         public decimal AvgBetAmount { get; set; }
