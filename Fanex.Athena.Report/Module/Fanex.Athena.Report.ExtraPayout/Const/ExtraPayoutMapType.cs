@@ -41,5 +41,7 @@ namespace Fanex.Athena.Report.ExtraPayout.Const
         public const int VgamingFreeBetsJackpotPrize = 6602;
 
         public const int VgamingFreeBetsJackpotContribution = 6603;
+
+        public const int PayoutStreamerTips = 7401;
     }
 }

@@ -46,7 +46,8 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
             { ExtraPayoutMapType.ArcadiaGamingBonus, BetType.ArcadiaGamingBonus },
             { ExtraPayoutMapType.VgamingFreeBets, BetType.VgamingFreeBets },
             { ExtraPayoutMapType.VgamingFreeBetsJackpotPrize, BetType.VgamingFreeBetsJackpotPrize },
-            { ExtraPayoutMapType.VgamingFreeBetsJackpotContribution, BetType.VgamingFreeBetsJackpotContribution }
+            { ExtraPayoutMapType.VgamingFreeBetsJackpotContribution, BetType.VgamingFreeBetsJackpotContribution },
+            { ExtraPayoutMapType.PayoutStreamerTips, BetType.TIPStreamerTips }
         };
 
         public ExtraPayoutRepository(

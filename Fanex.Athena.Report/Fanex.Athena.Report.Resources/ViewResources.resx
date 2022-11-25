@@ -769,4 +769,7 @@
   <data name="Commission" xml:space="preserve">
     <value>Commission</value>
   </data>
+  <data name="TIP" xml:space="preserve">
+    <value>Player Tips</value>
+  </data>
 </root>

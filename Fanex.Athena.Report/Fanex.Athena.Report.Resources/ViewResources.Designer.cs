@@ -1483,6 +1483,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Player Tips.
+        /// </summary>
+        public static string TIP {
+            get {
+                return ResourceManager.GetString("TIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tip Amount.
         /// </summary>
         public static string TipAmount {
