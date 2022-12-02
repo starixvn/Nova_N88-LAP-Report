@@ -5,6 +5,7 @@ using Fanex.Athena.Report.ExtraPayout.DTO;
 using Fanex.Athena.Report.ExtraPayout.Excels.Interfaces;
 using Fanex.Athena.Report.ExtraPayout.MetaModels;
 using Fanex.Athena.Report.Resources;
+using Fanex.Athena.Report.Resources.Constants;
 using NPOI.SS.UserModel;
 using System.Collections.Generic;
 using System.IO;
@@ -27,7 +28,7 @@ namespace Fanex.Athena.Report.ExtraPayout.Excels
         private const int ColumnLicSharingAmount = 7;
 
         private const int RowNoInfoTemplate = 6;
-        private const int ColumnTemplateCount = 7;
+        private const int ColumnTemplateCount = 8;
 
         private const int RowHeaderTemplate = 1;
         private const int RowTitleTemplate = 0;
@@ -117,12 +118,12 @@ namespace Fanex.Athena.Report.ExtraPayout.Excels
             {
                 var row = _builder.CopyRow(sheet, templateSheet, RowContentTemplate, index + RowContentTemplate);
                 row.Cells[ColumnIndex].SetCellValue(++index);
-                AssignCellData(row, item);
+                AssignCellData(row, item, true);
             }
             AssignGrandTotal(sheet, templateSheet, data, index + RowContentTemplate);
         }
 
-        private static void AssignCellData(IRow row, ExtraPayoutDetailDTO item)
+        private static void AssignCellData(IRow row, ExtraPayoutDetailDTO item, bool hideLicSharingAmountForTip = false)
         {
             row.Cells[ColumnDate].SetCellValue(item.DateString);
             row.Cells[ColumnRefNo].SetCellValue(item.Refno);
@@ -130,7 +131,15 @@ namespace Fanex.Athena.Report.ExtraPayout.Excels
             row.Cells[ColumnPromotionType].SetCellValue(item.PromotionName);
             row.Cells[ColumnTurnOver].SetCellValue((double)item.Turnover);
             row.Cells[ColumnCustomerAmount].SetCellValue((double)item.Amount);
-            row.Cells[ColumnLicSharingAmount].SetCellValue((double)item.SharingAmount);
+
+            if (item.ProductCode == Product.TIP && hideLicSharingAmountForTip)
+            {
+                row.Cells[ColumnLicSharingAmount].SetCellValue("-");
+            }
+            else
+            {
+                row.Cells[ColumnLicSharingAmount].SetCellValue((double)item.SharingAmount);
+            }
         }
 
         private void AssignGrandTotal(ISheet sheet, ISheet templateSheet, SortableResultModel<ExtraPayoutDetailDTO> data, int index)
