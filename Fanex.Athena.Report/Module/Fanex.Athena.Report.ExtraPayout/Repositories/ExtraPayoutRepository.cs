@@ -10,6 +10,7 @@ using Fanex.Athena.Report.ExtraPayout.DTO;
 using Fanex.Athena.Report.ExtraPayout.MetaModels;
 using Fanex.Athena.Report.ExtraPayout.Repositories.Interfaces;
 using Fanex.Athena.Report.Resources;
+using Fanex.Athena.Report.Resources.Constants;
 using Fanex.Data;
 using Fanex.RemotingRef;
 using System;
@@ -81,16 +82,18 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
         {
             var productCode = reader.GetVal<string>("ProductCode") ?? string.Empty;
             var currency = reader.GetVal<int>("Currency");
+            var basedSharingAmount = reader.GetVal<decimal>("BasedSharingAmount");
+            var sharingAmount = metaModel.IsConvertAllToBaseCurrency ? basedSharingAmount : reader.GetVal<decimal>("SharingAmount");
 
             data.BetCount = reader.GetVal<int>("betcount");
             data.ProductCode = productCode;
             data.ProductName = ViewResources.ResourceManager.GetString(productCode);
             data.BasedTurnover = reader.GetVal<decimal>("BasedTurnover");
             data.BasedAmount = reader.GetVal<decimal>("BasedAmount");
-            data.BasedSharingAmount = reader.GetVal<decimal>("BasedSharingAmount");
+            data.BasedSharingAmount = productCode == Product.TIP ? 0 : basedSharingAmount;
             data.Turnover = metaModel.IsConvertAllToBaseCurrency ? data.BasedTurnover : reader.GetVal<decimal>("Turnover");
             data.Amount = metaModel.IsConvertAllToBaseCurrency ? data.BasedAmount : reader.GetVal<decimal>("Amount");
-            data.SharingAmount = metaModel.IsConvertAllToBaseCurrency ? data.BasedSharingAmount : reader.GetVal<decimal>("SharingAmount");
+            data.SharingAmount = productCode == Product.TIP ? 0 : sharingAmount;
             data.Currency = currency;
             data.CurrencyName = currencyList.FirstOrDefault(x => x.ID == currency)?.Name;
         }
@@ -373,6 +376,8 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
                 var promotionType = reader.GetVal<int>("PromotionType");
                 var date = reader.GetVal<DateTime>("WinLostDate");
                 var dateString = date.ToString("MM/dd/yyyy");
+                var basedSharingAmount = reader.GetVal<decimal>("BasedSharingAmount");
+                var sharingAmount = metaModel.IsConvertAllToBaseCurrency ? basedSharingAmount : reader.GetVal<decimal>("SharingAmount");
 
                 var item = new ExtraPayoutDetailDTO
                 {
@@ -384,13 +389,13 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
                     PromotionName = GetPromotionName(promotionType),
                     BasedTurnover = reader.GetVal<decimal>("BasedTurnover"),
                     BasedAmount = reader.GetVal<decimal>("BasedAmount"),
-                    BasedSharingAmount = reader.GetVal<decimal>("BasedSharingAmount"),
+                    BasedSharingAmount = productCode == Product.TIP ? 0 : basedSharingAmount,
                     Refno = reader.GetVal<string>("RefNo")
                 };
 
                 item.Turnover = metaModel.IsConvertAllToBaseCurrency ? item.BasedTurnover : reader.GetVal<decimal>("Turnover");
                 item.Amount = metaModel.IsConvertAllToBaseCurrency ? item.BasedAmount : reader.GetVal<decimal>("Amount");
-                item.SharingAmount = metaModel.IsConvertAllToBaseCurrency ? item.BasedSharingAmount : reader.GetVal<decimal>("SharingAmount");
+                item.SharingAmount = productCode == Product.TIP ? 0 : sharingAmount;
 
                 dataList.Add(item);
             }

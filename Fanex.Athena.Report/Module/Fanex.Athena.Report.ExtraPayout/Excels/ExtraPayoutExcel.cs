@@ -5,6 +5,7 @@ using Fanex.Athena.Report.ExtraPayout.DTO;
 using Fanex.Athena.Report.ExtraPayout.Excels.Interfaces;
 using Fanex.Athena.Report.ExtraPayout.MetaModels;
 using Fanex.Athena.Report.Resources;
+using Fanex.Athena.Report.Resources.Constants;
 using NPOI.SS.UserModel;
 using System.Collections.Generic;
 using System.IO;
@@ -125,14 +126,14 @@ namespace Fanex.Athena.Report.ExtraPayout.Excels
             {
                 var row = _builder.CopyRow(sheet, templateSheet, RowContentTemplate, index + RowContentTemplate);
                 row.Cells[ColumnIndex].SetCellValue(++index);
-                AssignCellData(row, item);
+                AssignCellData(row, item, true);
             }
 
             AssignTotalCurrency(sheet, templateSheet, data, index + RowContentTemplate);
             AssignGrandTotal(sheet, templateSheet, data, index + RowContentTemplate + data.TotalDataList.Count());
         }
 
-        private static void AssignCellData(IRow row, ExtraPayoutDTO item)
+        private static void AssignCellData(IRow row, ExtraPayoutDTO item, bool hideLicSharingAmountForTip = false)
         {
             row.Cells[ColumnDate].SetCellValue(item.DateString);
             row.Cells[ColumnExternalId].SetCellValue(item.Nickname);
@@ -143,21 +144,33 @@ namespace Fanex.Athena.Report.ExtraPayout.Excels
             row.Cells[ColumnTurnOver].SetCellValue((double)item.Turnover);
             row.Cells[ColumnTotalTransaction].SetCellValue(item.BetCount);
             row.Cells[ColumnCustomerAmount].SetCellValue((double)item.Amount);
-            row.Cells[ColumnLicSharingAmount].SetCellValue((double)item.SharingAmount);
+
+            if (item.ProductCode == Product.TIP && hideLicSharingAmountForTip)
+            {
+                row.Cells[ColumnLicSharingAmount].SetCellValue("-");
+            }
+            else
+            {
+                row.Cells[ColumnLicSharingAmount].SetCellValue((double)item.SharingAmount);
+            }
         }
 
         private void AssignTotalCurrency(ISheet sheet, ISheet templateSheet, SortableResultModel<ExtraPayoutDTO> data, int index)
         {
+            var beginIndex = index;
+
             foreach (var item in data.TotalDataList)
             {
-                var row = _builder.CopyRow(sheet, templateSheet, RowTotalCurrencyTemplate, index);
+                var row = index == beginIndex ? _builder.CopyRow(sheet, templateSheet, RowTotalCurrencyTemplate, index)
+                    : _builder.CopyRow(sheet, templateSheet, RowTotalCurrencyTemplate + 1, index);
                 AssignCellData(row, item);
                 row.Cells[ColumnIndex].SetCellValue(ViewResources.Total);
                 row.Cells[ColumnCurrency].SetCellValue(item.CurrencyName);
-                _builder.MergeCells(sheet, firstRow: index, lastRow: index, firstCol: ColumnIndex, lastCol: ColumnSystemId);
                 _builder.MergeCells(sheet, firstRow: index, lastRow: index, firstCol: ColumnCurrency, lastCol: ColumnPromotionType);
                 index++;
             }
+
+            _builder.MergeCells(sheet, firstRow: beginIndex, lastRow: index - 1, firstCol: ColumnIndex, lastCol: ColumnSystemId);
         }
 
         private void AssignGrandTotal(ISheet sheet, ISheet templateSheet, SortableResultModel<ExtraPayoutDTO> data, int index)
