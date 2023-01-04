@@ -6,5 +6,7 @@
         public const string ReportBonusInfo = "BonusInfoReport";
 
         public const string ExtraPayout = "ExtraPayoutReport";
+
+        public const string AbnormalBet = "AbnormalBetReport";
     }
 }
