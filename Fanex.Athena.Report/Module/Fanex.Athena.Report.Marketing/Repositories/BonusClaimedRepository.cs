@@ -41,7 +41,7 @@ namespace Fanex.Athena.Report.Marketing.Repositories
         {
             using (var db = GetObjectDb(SpConsts.BonusClaimedDetail))
             {
-                var rows = Enumerable.Empty<BonusClaimedDetailDTO>();
+                IEnumerable<BonusClaimedDetailDTO> rows = null;
                 using (var reader = await db.ExecuteReaderAsync(metaModel))
                 {
                     rows = GetDataItems<BonusClaimedDetailDTO>(reader);

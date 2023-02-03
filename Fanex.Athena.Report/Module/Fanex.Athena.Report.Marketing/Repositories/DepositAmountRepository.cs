@@ -34,7 +34,7 @@ namespace Fanex.Athena.Report.Marketing.Repositories
         {
             using (var db = GetObjectDb(SpConsts.DepositAmountDetail))
             {
-                var rows = Enumerable.Empty<DepositAmountDetailDTO>();
+                IEnumerable<DepositAmountDetailDTO> rows = null;
                 using (var reader = await db.ExecuteReaderAsync(metaModel))
                 {
                     rows = GetDataItems<DepositAmountDetailDTO>(reader);

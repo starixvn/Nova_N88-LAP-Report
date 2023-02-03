@@ -52,6 +52,7 @@
             }
         }
 
+#pragma warning disable S1854
         private static void AddExceptionInfo(StringBuilder builder, Exception exception, int limitedInnerException)
         {
             builder.AppendLine();
@@ -66,6 +67,7 @@
                 AddExceptionInfo(builder, exception.InnerException, --limitedInnerException);
             }
         }
+#pragma warning restore S1854
 
         private static IDictionary<string, object> GetDbExceptionInfo(Exception exception)
         {
