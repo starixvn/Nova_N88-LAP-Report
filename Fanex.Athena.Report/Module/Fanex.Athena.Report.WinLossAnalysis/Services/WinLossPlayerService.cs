@@ -65,6 +65,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 ProgressiveWin = drilldownInOriginalCurrency ? _.ProgressiveWin : _.BasedProgressiveWin
             });
 
+#pragma warning disable S3776
         private IEnumerable<WinLossRecordViewModel> ToPlayerDetailViewModel(IEnumerable<WinLossPlayerDetailDTO> dataItems, bool drilldownInOriginalCurrency,
             string usernameParent, string originalCurrency)
             => dataItems.Select(_ => new WinLossRecordViewModel
@@ -89,5 +90,6 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 UniquePlayers = _.UniquePlayers,
                 Margin = NumberHepler.Margin(_.BasedGGRForMargin, _.BasedNetTurnoverForMargin)
             });
+#pragma warning restore S3776
     }
 }

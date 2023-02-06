@@ -39,7 +39,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.Athena.Report.BonusIn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.Athena.Report.BonusInfo.UnitTests", "UnitTests\Module\Fanex.Athena.Report.BonusInfo.UnitTests\Fanex.Athena.Report.BonusInfo.UnitTests.csproj", "{96A8DD84-9152-47A3-835A-753D093DFE5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Athena.Report.ExtraPayout", "Module\Fanex.Athena.Report.ExtraPayout\Fanex.Athena.Report.ExtraPayout.csproj", "{69C9A380-88E8-43EE-91B1-A8BE314006EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.Athena.Report.ExtraPayout", "Module\Fanex.Athena.Report.ExtraPayout\Fanex.Athena.Report.ExtraPayout.csproj", "{69C9A380-88E8-43EE-91B1-A8BE314006EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Athena.Report.AbnormalBet", "Module\Fanex.Athena.Report.AbnormalBet\Fanex.Athena.Report.AbnormalBet.csproj", "{7A247F47-9A08-464B-BF00-B2309B48D34E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +113,10 @@ Global
 		{69C9A380-88E8-43EE-91B1-A8BE314006EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69C9A380-88E8-43EE-91B1-A8BE314006EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69C9A380-88E8-43EE-91B1-A8BE314006EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A247F47-9A08-464B-BF00-B2309B48D34E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A247F47-9A08-464B-BF00-B2309B48D34E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A247F47-9A08-464B-BF00-B2309B48D34E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A247F47-9A08-464B-BF00-B2309B48D34E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -129,6 +135,7 @@ Global
 		{38555D37-9474-4D45-B68F-254ECD65C6B6} = {CEC67AA5-E7EA-42B0-B678-71DBC25A8FEB}
 		{96A8DD84-9152-47A3-835A-753D093DFE5F} = {367C8793-591A-45F5-8B8A-D567D5DE826F}
 		{69C9A380-88E8-43EE-91B1-A8BE314006EE} = {CEC67AA5-E7EA-42B0-B678-71DBC25A8FEB}
+		{7A247F47-9A08-464B-BF00-B2309B48D34E} = {CEC67AA5-E7EA-42B0-B678-71DBC25A8FEB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03541499-F762-410E-996E-B067DDF610D6}

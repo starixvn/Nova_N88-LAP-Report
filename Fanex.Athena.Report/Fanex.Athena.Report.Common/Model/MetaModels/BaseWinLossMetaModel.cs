@@ -1,8 +1,8 @@
-﻿using Fanex.Core.Utils;
+﻿using System;
+using Fanex.Core.Utils;
 using Fanex.NVC.Authentication.Infrastructure;
-using System;
 
-namespace Fanex.Athena.Report.ExtraPayout.MetaModels
+namespace Fanex.Athena.Report.Common.Model.MetaModels
 {
     public class BaseWinLossMetaModel : IAgentMetaModel, IBrandIdMetaModel, IDataTestableMetaModel, ICurrencyIdListMetaModel
     {

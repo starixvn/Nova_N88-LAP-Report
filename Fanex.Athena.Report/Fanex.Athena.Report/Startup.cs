@@ -66,6 +66,7 @@
             Marketing.ReportMarketingDIConfig.Setup(services);
             BonusInfo.ReportBonusInfoDIConfig.Setup(services);
             ExtraPayout.ReportExtraPayoutDIConfig.Setup(services);
+            AbnormalBet.ReportAbnormalBetDIConfig.Setup(services);
 
             var authConfig = Configuration.GetSection("MPAAuth").Get<AuthSharedSessionOption>();
             NVCSharedAuthManager

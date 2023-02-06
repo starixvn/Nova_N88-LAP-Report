@@ -36,7 +36,7 @@ namespace Fanex.Athena.Report.Marketing.Repositories
         {
             using (var db = GetObjectDb(SpConsts.NewlyRegisteredUsersDetail))
             {
-                var rows = Enumerable.Empty<NewlyRegisterUsersDetailDTO>();
+                IEnumerable<NewlyRegisterUsersDetailDTO> rows = null;
                 using (var reader = await db.ExecuteReaderAsync(metaModel))
                 {
                     rows = GetDataItems<NewlyRegisterUsersDetailDTO>(reader);

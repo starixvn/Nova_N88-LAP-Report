@@ -28,7 +28,7 @@ namespace Fanex.Athena.Report.Marketing.Repositories
         {
             using (var db = GetObjectDb(SpConsts.WithdrawalDetail))
             {
-                var rows = Enumerable.Empty<WithdrawalDetailDTO>();
+                IEnumerable<WithdrawalDetailDTO> rows = null;
                 using (var reader = await db.ExecuteReaderAsync(metaModel))
                 {
                     rows = GetDataItems<WithdrawalDetailDTO>(reader);

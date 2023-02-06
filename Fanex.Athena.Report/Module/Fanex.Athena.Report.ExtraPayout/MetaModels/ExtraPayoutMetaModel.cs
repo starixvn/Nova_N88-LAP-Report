@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
+using Fanex.Athena.Report.Common.Model.MetaModels;
 
 namespace Fanex.Athena.Report.ExtraPayout.MetaModels
 {

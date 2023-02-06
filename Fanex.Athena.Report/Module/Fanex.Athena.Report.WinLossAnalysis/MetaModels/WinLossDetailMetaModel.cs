@@ -44,6 +44,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         [SpParam(Ignored = true)]
         public IEnumerable<string> OrderCols { get; set; }
 
+#pragma warning disable S1067, S109
         [SpParam(Ignored = true)]
         public bool IsValid => !string.IsNullOrWhiteSpace(ProductIds) && !string.IsNullOrWhiteSpace(BrandIds) && !string.IsNullOrWhiteSpace(BaseCurrency) &&
             GroupBy >= 1 && GroupBy <= 2 &&
