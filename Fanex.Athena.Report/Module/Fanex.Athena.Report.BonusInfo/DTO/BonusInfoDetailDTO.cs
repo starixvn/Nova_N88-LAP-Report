@@ -1,5 +1,6 @@
 ﻿using Fanex.Athena.Report.BonusInfo.Consts;
 using Fanex.Athena.Report.Common.Attributes;
+using Fanex.Athena.Report.Common.Consts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,10 @@ namespace Fanex.Athena.Report.BonusInfo.DTO
 
         public string TransactionType { get; set; }
 
+        [DataPermission(Permission = PermissionKeys.SpecialReportData_TotalDepositAmount)]
         public decimal TotalDeposit { get; set; }
 
+        [DataPermission(Permission = PermissionKeys.SpecialReportData_TotalWithdrawalAmount)]
         public decimal TotalWithdrawal { get; set; }
 
         public int Status { get; set; }

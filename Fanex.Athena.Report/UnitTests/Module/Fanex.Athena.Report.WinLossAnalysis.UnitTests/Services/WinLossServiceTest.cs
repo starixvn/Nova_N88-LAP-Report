@@ -22,6 +22,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Services
         private readonly Mock<IWinLossRepository> _mockRepository;
         private readonly Mock<IDataMapper> _mockDataMapper;
         private readonly Mock<ICurrencyService> _mockCurrencyService;
+        private readonly Mock<IDataPermissionService> _dataService;
         private readonly IFixture _fixture = new Fixture();
 
         public WinLossServiceTest()
@@ -29,7 +30,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Services
             _mockRepository = new Mock<IWinLossRepository>();
             _mockDataMapper = new Mock<IDataMapper>();
             _mockCurrencyService = new Mock<ICurrencyService>();
-            _target = new WinLossService(_mockRepository.Object, _mockCurrencyService.Object, _mockDataMapper.Object);
+            _dataService = new Mock<IDataPermissionService>();
+            _target = new WinLossService(_mockRepository.Object, _mockCurrencyService.Object, _mockDataMapper.Object, _dataService.Object);
         }
 
         [Fact]
@@ -53,7 +55,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Services
             //Arrange
             var metaModel = _fixture.Create<WinLossMetaModel>();
             WinLossDataItemDTO data = new WinLossDataItemDTO() { Group = "g1", CurrencyId = 1, CurrencyCode = "1", CustId = 1, SabaId = "123", SabaSystemId = "111", BetCount = 1000 };
-            WinLossDataTotalDTO dataTotal = new WinLossDataTotalDTO() {
+            WinLossDataTotalDTO dataTotal = new WinLossDataTotalDTO()
+            {
                 TotalBasedTurnoverNoDraw = 0,
                 TotalBasedGGR = 0,
                 TotalBetCount = 0,

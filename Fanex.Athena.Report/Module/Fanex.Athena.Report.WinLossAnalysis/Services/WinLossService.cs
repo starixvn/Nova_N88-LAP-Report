@@ -6,6 +6,7 @@ using Fanex.Athena.Report.WinLossAnalysis.DTO;
 using Fanex.Athena.Report.WinLossAnalysis.MetaModels;
 using Fanex.Athena.Report.WinLossAnalysis.Repositories;
 using Fanex.Athena.Report.WinLossAnalysis.ViewModels;
+using Fanex.NVC.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,14 +19,17 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
         private readonly IWinLossRepository _winLossRepository;
         private readonly IDataMapper _dataMapper;
         private readonly ICurrencyService _currencyService;
+        private readonly IDataPermissionService _dataPermissionService;
 
         public WinLossService(IWinLossRepository winLossRepository,
             ICurrencyService currencyService,
-            IDataMapper dataMapper)
+            IDataMapper dataMapper,
+            IDataPermissionService dataPermissionService)
         {
             _winLossRepository = winLossRepository;
             _currencyService = currencyService;
             _dataMapper = dataMapper;
+            _dataPermissionService = dataPermissionService;
         }
 
         public async Task<ResultModel<WinLossRecordViewModel>> GetData(WinLossMetaModel metaModel)
@@ -44,7 +48,19 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 TotalData = ToTotalDataViewModel(dataTotal)
             };
 
-            return result;
+            return ClearData(result);
+        }
+
+        private ResultModel<WinLossRecordViewModel> ClearData(ResultModel<WinLossRecordViewModel> data)
+        {
+            data.DataList.ToList().ForEach(_ =>
+            {
+                _dataPermissionService.ClearDataByPermission(_.DrillDownData);
+                _dataPermissionService.ClearDataByPermission(_);
+            });
+            _dataPermissionService.ClearDataByPermission(data.TotalData);
+
+            return data;
         }
 
         public async Task<IEnumerable<WinLossDataDetailItemDTO>> GetDetailData(WinLossDetailMetaModel metaModel)
