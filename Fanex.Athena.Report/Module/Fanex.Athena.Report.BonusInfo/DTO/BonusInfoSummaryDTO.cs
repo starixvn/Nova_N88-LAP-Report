@@ -1,5 +1,6 @@
 ﻿using Fanex.Athena.Report.BonusInfo.Consts;
 using Fanex.Athena.Report.Common.Attributes;
+using Fanex.Athena.Report.Common.Consts;
 using Fanex.Athena.Report.Common.Model.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -26,10 +27,13 @@ namespace Fanex.Athena.Report.BonusInfo.DTO
 
         public decimal TotalClaimedAmount { get; set; }
 
+        [DataPermission(Permission = PermissionKeys.SpecialReportData_TotalDepositAmount)]
         public decimal TotalDeposit { get; set; }
 
+        [DataPermission(Permission = PermissionKeys.SpecialReportData_TotalWithdrawalAmount)]
         public decimal TotalWithdrawal { get; set; }
 
+        [DataPermission(Permission = PermissionKeys.SpecialReportData_GGR)]
         public decimal GGR { get; set; }
 
         public DateTime Date { get; set; }
@@ -53,10 +57,13 @@ namespace Fanex.Athena.Report.BonusInfo.DTO
 
         public decimal TotalClaimedAmount { get; set; }
 
+        [DataPermission(Permission = PermissionKeys.SpecialReportData_TotalDepositAmount)]
         public decimal TotalDeposit { get; set; }
 
+        [DataPermission(Permission = PermissionKeys.SpecialReportData_TotalWithdrawalAmount)]
         public decimal TotalWithdrawal { get; set; }
 
+        [DataPermission(Permission = PermissionKeys.SpecialReportData_GGR)]
         public decimal GGR { get; set; }
     }
 

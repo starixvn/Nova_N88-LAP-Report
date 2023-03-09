@@ -105,9 +105,29 @@ namespace Fanex.Athena.Report.BonusInfo.Excels
                 _builder.HideColumn(sheet, ColumnDate);
             }
 
+            HideDataColumn(sheet, metaModel);
+
             _builder.RemoveSheet(workBook, TemplateSheetName);
 
             return workBook;
+        }
+
+        private void HideDataColumn(ISheet sheet, BaseBonusInfoReportMetaModel metaModel)
+        {
+            if (!metaModel.IsAllowedGGR)
+            {
+                _builder.HideColumn(sheet, ColumnGGR);
+            }
+
+            if (!metaModel.IsAllowedTotalWithdrawal)
+            {
+                _builder.HideColumn(sheet, ColumnTotalWithdrawal);
+            }
+
+            if (!metaModel.IsAllowedTotalDeposit)
+            {
+                _builder.HideColumn(sheet, ColumnTotalDeposit);
+            }
         }
 
         private void AssignNoInfoRow(ISheet sheet, ISheet templateSheet, BonusInfoSummaryMetaModel metaModel)

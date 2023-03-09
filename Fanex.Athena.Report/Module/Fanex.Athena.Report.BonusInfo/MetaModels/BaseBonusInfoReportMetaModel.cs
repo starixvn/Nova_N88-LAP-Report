@@ -28,6 +28,15 @@ namespace Fanex.Athena.Report.BonusInfo.MetaModels
         public string BaseCurrency { get; set; }
 
         [SpParam(Ignored = true)]
+        public bool IsAllowedGGR { get; set; }
+
+        [SpParam(Ignored = true)]
+        public bool IsAllowedTotalDeposit { get; set; }
+
+        [SpParam(Ignored = true)]
+        public bool IsAllowedTotalWithdrawal { get; set; }
+
+        [SpParam(Ignored = true)]
         public virtual bool IsValid => BrandId > 0 && FromDate <= ToDate
             && !string.IsNullOrWhiteSpace(BaseCurrency);
     }

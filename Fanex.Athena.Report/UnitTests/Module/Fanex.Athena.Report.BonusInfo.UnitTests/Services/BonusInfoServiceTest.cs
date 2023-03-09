@@ -4,6 +4,7 @@ using Fanex.Athena.Report.BonusInfo.MetaModels;
 using Fanex.Athena.Report.BonusInfo.Repositories;
 using Fanex.Athena.Report.BonusInfo.Services;
 using Fanex.Athena.Report.Common.Model.ViewModel;
+using Fanex.Athena.Report.Common.Services.Interfaces;
 using Moq;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -17,12 +18,14 @@ namespace Fanex.Athena.Report.BonusInfo.UnitTests.Services
     {
         private readonly BonusInfoService _targetService;
         private readonly Mock<IBonusInfoRepository> _mockRepository;
+        private readonly Mock<IDataPermissionService> _dataService;
         private readonly IFixture _fixture = new Fixture();
 
         public BonusInfoServiceTest()
         {
             _mockRepository = new Mock<IBonusInfoRepository>();
-            _targetService = new BonusInfoService(_mockRepository.Object);
+            _dataService = new Mock<IDataPermissionService>();
+            _targetService = new BonusInfoService(_mockRepository.Object, _dataService.Object);
         }
 
         [Fact]
