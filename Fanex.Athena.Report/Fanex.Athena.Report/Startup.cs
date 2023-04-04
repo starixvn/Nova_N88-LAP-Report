@@ -61,7 +61,6 @@
                 new PhysicalFileProvider(HostingEnvironment.ContentRootPath)
                 );
             SharedServiceDIConfig.Setup(services);
-            BySite.ReportBySiteDIConfig.Setup(services);
             WinLossAnalysis.ReportByGroupDIConfig.Setup(services);
             Marketing.ReportMarketingDIConfig.Setup(services);
             BonusInfo.ReportBonusInfoDIConfig.Setup(services);
