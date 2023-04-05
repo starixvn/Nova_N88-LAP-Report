@@ -48,6 +48,9 @@ namespace Fanex.Athena.Report.BonusInfo.DTO
         public string DateString => Date.ToString(DateTimeFormat.MonthAbbreviationsDate);
 
         [SqlColumn(Ignored = true)]
+        public string MonthString => Date.ToString(DateTimeFormat.MonthAbbreviations);
+
+        [SqlColumn(Ignored = true)]
         public string BonusStatusText => BonusInfoDropdownOptions.BonusStatusList.FirstOrDefault(_ => _.Key == BonusStatus)?.Value;
     }
 
@@ -73,10 +76,20 @@ namespace Fanex.Athena.Report.BonusInfo.DTO
         {
             SortedData = new SortableResultModel<BonusInfoSummaryItemDTO>();
             BonusCodeList = new List<string>();
+            BonusCodeInfoDetailList = new List<BonusCodeInfoDetailDTO>();
         }
 
         public SortableResultModel<BonusInfoSummaryItemDTO> SortedData { get; set; }
 
         public IEnumerable<string> BonusCodeList { get; set; }
+
+        public IEnumerable<BonusCodeInfoDetailDTO> BonusCodeInfoDetailList { get; set; }
+    }
+
+    public class BonusCodeInfoDetailDTO
+    {
+        public DateTime Date { get; set; }
+
+        public string BonusCode { get; set; }
     }
 }

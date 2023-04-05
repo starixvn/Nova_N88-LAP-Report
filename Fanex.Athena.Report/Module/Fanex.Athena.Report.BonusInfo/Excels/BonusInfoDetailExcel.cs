@@ -20,16 +20,20 @@ namespace Fanex.Athena.Report.BonusInfo.Excels
         protected const string DateCellFormat = DateTimeFormat.MonthAbbreviationsDate;
 
         private const int ColumnUserName = 0;
-        private const int ColumnBonusCode = 1;
-        private const int ColumnClaimDate = 2;
-        private const int ColumnBonusAmountClaimed = 3;
-        private const int ColumnTransactionType = 4;
-        private const int ColumnTotalDeposit = 5;
-        private const int ColumnTotalWithdrawal = 6;
-        private const int ColumnStatus = 7;
-        private const int ColumnCompletion = 8;
+        private const int ColumnSabaId = 1;
+        private const int ColumnCurrency = 2;
+        private const int ColumnBonusCode = 3;
+        private const int ColumnBonusType = 4;
+        private const int ColumnBonusName = 5;
+        private const int ColumnClaimDate = 6;
+        private const int ColumnBonusAmountClaimed = 7;
+        private const int ColumnTransactionType = 8;
+        private const int ColumnTotalDeposit = 9;
+        private const int ColumnTotalWithdrawal = 10;
+        private const int ColumnStatus = 11;
+        private const int ColumnCompletion = 12;
 
-        private const int ColumnTemplateCount = 9;
+        private const int ColumnTemplateCount = 13;
 
         private const int RowTitleTemplate = 0;
         private const int RowHeaderTemplate = 1;
@@ -92,9 +96,8 @@ namespace Fanex.Athena.Report.BonusInfo.Excels
         private void AssignTitle(ISheet sheet, ISheet templateSheet, BonusInfoDetailMetaModel metaModel)
         {
             Sites.SiteNameList.TryGetValue(metaModel.BrandId, out string brandName);
-            string title = metaModel.GroupBy == GroupBy.BonusCode ? $"{ViewResources.BonusInfo}, {metaModel.FromDate.ToString(DateFormat)} - {metaModel.ToDate.ToString(DateFormat)}, {brandName}," +
-                    $" {string.Format(ViewResources.Viewin, metaModel.BaseCurrency.ToUpperInvariant())}, {metaModel.BonusCode}" : $"{ViewResources.BonusInfo}, {brandName}," +
-                    $" {string.Format(ViewResources.Viewin, metaModel.BaseCurrency.ToUpperInvariant())}, {metaModel.BonusCode}, {metaModel.FromDate.ToString(DateFormat)}";
+            string title = $"{ViewResources.BonusInfo}, {metaModel.FromDate.ToString(DateFormat)} - {metaModel.ToDate.ToString(DateFormat)}, {brandName}," +
+                    $" {string.Format(ViewResources.Viewin, metaModel.BaseCurrency.ToUpperInvariant())}, Bonus Code: {metaModel.BonusCode}";
 
             _builder.SetRowValue(sheet, templateSheet, sourceRowIndex: RowTitleTemplate, destRowIndex: RowTitleTemplate, columnCount: ColumnTemplateCount, value: title);
 
@@ -107,7 +110,11 @@ namespace Fanex.Athena.Report.BonusInfo.Excels
             var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: RowHeaderTemplate, destRowIndex: RowHeaderTemplate);
 
             row.Cells[ColumnUserName].SetCellValue(ViewResources.Username);
+            row.Cells[ColumnSabaId].SetCellValue(ViewResources.SabaId);
+            row.Cells[ColumnCurrency].SetCellValue(ViewResources.Currency);
             row.Cells[ColumnBonusCode].SetCellValue(ViewResources.BonusCode);
+            row.Cells[ColumnBonusType].SetCellValue(ViewResources.BonusType);
+            row.Cells[ColumnBonusName].SetCellValue(ViewResources.BonusName);
             row.Cells[ColumnClaimDate].SetCellValue(ViewResources.ClaimDate);
             row.Cells[ColumnBonusAmountClaimed].SetCellValue(ViewResources.BonusAmountClaimed);
             row.Cells[ColumnTransactionType].SetCellValue(ViewResources.TransactionType);
@@ -130,7 +137,11 @@ namespace Fanex.Athena.Report.BonusInfo.Excels
         {
             var row = _builder.CopyRow(sheet, templateSheet, RowContentTemplate, lastRowIndex + RowContentTemplate);
             row.Cells[ColumnUserName].SetCellValue(rowData.UserName);
+            row.Cells[ColumnSabaId].SetCellValue(rowData.SabaId);
+            row.Cells[ColumnCurrency].SetCellValue(rowData.Currency);
             row.Cells[ColumnBonusCode].SetCellValue(rowData.BonusCode);
+            row.Cells[ColumnBonusType].SetCellValue(rowData.BonusType);
+            row.Cells[ColumnBonusName].SetCellValue(rowData.BonusName);
             row.Cells[ColumnClaimDate].SetCellValue(rowData.ClaimedDate.ToString(DateCellFormat));
             row.Cells[ColumnBonusAmountClaimed].SetCellValue((double)rowData.ClaimedAmount);
             row.Cells[ColumnTransactionType].SetCellValue(rowData.TransactionType);

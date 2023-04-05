@@ -1,4 +1,5 @@
 ﻿using Fanex.Data;
+using System.Collections;
 
 namespace Fanex.Athena.Report.BonusInfo.MetaModels
 {
@@ -13,9 +14,7 @@ namespace Fanex.Athena.Report.BonusInfo.MetaModels
             PageSize = DefaultPageSize;
         }
 
-        public string BonusCode { get; set; }
-
-        public byte BonusTypeId { get; set; }
+        public string BonusInfo { get; set; }
 
         public byte SortbyId { get; set; }
 
@@ -29,6 +28,9 @@ namespace Fanex.Athena.Report.BonusInfo.MetaModels
         public int GroupBy { get; set; }
 
         [SpParam(Ignored = true)]
-        public override bool IsValid => PageSize <= MaxPageSize && !string.IsNullOrWhiteSpace(BonusCode) && base.IsValid;
+        public string BonusCode { get; set; }
+
+        [SpParam(Ignored = true)]
+        public override bool IsValid => PageSize <= MaxPageSize && !string.IsNullOrWhiteSpace(BonusInfo) && base.IsValid;
     }
 }

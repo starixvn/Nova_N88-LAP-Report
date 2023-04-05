@@ -9,5 +9,6 @@
     {
         public const int BonusCode = 1;
         public const int BonusCodeAndDate = 2;
+        public const int BonusCodeAndMonth = 3;
     }
 }
