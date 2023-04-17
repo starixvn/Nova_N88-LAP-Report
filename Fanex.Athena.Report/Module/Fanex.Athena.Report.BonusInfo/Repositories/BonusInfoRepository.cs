@@ -19,11 +19,13 @@ namespace Fanex.Athena.Report.BonusInfo.Repositories
             {
                 IEnumerable<BonusInfoSummaryItemDTO> dataList;
                 BonusInfoSummaryTotalDTO totalDetail;
+                IEnumerable<BonusCodeInfoDetailDTO> bonusCodeInfoDetailList;
 
                 using (var reader = await db.ExecuteReaderAsync(metaModel))
                 {
                     dataList = GetDataItems<BonusInfoSummaryItemDTO>(reader);
                     totalDetail = GetDataTotal<BonusInfoSummaryTotalDTO>(reader);
+                    bonusCodeInfoDetailList = GetDataItems<BonusCodeInfoDetailDTO>(reader, true);
                 }
 
                 if (!dataList.Any())
@@ -40,7 +42,9 @@ namespace Fanex.Athena.Report.BonusInfo.Repositories
                         TotalRows = dataList.Count()
                     },
 
-                    BonusCodeList = dataList.OrderBy(_ => _.BonusCode).Select(_ => _.BonusCode).Distinct()
+                    BonusCodeList = bonusCodeInfoDetailList.OrderBy(_ => _.BonusCode).Select(_ => _.BonusCode).Distinct(),
+
+                    BonusCodeInfoDetailList = bonusCodeInfoDetailList.OrderBy(_ => _.BonusCode)
                 };
             }
         }

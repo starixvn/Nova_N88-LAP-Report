@@ -28,24 +28,25 @@ namespace Fanex.Athena.Report.BonusInfo.UnitTests.Excels
         protected const string DateCellFormat = "dd-MMM-yyyy";
 
         private const int ColumnDate = 0;
-        private const int ColumnBonusName = 1;
-        private const int ColumnBonusCode = 2;
-        private const int ColumnBonusType = 3;
-        private const int ColumnStartDate = 4;
-        private const int ColumnEndDate = 5;
-        private const int ColumnBonusStatus = 6;
-        private const int ColumnTotalClaimants = 11;
-        private const int ColumnTotalClaimedAmount = 12;
-        private const int ColumnGGR = 13;
-        private const int ColumnTotalDeposit = 14;
-        private const int ColumnTotalWithdrawal = 15;
+        private const int ColumnMonth = 1;
+        private const int ColumnBonusName = 2;
+        private const int ColumnBonusCode = 3;
+        private const int ColumnBonusType = 4;
+        private const int ColumnStartDate = 5;
+        private const int ColumnEndDate = 6;
+        private const int ColumnBonusStatus = 7;
+        private const int ColumnTotalClaimants = 12;
+        private const int ColumnTotalClaimedAmount = 13;
+        private const int ColumnGGR = 14;
+        private const int ColumnTotalDeposit = 15;
+        private const int ColumnTotalWithdrawal = 16;
 
-        private const int ColumnStatusRunning = 7;
-        private const int ColumnStatusCancel = 8;
-        private const int ColumnStatusFullfill = 9;
-        private const int ColumnStatusOtherPlatform = 10;
+        private const int ColumnStatusRunning = 8;
+        private const int ColumnStatusCancel = 9;
+        private const int ColumnStatusFullfill = 10;
+        private const int ColumnStatusOtherPlatform = 11;
 
-        private const int ColumnTemplateCount = 16;
+        private const int ColumnTemplateCount = 17;
 
         private const int RowTitleTemplate = 0;
         private const int RowHeaderTemplate = 1;

@@ -27,16 +27,20 @@ namespace Fanex.Athena.Report.BonusInfo.UnitTests.Excels
         protected const string DateCellFormat = "dd-MMM-yyyy";
 
         private const int ColumnUserName = 0;
-        private const int ColumnBonusCode = 1;
-        private const int ColumnClaimDate = 2;
-        private const int ColumnBonusAmountClaimed = 3;
-        private const int ColumnTransactionType = 4;
-        private const int ColumnTotalDeposit = 5;
-        private const int ColumnTotalWithdrawal = 6;
-        private const int ColumnStatus = 7;
-        private const int ColumnCompletion = 8;
+        private const int ColumnSabaId = 1;
+        private const int ColumnCurrency = 2;
+        private const int ColumnBonusCode = 3;
+        private const int ColumnBonusType = 4;
+        private const int ColumnBonusName = 5;
+        private const int ColumnClaimDate = 6;
+        private const int ColumnBonusAmountClaimed = 7;
+        private const int ColumnTransactionType = 8;
+        private const int ColumnTotalDeposit = 9;
+        private const int ColumnTotalWithdrawal = 10;
+        private const int ColumnStatus = 11;
+        private const int ColumnCompletion = 12;
 
-        private const int ColumnTemplateCount = 9;
+        private const int ColumnTemplateCount = 13;
 
         private const int RowTitleTemplate = 0;
         private const int RowHeaderTemplate = 1;
@@ -61,7 +65,7 @@ namespace Fanex.Athena.Report.BonusInfo.UnitTests.Excels
             Sites.SiteNameList.TryGetValue(metaModel.BrandId, out string brandName);
 
             var reportTitle = $"{ViewResources.BonusInfo}, {metaModel.FromDate.ToString(DateFormat)} - {metaModel.ToDate.ToString(DateFormat)}, {brandName}," +
-                $" {string.Format(ViewResources.Viewin, metaModel.BaseCurrency.ToUpperInvariant())}, {metaModel.BonusCode}";
+                $" {string.Format(ViewResources.Viewin, metaModel.BaseCurrency.ToUpperInvariant())}, Bonus Code: {metaModel.BonusCode}";
 
             // Action
             excel.Export(data, metaModel);
@@ -80,7 +84,11 @@ namespace Fanex.Athena.Report.BonusInfo.UnitTests.Excels
             var headerTextList = new[]
             {
                 ViewResources.Username,
+                ViewResources.SabaId,
+                ViewResources.Currency,
                 ViewResources.BonusCode,
+                ViewResources.BonusType,
+                ViewResources.BonusName,
                 ViewResources.ClaimDate,
                 ViewResources.BonusAmountClaimed,
                 ViewResources.TransactionType,
@@ -190,7 +198,11 @@ namespace Fanex.Athena.Report.BonusInfo.UnitTests.Excels
         private void AssertCommonCellData(Mock<IRow> row, BonusInfoDetailItemDTO item)
         {
             Mock.Get(row.Object.Cells[ColumnUserName]).Verify(c => c.SetCellValue(item.UserName), Times.Once);
+            Mock.Get(row.Object.Cells[ColumnSabaId]).Verify(c => c.SetCellValue(item.SabaId), Times.Once);
+            Mock.Get(row.Object.Cells[ColumnCurrency]).Verify(c => c.SetCellValue(item.Currency), Times.Once);
             Mock.Get(row.Object.Cells[ColumnBonusCode]).Verify(c => c.SetCellValue(item.BonusCode), Times.Once);
+            Mock.Get(row.Object.Cells[ColumnBonusType]).Verify(c => c.SetCellValue(item.BonusType), Times.Once);
+            Mock.Get(row.Object.Cells[ColumnBonusName]).Verify(c => c.SetCellValue(item.BonusName), Times.Once);
             Mock.Get(row.Object.Cells[ColumnClaimDate]).Verify(c => c.SetCellValue(item.ClaimedDate.ToString(DateCellFormat)), Times.Once);
             Mock.Get(row.Object.Cells[ColumnBonusAmountClaimed]).Verify(c => c.SetCellValue(Convert.ToDouble(item.ClaimedAmount)), Times.Once);
             Mock.Get(row.Object.Cells[ColumnTransactionType]).Verify(c => c.SetCellValue(item.TransactionType), Times.Once);

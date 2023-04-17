@@ -11,7 +11,15 @@ namespace Fanex.Athena.Report.BonusInfo.DTO
     {
         public string UserName { get; set; }
 
+        public string Currency { get; set; }
+
+        public string SabaId { get; set; }
+
         public string BonusCode { get; set; }
+
+        public string BonusName { get; set; }
+
+        public string BonusType { get; set; }
 
         public DateTime ClaimedDate { get; set; }
 
