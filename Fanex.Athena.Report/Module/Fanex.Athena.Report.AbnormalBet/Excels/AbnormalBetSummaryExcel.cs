@@ -28,11 +28,10 @@ namespace Fanex.Athena.Report.AbnormalBet.Excels
         private const int ColumnTotalTransaction = 7;
         private const int ColumnBetType = 8;
         private const int ColumnChoice = 9;
-        private const int ColumnReason = 10;
-        private const int ColumnFinalSocre = 11;
+        private const int ColumnFinalSocre = 10;
 
         private const int RowNoInfoTemplate = 5;
-        private const int ColumnTemplateCount = 12;
+        private const int ColumnTemplateCount = 11;
 
         private const int RowTitleTemplate = 0;
         private const int RowHeaderTemplate = 1;
@@ -98,7 +97,6 @@ namespace Fanex.Athena.Report.AbnormalBet.Excels
                 ViewResources.TotalTransaction,
                 ViewResources.BetType,
                 ViewResources.Choice,
-                ViewResources.Reason,
                 ViewResources.FinalScore
             };
 
@@ -143,7 +141,6 @@ namespace Fanex.Athena.Report.AbnormalBet.Excels
             row.Cells[ColumnTotalTransaction].SetCellValue((double)item.TotalTransaction);
             row.Cells[ColumnBetType].SetCellValue(item.BetType);
             row.Cells[ColumnChoice].SetCellValue(item.Choice);
-            row.Cells[ColumnReason].SetCellValue(item.Reason);
             row.Cells[ColumnFinalSocre].SetCellValue(item.FinalScore);
         }
 
