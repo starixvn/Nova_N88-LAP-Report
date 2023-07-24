@@ -22,6 +22,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         public int Timezone { get; set; }
 
         public DateTime FromDate { get; set; }
+
         public DateTime ToDate { get; set; }
 
         public int ProductId { get; set; }
@@ -29,6 +30,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         public int CustId { get; set; }
 
         public bool IsNoDrawTicket { get; set; }
+
         public bool IsIncludedFreeSpin { get; set; }
 
         [SpParam(SqlParamName = "DisplayCurrency")]
@@ -38,9 +40,11 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         public bool DrilldownInOriginalCurrency { get; set; }
 
         public int PageIndex { get; set; }
+
         public int PageSize { get; set; }
 
         public byte SortbyId { get; set; }
+
         public bool IsSortAsc { get; set; }
 
 #pragma warning disable S1067

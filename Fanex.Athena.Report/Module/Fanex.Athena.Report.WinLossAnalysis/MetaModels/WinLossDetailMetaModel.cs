@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
 {
-    public class WinLossDetailMetaModel : ITimezoneMetaModel, IValidationMetaModel, IBrandIdListMetaModel, ICurrencyIdListMetaModel, IDataRangeMetaModel
+    public class WinLossDetailMetaModel : ITimezoneMetaModel, IValidationMetaModel, IBrandIdListMetaModel, ICurrencyIdListMetaModel, IDataRangeMetaModel, IPlayerListMetaModel
     {
         [SpParam(SqlParamName = "FilterBy")]
         public byte DateType { get; set; }
@@ -18,6 +18,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         public int Timezone { get; set; }
 
         public DateTime FromDate { get; set; }
+
         public DateTime ToDate { get; set; }
 
         public string ProductIds { get; set; }
@@ -26,9 +27,18 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         public string BrandIds { get; set; }
 
         public byte UserNameFilterId { get; set; } = 1;
+
         public string UserName { get; set; }
+
         public bool IsIncludedTestData { get; set; }
+
         public bool IsIncludedFreeSpin { get; set; }
+
+        public int DataLimitBy { get; set; }
+
+        public int IsDataLimitDesc { get; set; }
+
+        public int DataLimitValue { get; set; }
 
         [SpParam(SqlParamName = "CurrencyIds")]
         public string CurrencyIdList { get; set; }
@@ -45,6 +55,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         public IEnumerable<string> OrderCols { get; set; }
 
 #pragma warning disable S1067, S109
+
         [SpParam(Ignored = true)]
         public bool IsValid => !string.IsNullOrWhiteSpace(ProductIds) && !string.IsNullOrWhiteSpace(BrandIds) && !string.IsNullOrWhiteSpace(BaseCurrency) &&
             GroupBy >= 1 && GroupBy <= 2 &&

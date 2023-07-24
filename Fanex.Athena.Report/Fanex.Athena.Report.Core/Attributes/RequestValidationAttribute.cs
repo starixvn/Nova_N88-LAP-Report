@@ -6,6 +6,7 @@ using Fanex.NVC.Authentication.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
+using System.Linq;
 using System.Net;
 
 namespace Fanex.Athena.Report.Core.Attributes
@@ -96,7 +97,8 @@ namespace Fanex.Athena.Report.Core.Attributes
                 && _currencyValidation.IsValidCurrencyList(currencyIdListMetaModel.CurrencyIdList, AuthHelper.GetCurrencyList(_authInfoService.BrandList, brandIdMetaModel, brandIdListMetaModel)));
 
             result &= !_valiDataRangeLimitation || (MetaModelHelper.IsMetaModel(filterContext.ActionArguments, out IDataRangeMetaModel daterange)
-                && AuthHelper.IsValidDataRangeLimitation(daterange, _authInfoService.DataRangeLimitation));
+                && (!int.TryParse(_authInfoService.SettingList?.FirstOrDefault(_ => _.SettingKey == "LimitDays")?.SettingValue, out int userDataRangeLimitation)
+                    || AuthHelper.IsValidDataRangeLimitation(daterange, userDataRangeLimitation)));
 
             return result;
         }

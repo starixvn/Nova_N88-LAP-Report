@@ -8,7 +8,7 @@ using System;
 
 namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
 {
-    public class WinLossMetaModel : ITimezoneMetaModel, IValidationMetaModel, IBrandIdListMetaModel, ICurrencyIdListMetaModel, IDataRangeMetaModel
+    public class WinLossMetaModel : ITimezoneMetaModel, IValidationMetaModel, IBrandIdListMetaModel, ICurrencyIdListMetaModel, IDataRangeMetaModel, IPlayerListMetaModel
     {
         private const int DefaultPageSize = 500;
         private const int MaxPageSize = 2000;
@@ -27,7 +27,14 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
 
         public int Timezone { get; set; }
 
+        public int DataLimitBy { get; set; }
+
+        public int IsDataLimitDesc { get; set; }
+
+        public int DataLimitValue { get; set; }
+
         public DateTime FromDate { get; set; }
+
         public DateTime ToDate { get; set; }
 
         public string ProductIds { get; set; }
@@ -36,8 +43,11 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         public string BrandIds { get; set; }
 
         public byte UserNameFilterId { get; set; }
+
         public string UserName { get; set; }
+
         public bool IsIncludedTestData { get; set; }
+
         public bool IsIncludedFreeSpin { get; set; }
 
         [SpParam(SqlParamName = "CurrencyIds")]
@@ -49,6 +59,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         public string BaseCurrency { get; set; }
 
         public int PageIndex { get; set; }
+
         public int PageSize { get; set; }
 
         [SpParam(Ignored = true)]
@@ -61,6 +72,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         public bool DrilldownInOriginalCurrency { get; set; }
 
         public byte SortbyId { get; set; }
+
         public bool IsSortAsc { get; set; }
 
 #pragma warning disable S1067, S109, S1541
