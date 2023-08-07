@@ -105,14 +105,18 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
                 return new List<ExtraPayoutDTO>();
             }
 
-            return dataList.GroupBy(d => d.Currency).Select(g => new ExtraPayoutDTO
+            return dataList.GroupBy(d => d.Currency).Select(g =>
             {
-                Currency = g.FirstOrDefault().Currency,
-                CurrencyName = g.FirstOrDefault().CurrencyName,
-                BetCount = g.Sum(_ => _.BetCount),
-                Turnover = g.Sum(_ => _.BasedTurnover),
-                Amount = g.Sum(_ => _.BasedAmount),
-                SharingAmount = g.Sum(_ => _.BasedSharingAmount)
+                var item = g.FirstOrDefault() ?? new ExtraPayoutDTO();
+                return new ExtraPayoutDTO
+                {
+                    Currency = item.Currency,
+                    CurrencyName = item?.CurrencyName,
+                    BetCount = g.Sum(_ => _.BetCount),
+                    Turnover = g.Sum(_ => _.BasedTurnover),
+                    Amount = g.Sum(_ => _.BasedAmount),
+                    SharingAmount = g.Sum(_ => _.BasedSharingAmount)
+                };
             }).ToList();
         }
 

@@ -74,7 +74,8 @@ namespace Fanex.Athena.Report.Marketing.Excels
 
         private void AssignSummarySheetTotalData(ISheet sheet, ISheet templateSheet, IEnumerable<TotalDepositAmountSummaryDTO> totalData, DepositAmountExportMetaModel metaModel)
         {
-            var data = totalData.FirstOrDefault();
+            var data = totalData.FirstOrDefault() ?? new TotalDepositAmountSummaryDTO();
+
             var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: SummarySheetTemplateTotalContent, destRowIndex: SummarySheetTemplateTotalContent);
 
             row.Cells[SummarySheetTotalNameCol].SetCellValue(ViewResources.DepositAmount);
