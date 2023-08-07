@@ -17,7 +17,9 @@ namespace Fanex.Athena.Report.Common.Helpers
 
             try
             {
+#pragma warning disable S2259 // Null pointers should not be dereferenced
                 var result = await doing?.Invoke();
+#pragma warning restore S2259 // Null pointers should not be dereferenced
                 return result;
             }
             finally

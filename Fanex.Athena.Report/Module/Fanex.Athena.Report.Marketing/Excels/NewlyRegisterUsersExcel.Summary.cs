@@ -43,7 +43,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
 
         private const int SummarySheetTemplateSingupTotalContent = 6;
 
-        private int SummaryCurrentRowIndex = -1; 
+        private int SummaryCurrentRowIndex = -1;
 
         protected override void BuildSummarySheet(IWorkbook workBook, NewlyRegisterUsersExportMetaModel metaModel, NewlyRegisterUsersSummaryDTO summaryData)
         {
@@ -65,7 +65,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
 
             AssignSummarySheetBonusHeader(sheet, templateSheet);
             AssignSummarySheetBonusData(sheet, templateSheet, summaryData.CampaignData);
-         
+
             _builder.RemoveSheet(workBook, SummaryTemplateSheetName);
         }
 
@@ -100,7 +100,8 @@ namespace Fanex.Athena.Report.Marketing.Excels
 
         private void AssignSummarySheetTotalData(ISheet sheet, ISheet templateSheet, IEnumerable<TotalNewlyRegisterUsersDTO> totalData, NewlyRegisterUsersExportMetaModel metaModel)
         {
-            var data = totalData.FirstOrDefault();
+            var data = totalData.FirstOrDefault() ?? new TotalNewlyRegisterUsersDTO();
+
             var row = _builder.CopyRow(sheet, templateSheet, sourceRowIndex: SummarySheetTemplateTotalContent, destRowIndex: ++SummaryCurrentRowIndex);
 
             row.Cells[SummarySheetTotalNameCol].SetCellValue(ViewResources.NewlyRegisteredUsersAcronym);
@@ -162,7 +163,7 @@ namespace Fanex.Athena.Report.Marketing.Excels
         {
             foreach (var item in signupData)
             {
-                if(item.Childs != null && item.Childs.Any())
+                if (item.Childs != null && item.Childs.Any())
                 {
                     AssignSummarySheetSignupData(sheet, templateSheet, item.Childs);
                 }

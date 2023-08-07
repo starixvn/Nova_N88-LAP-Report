@@ -14,6 +14,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         public int Timezone { get; set; }
 
         public DateTime FromDate { get; set; }
+
         public DateTime ToDate { get; set; }
 
         public string ProductIds { get; set; }
@@ -21,6 +22,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         public int CustId { get; set; }
 
         public bool IsNoDrawTicket { get; set; }
+
         public bool IsIncludedFreeSpin { get; set; }
 
         [SpParam(SqlParamName = "DisplayCurrency")]
