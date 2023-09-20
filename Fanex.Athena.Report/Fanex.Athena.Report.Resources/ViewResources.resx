@@ -840,4 +840,7 @@
   <data name="ESportsPinGoal" xml:space="preserve">
     <value>E-Sports PinGoal</value>
   </data>
+  <data name="LG" xml:space="preserve">
+    <value>Virtual Sports 3</value>
+  </data>
 </root>
