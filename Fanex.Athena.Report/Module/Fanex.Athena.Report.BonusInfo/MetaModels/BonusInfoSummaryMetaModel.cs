@@ -1,8 +1,10 @@
-﻿using Fanex.Data;
+﻿using Fanex.Athena.Report.Common.Model.MetaModels;
+using Fanex.Athena.Report.Common.Model.MetaModels.Interfaces;
+using Fanex.Data;
 
 namespace Fanex.Athena.Report.BonusInfo.MetaModels
 {
-    public class BonusInfoSummaryMetaModel : BaseBonusInfoReportMetaModel
+    public class BonusInfoSummaryMetaModel : BaseBonusInfoReportMetaModel, IBonusTypeMetaModel
     {
         public int GroupBy { get; set; }
 

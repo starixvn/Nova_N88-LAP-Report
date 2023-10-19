@@ -111,7 +111,7 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
                 return new ExtraPayoutDTO
                 {
                     Currency = item.Currency,
-                    CurrencyName = item?.CurrencyName,
+                    CurrencyName = item.CurrencyName,
                     BetCount = g.Sum(_ => _.BetCount),
                     Turnover = g.Sum(_ => _.BasedTurnover),
                     Amount = g.Sum(_ => _.BasedAmount),

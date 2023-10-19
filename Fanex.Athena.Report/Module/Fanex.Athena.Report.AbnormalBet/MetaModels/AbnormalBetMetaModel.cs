@@ -20,7 +20,7 @@ namespace Fanex.Athena.Report.AbnormalBet.MetaModels
 
         public string UserName
         {
-            get => string.IsNullOrEmpty(_userName) ? string.Empty : _userName?.Trim();
+            get => string.IsNullOrEmpty(_userName) ? string.Empty : _userName.Trim();
 
             set => _userName = value;
         }
@@ -29,7 +29,7 @@ namespace Fanex.Athena.Report.AbnormalBet.MetaModels
 
         public string LeagueName
         {
-            get => string.IsNullOrEmpty(_leagueName) ? string.Empty : _leagueName?.Trim();
+            get => string.IsNullOrEmpty(_leagueName) ? string.Empty : _leagueName.Trim();
 
             set => _leagueName = value;
         }
@@ -38,7 +38,7 @@ namespace Fanex.Athena.Report.AbnormalBet.MetaModels
 
         public string LicenseeName
         {
-            get => string.IsNullOrEmpty(_licenseeName) ? string.Empty : _licenseeName?.Trim();
+            get => string.IsNullOrEmpty(_licenseeName) ? string.Empty : _licenseeName.Trim();
 
             set => _licenseeName = value;
         }
@@ -47,7 +47,7 @@ namespace Fanex.Athena.Report.AbnormalBet.MetaModels
 
         public string Ip
         {
-            get => string.IsNullOrEmpty(_ip) ? string.Empty : _ip?.Trim();
+            get => string.IsNullOrEmpty(_ip) ? string.Empty : _ip.Trim();
 
             set => _ip = value;
         }

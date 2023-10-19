@@ -20,8 +20,8 @@
 		<PackageReference Include="Fanex.Core.Utils" Version="1.0.2" />
 		<PackageReference Include="Fanex.Data" Version="4.2.2" />
 		<PackageReference Include="Fanex.Data.SqlServer" Version="4.2.0" />
-		<PackageReference Include="Fanex.NVC.Authentication" Version="1.0.8" />
-		<PackageReference Include="Fanex.NVC.Authentication.Infrastructure" Version="1.0.8" />
+		<PackageReference Include="Fanex.NVC.Authentication" Version="1.0.9" />
+		<PackageReference Include="Fanex.NVC.Authentication.Infrastructure" Version="1.0.9" />
 		<PackageReference Include="Fanex.RemotingRef" Version="1.5.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.HealthChecks" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />

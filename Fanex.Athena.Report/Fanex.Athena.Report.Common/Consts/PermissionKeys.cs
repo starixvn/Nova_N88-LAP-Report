@@ -19,5 +19,8 @@
         public const string SpecialReportData_TotalWithdrawalAmount = "SpecialReportData_TotalWithdrawalAmount";
         public const string SpecialReportData_Margin = "SpecialReportData_Margin";
         public const string SpecialReportData_AvgBetAmount = "SpecialReportData_AvgBetAmount";
+
+        public const string BonusReport_BonusType = "BonusReport_BonusType";
+        public const string BonusTypePrefix = "BonusType_";
     }
 }
