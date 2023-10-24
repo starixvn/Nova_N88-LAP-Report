@@ -71,7 +71,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                 var currencies = await _currencyService.GetCurrencyDictionaryAsync();
                 foreach (var item in dataItems)
                 {
-                    item.CurrencyCode = _dataMapper.ToCurrencyCode(currencies, item.CurrencyId);
+                    item.CurrencyCode = GetCurrencyName(item.TpCurrencyId, item.CurrencyId, currencies);
                 }
             }
 
@@ -87,10 +87,20 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Services
                        data => Grouping(data, metaModel, currencies),
                        _ =>
                        {
-                           _.CurrencyCode = _dataMapper.ToCurrencyCode(currencies, _.CurrencyId);
+                           _.CurrencyCode = GetCurrencyName(_.TpCurrencyId, _.CurrencyId, currencies);
                            return _;
                        },
                        Mapper(drilldownInOriginalCurrency, metaModel.IsGroupByPlayer)).ToList();
+        }
+
+        private string GetCurrencyName(int tpCurrencyId, int currencyId, IDictionary<int, Currency> currencies)
+        {
+            const int TpCurrencyUSDKHId = 72;
+            const int CurrencyUSDId = 3;
+            const string CurrencyNameUSDKH = "KHR USD";
+
+            return tpCurrencyId == TpCurrencyUSDKHId && currencyId == CurrencyUSDId
+                            ? CurrencyNameUSDKH : _dataMapper.ToCurrencyCode(currencies, currencyId);
         }
 
         private WinLossRecordViewModel ToTotalDataViewModel(WinLossDataTotalDTO dataTotal)
