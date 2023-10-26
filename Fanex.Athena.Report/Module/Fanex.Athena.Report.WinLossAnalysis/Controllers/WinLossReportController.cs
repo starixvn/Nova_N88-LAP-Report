@@ -60,7 +60,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Controllers
             }
             finally
             {
-                stream?.Dispose();
+                stream.Dispose();
                 (data?.DataList as List<WinLossRecordViewModel>)?.Clear();
             }
         }
@@ -83,7 +83,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Controllers
             }
             finally
             {
-                stream?.Dispose();
+                stream.Dispose();
             }
         }
 

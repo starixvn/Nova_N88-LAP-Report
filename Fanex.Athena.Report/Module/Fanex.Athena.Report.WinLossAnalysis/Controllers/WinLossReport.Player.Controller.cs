@@ -51,7 +51,7 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Controllers
             }
             finally
             {
-                stream?.Dispose();
+                stream.Dispose();
             }
         }
 

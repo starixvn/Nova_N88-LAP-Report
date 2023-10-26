@@ -37,7 +37,8 @@ namespace Fanex.Athena.Report.BonusInfo.Controllers
 
         [HttpPost]
         [RequestValidation(validateBrand: true, validateCurrencyList: true)]
-        public async Task<JsonResult> GetSummaryData([FromBody]BonusInfoSummaryMetaModel metaModel)
+        [RequestBonusInfoValidation(valiBonusTypeList: true)]
+        public async Task<JsonResult> GetSummaryData([FromBody] BonusInfoSummaryMetaModel metaModel)
         {
             var result = await _service.GetSummaryData(metaModel);
             return new JsonResult(result);
@@ -45,7 +46,8 @@ namespace Fanex.Athena.Report.BonusInfo.Controllers
 
         [HttpPost]
         [RequestValidation(validateBrand: true, validateCurrencyList: true)]
-        public async Task<JsonResult> GetDetailsData([FromBody]BonusInfoDetailMetaModel metaModel)
+        [RequestBonusInfoValidation(valiBonusInfo: true)]
+        public async Task<JsonResult> GetDetailsData([FromBody] BonusInfoDetailMetaModel metaModel)
         {
             var result = await _service.GetDetailsData(metaModel);
             return new JsonResult(result);
@@ -53,8 +55,9 @@ namespace Fanex.Athena.Report.BonusInfo.Controllers
 
         [HttpPost]
         [RequestValidation(validateBrand: true, validateCurrencyList: true)]
+        [RequestBonusInfoValidation(valiBonusTypeList: true)]
         public async Task<FileContentResult> ExportSummaryData(
-            [FromServices]IBonusInfoSummaryExcel excel,
+            [FromServices] IBonusInfoSummaryExcel excel,
             BonusInfoSummaryMetaModel metaModel)
         {
             var summaryData = await _service.GetSummaryData(metaModel);
@@ -66,9 +69,10 @@ namespace Fanex.Athena.Report.BonusInfo.Controllers
         }
 
         [HttpPost]
-        [RequestValidation(validateBrand: true)]
+        [RequestValidation(validateBrand: true, validateCurrencyList: true)]
+        [RequestBonusInfoValidation(valiBonusInfo: true)]
         public async Task<FileContentResult> ExportDetailData(
-        [FromServices]IBonusInfoDetailExcel excel,
+        [FromServices] IBonusInfoDetailExcel excel,
         BonusInfoDetailMetaModel metaModel)
         {
             EnsureMetaModelExport(metaModel);

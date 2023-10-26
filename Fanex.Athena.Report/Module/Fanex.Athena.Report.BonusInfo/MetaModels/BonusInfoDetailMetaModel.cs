@@ -1,9 +1,10 @@
-﻿using Fanex.Data;
+﻿using Fanex.Athena.Report.Common.Model.MetaModels.Interfaces;
+using Fanex.Data;
 using System.Collections;
 
 namespace Fanex.Athena.Report.BonusInfo.MetaModels
 {
-    public class BonusInfoDetailMetaModel : BaseBonusInfoReportMetaModel
+    public class BonusInfoDetailMetaModel : BaseBonusInfoReportMetaModel, IBonusInfoMetaModel
     {
         private const int DefaultPageSize = 100;
         private const int MaxPageSize = 1000;

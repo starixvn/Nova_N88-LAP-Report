@@ -28,7 +28,7 @@ namespace Fanex.Athena.Report.ExtraPayout.MetaModels
         {
             get
             {
-                return string.IsNullOrEmpty(_username) ? string.Empty : _username?.Trim();
+                return string.IsNullOrEmpty(_username) ? string.Empty : _username.Trim();
             }
 
             set

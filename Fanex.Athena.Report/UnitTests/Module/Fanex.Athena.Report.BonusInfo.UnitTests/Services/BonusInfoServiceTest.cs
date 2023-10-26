@@ -5,6 +5,7 @@ using Fanex.Athena.Report.BonusInfo.Repositories;
 using Fanex.Athena.Report.BonusInfo.Services;
 using Fanex.Athena.Report.Common.Model.ViewModel;
 using Fanex.Athena.Report.Common.Services.Interfaces;
+using Fanex.NVC.Authentication;
 using Moq;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -19,13 +20,17 @@ namespace Fanex.Athena.Report.BonusInfo.UnitTests.Services
         private readonly BonusInfoService _targetService;
         private readonly Mock<IBonusInfoRepository> _mockRepository;
         private readonly Mock<IDataPermissionService> _dataService;
+        private readonly Mock<INVCPermissionService> _permissionService;
+        private readonly Mock<INVCAuthInfoService> _authInfoService;
         private readonly IFixture _fixture = new Fixture();
 
         public BonusInfoServiceTest()
         {
             _mockRepository = new Mock<IBonusInfoRepository>();
             _dataService = new Mock<IDataPermissionService>();
-            _targetService = new BonusInfoService(_mockRepository.Object, _dataService.Object);
+            _permissionService = new Mock<INVCPermissionService>();
+            _authInfoService = new Mock<INVCAuthInfoService>();
+            _targetService = new BonusInfoService(_mockRepository.Object, _dataService.Object, _permissionService.Object, _authInfoService.Object);
         }
 
         [Fact]
