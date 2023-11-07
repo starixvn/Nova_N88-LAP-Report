@@ -19,7 +19,7 @@ namespace Fanex.Athena.Report.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ViewResources {
@@ -408,6 +408,15 @@ namespace Fanex.Athena.Report.Resources {
         public static string Canceled {
             get {
                 return ResourceManager.GetString("Canceled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Casino Promotion.
+        /// </summary>
+        public static string CasinoPromotion {
+            get {
+                return ResourceManager.GetString("CasinoPromotion", resourceCulture);
             }
         }
         
@@ -1551,6 +1560,15 @@ namespace Fanex.Athena.Report.Resources {
         public static string SB {
             get {
                 return ResourceManager.GetString("SB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sportsbook Promotion.
+        /// </summary>
+        public static string SBPromotion {
+            get {
+                return ResourceManager.GetString("SBPromotion", resourceCulture);
             }
         }
         

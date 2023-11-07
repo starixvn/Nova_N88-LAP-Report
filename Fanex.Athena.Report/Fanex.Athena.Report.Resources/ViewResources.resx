@@ -843,4 +843,10 @@
   <data name="LG" xml:space="preserve">
     <value>Virtual Sports 3</value>
   </data>
+  <data name="CasinoPromotion" xml:space="preserve">
+    <value>Casino Promotion</value>
+  </data>
+  <data name="SBPromotion" xml:space="preserve">
+    <value>Sportsbook Promotion</value>
+  </data>
 </root>

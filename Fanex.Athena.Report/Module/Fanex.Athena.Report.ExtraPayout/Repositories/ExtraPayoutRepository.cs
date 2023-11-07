@@ -3,6 +3,7 @@ using Fanex.Athena.Report.Common.Extensions;
 using Fanex.Athena.Report.Common.Model.DataDomain;
 using Fanex.Athena.Report.Common.Model.DTO;
 using Fanex.Athena.Report.Common.Model.ViewModel;
+using Fanex.Athena.Report.Common.Services;
 using Fanex.Athena.Report.Common.Services.Interfaces;
 using Fanex.Athena.Report.Core.Helpers;
 using Fanex.Athena.Report.ExtraPayout.Const;
@@ -25,10 +26,10 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
     public class ExtraPayoutRepository : IExtraPayoutRepository
     {
         private readonly IBalanceUpService _balanceUpService;
-        private readonly IRemotingRefService _remotingRefService;
+        private readonly ICacheRefAdapter _cacheRefAdapter;
         private readonly ICurrencyService _currencyService;
 
-        private readonly IDictionary<int, int> _extraPayoutMapType = new Dictionary<int, int>
+        private static readonly IDictionary<int, int> _extraPayoutMapType = new Dictionary<int, int>
         {
             { ExtraPayoutMapType.PPTournamentPrize, BetType.PPTournamentPrize },
             { ExtraPayoutMapType.PPPromotionPrize, BetType.PPPromotionPrize },
@@ -48,14 +49,27 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
             { ExtraPayoutMapType.VgamingFreeBets, BetType.VgamingFreeBets },
             { ExtraPayoutMapType.VgamingFreeBetsJackpotPrize, BetType.VgamingFreeBetsJackpotPrize },
             { ExtraPayoutMapType.VgamingFreeBetsJackpotContribution, BetType.VgamingFreeBetsJackpotContribution },
-            { ExtraPayoutMapType.PayoutStreamerTips, BetType.TIPStreamerTips }
+            { ExtraPayoutMapType.PayoutStreamerTips, BetType.TIPStreamerTips },
+            { ExtraPayoutMapType.PayoutSabaCasinoRoyaleTournamentPrize, BetType.SabaCasinoRoyaleTournamentPrize }
+        };
+
+        private static readonly int[] SBPromotionBettypes = new[] {
+            BetType.SabaLuckySpin,
+            BetType.SabaLuckySpot,
+            BetType.SabaNonCashPrize,
+            BetType.SabaLoyaltyPointsExchange,
+            BetType.SabaRedEnvelope
+        };
+
+        private static readonly int[] CasinoPromotionBettypes = new[] {
+            BetType.SabaCasinoRoyaleTournamentPrize
         };
 
         public ExtraPayoutRepository(
-            IBalanceUpService balanceUpService, IRemotingRefService remotingRefService, ICurrencyService currencyService)
+            IBalanceUpService balanceUpService, ICacheRefAdapter cacheRefAdapter, ICurrencyService currencyService)
         {
             _balanceUpService = balanceUpService;
-            _remotingRefService = remotingRefService;
+            _cacheRefAdapter = cacheRefAdapter;
             _currencyService = currencyService;
         }
 
@@ -436,9 +450,17 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
         {
             promotionType = _extraPayoutMapType.TryGetValue(promotionType, out int mapExtraPayoutType) ? mapExtraPayoutType : promotionType;
 
-            return IsSportType(promotionType) ? _remotingRefService.GetSportName(promotionType.ToString(),
-                Thread.CurrentThread.CurrentUICulture.Name) : _remotingRefService.GetBetTypeName(promotionType.ToString(),
-                Thread.CurrentThread.CurrentUICulture.Name);
+            if (SBPromotionBettypes.Contains(promotionType))
+            {
+                return $"{ViewResources.SBPromotion} - {_cacheRefAdapter.GetBettype(promotionType)}";
+            }
+
+            if (CasinoPromotionBettypes.Contains(promotionType))
+            {
+                return $"{ViewResources.CasinoPromotion} - {_cacheRefAdapter.GetBettype(promotionType)}";
+            }
+
+            return IsSportType(promotionType) ? _cacheRefAdapter.GetSportName(promotionType) : _cacheRefAdapter.GetBettype(promotionType);
         }
     }
 }
