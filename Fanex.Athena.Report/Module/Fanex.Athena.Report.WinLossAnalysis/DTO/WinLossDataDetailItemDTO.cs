@@ -20,6 +20,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.DTO
 
         public int CurrencyId { get; set; }
 
+        public int TpCurrencyId { get; set; }
+
         [SqlColumn(Ignored = true)]
         public string CurrencyCode { get; set; }
 
