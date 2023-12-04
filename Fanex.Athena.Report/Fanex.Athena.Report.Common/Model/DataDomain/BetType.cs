@@ -43,5 +43,7 @@ namespace Fanex.Athena.Report.Common.Model.DataDomain
         public const int VgamingFreeBetsJackpotContribution = 3898;
 
         public const int TIPStreamerTips = 8700;
+
+        public const int SabaCasinoRoyaleTournamentPrize = 17006;
     }
 }
