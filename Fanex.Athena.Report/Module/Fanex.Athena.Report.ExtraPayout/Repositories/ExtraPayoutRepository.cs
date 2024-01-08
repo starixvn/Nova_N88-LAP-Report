@@ -398,6 +398,7 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
                 var dateString = date.ToString("MM/dd/yyyy");
                 var basedSharingAmount = reader.GetVal<decimal>("BasedSharingAmount");
                 var sharingAmount = metaModel.IsConvertAllToBaseCurrency ? basedSharingAmount : reader.GetVal<decimal>("SharingAmount");
+                var betID = promotionType == ExtraPayoutMapType.PayoutSabaRewardRiskFreeRebate ? reader.GetVal<string>("BetID") : "-";
 
                 var item = new ExtraPayoutDetailDTO
                 {
@@ -410,7 +411,8 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
                     BasedTurnover = reader.GetVal<decimal>("BasedTurnover"),
                     BasedAmount = reader.GetVal<decimal>("BasedAmount"),
                     BasedSharingAmount = productCode == Product.TIP ? 0 : basedSharingAmount,
-                    Refno = reader.GetVal<string>("RefNo")
+                    Refno = reader.GetVal<string>("RefNo"),
+                    BetID = betID
                 };
 
                 item.Turnover = metaModel.IsConvertAllToBaseCurrency ? item.BasedTurnover : reader.GetVal<decimal>("Turnover");
