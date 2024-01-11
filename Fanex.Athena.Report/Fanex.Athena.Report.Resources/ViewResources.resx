@@ -849,4 +849,7 @@
   <data name="SBPromotion" xml:space="preserve">
     <value>Sportsbook Promotion</value>
   </data>
+  <data name="BetID" xml:space="preserve">
+    <value>Bet ID</value>
+  </data>
 </root>

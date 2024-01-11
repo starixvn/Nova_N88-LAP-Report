@@ -45,5 +45,7 @@ namespace Fanex.Athena.Report.ExtraPayout.Const
         public const int PayoutStreamerTips = 7401;
 
         public const int PayoutSabaCasinoRoyaleTournamentPrize = 3706;
+
+        public const int PayoutSabaRewardRiskFreeRebate = 3707;
     }
 }
