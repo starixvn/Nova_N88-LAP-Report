@@ -83,7 +83,7 @@
             services.AddSingleton<ICurrencyValidation, CurrencyValidation>();
             services.AddSingleton<IBrandValidation, BrandValidation>();
 
-            CompositeResolver.RegisterAndSetAsDefault(
+            CompositeResolver.Create(
                      //// resolver custom types first
                      NativeDateTimeResolver.Instance,
                      //// finally use standard resolver
