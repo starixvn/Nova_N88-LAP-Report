@@ -852,4 +852,7 @@
   <data name="BetID" xml:space="preserve">
     <value>Bet ID</value>
   </data>
+  <data name="ParlayBoost" xml:space="preserve">
+    <value>Parlay Boost</value>
+  </data>
 </root>
