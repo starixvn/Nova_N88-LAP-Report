@@ -16,9 +16,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Compile Remove="Connected Services\**" />
 		<Compile Remove="Controllers\**" />
+		<Content Remove="Connected Services\**" />
 		<Content Remove="Controllers\**" />
+		<EmbeddedResource Remove="Connected Services\**" />
 		<EmbeddedResource Remove="Controllers\**" />
+		<None Remove="Connected Services\**" />
 		<None Remove="Controllers\**" />
 	</ItemGroup>
 
@@ -124,14 +128,17 @@
 		<ProjectReference Include="..\Fanex.Athena.Report.Resources\Fanex.Athena.Report.Resources.csproj" />
 		<ProjectReference Include="..\Module\Fanex.Athena.Report.ExtraPayout\Fanex.Athena.Report.ExtraPayout.csproj" />
 		<ProjectReference Include="..\Module\Fanex.Athena.Report.Marketing\Fanex.Athena.Report.Marketing.csproj" />
+		<ProjectReference Include="..\Module\Fanex.Athena.Report.SabaWinLossAnalysis\Fanex.Athena.Report.SabaWinLossAnalysis.csproj" />
 		<ProjectReference Include="..\Module\Fanex.Athena.Report.WinLossAnalysis\Fanex.Athena.Report.WinLossAnalysis.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Connected Services\" />
+		<WCFMetadata Include="Connected Services" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<WCFMetadata Include="Connected Services" />
+	  <None Update="ExcelTemplate\SabaWinLossAnalysis\WinLossAnalysis.xls">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 </Project>

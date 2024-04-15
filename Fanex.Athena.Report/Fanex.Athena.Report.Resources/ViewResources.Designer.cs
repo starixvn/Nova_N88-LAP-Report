@@ -142,6 +142,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Amount Due To BA.
+        /// </summary>
+        public static string AmountDueToBA {
+            get {
+                return ResourceManager.GetString("AmountDueToBA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Amt Due To BA.
         /// </summary>
         public static string AmtDueToBA {
@@ -385,6 +394,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Breakdown By.
+        /// </summary>
+        public static string BreakdownBy {
+            get {
+                return ResourceManager.GetString("BreakdownBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bitcoin.
         /// </summary>
         public static string BTC {
@@ -453,6 +471,15 @@ namespace Fanex.Athena.Report.Resources {
         public static string ChangePercent {
             get {
                 return ResourceManager.GetString("ChangePercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chat Room.
+        /// </summary>
+        public static string ChatRoom {
+            get {
+                return ResourceManager.GetString("ChatRoom", resourceCulture);
             }
         }
         
@@ -673,6 +700,51 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Desktop.
+        /// </summary>
+        public static string Desktop {
+            get {
+                return ResourceManager.GetString("Desktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Desktop China.
+        /// </summary>
+        public static string DesktopChina {
+            get {
+                return ResourceManager.GetString("DesktopChina", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Desktop Others.
+        /// </summary>
+        public static string DesktopGalaxy {
+            get {
+                return ResourceManager.GetString("DesktopGalaxy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Desktop New Asia.
+        /// </summary>
+        public static string DesktopNewAsia {
+            get {
+                return ResourceManager.GetString("DesktopNewAsia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Desktop Others.
+        /// </summary>
+        public static string DesktopOthers {
+            get {
+                return ResourceManager.GetString("DesktopOthers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Detail.
         /// </summary>
         public static string Detail {
@@ -723,6 +795,33 @@ namespace Fanex.Athena.Report.Resources {
         public static string EndDate {
             get {
                 return ResourceManager.GetString("EndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-Sports APP.
+        /// </summary>
+        public static string ESportsApp {
+            get {
+                return ResourceManager.GetString("ESportsApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-Sports Desktop.
+        /// </summary>
+        public static string ESportsDesktop {
+            get {
+                return ResourceManager.GetString("ESportsDesktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-Sports Mobile.
+        /// </summary>
+        public static string ESportsMobile {
+            get {
+                return ResourceManager.GetString("ESportsMobile", resourceCulture);
             }
         }
         
@@ -853,6 +952,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Group By.
+        /// </summary>
+        public static string GroupBy {
+            get {
+                return ResourceManager.GetString("GroupBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to HDP.
         /// </summary>
         public static string HDP {
@@ -948,6 +1056,15 @@ namespace Fanex.Athena.Report.Resources {
         public static string LG {
             get {
                 return ResourceManager.GetString("LG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Licensee Comm.
+        /// </summary>
+        public static string LicenseeComm {
+            get {
+                return ResourceManager.GetString("LicenseeComm", resourceCulture);
             }
         }
         
@@ -1069,11 +1186,56 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mobile Compact.
+        /// </summary>
+        public static string MobileCompact {
+            get {
+                return ResourceManager.GetString("MobileCompact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mobile Euro.
+        /// </summary>
+        public static string MobileEuro {
+            get {
+                return ResourceManager.GetString("MobileEuro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mobile Galaxy.
+        /// </summary>
+        public static string MobileGalaxy {
+            get {
+                return ResourceManager.GetString("MobileGalaxy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mobile Lite Version.
         /// </summary>
         public static string MobileLiteVersion {
             get {
                 return ResourceManager.GetString("MobileLiteVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mobile Others.
+        /// </summary>
+        public static string MobileOthers {
+            get {
+                return ResourceManager.GetString("MobileOthers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mobile Standard.
+        /// </summary>
+        public static string MobileStandard {
+            get {
+                return ResourceManager.GetString("MobileStandard", resourceCulture);
             }
         }
         
@@ -1366,11 +1528,29 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Player Comm.
+        /// </summary>
+        public static string PlayerComm {
+            get {
+                return ResourceManager.GetString("PlayerComm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Player Name.
         /// </summary>
         public static string PlayerName {
             get {
                 return ResourceManager.GetString("PlayerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Player W/L.
+        /// </summary>
+        public static string PlayerW_L {
+            get {
+                return ResourceManager.GetString("PlayerW_L", resourceCulture);
             }
         }
         

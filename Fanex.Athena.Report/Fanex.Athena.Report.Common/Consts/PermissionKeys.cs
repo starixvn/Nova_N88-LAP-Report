@@ -9,6 +9,8 @@
 
         public const string AbnormalBet = "AbnormalBetReport";
 
+        public const string ReportWinlossAnalysis = "SabaWinLossAnalysis";
+
         /*Special Report Data*/
         public const string SpecialReportData = "SpecialReportData";
         public const string SpecialReportData_Turnover = "SpecialReportData_Turnover";

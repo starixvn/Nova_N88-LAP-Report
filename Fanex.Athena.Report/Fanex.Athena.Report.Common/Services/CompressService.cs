@@ -1,0 +1,55 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using Fanex.Athena.Report.Common.Excels;
+using Fanex.Athena.Report.Common.Model.MetaModels;
+using Fanex.Athena.Report.Common.Services.Interfaces;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Options;
+
+namespace Fanex.Athena.Report.Common.Services
+{
+    public class CompressService : ICompressService
+    {
+        protected readonly IHostingEnvironment _webHostEnvironment;
+        private readonly IFileService _fileService;
+        private readonly ExcelOptions _option;
+
+        public CompressService(IHostingEnvironment environment, IFileService fileService, IOptions<ExcelOptions> options)
+        {
+            _webHostEnvironment = environment;
+            _fileService = fileService;
+            _option = options.Value;
+        }
+
+        public byte[] CompressCompressDataInByteFormssData(IEnumerable<ZipEntry> entries, bool isDeleteOriginalAfterCompress)
+        {
+            var zipPath = Path.Combine(EnsureFolderPath(), $"{Guid.NewGuid()}.zip");
+            _fileService.Compress(entries, zipPath, isDeleteOriginalAfterCompress);
+            var bytes = _fileService.ReadAllBytes(zipPath);
+            _fileService.DeleteFile(zipPath);
+            return bytes;
+        }
+
+        public string CompressDataToFile(IEnumerable<ZipEntry> entries, bool isDeleteOriginalAfterCompress)
+        {
+            var zipPath = Path.Combine(EnsureFolderPath(), $"{Guid.NewGuid()}.zip");
+            _fileService.Compress(entries, zipPath, isDeleteOriginalAfterCompress);
+            return zipPath;
+        }
+
+        public string EnsureFolderPath()
+        {
+            var path = GetTempFolderPath();
+            _fileService.CreateFolder(path);
+            return path;
+        }
+
+        private string GetTempFolderPath()
+        {
+            var root = _fileService.GetParentDirectory(_webHostEnvironment.ContentRootPath);
+
+            return Path.Combine(root.FullName, _option.Path);
+        }
+    }
+}

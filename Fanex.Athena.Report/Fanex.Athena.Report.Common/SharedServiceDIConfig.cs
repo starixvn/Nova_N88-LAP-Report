@@ -21,6 +21,8 @@
             services.AddSingleton<IDataMapper, DataMapper>();
             services.AddSingleton<ICalculationService, CalculationService>();
             services.AddSingleton<ICacheRefAdapter, CacheRefAdapter>();
+            services.AddSingleton<ICompressService, CompressService>();
+            services.AddSingleton<INameService, NameService>();
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30717.126
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.Athena.Report", "Fanex.Athena.Report\Fanex.Athena.Report.csproj", "{1EBF12DF-FB95-455E-A1B2-D01B77309BDD}"
 EndProject
@@ -40,6 +40,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.Athena.Report.AbnormalBet", "Module\Fanex.Athena.Report.AbnormalBet\Fanex.Athena.Report.AbnormalBet.csproj", "{7A247F47-9A08-464B-BF00-B2309B48D34E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.Athena.Report.AbnormalBet.UnitTests", "UnitTests\Module\Fanex.Athena.Report.AbnormalBet.UnitTests\Fanex.Athena.Report.AbnormalBet.UnitTests.csproj", "{08D44F96-A5B5-416B-8B11-C31184045134}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Athena.Report.SabaWinLossAnalysis", "Module\Fanex.Athena.Report.SabaWinLossAnalysis\Fanex.Athena.Report.SabaWinLossAnalysis.csproj", "{2601C11B-4DBD-4314-9489-D5872D798D80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +113,10 @@ Global
 		{08D44F96-A5B5-416B-8B11-C31184045134}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08D44F96-A5B5-416B-8B11-C31184045134}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08D44F96-A5B5-416B-8B11-C31184045134}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2601C11B-4DBD-4314-9489-D5872D798D80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2601C11B-4DBD-4314-9489-D5872D798D80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2601C11B-4DBD-4314-9489-D5872D798D80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2601C11B-4DBD-4314-9489-D5872D798D80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -129,6 +135,7 @@ Global
 		{69C9A380-88E8-43EE-91B1-A8BE314006EE} = {CEC67AA5-E7EA-42B0-B678-71DBC25A8FEB}
 		{7A247F47-9A08-464B-BF00-B2309B48D34E} = {CEC67AA5-E7EA-42B0-B678-71DBC25A8FEB}
 		{08D44F96-A5B5-416B-8B11-C31184045134} = {367C8793-591A-45F5-8B8A-D567D5DE826F}
+		{2601C11B-4DBD-4314-9489-D5872D798D80} = {CEC67AA5-E7EA-42B0-B678-71DBC25A8FEB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03541499-F762-410E-996E-B067DDF610D6}
