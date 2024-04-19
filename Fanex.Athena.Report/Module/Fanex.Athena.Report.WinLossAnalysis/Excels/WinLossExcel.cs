@@ -1,4 +1,6 @@
-﻿using Fanex.Athena.Report.Common.Excel;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Fanex.Athena.Report.Common.Excel;
 using Fanex.Athena.Report.Common.Model.ViewModel;
 using Fanex.Athena.Report.Resources;
 using Fanex.Athena.Report.WinLossAnalysis.Consts;
@@ -7,8 +9,6 @@ using Fanex.Athena.Report.WinLossAnalysis.MetaModels;
 using Fanex.Athena.Report.WinLossAnalysis.ViewModels;
 using Microsoft.Extensions.FileProviders;
 using NPOI.SS.UserModel;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Fanex.Athena.Report.WinLossAnalysis.Excels
 {
@@ -96,7 +96,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.Excels
         {
             var title = $"{ViewResources.WinLossAnalysis}, {metaModel.FromDate.ToString(DateFormat)} - {metaModel.ToDate.ToString(DateFormat)}," +
                 $" {string.Format(ViewResources.Viewin, metaModel.BaseCurrency.ToUpperInvariant())}," +
-                $" {DataHelper.GetTimezoneName(metaModel.Timezone)}";
+                $" {DataHelper.GetTimezoneName(metaModel.Timezone)}" +
+                (string.IsNullOrEmpty(metaModel.DataViewName) ? "" : $", {metaModel.DataViewName}");
 
             _builder.SetRowValue(sheet, templateSheet, sourceRowIndex: RowTitleTemplate, destRowIndex: RowTitleTemplate, columnCount: ColumnTemplateCount, value: title);
 
