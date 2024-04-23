@@ -912,4 +912,28 @@
   <data name="Desktop" xml:space="preserve">
     <value>Desktop</value>
   </data>
+  <data name="CO" xml:space="preserve">
+    <value>Cash Out</value>
+  </data>
+  <data name="YB" xml:space="preserve">
+    <value>YeeBet</value>
+  </data>
+  <data name="WE" xml:space="preserve">
+    <value>WE Live Casino</value>
+  </data>
+  <data name="VB" xml:space="preserve">
+    <value>Macau Games</value>
+  </data>
+  <data name="UUSL" xml:space="preserve">
+    <value>UU SLOTS</value>
+  </data>
+  <data name="SXG" xml:space="preserve">
+    <value>AE Sexy</value>
+  </data>
+  <data name="L22" xml:space="preserve">
+    <value>Live22</value>
+  </data>
+  <data name="SB_BA" xml:space="preserve">
+    <value>Sportsbook &amp; BA</value>
+  </data>
 </root>
