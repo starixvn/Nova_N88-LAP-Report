@@ -6,7 +6,7 @@ namespace Fanex.Athena.Report.Resources.Helpers
     {
         public static string GetProductName(string productCode)
         {
-            return GetValue(productCode);
+            return GetValue(string.Join("_", productCode.Split(',')));
         }
 
         public static string GetValue(string key)
