@@ -1,15 +1,50 @@
-﻿namespace Fanex.Athena.Report.Resources.Helpers
+﻿using Fanex.Athena.Report.Resources.Constants;
+
+namespace Fanex.Athena.Report.Resources.Helpers
 {
     public static class DataHelper
     {
         public static string GetProductName(string productCode)
         {
-            return GetValue(productCode);
+            return GetValue(string.Join("_", productCode.Split(',')));
         }
 
         public static string GetValue(string key)
         {
             return ViewResources.ResourceManager.GetString(key);
+        }
+
+#pragma warning disable S1541 // Methods and properties should not be too complex
+
+        public static string GetPlatformName(int type)
+#pragma warning restore S1541 // Methods and properties should not be too complex
+        {
+            switch (type)
+            {
+                case PlatformType.DesktopNewAsia: return ViewResources.DesktopNewAsia;
+                case PlatformType.DesktopChina: return ViewResources.DesktopChina;
+                case PlatformType.DesktopOthers: return ViewResources.DesktopOthers;
+                case PlatformType.DesktopGalaxy: return ViewResources.DesktopGalaxy;
+                case PlatformType.MobileStandard: return ViewResources.MobileStandard;
+                case PlatformType.MobileEuro: return ViewResources.MobileEuro;
+                case PlatformType.MobileGalaxy: return ViewResources.MobileGalaxy;
+                case PlatformType.MobileCompact: return ViewResources.MobileCompact;
+                case PlatformType.MobileOthers: return ViewResources.MobileOthers;
+                case PlatformType.ESportsDesktop: return ViewResources.ESportsDesktop;
+                case PlatformType.ESportsMobile: return ViewResources.ESportsMobile;
+                case PlatformType.ESportsApp: return ViewResources.ESportsApp;
+                case PlatformType.MobileApp: return ViewResources.MobileApp;
+                case PlatformType.NativeApp: return ViewResources.NativeApp;
+                case PlatformType.Tablet: return ViewResources.Tablet;
+                case PlatformType.DeepLink: return ViewResources.DeepLink;
+                case PlatformType.WAP: return ViewResources.Wap;
+                case PlatformType.ChatRoom: return ViewResources.ChatRoom;
+                case PlatformType.BetfromOthers: return ViewResources.BetfromOthers;
+                case PlatformType.Others: return ViewResources.BetfromOthers;
+                case PlatformType.Desktop: return ViewResources.Desktop;
+                case PlatformType.Mobile: return ViewResources.Mobile;
+                default: return ViewResources.All;
+            }
         }
     }
 }

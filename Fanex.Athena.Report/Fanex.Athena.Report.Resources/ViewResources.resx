@@ -852,4 +852,88 @@
   <data name="BetID" xml:space="preserve">
     <value>Bet ID</value>
   </data>
+  <data name="GroupBy" xml:space="preserve">
+    <value>Group By</value>
+  </data>
+  <data name="BreakdownBy" xml:space="preserve">
+    <value>Breakdown By</value>
+  </data>
+  <data name="AmountDueToBA" xml:space="preserve">
+    <value>Amount Due To BA</value>
+  </data>
+  <data name="LicenseeComm" xml:space="preserve">
+    <value>Licensee Comm</value>
+  </data>
+  <data name="PlayerComm" xml:space="preserve">
+    <value>Player Comm</value>
+  </data>
+  <data name="PlayerW_L" xml:space="preserve">
+    <value>Player W/L</value>
+  </data>
+  <data name="DesktopNewAsia" xml:space="preserve">
+    <value>Desktop New Asia</value>
+  </data>
+  <data name="DesktopChina" xml:space="preserve">
+    <value>Desktop China</value>
+  </data>
+  <data name="DesktopOthers" xml:space="preserve">
+    <value>Desktop Others</value>
+  </data>
+  <data name="DesktopGalaxy" xml:space="preserve">
+    <value>Desktop Others</value>
+  </data>
+  <data name="MobileStandard" xml:space="preserve">
+    <value>Mobile Standard</value>
+  </data>
+  <data name="MobileEuro" xml:space="preserve">
+    <value>Mobile Euro</value>
+  </data>
+  <data name="MobileGalaxy" xml:space="preserve">
+    <value>Mobile Galaxy</value>
+  </data>
+  <data name="MobileCompact" xml:space="preserve">
+    <value>Mobile Compact</value>
+  </data>
+  <data name="MobileOthers" xml:space="preserve">
+    <value>Mobile Others</value>
+  </data>
+  <data name="ESportsDesktop" xml:space="preserve">
+    <value>E-Sports Desktop</value>
+  </data>
+  <data name="ESportsMobile" xml:space="preserve">
+    <value>E-Sports Mobile</value>
+  </data>
+  <data name="ESportsApp" xml:space="preserve">
+    <value>E-Sports APP</value>
+  </data>
+  <data name="ChatRoom" xml:space="preserve">
+    <value>Chat Room</value>
+  </data>
+  <data name="Desktop" xml:space="preserve">
+    <value>Desktop</value>
+  </data>
+  <data name="CO" xml:space="preserve">
+    <value>Cash Out</value>
+  </data>
+  <data name="YB" xml:space="preserve">
+    <value>YeeBet</value>
+  </data>
+  <data name="WE" xml:space="preserve">
+    <value>WE Live Casino</value>
+  </data>
+  <data name="VB" xml:space="preserve">
+    <value>Macau Games</value>
+  </data>
+  <data name="UUSL" xml:space="preserve">
+    <value>UU SLOTS</value>
+  </data>
+  <data name="SXG" xml:space="preserve">
+    <value>AE Sexy</value>
+  </data>
+  <data name="L22" xml:space="preserve">
+    <value>Live22</value>
+  </data>
+  <data name="SB_BA" xml:space="preserve">
+    <value>Sportsbook &amp; BA</value>
+  </data>
 </root>

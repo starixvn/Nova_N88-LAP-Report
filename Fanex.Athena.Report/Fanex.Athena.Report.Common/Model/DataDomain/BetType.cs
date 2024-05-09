@@ -42,10 +42,30 @@ namespace Fanex.Athena.Report.Common.Model.DataDomain
 
         public const int VgamingFreeBetsJackpotContribution = 3898;
 
+        public const int SGJackpotPrize = 4600;
+
+        public const int SGJackpotContribution = 4599;
+
+        public const int SGPromotion = 4598;
+
+        public const int AllbetPromotion = 2499;
+
         public const int TIPStreamerTips = 8700;
+
+        public const int MGRNGPromotion = 8695;
+
+        public const int NumberGameHappy5OddEven = 8102;
+
+        public const int VirtualBasketballOverUnder = 2803;
+
+        public const int VirtualBasketballFirstHalfHandicap = 2806;
+
+        public const int VirtualSportsTennisCorrectSoccer = 1235;
 
         public const int SabaCasinoRoyaleTournamentPrize = 17006;
 
         public const int SabaRewardRiskFreeRebate = 17007;
+
+        public const int Live22Promotion = 7698;
     }
 }

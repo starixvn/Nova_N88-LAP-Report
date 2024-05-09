@@ -37,6 +37,12 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         [SpParam(Ignored = true)]
         public string OriginalCurrency { get; set; }
 
+        [SpParam(SqlParamName = "ReportSettingTypeId")]
+        public int DataView { get; set; }
+
+        [SpParam(Ignored = true)]
+        public string DataViewName { get; set; }
+
 #pragma warning disable S1067
 
         [SpParam(Ignored = true)]

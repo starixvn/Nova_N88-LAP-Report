@@ -1,10 +1,10 @@
-﻿using Fanex.Athena.Report.Common.Model.MetaModels;
+﻿using System;
+using Fanex.Athena.Report.Common.Model.MetaModels;
 using Fanex.Athena.Report.Common.Model.MetaModels.Interfaces;
 using Fanex.Athena.Report.WinLossAnalysis.Consts;
 using Fanex.Core.Utils;
 using Fanex.Data;
 using Fanex.NVC.Authentication.Infrastructure;
-using System;
 
 namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
 {
@@ -74,6 +74,12 @@ namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels
         public byte SortbyId { get; set; }
 
         public bool IsSortAsc { get; set; }
+
+        [SpParam(SqlParamName = "ReportSettingTypeId")]
+        public int DataView { get; set; }
+
+        [SpParam(Ignored = true)]
+        public string DataViewName { get; set; }
 
 #pragma warning disable S1067, S109, S1541
 

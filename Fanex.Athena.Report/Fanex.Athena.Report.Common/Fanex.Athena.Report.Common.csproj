@@ -13,6 +13,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Repositories\Interfaces\**" />
+	  <EmbeddedResource Remove="Repositories\Interfaces\**" />
+	  <None Remove="Repositories\Interfaces\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<AdditionalFiles Include="..\.sonarlint\n88_lap_report\CSharp\SonarLint.xml" Link="SonarLint.xml" />
 	</ItemGroup>
 
@@ -34,9 +40,5 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Fanex.Athena.Report.Resources\Fanex.Athena.Report.Resources.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="Repositories\Interfaces\" />
 	</ItemGroup>
 </Project>
