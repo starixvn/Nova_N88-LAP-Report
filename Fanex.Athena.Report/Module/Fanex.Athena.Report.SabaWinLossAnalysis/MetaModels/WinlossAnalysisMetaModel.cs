@@ -47,7 +47,7 @@ namespace Fanex.Athena.Report.SabaWinLossAnalysis.MetaModels
 
         public bool IsExcludedTestData { get; set; }
 
-        public bool IsViewCashOutOnly { get; set; }
+        public int CashOutMode { get; set; }
 
         public int PageIndex { get; set; }
 
