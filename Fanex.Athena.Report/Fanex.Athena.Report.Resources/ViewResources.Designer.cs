@@ -727,7 +727,16 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Desktop Others.
+        ///   Looks up a localized string similar to Desktop Compact.
+        /// </summary>
+        public static string DesktopCompact {
+            get {
+                return ResourceManager.GetString("DesktopCompact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Desktop Galaxy.
         /// </summary>
         public static string DesktopGalaxy {
             get {
