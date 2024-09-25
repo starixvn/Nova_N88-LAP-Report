@@ -69,5 +69,7 @@ namespace Fanex.Athena.Report.Common.Model.DataDomain
         public const int SabaRewardRiskFreeRebate = 17007;
 
         public const int Live22Promotion = 7698;
+
+        public const int OddsBoostAdjustment = 997;
     }
 }
