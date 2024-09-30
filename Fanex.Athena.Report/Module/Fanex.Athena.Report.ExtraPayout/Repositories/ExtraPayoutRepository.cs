@@ -52,7 +52,8 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
             { ExtraPayoutMapType.VgamingFreeBetsJackpotContribution, BetType.VgamingFreeBetsJackpotContribution },
             { ExtraPayoutMapType.PayoutStreamerTips, BetType.TIPStreamerTips },
             { ExtraPayoutMapType.PayoutSabaCasinoRoyaleTournamentPrize, BetType.SabaCasinoRoyaleTournamentPrize },
-            { ExtraPayoutMapType.PayoutSabaRewardRiskFreeRebate, BetType.SabaRewardRiskFreeRebate }
+            { ExtraPayoutMapType.PayoutSabaRewardRiskFreeRebate, BetType.SabaRewardRiskFreeRebate },
+            { ExtraPayoutMapType.PayoutOddsBoostAdjustment, BetType.OddsBoostAdjustment }
         };
 
         private static readonly int[] SBPromotionBettypes = new[] {
@@ -361,10 +362,24 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
             var promotionType = reader.GetVal<int>("PromotionType");
 
             data.CustId = reader.GetVal<int>("CustId");
-            data.Username = reader.GetVal<string>("username");
+            data.Username = GetUserNameValue(reader, promotionType);
             data.PromotionType = promotionType;
             data.PromotionName = GetPromotionName(promotionType);
-            data.Nickname = reader.GetVal<string>("Nickname");
+            data.Nickname = GetNicknameValue(reader, promotionType);
+        }
+
+        private static string GetUserNameValue(IDataReader reader, int promotionType)
+        {
+            return promotionType == ExtraPayoutMapType.PayoutOddsBoostAdjustment ?
+                ViewResources.TotalOddsBootsBonus :
+                reader.GetVal<string>("username");
+        }
+
+        private static string GetNicknameValue(IDataReader reader, int promotionType)
+        {
+            return promotionType == ExtraPayoutMapType.PayoutOddsBoostAdjustment ?
+                string.Empty :
+                reader.GetVal<string>("Nickname");
         }
 
         public async Task<SortableResultModel<ExtraPayoutDetailDTO>> GetExtraPayoutDetailData(
@@ -463,6 +478,11 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
             if (CasinoPromotionBettypes.Contains(promotionType))
             {
                 return $"{ViewResources.CasinoPromotion} - {_cacheRefAdapter.GetBettype(promotionType)}";
+            }
+
+            if (promotionType == BetType.OddsBoostAdjustment)
+            {
+                return $"{ViewResources.SB} - {ViewResources.OddsBoostBonus}";
             }
 
             return IsSportType(promotionType) ? _cacheRefAdapter.GetSportName(promotionType) : _cacheRefAdapter.GetBettype(promotionType);
