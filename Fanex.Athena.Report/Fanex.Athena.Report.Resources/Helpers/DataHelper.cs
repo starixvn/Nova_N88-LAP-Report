@@ -1,7 +1,7 @@
-﻿using Fanex.Athena.Report.Resources.Constants;
-
-namespace Fanex.Athena.Report.Resources.Helpers
+﻿namespace Fanex.Athena.Report.Resources.Helpers
 {
+    using Constants;
+
     public static class DataHelper
     {
         public static string GetProductName(string productCode)
@@ -40,6 +40,7 @@ namespace Fanex.Athena.Report.Resources.Helpers
                 case PlatformType.WAP: return ViewResources.Wap;
                 case PlatformType.ChatRoom: return ViewResources.ChatRoom;
                 case PlatformType.DesktopCompact: return ViewResources.DesktopCompact;
+                case PlatformType.QuickBetWidget: return ViewResources.QuickBetWidget;
                 case PlatformType.BetfromOthers: return ViewResources.BetfromOthers;
                 case PlatformType.Others: return ViewResources.BetfromOthers;
                 case PlatformType.Desktop: return ViewResources.Desktop;
