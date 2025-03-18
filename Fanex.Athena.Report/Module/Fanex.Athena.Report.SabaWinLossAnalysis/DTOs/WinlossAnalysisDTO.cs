@@ -22,8 +22,6 @@
 
         public decimal LicComm { get; set; }
 
-        public decimal AmtDueToBA { get; set; }
-
         public decimal BetEffective { get; set; }
 
         public float Margin { get; set; }
@@ -39,8 +37,6 @@
         public decimal BaseLicWinloss { get; set; }
 
         public decimal BaseLicComm { get; set; }
-
-        public decimal BaseAmtDueToBA { get; set; }
 
         public decimal BaseBetEffective { get; set; }
 

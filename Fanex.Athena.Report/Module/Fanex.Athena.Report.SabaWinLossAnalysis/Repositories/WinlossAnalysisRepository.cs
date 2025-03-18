@@ -132,7 +132,6 @@ namespace Fanex.Athena.Report.SabaWinLossAnalysis.Repositories
             data.MemComm = reader.GetVal<decimal>("MemComm");
             data.LicWinloss = reader.GetVal<decimal>("LicWinloss");
             data.LicComm = reader.GetVal<decimal>("LicComm");
-            data.AmtDueToBA = reader.GetVal<decimal>("AmtDueToBA");
             data.BetEffective = reader.GetVal<decimal>("BetEffective");
             data.Margin = reader.GetVal<float>("Margin");
             data.BaseTurnover = reader.GetVal<decimal>("BaseTurnover");
@@ -141,7 +140,6 @@ namespace Fanex.Athena.Report.SabaWinLossAnalysis.Repositories
             data.BaseMemComm = reader.GetVal<decimal>("BaseMemComm");
             data.BaseLicWinloss = reader.GetVal<decimal>("BaseLicWinloss");
             data.BaseLicComm = reader.GetVal<decimal>("BaseLicComm");
-            data.BaseAmtDueToBA = reader.GetVal<decimal>("BaseAmtDueToBA");
             data.BaseBetEffective = reader.GetVal<decimal>("BaseBetEffective");
         }
     }
