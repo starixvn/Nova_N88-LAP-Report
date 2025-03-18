@@ -260,7 +260,6 @@ namespace Fanex.Athena.Report.SabaWinLossAnalysis.Services
             {
                 RowIndex = data.RowIndex,
                 DisplayRowIndex = data.RowIndex,
-                AmtDueToBA = data.AmtDueToBA,
                 BetCount = data.BetCount,
                 BetEffective = data.BetEffective,
                 BreakBy = data.BreakBy,
@@ -279,7 +278,6 @@ namespace Fanex.Athena.Report.SabaWinLossAnalysis.Services
             {
                 RowIndex = data.RowIndex,
                 DisplayRowIndex = data.RowIndex,
-                AmtDueToBA = data.BaseAmtDueToBA,
                 BetCount = data.BetCount,
                 BetEffective = data.BaseBetEffective,
                 BreakBy = data.BreakBy,

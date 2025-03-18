@@ -155,7 +155,6 @@
 
         private WinlossAnalysisExcelOption GenOptionFromParam(WinlossAnalysisMetaModel metaModel)
         {
-            var isHasBAProduct = metaModel.ProductCodes.Split(',').Contains(Resources.Constants.Product.BA);
             return new WinlossAnalysisExcelOption
             {
                 BaseCurrency = metaModel.BaseCurrencyName,
@@ -163,7 +162,6 @@
                 FromDate = metaModel.FromDate,
                 ToDate = metaModel.ToDate,
                 GroupByMode = metaModel.GroupMode,
-                IsHasBAProduct = isHasBAProduct,
                 CurrencyList = metaModel.CurrencyCodes,
                 ProductCodes = metaModel.ProductCodes,
                 ExportExcelMode = metaModel.ExportExcelMode,

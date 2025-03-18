@@ -19,7 +19,7 @@ namespace Fanex.Athena.Report.SabaWinLossAnalysis.Excels
         private const string TEMPLATE_SHEET_NAME = "Template";
         private const string SHEET_NAME = "Data";
         private const int GROUP_COL_CELL_RANGE = 2;
-        private const int MAX_NUMBER_OF_COL = 15;
+        private const int MAX_NUMBER_OF_COL = 14;
         private const int TEMPLATE_TITLE_ROW = 0;
         private const int TEMPLATE_HEADER_ROW = 1;
         private const int TEMPLATE_GROUP_ROW = 3;
@@ -40,16 +40,13 @@ namespace Fanex.Athena.Report.SabaWinLossAnalysis.Excels
         private const int TemplatePlayerCommCol = 10;
         private const int TemplateLicenseeWinlossCol = 11;
         private const int TemplateLicenseeComm = 12;
-        private const int TemplateAmtDueToBACol = 13;
-        private const int TemplateMarginCol = 14;
+        private const int TemplateMarginCol = 13;
 
         private WinlossAnalysisExcelOption Option { get; set; } = new WinlossAnalysisExcelOption();
 
         private bool IsHasSecondaryHeaderForGroupBy => Option.GroupByMode == GroupByMode.Player;
 
         private bool IsHasSecondaryHeaderForBreakDown => Option.BreakdownMode == BreakdownMode.Player;
-
-        private bool IsHasBACol => Option.IsHasBAProduct;
 
         private bool IsHasBetEffectiveCol => Option.GroupByMode == GroupByMode.Player;
 
@@ -118,7 +115,6 @@ namespace Fanex.Athena.Report.SabaWinLossAnalysis.Excels
                 ViewResources.PlayerComm,
                 ViewResources.LicenseeW_L,
                 ViewResources.LicenseeComm,
-                ViewResources.AmountDueToBA,
                 ViewResources.Margin
             };
             headerRow1.GetCell(TemplateGroupByCol).SetCellValue(ViewResources.GroupBy);
@@ -236,7 +232,6 @@ namespace Fanex.Athena.Report.SabaWinLossAnalysis.Excels
             row.GetCell(TemplatePlayerCommCol).SetCellValue((double)item.PlayerComm);
             row.GetCell(TemplateLicenseeWinlossCol).SetCellValue((double)item.LicWinloss);
             row.GetCell(TemplateLicenseeComm).SetCellValue((double)item.LicComm);
-            row.GetCell(TemplateAmtDueToBACol).SetCellValue((double)item.AmtDueToBA);
             row.GetCell(TemplateMarginCol).SetCellValue(item.Margin);
 
             if (item.LicWinloss < 0)
@@ -324,10 +319,6 @@ namespace Fanex.Athena.Report.SabaWinLossAnalysis.Excels
             if (!IsHasSecondaryHeaderForBreakDown)
             {
                 _builder.HideColumn(sheet, TemplateBreakdownCol + 1);
-            }
-            if (!IsHasBACol)
-            {
-                _builder.HideColumn(sheet, TemplateAmtDueToBACol);
             }
             if (!IsHasBetEffectiveCol)
             {
