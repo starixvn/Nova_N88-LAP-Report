@@ -71,5 +71,7 @@ namespace Fanex.Athena.Report.Common.Model.DataDomain
         public const int Live22Promotion = 7698;
 
         public const int OddsBoostAdjustment = 997;
+
+        public const int NumberGameLuckyDrawPromotion = 17031;
     }
 }
