@@ -53,5 +53,9 @@ namespace Fanex.Athena.Report.ExtraPayout.Const
         public const int PayoutOddsBoostAdjustment = 101;
 
         public const int PayoutNumberGameLuckyDrawPromotion = 3711;
+
+        public const int PayoutNBAPlayoffsLotteryPromotion = 3712;
+
+        public const int PayoutNBABalanceAdjustment = 3713;
     }
 }

@@ -54,7 +54,9 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
             { ExtraPayoutMapType.PayoutSabaCasinoRoyaleTournamentPrize, BetType.SabaCasinoRoyaleTournamentPrize },
             { ExtraPayoutMapType.PayoutSabaRewardRiskFreeRebate, BetType.SabaRewardRiskFreeRebate },
             { ExtraPayoutMapType.PayoutOddsBoostAdjustment, BetType.OddsBoostAdjustment },
-            { ExtraPayoutMapType.PayoutNumberGameLuckyDrawPromotion, BetType.NumberGameLuckyDrawPromotion }
+            { ExtraPayoutMapType.PayoutNumberGameLuckyDrawPromotion, BetType.NumberGameLuckyDrawPromotion },
+            { ExtraPayoutMapType.PayoutNBAPlayoffsLotteryPromotion, BetType.NBAPlayoffsLotteryPromotion },
+            { ExtraPayoutMapType.PayoutNBABalanceAdjustment, BetType.NBABalanceAdjustment }
         };
 
         private static readonly int[] SBPromotionBettypes = new[] {
@@ -63,7 +65,9 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
             BetType.SabaNonCashPrize,
             BetType.SabaLoyaltyPointsExchange,
             BetType.SabaRedEnvelope,
-            BetType.SabaRewardRiskFreeRebate
+            BetType.SabaRewardRiskFreeRebate,
+            BetType.NBAPlayoffsLotteryPromotion,
+            BetType.NBABalanceAdjustment
         };
 
         private static readonly int[] CasinoPromotionBettypes = new[] {
