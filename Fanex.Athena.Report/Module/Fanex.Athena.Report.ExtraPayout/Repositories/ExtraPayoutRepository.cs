@@ -53,7 +53,8 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
             { ExtraPayoutMapType.PayoutStreamerTips, BetType.TIPStreamerTips },
             { ExtraPayoutMapType.PayoutSabaCasinoRoyaleTournamentPrize, BetType.SabaCasinoRoyaleTournamentPrize },
             { ExtraPayoutMapType.PayoutSabaRewardRiskFreeRebate, BetType.SabaRewardRiskFreeRebate },
-            { ExtraPayoutMapType.PayoutOddsBoostAdjustment, BetType.OddsBoostAdjustment }
+            { ExtraPayoutMapType.PayoutOddsBoostAdjustment, BetType.OddsBoostAdjustment },
+            { ExtraPayoutMapType.PayoutNumberGameLuckyDrawPromotion, BetType.NumberGameLuckyDrawPromotion }
         };
 
         private static readonly int[] SBPromotionBettypes = new[] {
@@ -67,6 +68,10 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
 
         private static readonly int[] CasinoPromotionBettypes = new[] {
             BetType.SabaCasinoRoyaleTournamentPrize
+        };
+
+        private static readonly int[] NumberGamePromotionBettypes = new[] {
+            BetType.NumberGameLuckyDrawPromotion
         };
 
         public ExtraPayoutRepository(
@@ -483,6 +488,11 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
             if (promotionType == BetType.OddsBoostAdjustment)
             {
                 return $"{ViewResources.SB} - {ViewResources.OddsBoostBonus}";
+            }
+
+            if (NumberGamePromotionBettypes.Contains(promotionType))
+            {
+                return $"{ViewResources.NGPromotion} - {_cacheRefAdapter.GetBettype(promotionType)}";
             }
 
             return IsSportType(promotionType) ? _cacheRefAdapter.GetSportName(promotionType) : _cacheRefAdapter.GetBettype(promotionType);

@@ -51,5 +51,7 @@ namespace Fanex.Athena.Report.ExtraPayout.Const
         public const int PayoutSabaRewardRiskFreeRebate = 3707;
 
         public const int PayoutOddsBoostAdjustment = 101;
+
+        public const int PayoutNumberGameLuckyDrawPromotion = 3711;
     }
 }
