@@ -41,6 +41,7 @@
 		<None Remove="ExcelTemplate\AbnormalBet\AbnormalBetDetail.xls" />
 		<None Remove="ExcelTemplate\AbnormalBet\AbnormalBetIpSummary.xls" />
 		<None Remove="ExcelTemplate\AbnormalBet\AbnormalBetSummary.xls" />
+		<None Remove="ExcelTemplate\PlayerSabaCoins\PlayerSabaCoins.xls" />
 		<None Remove="SpConfig\FanexSpName.PROD.xml" />
 		<None Remove="SpConfig\FanexSpName.xml" />
 	</ItemGroup>
@@ -92,6 +93,9 @@
 		<Content Include="ExcelTemplate\AbnormalBet\AbnormalBetSummary.xls">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
+		<Content Include="ExcelTemplate\PlayerSabaCoins\PlayerSabaCoins.xls">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 		<Content Include="SpConfig\FanexSpName.PROD.xml">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
@@ -128,6 +132,7 @@
 		<ProjectReference Include="..\Fanex.Athena.Report.Resources\Fanex.Athena.Report.Resources.csproj" />
 		<ProjectReference Include="..\Module\Fanex.Athena.Report.ExtraPayout\Fanex.Athena.Report.ExtraPayout.csproj" />
 		<ProjectReference Include="..\Module\Fanex.Athena.Report.Marketing\Fanex.Athena.Report.Marketing.csproj" />
+		<ProjectReference Include="..\Module\Fanex.Athena.Report.PlayerSabaCoins\Fanex.Athena.Report.PlayerSabaCoins.csproj" />
 		<ProjectReference Include="..\Module\Fanex.Athena.Report.SabaWinLossAnalysis\Fanex.Athena.Report.SabaWinLossAnalysis.csproj" />
 		<ProjectReference Include="..\Module\Fanex.Athena.Report.WinLossAnalysis\Fanex.Athena.Report.WinLossAnalysis.csproj" />
 	</ItemGroup>

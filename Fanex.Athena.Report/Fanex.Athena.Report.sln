@@ -43,6 +43,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.Athena.Report.Abnorma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Athena.Report.SabaWinLossAnalysis", "Module\Fanex.Athena.Report.SabaWinLossAnalysis\Fanex.Athena.Report.SabaWinLossAnalysis.csproj", "{2601C11B-4DBD-4314-9489-D5872D798D80}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Athena.Report.PlayerSabaCoins", "Module\Fanex.Athena.Report.PlayerSabaCoins\Fanex.Athena.Report.PlayerSabaCoins.csproj", "{746ED388-BDC1-4744-BFEA-8BECF1D7009F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,10 @@ Global
 		{2601C11B-4DBD-4314-9489-D5872D798D80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2601C11B-4DBD-4314-9489-D5872D798D80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2601C11B-4DBD-4314-9489-D5872D798D80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{746ED388-BDC1-4744-BFEA-8BECF1D7009F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{746ED388-BDC1-4744-BFEA-8BECF1D7009F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{746ED388-BDC1-4744-BFEA-8BECF1D7009F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{746ED388-BDC1-4744-BFEA-8BECF1D7009F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -136,6 +142,7 @@ Global
 		{7A247F47-9A08-464B-BF00-B2309B48D34E} = {CEC67AA5-E7EA-42B0-B678-71DBC25A8FEB}
 		{08D44F96-A5B5-416B-8B11-C31184045134} = {367C8793-591A-45F5-8B8A-D567D5DE826F}
 		{2601C11B-4DBD-4314-9489-D5872D798D80} = {CEC67AA5-E7EA-42B0-B678-71DBC25A8FEB}
+		{746ED388-BDC1-4744-BFEA-8BECF1D7009F} = {CEC67AA5-E7EA-42B0-B678-71DBC25A8FEB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03541499-F762-410E-996E-B067DDF610D6}

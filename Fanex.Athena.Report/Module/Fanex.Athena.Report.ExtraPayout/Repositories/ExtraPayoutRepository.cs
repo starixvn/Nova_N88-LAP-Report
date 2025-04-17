@@ -40,6 +40,9 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
             { ExtraPayoutMapType.SabaNonCashPrize, BetType.SabaNonCashPrize },
             { ExtraPayoutMapType.SabaLoyaltyPointsExchange, BetType.SabaLoyaltyPointsExchange },
             { ExtraPayoutMapType.SabaRedEnvelope, BetType.SabaRedEnvelope },
+            { ExtraPayoutMapType.SabaCoinsCashExchange, BetType.SabaCoinsCashExchange },
+            { ExtraPayoutMapType.PromotionJackpotPrize, BetType.PromotionJackpotPrize },
+            { ExtraPayoutMapType.PromotionCashPrize, BetType.PromotionCashPrize },
             { ExtraPayoutMapType.SAGamingTip, BetType.SAGamingTip },
             { ExtraPayoutMapType.SCBFreeBets, BetType.SCBFreeBets },
             { ExtraPayoutMapType.SCBFreeBetsJackpotPrize, BetType.SCBFreeBetsJackpotPrize },
@@ -66,6 +69,9 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
             BetType.SabaLoyaltyPointsExchange,
             BetType.SabaRedEnvelope,
             BetType.SabaRewardRiskFreeRebate,
+            BetType.SabaCoinsCashExchange,
+            BetType.PromotionJackpotPrize,
+            BetType.PromotionCashPrize,
             BetType.NBAPlayoffsLotteryPromotion,
             BetType.NBABalanceAdjustment
         };

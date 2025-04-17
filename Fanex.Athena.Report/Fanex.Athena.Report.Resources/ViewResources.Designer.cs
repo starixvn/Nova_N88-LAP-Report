@@ -862,6 +862,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exchange To Cash.
+        /// </summary>
+        public static string ExchangeToCash {
+            get {
+                return ResourceManager.GetString("ExchangeToCash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Expiry.
         /// </summary>
         public static string Expiry {
@@ -1591,6 +1600,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Player Saba Coins.
+        /// </summary>
+        public static string PlayerSabaCoins {
+            get {
+                return ResourceManager.GetString("PlayerSabaCoins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Player W/L.
         /// </summary>
         public static string PlayerW_L {
@@ -1749,6 +1767,15 @@ namespace Fanex.Athena.Report.Resources {
         public static string ReportDate {
             get {
                 return ResourceManager.GetString("ReportDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reward/ Promotion.
+        /// </summary>
+        public static string Reward_Promotion {
+            get {
+                return ResourceManager.GetString("Reward_Promotion", resourceCulture);
             }
         }
         

@@ -67,6 +67,7 @@
             ExtraPayout.ReportExtraPayoutDIConfig.Setup(services);
             AbnormalBet.ReportAbnormalBetDIConfig.Setup(services);
             SabaWinLossAnalysis.ReportSabaWinLossAnalysisDIConfig.Setup(services);
+            PlayerSabaCoins.ReportPlayerSabaCoinsDIConfig.Setup(services);
 
             var authConfig = Configuration.GetSection("MPAAuth").Get<AuthSharedSessionOption>();
             NVCSharedAuthManager

@@ -24,6 +24,12 @@ namespace Fanex.Athena.Report.ExtraPayout.Const
 
         public const int SabaRedEnvelope = 3705;
 
+        public const int SabaCoinsCashExchange = 3708;
+
+        public const int PromotionJackpotPrize = 3709;
+
+        public const int PromotionCashPrize = 3710;
+
         public const int SAGamingTip = 3901;
 
         public const int SCBFreeBets = 4201;
