@@ -808,7 +808,7 @@
     <value>Reason</value>
   </data>
   <data name="Saba" xml:space="preserve">
-    <value>Saba</value>
+    <value>Saba </value>
   </data>
   <data name="Score" xml:space="preserve">
     <value>Score</value>
@@ -950,6 +950,9 @@
   </data>
   <data name="NGPromotion" xml:space="preserve">
     <value>Number Game Promotion</value>
+  </data>
+  <data name="SoccerMarble" xml:space="preserve">
+    <value>Soccer Marble</value>
   </data>
   <data name="ExchangeToCash" xml:space="preserve">
     <value>Exchange To Cash</value>
