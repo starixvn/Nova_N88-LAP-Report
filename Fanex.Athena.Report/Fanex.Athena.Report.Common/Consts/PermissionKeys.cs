@@ -11,6 +11,8 @@
 
         public const string ReportWinlossAnalysis = "SabaWinLossAnalysis";
 
+        public const string PlayerSabaCoins = "SabaCoins";
+
         /*Special Report Data*/
         public const string SpecialReportData = "SpecialReportData";
         public const string SpecialReportData_Turnover = "SpecialReportData_Turnover";

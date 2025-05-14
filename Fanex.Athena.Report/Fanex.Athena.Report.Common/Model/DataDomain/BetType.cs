@@ -24,6 +24,12 @@ namespace Fanex.Athena.Report.Common.Model.DataDomain
 
         public const int SabaRedEnvelope = 17004;
 
+        public const int SabaCoinsCashExchange = 17008;
+
+        public const int PromotionJackpotPrize = 17009;
+
+        public const int PromotionCashPrize = 17010;
+
         public const int SAGamingTip = 3007;
 
         public const int SCBFreeBets = 150;
