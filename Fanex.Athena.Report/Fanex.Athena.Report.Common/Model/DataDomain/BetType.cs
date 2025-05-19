@@ -83,5 +83,7 @@ namespace Fanex.Athena.Report.Common.Model.DataDomain
         public const int NBAPlayoffsLotteryPromotion = 17011;
 
         public const int NBABalanceAdjustment = 17012;
+
+        public const int FIFACWCScoreChallenge = 17013;
     }
 }
