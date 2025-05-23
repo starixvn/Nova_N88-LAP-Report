@@ -1789,7 +1789,7 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Saba.
+        ///   Looks up a localized string similar to Saba .
         /// </summary>
         public static string Saba {
             get {
@@ -1884,6 +1884,15 @@ namespace Fanex.Athena.Report.Resources {
         public static string SLT {
             get {
                 return ResourceManager.GetString("SLT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Soccer Marble.
+        /// </summary>
+        public static string SoccerMarble {
+            get {
+                return ResourceManager.GetString("SoccerMarble", resourceCulture);
             }
         }
         

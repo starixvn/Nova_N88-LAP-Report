@@ -309,9 +309,9 @@ namespace Fanex.Athena.Report.AbnormalBet.Repositories
 
                 var sabaSportName = sabaSport.Item2 != 0
                     ? _cacheRefAdapter.GetSportName(sabaSport.Item2)
-                    : sabaSport.Item3;
+                    : ViewResources.ResourceManager.GetString(sabaSport.Item3);
 
-                return $"{ViewResources.Saba} {sabaSportName}";
+                return $"{ViewResources.Saba}{sabaSportName}";
             }
         }
 
