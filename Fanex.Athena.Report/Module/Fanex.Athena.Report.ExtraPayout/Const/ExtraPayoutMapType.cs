@@ -63,5 +63,7 @@ namespace Fanex.Athena.Report.ExtraPayout.Const
         public const int PayoutNBAPlayoffsLotteryPromotion = 3712;
 
         public const int PayoutNBABalanceAdjustment = 3713;
+
+        public const int PayoutFIFACWCScoreChallenge = 3714;
     }
 }

@@ -59,7 +59,8 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
             { ExtraPayoutMapType.PayoutOddsBoostAdjustment, BetType.OddsBoostAdjustment },
             { ExtraPayoutMapType.PayoutNumberGameLuckyDrawPromotion, BetType.NumberGameLuckyDrawPromotion },
             { ExtraPayoutMapType.PayoutNBAPlayoffsLotteryPromotion, BetType.NBAPlayoffsLotteryPromotion },
-            { ExtraPayoutMapType.PayoutNBABalanceAdjustment, BetType.NBABalanceAdjustment }
+            { ExtraPayoutMapType.PayoutNBABalanceAdjustment, BetType.NBABalanceAdjustment },
+            { ExtraPayoutMapType.PayoutFIFACWCScoreChallenge, BetType.FIFACWCScoreChallenge }
         };
 
         private static readonly int[] SBPromotionBettypes = new[] {
@@ -73,7 +74,8 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories
             BetType.PromotionJackpotPrize,
             BetType.PromotionCashPrize,
             BetType.NBAPlayoffsLotteryPromotion,
-            BetType.NBABalanceAdjustment
+            BetType.NBABalanceAdjustment,
+            BetType.FIFACWCScoreChallenge
         };
 
         private static readonly int[] CasinoPromotionBettypes = new[] {
