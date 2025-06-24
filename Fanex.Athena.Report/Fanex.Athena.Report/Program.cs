@@ -3,6 +3,11 @@
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Logging.Console.Internal;
+    using Sentry.Protocol;
     using System;
 
     public static class Program
@@ -10,7 +15,10 @@
         public static void Main(string[] args)
         {
             Console.Title = "N88 Report API";
-            CreateWebHostBuilder(args).Build().Run();
+            var host = CreateWebHostBuilder(args).Build();
+            host.Run();
+
+            throw new Exception("Application starting...");
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
