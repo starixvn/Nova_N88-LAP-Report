@@ -1,5 +1,4 @@
-﻿using Fanex.Athena.Report.Common.Model.MetaModels;
-using Fanex.Data;
+﻿using Fanex.Data;
 using System.Collections.Generic;
 
 namespace Fanex.Athena.Report.WinLossAnalysis.MetaModels

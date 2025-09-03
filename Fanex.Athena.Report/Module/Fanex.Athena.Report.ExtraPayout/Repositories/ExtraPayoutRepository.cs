@@ -3,7 +3,7 @@ using Fanex.Athena.Report.Common.Extensions;
 using Fanex.Athena.Report.Common.Model.DataDomain;
 using Fanex.Athena.Report.Common.Model.DTO;
 using Fanex.Athena.Report.Common.Model.ViewModel;
-using Fanex.Athena.Report.Common.Services;
+
 using Fanex.Athena.Report.Common.Services.Interfaces;
 using Fanex.Athena.Report.Core.Helpers;
 using Fanex.Athena.Report.ExtraPayout.Const;
@@ -13,12 +13,12 @@ using Fanex.Athena.Report.ExtraPayout.Repositories.Interfaces;
 using Fanex.Athena.Report.Resources;
 using Fanex.Athena.Report.Resources.Constants;
 using Fanex.Data;
-using Fanex.RemotingRef;
+
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Threading;
+
 using System.Threading.Tasks;
 
 namespace Fanex.Athena.Report.ExtraPayout.Repositories

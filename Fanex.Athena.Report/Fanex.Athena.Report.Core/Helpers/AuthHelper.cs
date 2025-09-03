@@ -1,10 +1,10 @@
-﻿using Fanex.Athena.Report.Common.Model.MetaModels;
+﻿
 using Fanex.Athena.Report.Common.Model.MetaModels.Interfaces;
 using Fanex.NVC.Authentication.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.AccessControl;
+
 using System.Xml;
 
 namespace Fanex.Athena.Report.Core.Helpers

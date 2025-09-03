@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Fanex.Athena.Report.Common.Consts;
 using Fanex.Athena.Report.Common.Model.DataDomain;
 using Fanex.Athena.Report.Common.Services.Interfaces;
@@ -41,59 +42,27 @@ namespace Fanex.Athena.Report.Common.Services
 
         private string GetSabaSportSuffixName(int sportTypeId, string lang)
         {
-            var sportName = string.Empty;
-            switch (sportTypeId)
+            return GetSportNameFromMapping(sportTypeId, lang) ?? string.Empty;
+        }
+
+        private string GetSportNameFromMapping(int sportTypeId, string lang)
+        {
+            var sportMappings = new Dictionary<int, Func<string>>
             {
-                case HardCodeSportType.SabaBasketball:
-                    sportName = _cacheRefAdapter.GetSportName(SportType.BasketBall, lang);
-                    break;
+                { HardCodeSportType.SabaBasketball, () => _cacheRefAdapter.GetSportName(SportType.BasketBall, lang) },
+                { HardCodeSportType.SabaSoccer, () => _cacheRefAdapter.GetSportName(SportType.Soccer, lang) },
+                { HardCodeSportType.SabaCricket, () => _cacheRefAdapter.GetSportName(SportType.Cricket, lang) },
+                { HardCodeSportType.SabaSoccerPinGoal, () => ViewResources.SoccerPinGoal },
+                { HardCodeSportType.SabaBasketballPinGoal, () => ViewResources.BasketballPinGoal },
+                { HardCodeSportType.SabaESportPinGoal, () => ViewResources.ESportsPinGoal },
+                { HardCodeSportType.SabaFutsal, () => _cacheRefAdapter.GetSportName(SportType.Futsal, lang) },
+                { HardCodeSportType.SabaTennis, () => _cacheRefAdapter.GetSportName(SportType.Tennis, lang) },
+                { HardCodeSportType.SabaIceHockey, () => _cacheRefAdapter.GetSportName(SportType.IceHockey, lang) },
+                { HardCodeSportType.SabaKabaddi, () => _cacheRefAdapter.GetSportName(SportType.Kabaddi, lang) },
+                { HardCodeSportType.SabaSoccerMarble, () => ViewResources.SoccerMarble }
+            };
 
-                case HardCodeSportType.SabaSoccer:
-                    sportName = _cacheRefAdapter.GetSportName(SportType.Soccer, lang);
-                    break;
-
-                case HardCodeSportType.SabaCricket:
-                    sportName = _cacheRefAdapter.GetSportName(SportType.Cricket, lang);
-                    break;
-
-                case HardCodeSportType.SabaSoccerPinGoal:
-                    sportName = ViewResources.SoccerPinGoal;
-                    break;
-
-                case HardCodeSportType.SabaBasketballPinGoal:
-                    sportName = ViewResources.BasketballPinGoal;
-                    break;
-
-                case HardCodeSportType.SabaESportPinGoal:
-                    sportName = ViewResources.ESportsPinGoal;
-                    break;
-
-                case HardCodeSportType.SabaFutsal:
-                    sportName = _cacheRefAdapter.GetSportName(SportType.Futsal, lang);
-                    break;
-
-                case HardCodeSportType.SabaTennis:
-                    sportName = _cacheRefAdapter.GetSportName(SportType.Tennis, lang);
-                    break;
-
-                case HardCodeSportType.SabaIceHockey:
-                    sportName = _cacheRefAdapter.GetSportName(SportType.IceHockey, lang);
-                    break;
-
-                case HardCodeSportType.SabaKabaddi:
-                    sportName = _cacheRefAdapter.GetSportName(SportType.Kabaddi, lang);
-                    break;
-
-                case HardCodeSportType.SabaSoccerMarble:
-                    sportName = ViewResources.SoccerMarble;
-                    break;
-
-                default:
-                    sportName = string.Empty;
-                    break;
-            }
-
-            return sportName;
+            return sportMappings.TryGetValue(sportTypeId, out var nameProvider) ? nameProvider() : null;
         }
 
         private string GetBettypeNameSuffix(int betType)

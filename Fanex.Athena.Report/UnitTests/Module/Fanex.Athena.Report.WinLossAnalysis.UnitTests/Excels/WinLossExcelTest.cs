@@ -64,7 +64,8 @@ namespace Fanex.Athena.Report.WinLossAnalysis.UnitTests.Excels
 
             var expectedTitle = $"{ViewResources.WinLossAnalysis}, {metaModel.FromDate.ToString("MM/dd/yyyy")} - {metaModel.ToDate.ToString("MM/dd/yyyy")}," +
                 $" {string.Format(ViewResources.Viewin, metaModel.BaseCurrency.ToUpperInvariant())}," +
-                $" {DataHelper.GetTimezoneName(metaModel.Timezone)}";
+                $" {DataHelper.GetTimezoneName(metaModel.Timezone)}" +
+                (string.IsNullOrEmpty(metaModel.DataViewName) ? "" : $", {metaModel.DataViewName}");
 
             //Act
             _ = _target.Export(new ResultModel<WinLossRecordViewModel> { DataList = new List<WinLossRecordViewModel>() },
