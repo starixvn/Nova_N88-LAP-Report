@@ -1,6 +1,5 @@
 ﻿using Fanex.Athena.Report.Common.Model.MetaModels.Interfaces;
 using Fanex.Data;
-using System.Collections;
 
 namespace Fanex.Athena.Report.BonusInfo.MetaModels
 {

@@ -1,10 +1,8 @@
 ﻿using AutoFixture;
-using Fanex.Athena.Report.Common.Model.ViewModel;
 using Fanex.Athena.Report.Marketing.Consts;
 using Fanex.Athena.Report.Marketing.DTO;
 using Fanex.Athena.Report.Marketing.MetaModels;
 using Fanex.Athena.Report.Resources;
-using Microsoft.Extensions.FileProviders;
 using Moq;
 using NPOI.SS.UserModel;
 using System.Linq;

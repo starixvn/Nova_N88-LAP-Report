@@ -4,8 +4,6 @@ using Fanex.Athena.Report.Marketing.DTO;
 using Fanex.Athena.Report.Marketing.Helpers;
 using Fanex.Athena.Report.Marketing.MetaModels;
 using Fanex.Athena.Report.Marketing.Repositories;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CommonExtensions = Fanex.Athena.Report.Common.Extensions;

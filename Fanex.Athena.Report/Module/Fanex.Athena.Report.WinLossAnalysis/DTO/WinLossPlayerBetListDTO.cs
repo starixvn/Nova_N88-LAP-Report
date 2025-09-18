@@ -1,6 +1,4 @@
-﻿using Fanex.Athena.Report.Common.Attributes;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 
 namespace Fanex.Athena.Report.WinLossAnalysis.DTO
 {

@@ -24,7 +24,7 @@ namespace Fanex.Athena.Report.Marketing.Controllers
 
         [HttpPost]
         [RequestValidation(validateBrand: true, validateCurrencyList: true, valiDataRangeLimitation: true)]
-        public async Task<JsonResult> GetSummaryData([FromBody]BonusClaimedSummaryMetaModel metaModel)
+        public async Task<JsonResult> GetSummaryData([FromBody] BonusClaimedSummaryMetaModel metaModel)
         {
             var result = await _service.GetSummaryData(metaModel);
             return new JsonResult(result);
@@ -32,7 +32,7 @@ namespace Fanex.Athena.Report.Marketing.Controllers
 
         [HttpPost]
         [RequestValidation(validateBrand: true, validateCurrencyList: true, valiDataRangeLimitation: true)]
-        public async Task<JsonResult> GetDetailsData([FromBody]BonusClaimedDetailMetaModel metaModel)
+        public async Task<JsonResult> GetDetailsData([FromBody] BonusClaimedDetailMetaModel metaModel)
         {
             var result = await _service.GetDetailsData(metaModel);
             return new JsonResult(result);
@@ -41,7 +41,7 @@ namespace Fanex.Athena.Report.Marketing.Controllers
         [HttpPost]
         [RequestValidation(validateBrand: true, validateCurrencyList: true, valiDataRangeLimitation: true)]
         public async Task<FileResult> ExportData(
-            [FromServices]IBonusClaimedExcel excel,
+            [FromServices] IBonusClaimedExcel excel,
             BonusClaimedExportMetaModel metaModel)
         {
             var (summaryData, detailData) = await _service.GetExportData(metaModel);

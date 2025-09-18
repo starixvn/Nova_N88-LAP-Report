@@ -5,7 +5,6 @@ using Fanex.Athena.Report.Marketing.MetaModels;
 using Fanex.Athena.Report.Resources;
 using NPOI.SS.UserModel;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Fanex.Athena.Report.Marketing.Excels
 {

@@ -24,7 +24,7 @@ namespace Fanex.Athena.Report.Marketing.Controllers
 
         [HttpPost]
         [RequestValidation(validateBrand: true, validateCurrencyList: true, valiDataRangeLimitation: true)]
-        public async Task<JsonResult> GetSummaryData([FromBody]WithdrawalSummaryMetaModel metaModel)
+        public async Task<JsonResult> GetSummaryData([FromBody] WithdrawalSummaryMetaModel metaModel)
         {
             var result = await _service.GetSummaryData(metaModel);
             return new JsonResult(result);
@@ -32,7 +32,7 @@ namespace Fanex.Athena.Report.Marketing.Controllers
 
         [HttpPost]
         [RequestValidation(validateBrand: true, validateCurrencyList: true, valiDataRangeLimitation: true)]
-        public async Task<JsonResult> GetDetailsData([FromBody]WithdrawalDetailMetaModel metaModel)
+        public async Task<JsonResult> GetDetailsData([FromBody] WithdrawalDetailMetaModel metaModel)
         {
             var result = await _service.GetDetailsData(metaModel);
             return new JsonResult(result);
@@ -40,7 +40,7 @@ namespace Fanex.Athena.Report.Marketing.Controllers
 
         [HttpPost]
         [RequestValidation(validateBrand: true, validateCurrencyList: true, valiDataRangeLimitation: true)]
-        public async Task<FileResult> ExportData([FromServices]IWithdrawalExcel excel, WithdrawalExportMetaModel metaModel)
+        public async Task<FileResult> ExportData([FromServices] IWithdrawalExcel excel, WithdrawalExportMetaModel metaModel)
         {
             var (summaryData, detailData) = await _service.GetExportData(metaModel);
             var workBook = excel.Export(summaryData, detailData.DataList, metaModel);

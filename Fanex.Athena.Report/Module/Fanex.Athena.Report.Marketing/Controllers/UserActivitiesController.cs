@@ -22,7 +22,7 @@ namespace Fanex.Athena.Report.Marketing.Controllers
 
         [HttpPost]
         [RequestValidation(validateBrand: true, validateCurrencyList: true, valiDataRangeLimitation: true)]
-        public async Task<JsonResult> GetData([FromBody]UserActivitiesMetaModel metaModel)
+        public async Task<JsonResult> GetData([FromBody] UserActivitiesMetaModel metaModel)
         {
             var result = await _service.GetData(metaModel);
             return new JsonResult(result);

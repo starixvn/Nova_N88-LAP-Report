@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text;
-
-namespace Fanex.Athena.Report.ExtraPayout.Const
+﻿namespace Fanex.Athena.Report.ExtraPayout.Const
 {
     public static class ExtraPayoutMapType
     {

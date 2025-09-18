@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 using Fanex.Athena.Report.Common.Model.MetaModels;
 
 namespace Fanex.Athena.Report.AbnormalBet.MetaModels

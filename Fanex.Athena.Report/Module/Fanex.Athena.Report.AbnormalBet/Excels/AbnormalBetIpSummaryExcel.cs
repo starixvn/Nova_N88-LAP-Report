@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Fanex.Athena.Report.AbnormalBet.DTO;
 using Fanex.Athena.Report.AbnormalBet.Excels.Interfaces;
 using Fanex.Athena.Report.AbnormalBet.MetaModels;
