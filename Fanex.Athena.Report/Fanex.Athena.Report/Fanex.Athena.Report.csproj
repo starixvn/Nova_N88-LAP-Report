@@ -27,6 +27,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Remove="ExcelTemplate\ExtraPayout\OddsBoostBonusDetail.xls" />
 		<None Remove="ExcelTemplate\Marketing\BonusClaimed.xls" />
 		<None Remove="ExcelTemplate\Marketing\NewlyRegisterUsers.xls" />
 		<None Remove="ExcelTemplate\Marketing\PerformanceHighlight.xls" />
@@ -48,6 +49,9 @@
 
 	<ItemGroup>
 		<AdditionalFiles Include="..\.sonarlint\n88_lap_report\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+		<Content Include="ExcelTemplate\ExtraPayout\OddsBoostBonusDetail.xls">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 		<Content Include="ExcelTemplate\Marketing\BonusClaimed.xls">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
