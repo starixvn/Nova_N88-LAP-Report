@@ -9,7 +9,6 @@ using Fanex.NVC.Authentication;
 using Moq;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 

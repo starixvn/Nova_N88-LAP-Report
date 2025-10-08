@@ -150,16 +150,6 @@ namespace Fanex.Athena.Report.Marketing.Excels
             }
         }
 
-        private void AssignRowCommonData(ISheet sheet, ISheet templateSheet, int currentRowIndex, PerformanceHighlightCommonExportDTO rowData)
-        {
-            var rowTemplateIndex = GetRowTemplateIndex(rowData.DataType);
-            var row = _builder.CopyRow(sheet, templateSheet, rowTemplateIndex, currentRowIndex);
-
-            row.Cells[ColumnName].SetCellValue(_isModeVN ? rowData.NameVN : rowData.Name);
-            ExcelHelper.SetValueCellDecimal(row.Cells[ColumnRange], rowData.DateRange);
-            ExcelHelper.SetValueCellDecimal(row.Cells[ColumnMonthToDate], rowData.MonthToDate);
-        }
-
         private void AssignRegistrationData(ISheet sheet, ISheet templateSheet, int currentRowIndex, PerformanceHighlightRegistrationExportDTO rowData)
         {
             var rowTemplateIndex = GetRowTemplateIndex(rowData.DataType);
@@ -168,6 +158,16 @@ namespace Fanex.Athena.Report.Marketing.Excels
             row.Cells[ColumnName].SetCellValue(_isModeVN ? rowData.SignupUrlVN : rowData.SignupUrl);
             ExcelHelper.SetValueCellDecimal(row.Cells[ColumnRange], rowData.SignupUsers);
             ExcelHelper.SetValueCellDecimal(row.Cells[ColumnMonthToDate], rowData.MonthToDateSignupUsers);
+        }
+
+        private void AssignRowCommonData(ISheet sheet, ISheet templateSheet, int currentRowIndex, PerformanceHighlightCommonExportDTO rowData)
+        {
+            var rowTemplateIndex = GetRowTemplateIndex(rowData.DataType);
+            var row = _builder.CopyRow(sheet, templateSheet, rowTemplateIndex, currentRowIndex);
+
+            row.Cells[ColumnName].SetCellValue(_isModeVN ? rowData.NameVN : rowData.Name);
+            ExcelHelper.SetValueCellDecimal(row.Cells[ColumnRange], rowData.DateRange);
+            ExcelHelper.SetValueCellDecimal(row.Cells[ColumnMonthToDate], rowData.MonthToDate);
         }
 
         private void ResetState()

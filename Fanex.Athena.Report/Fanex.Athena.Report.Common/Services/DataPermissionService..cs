@@ -1,6 +1,4 @@
 ﻿using Fanex.Athena.Report.Common.Attributes;
-using Fanex.Athena.Report.Common.Excel;
-using Fanex.Athena.Report.Common.Model.DTO;
 using Fanex.Athena.Report.Common.Services.Interfaces;
 using Fanex.NVC.Authentication;
 using System;

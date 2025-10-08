@@ -1,6 +1,4 @@
-﻿using Fanex.Athena.Report.Common.Attributes;
-
-namespace Fanex.Athena.Report.BonusInfo.DTO
+﻿namespace Fanex.Athena.Report.BonusInfo.DTO
 {
     public class ClaimStatusDTO
     {

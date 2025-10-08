@@ -24,7 +24,7 @@ namespace Fanex.Athena.Report.Marketing.Repositories
 
         [HttpPost]
         [RequestValidation(validateBrand: true, validateCurrencyList: true, valiDataRangeLimitation: true)]
-        public async Task<JsonResult> GetData([FromBody]PerformanceHighlightMetaModel metaModel)
+        public async Task<JsonResult> GetData([FromBody] PerformanceHighlightMetaModel metaModel)
         {
             var result = await _service.GetData(metaModel);
             return new JsonResult(result);
@@ -32,7 +32,7 @@ namespace Fanex.Athena.Report.Marketing.Repositories
 
         [HttpPost]
         [RequestValidation(validateBrand: true, validateCurrencyList: true, valiDataRangeLimitation: true)]
-        public async Task<FileResult> ExportData([FromServices]IPerformanceHighlightExcel excel, PerformanceHighlightExportAllMetaModel metaModel)
+        public async Task<FileResult> ExportData([FromServices] IPerformanceHighlightExcel excel, PerformanceHighlightExportAllMetaModel metaModel)
         {
             var data = await _service.ExportData(metaModel);
             var workBook = excel.Export(data, metaModel);

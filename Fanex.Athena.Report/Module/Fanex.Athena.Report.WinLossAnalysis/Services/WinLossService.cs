@@ -6,7 +6,6 @@ using Fanex.Athena.Report.WinLossAnalysis.DTO;
 using Fanex.Athena.Report.WinLossAnalysis.MetaModels;
 using Fanex.Athena.Report.WinLossAnalysis.Repositories;
 using Fanex.Athena.Report.WinLossAnalysis.ViewModels;
-using Fanex.NVC.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -36,6 +36,7 @@ namespace Fanex.Athena.Report.ExtraPayout
         {
             services.AddTransient<IExtraPayoutDetailExcel, ExtraPayoutDetailExcel>();
             services.AddTransient<IExtraPayoutExcel, ExtraPayoutExcel>();
+            services.AddTransient<IOddsBoostBonusDetailExcel, OddsBoostBonusDetailExcel>();
 
             return services;
         }

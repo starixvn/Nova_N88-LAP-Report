@@ -27,8 +27,8 @@ namespace Fanex.Athena.Report.UnitTestUtils.Excels
             _mockFileInfo = new Mock<IFileInfo>();
 
             Create();
-        }      
-        
+        }
+
         protected virtual void Create()
         {
             _target = (T)Activator.CreateInstance(typeof(T), _mockExcelBuilder.Object, _mockFileProvider.Object);

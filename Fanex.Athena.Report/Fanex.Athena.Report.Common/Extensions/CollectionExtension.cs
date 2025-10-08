@@ -10,8 +10,9 @@ namespace Fanex.Athena.Report.Common.Extensions
 
         private static string GetPropertyName<T>(string propertyName)
         {
-            return typeof(T).GetProperties()
-                .FirstOrDefault(_ => _.Name.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase))
+            var properties = typeof(T).GetProperties().ToList();
+            return properties
+                .Find(_ => _.Name.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase))
                 ?.Name;
         }
 

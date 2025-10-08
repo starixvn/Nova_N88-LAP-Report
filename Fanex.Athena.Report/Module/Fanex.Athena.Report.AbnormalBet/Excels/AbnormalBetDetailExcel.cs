@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Fanex.Athena.Report.AbnormalBet.DTO;
 using Fanex.Athena.Report.AbnormalBet.Excels.Interfaces;
 using Fanex.Athena.Report.AbnormalBet.MetaModels;
@@ -186,7 +184,7 @@ namespace Fanex.Athena.Report.AbnormalBet.Excels
             var baseCurrency = !string.IsNullOrWhiteSpace(metaModel.BaseCurrency) ? metaModel.BaseCurrency.ToUpperInvariant() : metaModel.CurrencyName;
             var baseCurrencyText = $"{ViewResources.BaseCurrency}: {baseCurrency}";
             var userText = string.IsNullOrEmpty(metaModel.UserName) ? "" : $", {ViewResources.Username}: {metaModel.UserName}";
-            var reportTitle = $"{ViewResources.AbnormalBet}, {viewInText}, {metaModel.FromDate:MM/dd/yyyy} -> {metaModel.ToDate:MM/dd/yyyy}, { currencyText }, { baseCurrencyText}" + userText;
+            var reportTitle = $"{ViewResources.AbnormalBet}, {viewInText}, {metaModel.FromDate:MM/dd/yyyy} -> {metaModel.ToDate:MM/dd/yyyy}, {currencyText}, {baseCurrencyText}" + userText;
 
             _builder.SetRowValue(
                 sheet,

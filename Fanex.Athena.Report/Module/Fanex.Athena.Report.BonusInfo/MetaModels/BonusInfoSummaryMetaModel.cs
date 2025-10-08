@@ -1,5 +1,4 @@
-﻿using Fanex.Athena.Report.Common.Model.MetaModels;
-using Fanex.Athena.Report.Common.Model.MetaModels.Interfaces;
+﻿using Fanex.Athena.Report.Common.Model.MetaModels.Interfaces;
 using Fanex.Data;
 
 namespace Fanex.Athena.Report.BonusInfo.MetaModels

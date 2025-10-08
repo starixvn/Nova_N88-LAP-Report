@@ -1,4 +1,5 @@
-﻿using Fanex.Athena.Report.Common.Model.ViewModel;
+﻿using Fanex.Athena.Report.Common.Model.ResultModel;
+using Fanex.Athena.Report.Common.Model.ViewModel;
 using Fanex.Athena.Report.ExtraPayout.DTO;
 using Fanex.Athena.Report.ExtraPayout.MetaModels;
 using System.Threading.Tasks;
@@ -15,5 +16,8 @@ namespace Fanex.Athena.Report.ExtraPayout.Repositories.Interfaces
 
         Task<SortableResultModel<ExtraPayoutDetailDTO>> GetExtraPayoutDetailData(
             ExtraPayoutDetailMetaModel metaModel);
+
+        Task<SortableReportResultModel<OddsBoostBonusDetail>> GetOddsBoostBonusDetailData(
+            ExtraPayoutMetaModel metaModel);
     }
 }

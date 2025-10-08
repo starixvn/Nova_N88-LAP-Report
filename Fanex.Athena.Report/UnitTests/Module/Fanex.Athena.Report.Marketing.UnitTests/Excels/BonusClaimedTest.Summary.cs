@@ -107,7 +107,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             //Assert
             mockCellName.Verify(_ => _.SetCellValue(ViewResources.TotalBonusAmountClaimed), Times.Once);
             mockCellReportDate.Verify(_ => _.SetCellValue(ViewResources.ReportDate), Times.Once);
-            if(metaModel.AllowedCompare)
+            if (metaModel.AllowedCompare)
             {
                 mockCellCompareDate.Verify(_ => _.SetCellValue(ViewResources.CompareDate), Times.Once);
                 mockCellChangeRate.Verify(_ => _.SetCellValue(ViewResources.ChangePercent), Times.Once);
@@ -117,7 +117,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
                 mockCellCompareDate.Verify(_ => _.SetCellValue(ViewResources.CompareDate), Times.Never);
                 mockCellChangeRate.Verify(_ => _.SetCellValue(ViewResources.ChangePercent), Times.Never);
             }
-           
+
         }
 
         [Fact]
@@ -134,7 +134,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
 
             SetupSummarySheet(sheet, templateSheet);
 
-            var mockCellBonusCode = new Mock<ICell>(); 
+            var mockCellBonusCode = new Mock<ICell>();
             var mockCellCurrency = new Mock<ICell>();
             var mockCellBonusName = new Mock<ICell>();
             var mockCellNumberOfBonusClaimed = new Mock<ICell>();

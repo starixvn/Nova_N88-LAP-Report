@@ -159,7 +159,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
             var listCell = new List<ICell>
             {
                 mockCellRowId.Object, mockCellBonusCode.Object, mockCellUsername.Object, mockCellCurrency.Object,
-                mockCellRegisteredDate.Object, mockCellSignupUrl.Object, mockCellAffCode.Object,  mockCellDepositAmount.Object, 
+                mockCellRegisteredDate.Object, mockCellSignupUrl.Object, mockCellAffCode.Object,  mockCellDepositAmount.Object,
                 mockCellWithdrawalAmount.Object,
                 mockCellBonusAmountClaimed.Object
             };
@@ -190,7 +190,7 @@ namespace Fanex.Athena.Report.Marketing.UnitTests.Excels
 
         protected void AssertDecimalCell(Mock<ICell> mockCell, decimal value, Func<Times> times)
         {
-                mockCell.Verify(_ => _.SetCellValue((double)value), times);
+            mockCell.Verify(_ => _.SetCellValue((double)value), times);
         }
 
         private void SetupDetailSheet(ISheet sheet, ISheet templateSheet)

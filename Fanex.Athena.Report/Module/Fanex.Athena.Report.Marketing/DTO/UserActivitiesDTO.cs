@@ -1,6 +1,4 @@
-﻿using Fanex.Athena.Report.Common.Attributes;
-
-namespace Fanex.Athena.Report.Marketing.DTO
+﻿namespace Fanex.Athena.Report.Marketing.DTO
 {
     public class UserActivitiesDTO
     {
