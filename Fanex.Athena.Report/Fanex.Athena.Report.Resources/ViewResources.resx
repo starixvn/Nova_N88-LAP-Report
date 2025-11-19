@@ -969,4 +969,7 @@
   <data name="Reward_Promotion" xml:space="preserve">
     <value>Reward/ Promotion</value>
   </data>
+  <data name="CasinoRoyale" xml:space="preserve">
+    <value>Casino Royale</value>
+  </data>
 </root>
