@@ -448,6 +448,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Casino Royale.
+        /// </summary>
+        public static string CasinoRoyale {
+            get {
+                return ResourceManager.GetString("CasinoRoyale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Arcadia Gaming.
         /// </summary>
         public static string CC {
@@ -1798,6 +1807,15 @@ namespace Fanex.Athena.Report.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Saba Coins.
+        /// </summary>
+        public static string SabaCoins {
+            get {
+                return ResourceManager.GetString("SabaCoins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Saba Id.
         /// </summary>
         public static string SabaId {
@@ -2289,6 +2307,15 @@ namespace Fanex.Athena.Report.Resources {
         public static string Viewin {
             get {
                 return ResourceManager.GetString("Viewin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Saba Coins.
+        /// </summary>
+        public static string ViewSabaCoins {
+            get {
+                return ResourceManager.GetString("ViewSabaCoins", resourceCulture);
             }
         }
         
